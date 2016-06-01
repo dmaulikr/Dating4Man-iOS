@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="CommonDetailAndAccessoryTableViewCell" rowHeight="47" id="KGk-i7-Jjw" customClass="CommonDetailAndAccessoryTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="315" height="47"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="315" height="46"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="标题" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xaf-ng-Eki">
+                        <rect key="frame" x="10" y="5" width="32" height="36"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                        <color key="textColor" red="0.0" green="0.40000000000000002" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$21.00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xm5-rV-Kfl">
+                        <rect key="frame" x="255" y="5" width="50" height="36"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                        <color key="textColor" red="0.52549019607843139" green="0.52549019607843139" blue="0.52549019607843139" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="Xaf-ng-Eki" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="2GC-d3-gtX"/>
+                    <constraint firstItem="xm5-rV-Kfl" firstAttribute="top" secondItem="Xaf-ng-Eki" secondAttribute="top" id="Abn-6S-R6u"/>
+                    <constraint firstItem="xm5-rV-Kfl" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailing" constant="-10" id="PEt-Nc-7d2"/>
+                    <constraint firstItem="xm5-rV-Kfl" firstAttribute="bottom" secondItem="Xaf-ng-Eki" secondAttribute="bottom" id="dxD-DY-ZQc"/>
+                    <constraint firstItem="Xaf-ng-Eki" firstAttribute="bottom" secondItem="H2p-sc-9uM" secondAttribute="bottom" constant="-5" id="pQ1-zX-GUZ"/>
+                    <constraint firstItem="Xaf-ng-Eki" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="xsY-Gv-c0d"/>
+                </constraints>
+                <edgeInsets key="layoutMargins" top="8" left="0.0" bottom="8" right="8"/>
+            </tableViewCellContentView>
+            <edgeInsets key="layoutMargins" top="8" left="0.0" bottom="8" right="8"/>
+            <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+            <connections>
+                <outlet property="accessoryLabel" destination="xm5-rV-Kfl" id="oKx-Ic-CeB"/>
+                <outlet property="detailLabel" destination="Xaf-ng-Eki" id="GTx-MX-lmL"/>
+            </connections>
+            <point key="canvasLocation" x="411.5" y="339.5"/>
+        </tableViewCell>
+    </objects>
+</document>

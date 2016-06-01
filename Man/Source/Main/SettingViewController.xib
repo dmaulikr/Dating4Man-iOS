@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SettingViewController">
+            <connections>
+                <outlet property="CreditsBalanceCount" destination="3D2-Vf-aFn" id="ji8-Zf-USY"/>
+                <outlet property="imageViewHead" destination="DVG-ct-XEO" id="tUc-iv-BB8"/>
+                <outlet property="tableView" destination="GZm-xn-z4z" id="RPl-hx-TO8"/>
+                <outlet property="titleLabel" destination="bty-cg-oWT" id="Cqp-4Z-Jz1"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="64" width="414" height="672"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Exf-6W-Mr8" userLabel="HeadView">
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="200"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Setting-HeaderBackground" translatesAutoresizingMaskIntoConstraints="NO" id="Cs6-k0-mXd">
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="200"/>
+                        </imageView>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Setting-HeaderImage-Test" translatesAutoresizingMaskIntoConstraints="NO" id="DVG-ct-XEO" userLabel="MyProdileHead">
+                            <rect key="frame" x="157" y="40" width="100" height="100"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="100" id="tbt-iM-JGU"/>
+                                <constraint firstAttribute="height" constant="100" id="vcW-41-6se"/>
+                            </constraints>
+                        </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Micheal" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bty-cg-oWT">
+                            <rect key="frame" x="157" y="140" width="100" height="21"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="21" id="VtU-5K-ldf"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="DVG-ct-XEO" firstAttribute="centerY" secondItem="Exf-6W-Mr8" secondAttribute="centerY" constant="-10" id="0Ds-TC-Vqz"/>
+                        <constraint firstItem="Cs6-k0-mXd" firstAttribute="top" secondItem="Exf-6W-Mr8" secondAttribute="top" id="3sX-IS-gvv"/>
+                        <constraint firstAttribute="height" constant="200" id="M5L-bu-DPA"/>
+                        <constraint firstItem="bty-cg-oWT" firstAttribute="width" secondItem="DVG-ct-XEO" secondAttribute="width" id="O8M-jN-Y6g"/>
+                        <constraint firstItem="Cs6-k0-mXd" firstAttribute="height" secondItem="Exf-6W-Mr8" secondAttribute="height" id="WPa-uI-CR8"/>
+                        <constraint firstItem="DVG-ct-XEO" firstAttribute="centerX" secondItem="Exf-6W-Mr8" secondAttribute="centerX" id="b9v-CF-Q8F"/>
+                        <constraint firstItem="Cs6-k0-mXd" firstAttribute="leading" secondItem="Exf-6W-Mr8" secondAttribute="leading" id="gVn-kb-ZIY"/>
+                        <constraint firstItem="bty-cg-oWT" firstAttribute="centerX" secondItem="Exf-6W-Mr8" secondAttribute="centerX" id="owO-8a-Kg2"/>
+                        <constraint firstItem="bty-cg-oWT" firstAttribute="top" secondItem="DVG-ct-XEO" secondAttribute="bottom" id="rt4-Dm-L15"/>
+                        <constraint firstItem="Cs6-k0-mXd" firstAttribute="width" secondItem="Exf-6W-Mr8" secondAttribute="width" id="sp0-SL-RLV"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7Wo-Kl-AGQ" userLabel="Creadit Balance">
+                    <rect key="frame" x="0.0" y="200" width="414" height="36"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Credit Balance" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f5b-Kh-TYO">
+                            <rect key="frame" x="10" y="0.0" width="200" height="36"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="200" id="Ihb-hn-DhR"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                            <color key="textColor" red="1" green="0.40000000000000002" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2.50" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3D2-Vf-aFn">
+                            <rect key="frame" x="351" y="7" width="53" height="22"/>
+                            <color key="backgroundColor" red="0.70196078431372544" green="0.70196078431372544" blue="0.70196078431372544" alpha="1" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="22" id="Usj-1y-Njt"/>
+                                <constraint firstAttribute="width" constant="53" id="kh6-bf-mHA"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
+                            <color key="textColor" red="1" green="0.40000000000000002" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="f5b-Kh-TYO" firstAttribute="leading" secondItem="7Wo-Kl-AGQ" secondAttribute="leading" constant="10" id="CsW-Fv-iSi"/>
+                        <constraint firstAttribute="trailing" secondItem="3D2-Vf-aFn" secondAttribute="trailing" constant="10" id="QhR-YN-KCS"/>
+                        <constraint firstItem="3D2-Vf-aFn" firstAttribute="top" secondItem="f5b-Kh-TYO" secondAttribute="top" id="Xem-6M-btB"/>
+                        <constraint firstItem="3D2-Vf-aFn" firstAttribute="bottom" secondItem="f5b-Kh-TYO" secondAttribute="bottom" id="cdC-7J-gPp"/>
+                        <constraint firstItem="3D2-Vf-aFn" firstAttribute="centerY" secondItem="f5b-Kh-TYO" secondAttribute="centerY" id="dBZ-AM-1Q0"/>
+                        <constraint firstItem="f5b-Kh-TYO" firstAttribute="top" secondItem="7Wo-Kl-AGQ" secondAttribute="top" id="eEU-ct-E4L"/>
+                        <constraint firstAttribute="height" constant="36" id="qmm-qY-8r7"/>
+                        <constraint firstItem="f5b-Kh-TYO" firstAttribute="height" secondItem="7Wo-Kl-AGQ" secondAttribute="height" id="uBM-O1-8v1"/>
+                    </constraints>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="Xem-6M-btB"/>
+                            <exclude reference="cdC-7J-gPp"/>
+                        </mask>
+                    </variation>
+                </view>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="GZm-xn-z4z">
+                    <rect key="frame" x="0.0" y="236" width="414" height="436"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="4g7-bH-6wG"/>
+                        <outlet property="delegate" destination="-1" id="Ew4-6t-xkU"/>
+                    </connections>
+                </tableView>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="GZm-xn-z4z" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="1s9-QP-sfJ"/>
+                <constraint firstItem="7Wo-Kl-AGQ" firstAttribute="width" secondItem="i5M-Pr-FkT" secondAttribute="width" id="9DX-aJ-siX"/>
+                <constraint firstItem="Exf-6W-Mr8" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="DMG-N8-sIn"/>
+                <constraint firstItem="GZm-xn-z4z" firstAttribute="top" secondItem="7Wo-Kl-AGQ" secondAttribute="bottom" id="YjJ-26-lKV"/>
+                <constraint firstItem="7Wo-Kl-AGQ" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="ZGb-u0-EmM"/>
+                <constraint firstItem="Exf-6W-Mr8" firstAttribute="width" secondItem="i5M-Pr-FkT" secondAttribute="width" id="ZUS-AA-1F2"/>
+                <constraint firstItem="7Wo-Kl-AGQ" firstAttribute="top" secondItem="Exf-6W-Mr8" secondAttribute="bottom" id="Zti-Vt-zcN"/>
+                <constraint firstItem="GZm-xn-z4z" firstAttribute="bottom" secondItem="i5M-Pr-FkT" secondAttribute="bottom" id="chE-Pr-lJ0"/>
+                <constraint firstItem="GZm-xn-z4z" firstAttribute="width" secondItem="i5M-Pr-FkT" secondAttribute="width" id="rGY-1W-KTD"/>
+                <constraint firstItem="Exf-6W-Mr8" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="vAU-zI-rth"/>
+            </constraints>
+            <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="Setting-HeaderBackground" width="124" height="90"/>
+        <image name="Setting-HeaderImage-Test" width="64" height="64"/>
+    </resources>
+</document>

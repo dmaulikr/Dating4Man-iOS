@@ -1,0 +1,1684 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		501BF3AB1C7EFF460052C59F /* aes.c in Sources */ = {isa = PBXBuildFile; fileRef = 501BF3821C7EFF460052C59F /* aes.c */; };
+		501BF3AC1C7EFF460052C59F /* Arithmetic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 501BF3851C7EFF460052C59F /* Arithmetic.cpp */; };
+		501BF3AF1C7EFF460052C59F /* command.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 501BF38B1C7EFF460052C59F /* command.cpp */; };
+		501BF3B01C7EFF460052C59F /* CommonFunc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 501BF38D1C7EFF460052C59F /* CommonFunc.cpp */; };
+		501BF3B11C7EFF460052C59F /* IAutoLock.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 501BF3911C7EFF460052C59F /* IAutoLock.cpp */; };
+		501BF3B21C7EFF460052C59F /* IPAddress.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 501BF3931C7EFF460052C59F /* IPAddress.cpp */; };
+		501BF3B31C7EFF460052C59F /* KLog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 501BF3961C7EFF460052C59F /* KLog.cpp */; };
+		501BF3B41C7EFF460052C59F /* KSocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 501BF39B1C7EFF460052C59F /* KSocket.cpp */; };
+		501BF3B51C7EFF460052C59F /* KTcpSocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 501BF39D1C7EFF460052C59F /* KTcpSocket.cpp */; };
+		501BF3B61C7EFF460052C59F /* KThread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 501BF39F1C7EFF460052C59F /* KThread.cpp */; };
+		501BF3B81C7EFF460052C59F /* KZip.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 501BF3A31C7EFF460052C59F /* KZip.cpp */; };
+		501BF3B91C7EFF460052C59F /* md5.c in Sources */ = {isa = PBXBuildFile; fileRef = 501BF3A71C7EFF460052C59F /* md5.c */; };
+		501BF3C71C7F00400052C59F /* ioapi.c in Sources */ = {isa = PBXBuildFile; fileRef = 501BF3BD1C7F00400052C59F /* ioapi.c */; };
+		501BF3C81C7F00400052C59F /* miniunz.c in Sources */ = {isa = PBXBuildFile; fileRef = 501BF3BF1C7F00400052C59F /* miniunz.c */; };
+		501BF3C91C7F00400052C59F /* minizip.c in Sources */ = {isa = PBXBuildFile; fileRef = 501BF3C01C7F00400052C59F /* minizip.c */; };
+		501BF3CA1C7F00400052C59F /* mztools.c in Sources */ = {isa = PBXBuildFile; fileRef = 501BF3C11C7F00400052C59F /* mztools.c */; };
+		501BF3CB1C7F00400052C59F /* unzip.c in Sources */ = {isa = PBXBuildFile; fileRef = 501BF3C31C7F00400052C59F /* unzip.c */; };
+		501BF3CC1C7F00400052C59F /* zip.c in Sources */ = {isa = PBXBuildFile; fileRef = 501BF3C51C7F00400052C59F /* zip.c */; };
+		502D6FA61CA8D883000547F8 /* LadyDetail.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 502D6FA51CA8D883000547F8 /* LadyDetail.cpp */; };
+		504CD9FC1C7FD6AF00DBB429 /* png.c in Sources */ = {isa = PBXBuildFile; fileRef = 504CD9E61C7FD6AF00DBB429 /* png.c */; };
+		504CD9FD1C7FD6AF00DBB429 /* pngerror.c in Sources */ = {isa = PBXBuildFile; fileRef = 504CD9EA1C7FD6AF00DBB429 /* pngerror.c */; };
+		504CD9FE1C7FD6AF00DBB429 /* pngget.c in Sources */ = {isa = PBXBuildFile; fileRef = 504CD9EB1C7FD6AF00DBB429 /* pngget.c */; };
+		504CD9FF1C7FD6AF00DBB429 /* pngmem.c in Sources */ = {isa = PBXBuildFile; fileRef = 504CD9EE1C7FD6AF00DBB429 /* pngmem.c */; };
+		504CDA001C7FD6AF00DBB429 /* pngpread.c in Sources */ = {isa = PBXBuildFile; fileRef = 504CD9EF1C7FD6AF00DBB429 /* pngpread.c */; };
+		504CDA011C7FD6AF00DBB429 /* pngread.c in Sources */ = {isa = PBXBuildFile; fileRef = 504CD9F11C7FD6AF00DBB429 /* pngread.c */; };
+		504CDA021C7FD6AF00DBB429 /* pngrio.c in Sources */ = {isa = PBXBuildFile; fileRef = 504CD9F21C7FD6AF00DBB429 /* pngrio.c */; };
+		504CDA031C7FD6AF00DBB429 /* pngrtran.c in Sources */ = {isa = PBXBuildFile; fileRef = 504CD9F31C7FD6AF00DBB429 /* pngrtran.c */; };
+		504CDA041C7FD6AF00DBB429 /* pngrutil.c in Sources */ = {isa = PBXBuildFile; fileRef = 504CD9F41C7FD6AF00DBB429 /* pngrutil.c */; };
+		504CDA051C7FD6AF00DBB429 /* pngset.c in Sources */ = {isa = PBXBuildFile; fileRef = 504CD9F51C7FD6AF00DBB429 /* pngset.c */; };
+		504CDA061C7FD6AF00DBB429 /* pngtrans.c in Sources */ = {isa = PBXBuildFile; fileRef = 504CD9F71C7FD6AF00DBB429 /* pngtrans.c */; };
+		504CDA071C7FD6AF00DBB429 /* pngwio.c in Sources */ = {isa = PBXBuildFile; fileRef = 504CD9F81C7FD6AF00DBB429 /* pngwio.c */; };
+		504CDA081C7FD6AF00DBB429 /* pngwrite.c in Sources */ = {isa = PBXBuildFile; fileRef = 504CD9F91C7FD6AF00DBB429 /* pngwrite.c */; };
+		504CDA091C7FD6AF00DBB429 /* pngwtran.c in Sources */ = {isa = PBXBuildFile; fileRef = 504CD9FA1C7FD6AF00DBB429 /* pngwtran.c */; };
+		504CDA0A1C7FD6AF00DBB429 /* pngwutil.c in Sources */ = {isa = PBXBuildFile; fileRef = 504CD9FB1C7FD6AF00DBB429 /* pngwutil.c */; };
+		504CDA1D1C7FD6EE00DBB429 /* json_reader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504CDA191C7FD6EE00DBB429 /* json_reader.cpp */; };
+		504CDA1E1C7FD6EE00DBB429 /* json_value.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504CDA1A1C7FD6EE00DBB429 /* json_value.cpp */; };
+		504CDA1F1C7FD6EE00DBB429 /* json_writer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504CDA1C1C7FD6EE00DBB429 /* json_writer.cpp */; };
+		504CDA291C7FDA2D00DBB429 /* tinystr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504CDA221C7FDA2D00DBB429 /* tinystr.cpp */; };
+		504CDA2A1C7FDA2D00DBB429 /* tinyxml.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504CDA241C7FDA2D00DBB429 /* tinyxml.cpp */; };
+		504CDA2B1C7FDA2D00DBB429 /* tinyxmlerror.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504CDA261C7FDA2D00DBB429 /* tinyxmlerror.cpp */; };
+		504CDA2C1C7FDA2D00DBB429 /* tinyxmlparser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504CDA271C7FDA2D00DBB429 /* tinyxmlparser.cpp */; };
+		504CDA2D1C7FDA2D00DBB429 /* xmltest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504CDA281C7FDA2D00DBB429 /* xmltest.cpp */; };
+		504CDA341C7FDA4100DBB429 /* AMF3.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504CDA2F1C7FDA4100DBB429 /* AMF3.cpp */; };
+		504CDA351C7FDA4100DBB429 /* AmfParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504CDA311C7FDA4100DBB429 /* AmfParser.cpp */; };
+		504CDA451C7FDB0500DBB429 /* HttpClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504CDA381C7FDB0500DBB429 /* HttpClient.cpp */; };
+		504CDA461C7FDB0500DBB429 /* HttpDownloader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504CDA3A1C7FDB0500DBB429 /* HttpDownloader.cpp */; };
+		504CDA471C7FDB0500DBB429 /* HttpEntiy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504CDA3C1C7FDB0500DBB429 /* HttpEntiy.cpp */; };
+		504CDA481C7FDB0500DBB429 /* HttpRequest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504CDA3E1C7FDB0500DBB429 /* HttpRequest.cpp */; };
+		504CDA491C7FDB0500DBB429 /* HttpRequestHostManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504CDA411C7FDB0500DBB429 /* HttpRequestHostManager.cpp */; };
+		504CDA4A1C7FDB0500DBB429 /* HttpRequestManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504CDA431C7FDB0500DBB429 /* HttpRequestManager.cpp */; };
+		504CDA531C7FDD7F00DBB429 /* PngHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504CDA4D1C7FDD7F00DBB429 /* PngHandler.cpp */; };
+		504CDA541C7FDD7F00DBB429 /* PngReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504CDA4F1C7FDD7F00DBB429 /* PngReader.cpp */; };
+		504CDA551C7FDD7F00DBB429 /* PngWriter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504CDA511C7FDD7F00DBB429 /* PngWriter.cpp */; };
+		504CDB621C7FE31500DBB429 /* ILiveChatManManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504CDB2E1C7FE31500DBB429 /* ILiveChatManManager.cpp */; };
+		504CDB631C7FE31500DBB429 /* LCBlockManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504CDB301C7FE31500DBB429 /* LCBlockManager.cpp */; };
+		504CDB641C7FE31500DBB429 /* LCContactManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504CDB321C7FE31500DBB429 /* LCContactManager.cpp */; };
+		504CDB651C7FE31500DBB429 /* LCEmotionDownloader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504CDB341C7FE31500DBB429 /* LCEmotionDownloader.cpp */; };
+		504CDB661C7FE31500DBB429 /* LCEmotionItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504CDB361C7FE31500DBB429 /* LCEmotionItem.cpp */; };
+		504CDB671C7FE31500DBB429 /* LCEmotionManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504CDB381C7FE31500DBB429 /* LCEmotionManager.cpp */; };
+		504CDB681C7FE31500DBB429 /* LCInviteManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504CDB3A1C7FE31500DBB429 /* LCInviteManager.cpp */; };
+		504CDB691C7FE31500DBB429 /* LCMessageFilter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504CDB3C1C7FE31500DBB429 /* LCMessageFilter.cpp */; };
+		504CDB6A1C7FE31500DBB429 /* LCMessageItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504CDB3E1C7FE31500DBB429 /* LCMessageItem.cpp */; };
+		504CDB6B1C7FE31500DBB429 /* LCPhotoDownloader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504CDB401C7FE31500DBB429 /* LCPhotoDownloader.cpp */; };
+		504CDB6C1C7FE31500DBB429 /* LCPhotoItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504CDB421C7FE31500DBB429 /* LCPhotoItem.cpp */; };
+		504CDB6D1C7FE31500DBB429 /* LCPhotoManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504CDB441C7FE31500DBB429 /* LCPhotoManager.cpp */; };
+		504CDB6E1C7FE31500DBB429 /* LCSystemItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504CDB461C7FE31500DBB429 /* LCSystemItem.cpp */; };
+		504CDB6F1C7FE31500DBB429 /* LCTextItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504CDB481C7FE31500DBB429 /* LCTextItem.cpp */; };
+		504CDB701C7FE31500DBB429 /* LCTextManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504CDB4A1C7FE31500DBB429 /* LCTextManager.cpp */; };
+		504CDB711C7FE31500DBB429 /* LCUserItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504CDB4C1C7FE31500DBB429 /* LCUserItem.cpp */; };
+		504CDB721C7FE31500DBB429 /* LCUserManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504CDB4E1C7FE31500DBB429 /* LCUserManager.cpp */; };
+		504CDB731C7FE31500DBB429 /* LCVideoDownloader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504CDB501C7FE31500DBB429 /* LCVideoDownloader.cpp */; };
+		504CDB741C7FE31500DBB429 /* LCVideoItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504CDB521C7FE31500DBB429 /* LCVideoItem.cpp */; };
+		504CDB751C7FE31500DBB429 /* LCVideoManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504CDB541C7FE31500DBB429 /* LCVideoManager.cpp */; };
+		504CDB761C7FE31500DBB429 /* LCVideoPhotoDownloader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504CDB561C7FE31500DBB429 /* LCVideoPhotoDownloader.cpp */; };
+		504CDB771C7FE31500DBB429 /* LCVoiceItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504CDB581C7FE31500DBB429 /* LCVoiceItem.cpp */; };
+		504CDB781C7FE31500DBB429 /* LCVoiceManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504CDB5A1C7FE31500DBB429 /* LCVoiceManager.cpp */; };
+		504CDB791C7FE31500DBB429 /* LCWarningItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504CDB5C1C7FE31500DBB429 /* LCWarningItem.cpp */; };
+		504CDB7A1C7FE31500DBB429 /* LCWarningLinkItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504CDB5E1C7FE31500DBB429 /* LCWarningLinkItem.cpp */; };
+		504CDB7B1C7FE31500DBB429 /* LiveChatManManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504CDB601C7FE31500DBB429 /* LiveChatManManager.cpp */; };
+		504CDBD11C7FEB1500DBB429 /* HttpRequestHostManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504CDB891C7FEB1500DBB429 /* HttpRequestHostManager.cpp */; };
+		504CDBD21C7FEB1500DBB429 /* HttpRequestManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504CDB8B1C7FEB1500DBB429 /* HttpRequestManager.cpp */; };
+		504CDBD31C7FEB1500DBB429 /* RequestAdvertController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504CDBA81C7FEB1500DBB429 /* RequestAdvertController.cpp */; };
+		504CDBD41C7FEB1500DBB429 /* RequestAuthorizationController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504CDBAB1C7FEB1500DBB429 /* RequestAuthorizationController.cpp */; };
+		504CDBD51C7FEB1500DBB429 /* RequestBaseController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504CDBAE1C7FEB1500DBB429 /* RequestBaseController.cpp */; };
+		504CDBD61C7FEB1500DBB429 /* RequestEMFController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504CDBB11C7FEB1500DBB429 /* RequestEMFController.cpp */; };
+		504CDBD71C7FEB1500DBB429 /* RequestEnumDefine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504CDBB41C7FEB1500DBB429 /* RequestEnumDefine.cpp */; };
+		504CDBD81C7FEB1500DBB429 /* RequestLadyController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504CDBB61C7FEB1500DBB429 /* RequestLadyController.cpp */; };
+		504CDBD91C7FEB1500DBB429 /* RequestLiveChatController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504CDBB91C7FEB1500DBB429 /* RequestLiveChatController.cpp */; };
+		504CDBDA1C7FEB1500DBB429 /* RequestLoveCallController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504CDBBC1C7FEB1500DBB429 /* RequestLoveCallController.cpp */; };
+		504CDBDB1C7FEB1500DBB429 /* RequestOtherController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504CDBBF1C7FEB1500DBB429 /* RequestOtherController.cpp */; };
+		504CDBDC1C7FEB1500DBB429 /* RequestProfileController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504CDBC21C7FEB1500DBB429 /* RequestProfileController.cpp */; };
+		504CDBDD1C7FEB1500DBB429 /* RequestQuickMatchController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504CDBC51C7FEB1500DBB429 /* RequestQuickMatchController.cpp */; };
+		504CDBDE1C7FEB1500DBB429 /* RequestSettingController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504CDBC81C7FEB1500DBB429 /* RequestSettingController.cpp */; };
+		504CDBDF1C7FEB1500DBB429 /* RequestTicketController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504CDBCB1C7FEB1500DBB429 /* RequestTicketController.cpp */; };
+		504CDBE01C7FEB1500DBB429 /* RequestVideoShowController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 504CDBCE1C7FEB1500DBB429 /* RequestVideoShowController.cpp */; };
+		505D86901C7EF748006FDAC7 /* Common_C_Library.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 505D868F1C7EF748006FDAC7 /* Common_C_Library.h */; };
+		505D86921C7EF748006FDAC7 /* Common_C_Library.mm in Sources */ = {isa = PBXBuildFile; fileRef = 505D86911C7EF748006FDAC7 /* Common_C_Library.mm */; };
+		507FFA2A1C9FD76D0083EC06 /* CheckMemoryLeak.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 507FFA261C9FD76D0083EC06 /* CheckMemoryLeak.cpp */; };
+		507FFA2B1C9FD76D0083EC06 /* CheckMemoryList.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 507FFA281C9FD76D0083EC06 /* CheckMemoryList.cpp */; };
+		50E967731CC4CC4B00E5BF26 /* CheckVerTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E966D41CC4CC4B00E5BF26 /* CheckVerTask.cpp */; };
+		50E967741CC4CC4B00E5BF26 /* CommonParsing.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E966D61CC4CC4B00E5BF26 /* CommonParsing.cpp */; };
+		50E967751CC4CC4B00E5BF26 /* Counter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E966D81CC4CC4B00E5BF26 /* Counter.cpp */; };
+		50E967761CC4CC4B00E5BF26 /* EndTalkTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E966DA1CC4CC4B00E5BF26 /* EndTalkTask.cpp */; };
+		50E967771CC4CC4B00E5BF26 /* GetBlockUsersTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E966DC1CC4CC4B00E5BF26 /* GetBlockUsersTask.cpp */; };
+		50E967781CC4CC4B00E5BF26 /* GetContactListTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E966DE1CC4CC4B00E5BF26 /* GetContactListTask.cpp */; };
+		50E967791CC4CC4B00E5BF26 /* GetFeeRecentContactListTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E966E01CC4CC4B00E5BF26 /* GetFeeRecentContactListTask.cpp */; };
+		50E9677A1CC4CC4B00E5BF26 /* GetLadyChatInfoTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E966E21CC4CC4B00E5BF26 /* GetLadyChatInfoTask.cpp */; };
+		50E9677B1CC4CC4B00E5BF26 /* GetLadyConditionTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E966E41CC4CC4B00E5BF26 /* GetLadyConditionTask.cpp */; };
+		50E9677C1CC4CC4B00E5BF26 /* GetLadyCustomTemplateTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E966E61CC4CC4B00E5BF26 /* GetLadyCustomTemplateTask.cpp */; };
+		50E9677D1CC4CC4B00E5BF26 /* GetLadyVoiceCodeTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E966E81CC4CC4B00E5BF26 /* GetLadyVoiceCodeTask.cpp */; };
+		50E9677E1CC4CC4B00E5BF26 /* GetRecentContactListTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E966EA1CC4CC4B00E5BF26 /* GetRecentContactListTask.cpp */; };
+		50E9677F1CC4CC4B00E5BF26 /* GetTalkInfoTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E966EC1CC4CC4B00E5BF26 /* GetTalkInfoTask.cpp */; };
+		50E967801CC4CC4B00E5BF26 /* GetTalkListTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E966EE1CC4CC4B00E5BF26 /* GetTalkListTask.cpp */; };
+		50E967811CC4CC4B00E5BF26 /* GetUserInfoTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E966F01CC4CC4B00E5BF26 /* GetUserInfoTask.cpp */; };
+		50E967821CC4CC4B00E5BF26 /* GetUsersInfoTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E966F21CC4CC4B00E5BF26 /* GetUsersInfoTask.cpp */; };
+		50E967831CC4CC4B00E5BF26 /* GetUserStatusTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E966F41CC4CC4B00E5BF26 /* GetUserStatusTask.cpp */; };
+		50E967841CC4CC4B00E5BF26 /* GetVoiceCodeTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E966F61CC4CC4B00E5BF26 /* GetVoiceCodeTask.cpp */; };
+		50E967851CC4CC4B00E5BF26 /* HearbeatTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E966F81CC4CC4B00E5BF26 /* HearbeatTask.cpp */; };
+		50E967861CC4CC4B00E5BF26 /* ILiveChatClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E966FA1CC4CC4B00E5BF26 /* ILiveChatClient.cpp */; };
+		50E967871CC4CC4B00E5BF26 /* ISocketHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E966FD1CC4CC4B00E5BF26 /* ISocketHandler.cpp */; };
+		50E967881CC4CC4B00E5BF26 /* ITask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E966FF1CC4CC4B00E5BF26 /* ITask.cpp */; };
+		50E967891CC4CC4B00E5BF26 /* IThreadHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E967021CC4CC4B00E5BF26 /* IThreadHandler.cpp */; };
+		50E9678A1CC4CC4B00E5BF26 /* ITransportDataHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E967041CC4CC4B00E5BF26 /* ITransportDataHandler.cpp */; };
+		50E9678B1CC4CC4B00E5BF26 /* ITransportPacketHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E967061CC4CC4B00E5BF26 /* ITransportPacketHandler.cpp */; };
+		50E9678C1CC4CC4B00E5BF26 /* JniIntToType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E967081CC4CC4B00E5BF26 /* JniIntToType.cpp */; };
+		50E9678D1CC4CC4B00E5BF26 /* LiveChatClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E9670A1CC4CC4B00E5BF26 /* LiveChatClient.cpp */; };
+		50E9678E1CC4CC4B00E5BF26 /* LoginTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E9670D1CC4CC4B00E5BF26 /* LoginTask.cpp */; };
+		50E9678F1CC4CC4B00E5BF26 /* PlayVideoTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E9670F1CC4CC4B00E5BF26 /* PlayVideoTask.cpp */; };
+		50E967901CC4CC4B00E5BF26 /* RecvAutoChargeResultTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E967141CC4CC4B00E5BF26 /* RecvAutoChargeResultTask.cpp */; };
+		50E967911CC4CC4B00E5BF26 /* RecvAutoInviteTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E967161CC4CC4B00E5BF26 /* RecvAutoInviteTask.cpp */; };
+		50E967921CC4CC4B00E5BF26 /* RecvEditMsgTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E967181CC4CC4B00E5BF26 /* RecvEditMsgTask.cpp */; };
+		50E967931CC4CC4B00E5BF26 /* RecvEMFNoticeTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E9671A1CC4CC4B00E5BF26 /* RecvEMFNoticeTask.cpp */; };
+		50E967941CC4CC4B00E5BF26 /* RecvEmotionTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E9671C1CC4CC4B00E5BF26 /* RecvEmotionTask.cpp */; };
+		50E967951CC4CC4B00E5BF26 /* RecvIdentifyCodeTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E9671E1CC4CC4B00E5BF26 /* RecvIdentifyCodeTask.cpp */; };
+		50E967961CC4CC4B00E5BF26 /* RecvKickOfflineTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E967201CC4CC4B00E5BF26 /* RecvKickOfflineTask.cpp */; };
+		50E967971CC4CC4B00E5BF26 /* RecvLadyVoiceCodeTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E967221CC4CC4B00E5BF26 /* RecvLadyVoiceCodeTask.cpp */; };
+		50E967981CC4CC4B00E5BF26 /* RecvMagicIconTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E967241CC4CC4B00E5BF26 /* RecvMagicIconTask.cpp */; };
+		50E967991CC4CC4B00E5BF26 /* RecvMsgTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E967261CC4CC4B00E5BF26 /* RecvMsgTask.cpp */; };
+		50E9679A1CC4CC4B00E5BF26 /* RecvPhotoTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E967281CC4CC4B00E5BF26 /* RecvPhotoTask.cpp */; };
+		50E9679B1CC4CC4B00E5BF26 /* RecvShowPhotoTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E9672A1CC4CC4B00E5BF26 /* RecvShowPhotoTask.cpp */; };
+		50E9679C1CC4CC4B00E5BF26 /* RecvShowVideoTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E9672C1CC4CC4B00E5BF26 /* RecvShowVideoTask.cpp */; };
+		50E9679D1CC4CC4B00E5BF26 /* RecvTalkEventTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E9672E1CC4CC4B00E5BF26 /* RecvTalkEventTask.cpp */; };
+		50E9679E1CC4CC4B00E5BF26 /* RecvTryTalkBeginTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E967301CC4CC4B00E5BF26 /* RecvTryTalkBeginTask.cpp */; };
+		50E9679F1CC4CC4B00E5BF26 /* RecvTryTalkEndTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E967321CC4CC4B00E5BF26 /* RecvTryTalkEndTask.cpp */; };
+		50E967A01CC4CC4B00E5BF26 /* RecvVideoTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E967341CC4CC4B00E5BF26 /* RecvVideoTask.cpp */; };
+		50E967A11CC4CC4B00E5BF26 /* RecvVoiceTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E967361CC4CC4B00E5BF26 /* RecvVoiceTask.cpp */; };
+		50E967A21CC4CC4B00E5BF26 /* RecvWarningTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E967381CC4CC4B00E5BF26 /* RecvWarningTask.cpp */; };
+		50E967A31CC4CC4B00E5BF26 /* RefreshIdentifyCodeTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E9673A1CC4CC4B00E5BF26 /* RefreshIdentifyCodeTask.cpp */; };
+		50E967A41CC4CC4B00E5BF26 /* RefreshInviteTemplateTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E9673C1CC4CC4B00E5BF26 /* RefreshInviteTemplateTask.cpp */; };
+		50E967A51CC4CC4B00E5BF26 /* ReplyIdentifyCodeTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E9673E1CC4CC4B00E5BF26 /* ReplyIdentifyCodeTask.cpp */; };
+		50E967A61CC4CC4B00E5BF26 /* SearchOnlineManTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E967401CC4CC4B00E5BF26 /* SearchOnlineManTask.cpp */; };
+		50E967A71CC4CC4B00E5BF26 /* SendEmotionTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E967421CC4CC4B00E5BF26 /* SendEmotionTask.cpp */; };
+		50E967A81CC4CC4B00E5BF26 /* SendLadyEditingMsgTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E967441CC4CC4B00E5BF26 /* SendLadyEditingMsgTask.cpp */; };
+		50E967A91CC4CC4B00E5BF26 /* SendLadyPhotoTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E967461CC4CC4B00E5BF26 /* SendLadyPhotoTask.cpp */; };
+		50E967AA1CC4CC4B00E5BF26 /* SendLadyVideoTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E967481CC4CC4B00E5BF26 /* SendLadyVideoTask.cpp */; };
+		50E967AB1CC4CC4B00E5BF26 /* SendMagicIconTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E9674A1CC4CC4B00E5BF26 /* SendMagicIconTask.cpp */; };
+		50E967AC1CC4CC4B00E5BF26 /* SendMsgTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E9674C1CC4CC4B00E5BF26 /* SendMsgTask.cpp */; };
+		50E967AD1CC4CC4B00E5BF26 /* SendPhotoTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E9674E1CC4CC4B00E5BF26 /* SendPhotoTask.cpp */; };
+		50E967AE1CC4CC4B00E5BF26 /* SendVGiftTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E967501CC4CC4B00E5BF26 /* SendVGiftTask.cpp */; };
+		50E967AF1CC4CC4B00E5BF26 /* SendVoiceTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E967521CC4CC4B00E5BF26 /* SendVoiceTask.cpp */; };
+		50E967B01CC4CC4B00E5BF26 /* SetStatusTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E967541CC4CC4B00E5BF26 /* SetStatusTask.cpp */; };
+		50E967B11CC4CC4B00E5BF26 /* ShowPhotoTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E967561CC4CC4B00E5BF26 /* ShowPhotoTask.cpp */; };
+		50E967B21CC4CC4B00E5BF26 /* TaskManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E967591CC4CC4B00E5BF26 /* TaskManager.cpp */; };
+		50E967B31CC4CC4B00E5BF26 /* TaskMapManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E9675B1CC4CC4B00E5BF26 /* TaskMapManager.cpp */; };
+		50E967B41CC4CC4B00E5BF26 /* TransportDataHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E9675D1CC4CC4B00E5BF26 /* TransportDataHandler.cpp */; };
+		50E967B51CC4CC4B00E5BF26 /* TransportPacketHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E9675F1CC4CC4B00E5BF26 /* TransportPacketHandler.cpp */; };
+		50E967B61CC4CC4B00E5BF26 /* UpdateStatusTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E967611CC4CC4B00E5BF26 /* UpdateStatusTask.cpp */; };
+		50E967B71CC4CC4B00E5BF26 /* UpdateTicketTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E967631CC4CC4B00E5BF26 /* UpdateTicketTask.cpp */; };
+		50E967B81CC4CC4B00E5BF26 /* UploadAutoChargeStatusTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E967651CC4CC4B00E5BF26 /* UploadAutoChargeStatusTask.cpp */; };
+		50E967B91CC4CC4B00E5BF26 /* UploadDeviceIdTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E967671CC4CC4B00E5BF26 /* UploadDeviceIdTask.cpp */; };
+		50E967BA1CC4CC4B00E5BF26 /* UploadDeviceTypeTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E967691CC4CC4B00E5BF26 /* UploadDeviceTypeTask.cpp */; };
+		50E967BB1CC4CC4B00E5BF26 /* UploadPopLadyAutoInviteTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E9676B1CC4CC4B00E5BF26 /* UploadPopLadyAutoInviteTask.cpp */; };
+		50E967BC1CC4CC4B00E5BF26 /* UploadTicketTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E9676D1CC4CC4B00E5BF26 /* UploadTicketTask.cpp */; };
+		50E967BD1CC4CC4B00E5BF26 /* UploadVerTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E9676F1CC4CC4B00E5BF26 /* UploadVerTask.cpp */; };
+		50E967BE1CC4CC4B00E5BF26 /* UseTryTicketTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E967711CC4CC4B00E5BF26 /* UseTryTicketTask.cpp */; };
+		D14A7F3F1CF99A4A00135FA3 /* LCCustomItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D14A7F3D1CF99A4A00135FA3 /* LCCustomItem.cpp */; };
+		D16939491CE59724001D40E7 /* GetAllPaidThemeTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D16939391CE59724001D40E7 /* GetAllPaidThemeTask.cpp */; };
+		D169394A1CE59724001D40E7 /* GetPaidThemeTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D169393B1CE59724001D40E7 /* GetPaidThemeTask.cpp */; };
+		D169394B1CE59724001D40E7 /* ManApplyThemeTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D169393D1CE59724001D40E7 /* ManApplyThemeTask.cpp */; };
+		D169394C1CE59724001D40E7 /* ManFeeThemeTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D169393F1CE59724001D40E7 /* ManFeeThemeTask.cpp */; };
+		D169394D1CE59724001D40E7 /* PlayThemeMotionTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D16939411CE59724001D40E7 /* PlayThemeMotionTask.cpp */; };
+		D169394E1CE59724001D40E7 /* RecvThemeMotionTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D16939431CE59724001D40E7 /* RecvThemeMotionTask.cpp */; };
+		D169394F1CE59724001D40E7 /* RecvThemeRecommendTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D16939451CE59724001D40E7 /* RecvThemeRecommendTask.cpp */; };
+		D16939501CE59724001D40E7 /* UploadThemeListVerTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D16939471CE59724001D40E7 /* UploadThemeListVerTask.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		505D868A1C7EF748006FDAC7 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+				505D86901C7EF748006FDAC7 /* Common_C_Library.h in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		501BF36B1C7EFB430052C59F /* curl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = curl.h; sourceTree = "<group>"; };
+		501BF36C1C7EFB430052C59F /* curlbuild.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = curlbuild.h; sourceTree = "<group>"; };
+		501BF3701C7EFB430052C59F /* curlrules.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = curlrules.h; sourceTree = "<group>"; };
+		501BF3711C7EFB430052C59F /* curlver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = curlver.h; sourceTree = "<group>"; };
+		501BF3721C7EFB430052C59F /* easy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = easy.h; sourceTree = "<group>"; };
+		501BF3761C7EFB430052C59F /* mprintf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mprintf.h; sourceTree = "<group>"; };
+		501BF3771C7EFB430052C59F /* multi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = multi.h; sourceTree = "<group>"; };
+		501BF3791C7EFB430052C59F /* stdcheaders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stdcheaders.h; sourceTree = "<group>"; };
+		501BF37A1C7EFB430052C59F /* typecheck-gcc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "typecheck-gcc.h"; sourceTree = "<group>"; };
+		501BF3821C7EFF460052C59F /* aes.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = aes.c; sourceTree = "<group>"; };
+		501BF3831C7EFF460052C59F /* aes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aes.h; sourceTree = "<group>"; };
+		501BF3841C7EFF460052C59F /* Android.mk */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Android.mk; sourceTree = "<group>"; };
+		501BF3851C7EFF460052C59F /* Arithmetic.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Arithmetic.cpp; sourceTree = "<group>"; };
+		501BF3861C7EFF460052C59F /* Arithmetic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Arithmetic.h; sourceTree = "<group>"; };
+		501BF38B1C7EFF460052C59F /* command.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = command.cpp; sourceTree = "<group>"; };
+		501BF38C1C7EFF460052C59F /* command.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = command.h; sourceTree = "<group>"; };
+		501BF38D1C7EFF460052C59F /* CommonFunc.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CommonFunc.cpp; sourceTree = "<group>"; };
+		501BF38E1C7EFF460052C59F /* CommonFunc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommonFunc.h; sourceTree = "<group>"; };
+		501BF38F1C7EFF460052C59F /* config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
+		501BF3901C7EFF460052C59F /* dualmap_lock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dualmap_lock.h; sourceTree = "<group>"; };
+		501BF3911C7EFF460052C59F /* IAutoLock.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IAutoLock.cpp; sourceTree = "<group>"; };
+		501BF3921C7EFF460052C59F /* IAutoLock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAutoLock.h; sourceTree = "<group>"; };
+		501BF3931C7EFF460052C59F /* IPAddress.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IPAddress.cpp; sourceTree = "<group>"; };
+		501BF3941C7EFF460052C59F /* IPAddress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPAddress.h; sourceTree = "<group>"; };
+		501BF3951C7EFF460052C59F /* KCond.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KCond.h; sourceTree = "<group>"; };
+		501BF3961C7EFF460052C59F /* KLog.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = KLog.cpp; sourceTree = "<group>"; };
+		501BF3971C7EFF460052C59F /* KLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KLog.h; sourceTree = "<group>"; };
+		501BF3981C7EFF460052C59F /* KMutex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KMutex.h; sourceTree = "<group>"; };
+		501BF3991C7EFF460052C59F /* KRunnable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KRunnable.h; sourceTree = "<group>"; };
+		501BF39A1C7EFF460052C59F /* KSafeMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSafeMap.h; sourceTree = "<group>"; };
+		501BF39B1C7EFF460052C59F /* KSocket.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = KSocket.cpp; sourceTree = "<group>"; };
+		501BF39C1C7EFF460052C59F /* KSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSocket.h; sourceTree = "<group>"; };
+		501BF39D1C7EFF460052C59F /* KTcpSocket.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = KTcpSocket.cpp; sourceTree = "<group>"; };
+		501BF39E1C7EFF460052C59F /* KTcpSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTcpSocket.h; sourceTree = "<group>"; };
+		501BF39F1C7EFF460052C59F /* KThread.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = KThread.cpp; sourceTree = "<group>"; };
+		501BF3A01C7EFF460052C59F /* KThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KThread.h; sourceTree = "<group>"; };
+		501BF3A31C7EFF460052C59F /* KZip.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = KZip.cpp; sourceTree = "<group>"; };
+		501BF3A41C7EFF460052C59F /* KZip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KZip.h; sourceTree = "<group>"; };
+		501BF3A51C7EFF460052C59F /* list_lock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = list_lock.h; sourceTree = "<group>"; };
+		501BF3A61C7EFF460052C59F /* map_lock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = map_lock.h; sourceTree = "<group>"; };
+		501BF3A71C7EFF460052C59F /* md5.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = md5.c; sourceTree = "<group>"; };
+		501BF3A81C7EFF460052C59F /* md5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = md5.h; sourceTree = "<group>"; };
+		501BF3A91C7EFF460052C59F /* StringHandle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StringHandle.h; sourceTree = "<group>"; };
+		501BF3AA1C7EFF460052C59F /* vector_lock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vector_lock.h; sourceTree = "<group>"; };
+		501BF3BC1C7F00400052C59F /* crypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = crypt.h; sourceTree = "<group>"; };
+		501BF3BD1C7F00400052C59F /* ioapi.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ioapi.c; sourceTree = "<group>"; };
+		501BF3BE1C7F00400052C59F /* ioapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ioapi.h; sourceTree = "<group>"; };
+		501BF3BF1C7F00400052C59F /* miniunz.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = miniunz.c; sourceTree = "<group>"; };
+		501BF3C01C7F00400052C59F /* minizip.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = minizip.c; sourceTree = "<group>"; };
+		501BF3C11C7F00400052C59F /* mztools.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mztools.c; sourceTree = "<group>"; };
+		501BF3C21C7F00400052C59F /* mztools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mztools.h; sourceTree = "<group>"; };
+		501BF3C31C7F00400052C59F /* unzip.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = unzip.c; sourceTree = "<group>"; };
+		501BF3C41C7F00400052C59F /* unzip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = unzip.h; sourceTree = "<group>"; };
+		501BF3C51C7F00400052C59F /* zip.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = zip.c; sourceTree = "<group>"; };
+		501BF3C61C7F00400052C59F /* zip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = zip.h; sourceTree = "<group>"; };
+		502D6FA51CA8D883000547F8 /* LadyDetail.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LadyDetail.cpp; sourceTree = "<group>"; };
+		504CD9E61C7FD6AF00DBB429 /* png.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = png.c; sourceTree = "<group>"; };
+		504CD9E71C7FD6AF00DBB429 /* png.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = png.h; sourceTree = "<group>"; };
+		504CD9E81C7FD6AF00DBB429 /* pngconf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pngconf.h; sourceTree = "<group>"; };
+		504CD9E91C7FD6AF00DBB429 /* pngdebug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pngdebug.h; sourceTree = "<group>"; };
+		504CD9EA1C7FD6AF00DBB429 /* pngerror.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pngerror.c; sourceTree = "<group>"; };
+		504CD9EB1C7FD6AF00DBB429 /* pngget.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pngget.c; sourceTree = "<group>"; };
+		504CD9EC1C7FD6AF00DBB429 /* pnginfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pnginfo.h; sourceTree = "<group>"; };
+		504CD9ED1C7FD6AF00DBB429 /* pnglibconf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pnglibconf.h; sourceTree = "<group>"; };
+		504CD9EE1C7FD6AF00DBB429 /* pngmem.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pngmem.c; sourceTree = "<group>"; };
+		504CD9EF1C7FD6AF00DBB429 /* pngpread.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pngpread.c; sourceTree = "<group>"; };
+		504CD9F01C7FD6AF00DBB429 /* pngpriv.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pngpriv.h; sourceTree = "<group>"; };
+		504CD9F11C7FD6AF00DBB429 /* pngread.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pngread.c; sourceTree = "<group>"; };
+		504CD9F21C7FD6AF00DBB429 /* pngrio.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pngrio.c; sourceTree = "<group>"; };
+		504CD9F31C7FD6AF00DBB429 /* pngrtran.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pngrtran.c; sourceTree = "<group>"; };
+		504CD9F41C7FD6AF00DBB429 /* pngrutil.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pngrutil.c; sourceTree = "<group>"; };
+		504CD9F51C7FD6AF00DBB429 /* pngset.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pngset.c; sourceTree = "<group>"; };
+		504CD9F61C7FD6AF00DBB429 /* pngstruct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pngstruct.h; sourceTree = "<group>"; };
+		504CD9F71C7FD6AF00DBB429 /* pngtrans.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pngtrans.c; sourceTree = "<group>"; };
+		504CD9F81C7FD6AF00DBB429 /* pngwio.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pngwio.c; sourceTree = "<group>"; };
+		504CD9F91C7FD6AF00DBB429 /* pngwrite.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pngwrite.c; sourceTree = "<group>"; };
+		504CD9FA1C7FD6AF00DBB429 /* pngwtran.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pngwtran.c; sourceTree = "<group>"; };
+		504CD9FB1C7FD6AF00DBB429 /* pngwutil.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pngwutil.c; sourceTree = "<group>"; };
+		504CDA0C1C7FD6EE00DBB429 /* Android.mk */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Android.mk; sourceTree = "<group>"; };
+		504CDA0E1C7FD6EE00DBB429 /* autolink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = autolink.h; sourceTree = "<group>"; };
+		504CDA0F1C7FD6EE00DBB429 /* config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
+		504CDA101C7FD6EE00DBB429 /* features.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = features.h; sourceTree = "<group>"; };
+		504CDA111C7FD6EE00DBB429 /* forwards.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = forwards.h; sourceTree = "<group>"; };
+		504CDA121C7FD6EE00DBB429 /* json.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = json.h; sourceTree = "<group>"; };
+		504CDA131C7FD6EE00DBB429 /* reader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = reader.h; sourceTree = "<group>"; };
+		504CDA141C7FD6EE00DBB429 /* value.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = value.h; sourceTree = "<group>"; };
+		504CDA151C7FD6EE00DBB429 /* writer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = writer.h; sourceTree = "<group>"; };
+		504CDA161C7FD6EE00DBB429 /* json_batchallocator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = json_batchallocator.h; sourceTree = "<group>"; };
+		504CDA171C7FD6EE00DBB429 /* json_internalarray.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = json_internalarray.inl; sourceTree = "<group>"; };
+		504CDA181C7FD6EE00DBB429 /* json_internalmap.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = json_internalmap.inl; sourceTree = "<group>"; };
+		504CDA191C7FD6EE00DBB429 /* json_reader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = json_reader.cpp; sourceTree = "<group>"; };
+		504CDA1A1C7FD6EE00DBB429 /* json_value.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = json_value.cpp; sourceTree = "<group>"; };
+		504CDA1B1C7FD6EE00DBB429 /* json_valueiterator.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = json_valueiterator.inl; sourceTree = "<group>"; };
+		504CDA1C1C7FD6EE00DBB429 /* json_writer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = json_writer.cpp; sourceTree = "<group>"; };
+		504CDA221C7FDA2D00DBB429 /* tinystr.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tinystr.cpp; sourceTree = "<group>"; };
+		504CDA231C7FDA2D00DBB429 /* tinystr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tinystr.h; sourceTree = "<group>"; };
+		504CDA241C7FDA2D00DBB429 /* tinyxml.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tinyxml.cpp; sourceTree = "<group>"; };
+		504CDA251C7FDA2D00DBB429 /* tinyxml.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tinyxml.h; sourceTree = "<group>"; };
+		504CDA261C7FDA2D00DBB429 /* tinyxmlerror.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tinyxmlerror.cpp; sourceTree = "<group>"; };
+		504CDA271C7FDA2D00DBB429 /* tinyxmlparser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tinyxmlparser.cpp; sourceTree = "<group>"; };
+		504CDA281C7FDA2D00DBB429 /* xmltest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = xmltest.cpp; sourceTree = "<group>"; };
+		504CDA2F1C7FDA4100DBB429 /* AMF3.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AMF3.cpp; sourceTree = "<group>"; };
+		504CDA301C7FDA4100DBB429 /* AMF3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMF3.h; sourceTree = "<group>"; };
+		504CDA311C7FDA4100DBB429 /* AmfParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AmfParser.cpp; sourceTree = "<group>"; };
+		504CDA321C7FDA4100DBB429 /* AmfParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AmfParser.h; sourceTree = "<group>"; };
+		504CDA371C7FDB0500DBB429 /* Android.mk */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Android.mk; sourceTree = "<group>"; };
+		504CDA381C7FDB0500DBB429 /* HttpClient.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HttpClient.cpp; sourceTree = "<group>"; };
+		504CDA391C7FDB0500DBB429 /* HttpClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpClient.h; sourceTree = "<group>"; };
+		504CDA3A1C7FDB0500DBB429 /* HttpDownloader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HttpDownloader.cpp; sourceTree = "<group>"; };
+		504CDA3B1C7FDB0500DBB429 /* HttpDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpDownloader.h; sourceTree = "<group>"; };
+		504CDA3C1C7FDB0500DBB429 /* HttpEntiy.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HttpEntiy.cpp; sourceTree = "<group>"; };
+		504CDA3D1C7FDB0500DBB429 /* HttpEntiy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpEntiy.h; sourceTree = "<group>"; };
+		504CDA3E1C7FDB0500DBB429 /* HttpRequest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HttpRequest.cpp; sourceTree = "<group>"; };
+		504CDA3F1C7FDB0500DBB429 /* HttpRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpRequest.h; sourceTree = "<group>"; };
+		504CDA401C7FDB0500DBB429 /* HttpRequestDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpRequestDefine.h; sourceTree = "<group>"; };
+		504CDA411C7FDB0500DBB429 /* HttpRequestHostManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HttpRequestHostManager.cpp; sourceTree = "<group>"; };
+		504CDA421C7FDB0500DBB429 /* HttpRequestHostManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpRequestHostManager.h; sourceTree = "<group>"; };
+		504CDA431C7FDB0500DBB429 /* HttpRequestManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HttpRequestManager.cpp; sourceTree = "<group>"; };
+		504CDA441C7FDB0500DBB429 /* HttpRequestManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpRequestManager.h; sourceTree = "<group>"; };
+		504CDA4D1C7FDD7F00DBB429 /* PngHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PngHandler.cpp; sourceTree = "<group>"; };
+		504CDA4E1C7FDD7F00DBB429 /* PngHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PngHandler.h; sourceTree = "<group>"; };
+		504CDA4F1C7FDD7F00DBB429 /* PngReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PngReader.cpp; sourceTree = "<group>"; };
+		504CDA501C7FDD7F00DBB429 /* PngReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PngReader.h; sourceTree = "<group>"; };
+		504CDA511C7FDD7F00DBB429 /* PngWriter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PngWriter.cpp; sourceTree = "<group>"; };
+		504CDA521C7FDD7F00DBB429 /* PngWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PngWriter.h; sourceTree = "<group>"; };
+		504CDB2D1C7FE31500DBB429 /* Android.mk */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Android.mk; sourceTree = "<group>"; };
+		504CDB2E1C7FE31500DBB429 /* ILiveChatManManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ILiveChatManManager.cpp; sourceTree = "<group>"; };
+		504CDB2F1C7FE31500DBB429 /* ILiveChatManManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILiveChatManManager.h; sourceTree = "<group>"; };
+		504CDB301C7FE31500DBB429 /* LCBlockManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LCBlockManager.cpp; sourceTree = "<group>"; };
+		504CDB311C7FE31500DBB429 /* LCBlockManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCBlockManager.h; sourceTree = "<group>"; };
+		504CDB321C7FE31500DBB429 /* LCContactManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LCContactManager.cpp; sourceTree = "<group>"; };
+		504CDB331C7FE31500DBB429 /* LCContactManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCContactManager.h; sourceTree = "<group>"; };
+		504CDB341C7FE31500DBB429 /* LCEmotionDownloader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LCEmotionDownloader.cpp; sourceTree = "<group>"; };
+		504CDB351C7FE31500DBB429 /* LCEmotionDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCEmotionDownloader.h; sourceTree = "<group>"; };
+		504CDB361C7FE31500DBB429 /* LCEmotionItem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LCEmotionItem.cpp; sourceTree = "<group>"; };
+		504CDB371C7FE31500DBB429 /* LCEmotionItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCEmotionItem.h; sourceTree = "<group>"; };
+		504CDB381C7FE31500DBB429 /* LCEmotionManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LCEmotionManager.cpp; sourceTree = "<group>"; };
+		504CDB391C7FE31500DBB429 /* LCEmotionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCEmotionManager.h; sourceTree = "<group>"; };
+		504CDB3A1C7FE31500DBB429 /* LCInviteManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LCInviteManager.cpp; sourceTree = "<group>"; };
+		504CDB3B1C7FE31500DBB429 /* LCInviteManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCInviteManager.h; sourceTree = "<group>"; };
+		504CDB3C1C7FE31500DBB429 /* LCMessageFilter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LCMessageFilter.cpp; sourceTree = "<group>"; };
+		504CDB3D1C7FE31500DBB429 /* LCMessageFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCMessageFilter.h; sourceTree = "<group>"; };
+		504CDB3E1C7FE31500DBB429 /* LCMessageItem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LCMessageItem.cpp; sourceTree = "<group>"; };
+		504CDB3F1C7FE31500DBB429 /* LCMessageItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCMessageItem.h; sourceTree = "<group>"; };
+		504CDB401C7FE31500DBB429 /* LCPhotoDownloader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LCPhotoDownloader.cpp; sourceTree = "<group>"; };
+		504CDB411C7FE31500DBB429 /* LCPhotoDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCPhotoDownloader.h; sourceTree = "<group>"; };
+		504CDB421C7FE31500DBB429 /* LCPhotoItem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LCPhotoItem.cpp; sourceTree = "<group>"; };
+		504CDB431C7FE31500DBB429 /* LCPhotoItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCPhotoItem.h; sourceTree = "<group>"; };
+		504CDB441C7FE31500DBB429 /* LCPhotoManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LCPhotoManager.cpp; sourceTree = "<group>"; };
+		504CDB451C7FE31500DBB429 /* LCPhotoManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCPhotoManager.h; sourceTree = "<group>"; };
+		504CDB461C7FE31500DBB429 /* LCSystemItem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LCSystemItem.cpp; sourceTree = "<group>"; };
+		504CDB471C7FE31500DBB429 /* LCSystemItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCSystemItem.h; sourceTree = "<group>"; };
+		504CDB481C7FE31500DBB429 /* LCTextItem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LCTextItem.cpp; sourceTree = "<group>"; };
+		504CDB491C7FE31500DBB429 /* LCTextItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCTextItem.h; sourceTree = "<group>"; };
+		504CDB4A1C7FE31500DBB429 /* LCTextManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LCTextManager.cpp; sourceTree = "<group>"; };
+		504CDB4B1C7FE31500DBB429 /* LCTextManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCTextManager.h; sourceTree = "<group>"; };
+		504CDB4C1C7FE31500DBB429 /* LCUserItem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LCUserItem.cpp; sourceTree = "<group>"; };
+		504CDB4D1C7FE31500DBB429 /* LCUserItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCUserItem.h; sourceTree = "<group>"; };
+		504CDB4E1C7FE31500DBB429 /* LCUserManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LCUserManager.cpp; sourceTree = "<group>"; };
+		504CDB4F1C7FE31500DBB429 /* LCUserManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCUserManager.h; sourceTree = "<group>"; };
+		504CDB501C7FE31500DBB429 /* LCVideoDownloader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LCVideoDownloader.cpp; sourceTree = "<group>"; };
+		504CDB511C7FE31500DBB429 /* LCVideoDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCVideoDownloader.h; sourceTree = "<group>"; };
+		504CDB521C7FE31500DBB429 /* LCVideoItem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LCVideoItem.cpp; sourceTree = "<group>"; };
+		504CDB531C7FE31500DBB429 /* LCVideoItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCVideoItem.h; sourceTree = "<group>"; };
+		504CDB541C7FE31500DBB429 /* LCVideoManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LCVideoManager.cpp; sourceTree = "<group>"; };
+		504CDB551C7FE31500DBB429 /* LCVideoManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCVideoManager.h; sourceTree = "<group>"; };
+		504CDB561C7FE31500DBB429 /* LCVideoPhotoDownloader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LCVideoPhotoDownloader.cpp; sourceTree = "<group>"; };
+		504CDB571C7FE31500DBB429 /* LCVideoPhotoDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCVideoPhotoDownloader.h; sourceTree = "<group>"; };
+		504CDB581C7FE31500DBB429 /* LCVoiceItem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LCVoiceItem.cpp; sourceTree = "<group>"; };
+		504CDB591C7FE31500DBB429 /* LCVoiceItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCVoiceItem.h; sourceTree = "<group>"; };
+		504CDB5A1C7FE31500DBB429 /* LCVoiceManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LCVoiceManager.cpp; sourceTree = "<group>"; };
+		504CDB5B1C7FE31500DBB429 /* LCVoiceManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCVoiceManager.h; sourceTree = "<group>"; };
+		504CDB5C1C7FE31500DBB429 /* LCWarningItem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LCWarningItem.cpp; sourceTree = "<group>"; };
+		504CDB5D1C7FE31500DBB429 /* LCWarningItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCWarningItem.h; sourceTree = "<group>"; };
+		504CDB5E1C7FE31500DBB429 /* LCWarningLinkItem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LCWarningLinkItem.cpp; sourceTree = "<group>"; };
+		504CDB5F1C7FE31500DBB429 /* LCWarningLinkItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCWarningLinkItem.h; sourceTree = "<group>"; };
+		504CDB601C7FE31500DBB429 /* LiveChatManManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LiveChatManManager.cpp; sourceTree = "<group>"; };
+		504CDB611C7FE31500DBB429 /* LiveChatManManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LiveChatManManager.h; sourceTree = "<group>"; };
+		504CDB881C7FEB1500DBB429 /* Android.mk */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Android.mk; sourceTree = "<group>"; };
+		504CDB891C7FEB1500DBB429 /* HttpRequestHostManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HttpRequestHostManager.cpp; sourceTree = "<group>"; };
+		504CDB8A1C7FEB1500DBB429 /* HttpRequestHostManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpRequestHostManager.h; sourceTree = "<group>"; };
+		504CDB8B1C7FEB1500DBB429 /* HttpRequestManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HttpRequestManager.cpp; sourceTree = "<group>"; };
+		504CDB8C1C7FEB1500DBB429 /* HttpRequestManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpRequestManager.h; sourceTree = "<group>"; };
+		504CDB8E1C7FEB1500DBB429 /* Advert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Advert.h; sourceTree = "<group>"; };
+		504CDB8F1C7FEB1500DBB429 /* Coupon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Coupon.h; sourceTree = "<group>"; };
+		504CDB901C7FEB1500DBB429 /* EMF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMF.h; sourceTree = "<group>"; };
+		504CDB911C7FEB1500DBB429 /* EMFError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMFError.h; sourceTree = "<group>"; };
+		504CDB921C7FEB1500DBB429 /* Gift.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Gift.h; sourceTree = "<group>"; };
+		504CDB931C7FEB1500DBB429 /* Lady.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Lady.h; sourceTree = "<group>"; };
+		504CDB941C7FEB1500DBB429 /* LadyCall.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LadyCall.h; sourceTree = "<group>"; };
+		504CDB951C7FEB1500DBB429 /* LadyDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LadyDetail.h; sourceTree = "<group>"; };
+		504CDB961C7FEB1500DBB429 /* LadyMatch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LadyMatch.h; sourceTree = "<group>"; };
+		504CDB971C7FEB1500DBB429 /* LadyRecentContact.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LadyRecentContact.h; sourceTree = "<group>"; };
+		504CDB981C7FEB1500DBB429 /* LadySignListItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LadySignListItem.h; sourceTree = "<group>"; };
+		504CDB991C7FEB1500DBB429 /* LCSendPhotoItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCSendPhotoItem.h; sourceTree = "<group>"; };
+		504CDB9A1C7FEB1500DBB429 /* LCVideoItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCVideoItem.h; sourceTree = "<group>"; };
+		504CDB9B1C7FEB1500DBB429 /* LoginErrorItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginErrorItem.h; sourceTree = "<group>"; };
+		504CDB9C1C7FEB1500DBB429 /* LoginFacebookItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginFacebookItem.h; sourceTree = "<group>"; };
+		504CDB9D1C7FEB1500DBB429 /* LoginItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginItem.h; sourceTree = "<group>"; };
+		504CDB9E1C7FEB1500DBB429 /* LoveCall.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoveCall.h; sourceTree = "<group>"; };
+		504CDB9F1C7FEB1500DBB429 /* Other.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Other.h; sourceTree = "<group>"; };
+		504CDBA01C7FEB1500DBB429 /* ProfileItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileItem.h; sourceTree = "<group>"; };
+		504CDBA11C7FEB1500DBB429 /* QuickMatchLady.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuickMatchLady.h; sourceTree = "<group>"; };
+		504CDBA21C7FEB1500DBB429 /* Record.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Record.h; sourceTree = "<group>"; };
+		504CDBA31C7FEB1500DBB429 /* RecordMutiple.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecordMutiple.h; sourceTree = "<group>"; };
+		504CDBA41C7FEB1500DBB429 /* RegisterItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterItem.h; sourceTree = "<group>"; };
+		504CDBA51C7FEB1500DBB429 /* Ticket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Ticket.h; sourceTree = "<group>"; };
+		504CDBA61C7FEB1500DBB429 /* VideoItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoItem.h; sourceTree = "<group>"; };
+		504CDBA71C7FEB1500DBB429 /* VideoShow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoShow.h; sourceTree = "<group>"; };
+		504CDBA81C7FEB1500DBB429 /* RequestAdvertController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RequestAdvertController.cpp; sourceTree = "<group>"; };
+		504CDBA91C7FEB1500DBB429 /* RequestAdvertController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequestAdvertController.h; sourceTree = "<group>"; };
+		504CDBAA1C7FEB1500DBB429 /* RequestAdvertDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequestAdvertDefine.h; sourceTree = "<group>"; };
+		504CDBAB1C7FEB1500DBB429 /* RequestAuthorizationController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RequestAuthorizationController.cpp; sourceTree = "<group>"; };
+		504CDBAC1C7FEB1500DBB429 /* RequestAuthorizationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequestAuthorizationController.h; sourceTree = "<group>"; };
+		504CDBAD1C7FEB1500DBB429 /* RequestAuthorizationDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequestAuthorizationDefine.h; sourceTree = "<group>"; };
+		504CDBAE1C7FEB1500DBB429 /* RequestBaseController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RequestBaseController.cpp; sourceTree = "<group>"; };
+		504CDBAF1C7FEB1500DBB429 /* RequestBaseController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequestBaseController.h; sourceTree = "<group>"; };
+		504CDBB01C7FEB1500DBB429 /* RequestDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequestDefine.h; sourceTree = "<group>"; };
+		504CDBB11C7FEB1500DBB429 /* RequestEMFController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RequestEMFController.cpp; sourceTree = "<group>"; };
+		504CDBB21C7FEB1500DBB429 /* RequestEMFController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequestEMFController.h; sourceTree = "<group>"; };
+		504CDBB31C7FEB1500DBB429 /* RequestEMFDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequestEMFDefine.h; sourceTree = "<group>"; };
+		504CDBB41C7FEB1500DBB429 /* RequestEnumDefine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RequestEnumDefine.cpp; sourceTree = "<group>"; };
+		504CDBB51C7FEB1500DBB429 /* RequestEnumDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequestEnumDefine.h; sourceTree = "<group>"; };
+		504CDBB61C7FEB1500DBB429 /* RequestLadyController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RequestLadyController.cpp; sourceTree = "<group>"; };
+		504CDBB71C7FEB1500DBB429 /* RequestLadyController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequestLadyController.h; sourceTree = "<group>"; };
+		504CDBB81C7FEB1500DBB429 /* RequestLadyDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequestLadyDefine.h; sourceTree = "<group>"; };
+		504CDBB91C7FEB1500DBB429 /* RequestLiveChatController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RequestLiveChatController.cpp; sourceTree = "<group>"; };
+		504CDBBA1C7FEB1500DBB429 /* RequestLiveChatController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequestLiveChatController.h; sourceTree = "<group>"; };
+		504CDBBB1C7FEB1500DBB429 /* RequestLiveChatDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequestLiveChatDefine.h; sourceTree = "<group>"; };
+		504CDBBC1C7FEB1500DBB429 /* RequestLoveCallController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RequestLoveCallController.cpp; sourceTree = "<group>"; };
+		504CDBBD1C7FEB1500DBB429 /* RequestLoveCallController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequestLoveCallController.h; sourceTree = "<group>"; };
+		504CDBBE1C7FEB1500DBB429 /* RequestLoveCallDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequestLoveCallDefine.h; sourceTree = "<group>"; };
+		504CDBBF1C7FEB1500DBB429 /* RequestOtherController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RequestOtherController.cpp; sourceTree = "<group>"; };
+		504CDBC01C7FEB1500DBB429 /* RequestOtherController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequestOtherController.h; sourceTree = "<group>"; };
+		504CDBC11C7FEB1500DBB429 /* RequestOtherDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequestOtherDefine.h; sourceTree = "<group>"; };
+		504CDBC21C7FEB1500DBB429 /* RequestProfileController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RequestProfileController.cpp; sourceTree = "<group>"; };
+		504CDBC31C7FEB1500DBB429 /* RequestProfileController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequestProfileController.h; sourceTree = "<group>"; };
+		504CDBC41C7FEB1500DBB429 /* RequestProfileDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequestProfileDefine.h; sourceTree = "<group>"; };
+		504CDBC51C7FEB1500DBB429 /* RequestQuickMatchController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RequestQuickMatchController.cpp; sourceTree = "<group>"; };
+		504CDBC61C7FEB1500DBB429 /* RequestQuickMatchController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequestQuickMatchController.h; sourceTree = "<group>"; };
+		504CDBC71C7FEB1500DBB429 /* RequestQuickMatchDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequestQuickMatchDefine.h; sourceTree = "<group>"; };
+		504CDBC81C7FEB1500DBB429 /* RequestSettingController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RequestSettingController.cpp; sourceTree = "<group>"; };
+		504CDBC91C7FEB1500DBB429 /* RequestSettingController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequestSettingController.h; sourceTree = "<group>"; };
+		504CDBCA1C7FEB1500DBB429 /* RequestSettingDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequestSettingDefine.h; sourceTree = "<group>"; };
+		504CDBCB1C7FEB1500DBB429 /* RequestTicketController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RequestTicketController.cpp; sourceTree = "<group>"; };
+		504CDBCC1C7FEB1500DBB429 /* RequestTicketController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequestTicketController.h; sourceTree = "<group>"; };
+		504CDBCD1C7FEB1500DBB429 /* RequestTicketDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequestTicketDefine.h; sourceTree = "<group>"; };
+		504CDBCE1C7FEB1500DBB429 /* RequestVideoShowController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RequestVideoShowController.cpp; sourceTree = "<group>"; };
+		504CDBCF1C7FEB1500DBB429 /* RequestVideoShowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequestVideoShowController.h; sourceTree = "<group>"; };
+		504CDBD01C7FEB1500DBB429 /* RequestVideoShowDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequestVideoShowDefine.h; sourceTree = "<group>"; };
+		505D868C1C7EF748006FDAC7 /* libCommon-C-Library.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libCommon-C-Library.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		505D868F1C7EF748006FDAC7 /* Common_C_Library.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Common_C_Library.h; sourceTree = "<group>"; };
+		505D86911C7EF748006FDAC7 /* Common_C_Library.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = Common_C_Library.mm; sourceTree = "<group>"; };
+		507FFA261C9FD76D0083EC06 /* CheckMemoryLeak.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CheckMemoryLeak.cpp; sourceTree = "<group>"; };
+		507FFA271C9FD76D0083EC06 /* CheckMemoryLeak.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckMemoryLeak.h; sourceTree = "<group>"; };
+		507FFA281C9FD76D0083EC06 /* CheckMemoryList.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CheckMemoryList.cpp; sourceTree = "<group>"; };
+		507FFA291C9FD76D0083EC06 /* CheckMemoryList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckMemoryList.h; sourceTree = "<group>"; };
+		50E966D21CC4CC4B00E5BF26 /* AmfPublicParse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AmfPublicParse.h; sourceTree = "<group>"; };
+		50E966D31CC4CC4B00E5BF26 /* Android.mk */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Android.mk; sourceTree = "<group>"; };
+		50E966D41CC4CC4B00E5BF26 /* CheckVerTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CheckVerTask.cpp; sourceTree = "<group>"; };
+		50E966D51CC4CC4B00E5BF26 /* CheckVerTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckVerTask.h; sourceTree = "<group>"; };
+		50E966D61CC4CC4B00E5BF26 /* CommonParsing.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CommonParsing.cpp; sourceTree = "<group>"; };
+		50E966D71CC4CC4B00E5BF26 /* CommonParsing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommonParsing.h; sourceTree = "<group>"; };
+		50E966D81CC4CC4B00E5BF26 /* Counter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Counter.cpp; sourceTree = "<group>"; };
+		50E966D91CC4CC4B00E5BF26 /* Counter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Counter.h; sourceTree = "<group>"; };
+		50E966DA1CC4CC4B00E5BF26 /* EndTalkTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EndTalkTask.cpp; sourceTree = "<group>"; };
+		50E966DB1CC4CC4B00E5BF26 /* EndTalkTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EndTalkTask.h; sourceTree = "<group>"; };
+		50E966DC1CC4CC4B00E5BF26 /* GetBlockUsersTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GetBlockUsersTask.cpp; sourceTree = "<group>"; };
+		50E966DD1CC4CC4B00E5BF26 /* GetBlockUsersTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GetBlockUsersTask.h; sourceTree = "<group>"; };
+		50E966DE1CC4CC4B00E5BF26 /* GetContactListTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GetContactListTask.cpp; sourceTree = "<group>"; };
+		50E966DF1CC4CC4B00E5BF26 /* GetContactListTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GetContactListTask.h; sourceTree = "<group>"; };
+		50E966E01CC4CC4B00E5BF26 /* GetFeeRecentContactListTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GetFeeRecentContactListTask.cpp; sourceTree = "<group>"; };
+		50E966E11CC4CC4B00E5BF26 /* GetFeeRecentContactListTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GetFeeRecentContactListTask.h; sourceTree = "<group>"; };
+		50E966E21CC4CC4B00E5BF26 /* GetLadyChatInfoTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GetLadyChatInfoTask.cpp; sourceTree = "<group>"; };
+		50E966E31CC4CC4B00E5BF26 /* GetLadyChatInfoTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GetLadyChatInfoTask.h; sourceTree = "<group>"; };
+		50E966E41CC4CC4B00E5BF26 /* GetLadyConditionTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GetLadyConditionTask.cpp; sourceTree = "<group>"; };
+		50E966E51CC4CC4B00E5BF26 /* GetLadyConditionTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GetLadyConditionTask.h; sourceTree = "<group>"; };
+		50E966E61CC4CC4B00E5BF26 /* GetLadyCustomTemplateTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GetLadyCustomTemplateTask.cpp; sourceTree = "<group>"; };
+		50E966E71CC4CC4B00E5BF26 /* GetLadyCustomTemplateTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GetLadyCustomTemplateTask.h; sourceTree = "<group>"; };
+		50E966E81CC4CC4B00E5BF26 /* GetLadyVoiceCodeTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GetLadyVoiceCodeTask.cpp; sourceTree = "<group>"; };
+		50E966E91CC4CC4B00E5BF26 /* GetLadyVoiceCodeTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GetLadyVoiceCodeTask.h; sourceTree = "<group>"; };
+		50E966EA1CC4CC4B00E5BF26 /* GetRecentContactListTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GetRecentContactListTask.cpp; sourceTree = "<group>"; };
+		50E966EB1CC4CC4B00E5BF26 /* GetRecentContactListTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GetRecentContactListTask.h; sourceTree = "<group>"; };
+		50E966EC1CC4CC4B00E5BF26 /* GetTalkInfoTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GetTalkInfoTask.cpp; sourceTree = "<group>"; };
+		50E966ED1CC4CC4B00E5BF26 /* GetTalkInfoTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GetTalkInfoTask.h; sourceTree = "<group>"; };
+		50E966EE1CC4CC4B00E5BF26 /* GetTalkListTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GetTalkListTask.cpp; sourceTree = "<group>"; };
+		50E966EF1CC4CC4B00E5BF26 /* GetTalkListTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GetTalkListTask.h; sourceTree = "<group>"; };
+		50E966F01CC4CC4B00E5BF26 /* GetUserInfoTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GetUserInfoTask.cpp; sourceTree = "<group>"; };
+		50E966F11CC4CC4B00E5BF26 /* GetUserInfoTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GetUserInfoTask.h; sourceTree = "<group>"; };
+		50E966F21CC4CC4B00E5BF26 /* GetUsersInfoTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GetUsersInfoTask.cpp; sourceTree = "<group>"; };
+		50E966F31CC4CC4B00E5BF26 /* GetUsersInfoTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GetUsersInfoTask.h; sourceTree = "<group>"; };
+		50E966F41CC4CC4B00E5BF26 /* GetUserStatusTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GetUserStatusTask.cpp; sourceTree = "<group>"; };
+		50E966F51CC4CC4B00E5BF26 /* GetUserStatusTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GetUserStatusTask.h; sourceTree = "<group>"; };
+		50E966F61CC4CC4B00E5BF26 /* GetVoiceCodeTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GetVoiceCodeTask.cpp; sourceTree = "<group>"; };
+		50E966F71CC4CC4B00E5BF26 /* GetVoiceCodeTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GetVoiceCodeTask.h; sourceTree = "<group>"; };
+		50E966F81CC4CC4B00E5BF26 /* HearbeatTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HearbeatTask.cpp; sourceTree = "<group>"; };
+		50E966F91CC4CC4B00E5BF26 /* HearbeatTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HearbeatTask.h; sourceTree = "<group>"; };
+		50E966FA1CC4CC4B00E5BF26 /* ILiveChatClient.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ILiveChatClient.cpp; sourceTree = "<group>"; };
+		50E966FB1CC4CC4B00E5BF26 /* ILiveChatClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILiveChatClient.h; sourceTree = "<group>"; };
+		50E966FC1CC4CC4B00E5BF26 /* ILiveChatClientDef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILiveChatClientDef.h; sourceTree = "<group>"; };
+		50E966FD1CC4CC4B00E5BF26 /* ISocketHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ISocketHandler.cpp; sourceTree = "<group>"; };
+		50E966FE1CC4CC4B00E5BF26 /* ISocketHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISocketHandler.h; sourceTree = "<group>"; };
+		50E966FF1CC4CC4B00E5BF26 /* ITask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ITask.cpp; sourceTree = "<group>"; };
+		50E967001CC4CC4B00E5BF26 /* ITask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ITask.h; sourceTree = "<group>"; };
+		50E967011CC4CC4B00E5BF26 /* ITaskManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ITaskManager.h; sourceTree = "<group>"; };
+		50E967021CC4CC4B00E5BF26 /* IThreadHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IThreadHandler.cpp; sourceTree = "<group>"; };
+		50E967031CC4CC4B00E5BF26 /* IThreadHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IThreadHandler.h; sourceTree = "<group>"; };
+		50E967041CC4CC4B00E5BF26 /* ITransportDataHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ITransportDataHandler.cpp; sourceTree = "<group>"; };
+		50E967051CC4CC4B00E5BF26 /* ITransportDataHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ITransportDataHandler.h; sourceTree = "<group>"; };
+		50E967061CC4CC4B00E5BF26 /* ITransportPacketHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ITransportPacketHandler.cpp; sourceTree = "<group>"; };
+		50E967071CC4CC4B00E5BF26 /* ITransportPacketHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ITransportPacketHandler.h; sourceTree = "<group>"; };
+		50E967081CC4CC4B00E5BF26 /* JniIntToType.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JniIntToType.cpp; sourceTree = "<group>"; };
+		50E967091CC4CC4B00E5BF26 /* JniIntToType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JniIntToType.h; sourceTree = "<group>"; };
+		50E9670A1CC4CC4B00E5BF26 /* LiveChatClient.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LiveChatClient.cpp; sourceTree = "<group>"; };
+		50E9670B1CC4CC4B00E5BF26 /* LiveChatClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LiveChatClient.h; sourceTree = "<group>"; };
+		50E9670C1CC4CC4B00E5BF26 /* LiveChatJniCallbackItemDef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LiveChatJniCallbackItemDef.h; sourceTree = "<group>"; };
+		50E9670D1CC4CC4B00E5BF26 /* LoginTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LoginTask.cpp; sourceTree = "<group>"; };
+		50E9670E1CC4CC4B00E5BF26 /* LoginTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginTask.h; sourceTree = "<group>"; };
+		50E9670F1CC4CC4B00E5BF26 /* PlayVideoTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PlayVideoTask.cpp; sourceTree = "<group>"; };
+		50E967101CC4CC4B00E5BF26 /* PlayVideoTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayVideoTask.h; sourceTree = "<group>"; };
+		50E967131CC4CC4B00E5BF26 /* livehcat.cbp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = livehcat.cbp; sourceTree = "<group>"; };
+		50E967141CC4CC4B00E5BF26 /* RecvAutoChargeResultTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RecvAutoChargeResultTask.cpp; sourceTree = "<group>"; };
+		50E967151CC4CC4B00E5BF26 /* RecvAutoChargeResultTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecvAutoChargeResultTask.h; sourceTree = "<group>"; };
+		50E967161CC4CC4B00E5BF26 /* RecvAutoInviteTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RecvAutoInviteTask.cpp; sourceTree = "<group>"; };
+		50E967171CC4CC4B00E5BF26 /* RecvAutoInviteTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecvAutoInviteTask.h; sourceTree = "<group>"; };
+		50E967181CC4CC4B00E5BF26 /* RecvEditMsgTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RecvEditMsgTask.cpp; sourceTree = "<group>"; };
+		50E967191CC4CC4B00E5BF26 /* RecvEditMsgTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecvEditMsgTask.h; sourceTree = "<group>"; };
+		50E9671A1CC4CC4B00E5BF26 /* RecvEMFNoticeTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RecvEMFNoticeTask.cpp; sourceTree = "<group>"; };
+		50E9671B1CC4CC4B00E5BF26 /* RecvEMFNoticeTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecvEMFNoticeTask.h; sourceTree = "<group>"; };
+		50E9671C1CC4CC4B00E5BF26 /* RecvEmotionTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RecvEmotionTask.cpp; sourceTree = "<group>"; };
+		50E9671D1CC4CC4B00E5BF26 /* RecvEmotionTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecvEmotionTask.h; sourceTree = "<group>"; };
+		50E9671E1CC4CC4B00E5BF26 /* RecvIdentifyCodeTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RecvIdentifyCodeTask.cpp; sourceTree = "<group>"; };
+		50E9671F1CC4CC4B00E5BF26 /* RecvIdentifyCodeTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecvIdentifyCodeTask.h; sourceTree = "<group>"; };
+		50E967201CC4CC4B00E5BF26 /* RecvKickOfflineTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RecvKickOfflineTask.cpp; sourceTree = "<group>"; };
+		50E967211CC4CC4B00E5BF26 /* RecvKickOfflineTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecvKickOfflineTask.h; sourceTree = "<group>"; };
+		50E967221CC4CC4B00E5BF26 /* RecvLadyVoiceCodeTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RecvLadyVoiceCodeTask.cpp; sourceTree = "<group>"; };
+		50E967231CC4CC4B00E5BF26 /* RecvLadyVoiceCodeTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecvLadyVoiceCodeTask.h; sourceTree = "<group>"; };
+		50E967241CC4CC4B00E5BF26 /* RecvMagicIconTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RecvMagicIconTask.cpp; sourceTree = "<group>"; };
+		50E967251CC4CC4B00E5BF26 /* RecvMagicIconTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecvMagicIconTask.h; sourceTree = "<group>"; };
+		50E967261CC4CC4B00E5BF26 /* RecvMsgTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RecvMsgTask.cpp; sourceTree = "<group>"; };
+		50E967271CC4CC4B00E5BF26 /* RecvMsgTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecvMsgTask.h; sourceTree = "<group>"; };
+		50E967281CC4CC4B00E5BF26 /* RecvPhotoTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RecvPhotoTask.cpp; sourceTree = "<group>"; };
+		50E967291CC4CC4B00E5BF26 /* RecvPhotoTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecvPhotoTask.h; sourceTree = "<group>"; };
+		50E9672A1CC4CC4B00E5BF26 /* RecvShowPhotoTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RecvShowPhotoTask.cpp; sourceTree = "<group>"; };
+		50E9672B1CC4CC4B00E5BF26 /* RecvShowPhotoTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecvShowPhotoTask.h; sourceTree = "<group>"; };
+		50E9672C1CC4CC4B00E5BF26 /* RecvShowVideoTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RecvShowVideoTask.cpp; sourceTree = "<group>"; };
+		50E9672D1CC4CC4B00E5BF26 /* RecvShowVideoTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecvShowVideoTask.h; sourceTree = "<group>"; };
+		50E9672E1CC4CC4B00E5BF26 /* RecvTalkEventTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RecvTalkEventTask.cpp; sourceTree = "<group>"; };
+		50E9672F1CC4CC4B00E5BF26 /* RecvTalkEventTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecvTalkEventTask.h; sourceTree = "<group>"; };
+		50E967301CC4CC4B00E5BF26 /* RecvTryTalkBeginTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RecvTryTalkBeginTask.cpp; sourceTree = "<group>"; };
+		50E967311CC4CC4B00E5BF26 /* RecvTryTalkBeginTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecvTryTalkBeginTask.h; sourceTree = "<group>"; };
+		50E967321CC4CC4B00E5BF26 /* RecvTryTalkEndTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RecvTryTalkEndTask.cpp; sourceTree = "<group>"; };
+		50E967331CC4CC4B00E5BF26 /* RecvTryTalkEndTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecvTryTalkEndTask.h; sourceTree = "<group>"; };
+		50E967341CC4CC4B00E5BF26 /* RecvVideoTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RecvVideoTask.cpp; sourceTree = "<group>"; };
+		50E967351CC4CC4B00E5BF26 /* RecvVideoTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecvVideoTask.h; sourceTree = "<group>"; };
+		50E967361CC4CC4B00E5BF26 /* RecvVoiceTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RecvVoiceTask.cpp; sourceTree = "<group>"; };
+		50E967371CC4CC4B00E5BF26 /* RecvVoiceTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecvVoiceTask.h; sourceTree = "<group>"; };
+		50E967381CC4CC4B00E5BF26 /* RecvWarningTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RecvWarningTask.cpp; sourceTree = "<group>"; };
+		50E967391CC4CC4B00E5BF26 /* RecvWarningTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecvWarningTask.h; sourceTree = "<group>"; };
+		50E9673A1CC4CC4B00E5BF26 /* RefreshIdentifyCodeTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RefreshIdentifyCodeTask.cpp; sourceTree = "<group>"; };
+		50E9673B1CC4CC4B00E5BF26 /* RefreshIdentifyCodeTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RefreshIdentifyCodeTask.h; sourceTree = "<group>"; };
+		50E9673C1CC4CC4B00E5BF26 /* RefreshInviteTemplateTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RefreshInviteTemplateTask.cpp; sourceTree = "<group>"; };
+		50E9673D1CC4CC4B00E5BF26 /* RefreshInviteTemplateTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RefreshInviteTemplateTask.h; sourceTree = "<group>"; };
+		50E9673E1CC4CC4B00E5BF26 /* ReplyIdentifyCodeTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ReplyIdentifyCodeTask.cpp; sourceTree = "<group>"; };
+		50E9673F1CC4CC4B00E5BF26 /* ReplyIdentifyCodeTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReplyIdentifyCodeTask.h; sourceTree = "<group>"; };
+		50E967401CC4CC4B00E5BF26 /* SearchOnlineManTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SearchOnlineManTask.cpp; sourceTree = "<group>"; };
+		50E967411CC4CC4B00E5BF26 /* SearchOnlineManTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchOnlineManTask.h; sourceTree = "<group>"; };
+		50E967421CC4CC4B00E5BF26 /* SendEmotionTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SendEmotionTask.cpp; sourceTree = "<group>"; };
+		50E967431CC4CC4B00E5BF26 /* SendEmotionTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SendEmotionTask.h; sourceTree = "<group>"; };
+		50E967441CC4CC4B00E5BF26 /* SendLadyEditingMsgTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SendLadyEditingMsgTask.cpp; sourceTree = "<group>"; };
+		50E967451CC4CC4B00E5BF26 /* SendLadyEditingMsgTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SendLadyEditingMsgTask.h; sourceTree = "<group>"; };
+		50E967461CC4CC4B00E5BF26 /* SendLadyPhotoTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SendLadyPhotoTask.cpp; sourceTree = "<group>"; };
+		50E967471CC4CC4B00E5BF26 /* SendLadyPhotoTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SendLadyPhotoTask.h; sourceTree = "<group>"; };
+		50E967481CC4CC4B00E5BF26 /* SendLadyVideoTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SendLadyVideoTask.cpp; sourceTree = "<group>"; };
+		50E967491CC4CC4B00E5BF26 /* SendLadyVideoTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SendLadyVideoTask.h; sourceTree = "<group>"; };
+		50E9674A1CC4CC4B00E5BF26 /* SendMagicIconTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SendMagicIconTask.cpp; sourceTree = "<group>"; };
+		50E9674B1CC4CC4B00E5BF26 /* SendMagicIconTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SendMagicIconTask.h; sourceTree = "<group>"; };
+		50E9674C1CC4CC4B00E5BF26 /* SendMsgTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SendMsgTask.cpp; sourceTree = "<group>"; };
+		50E9674D1CC4CC4B00E5BF26 /* SendMsgTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SendMsgTask.h; sourceTree = "<group>"; };
+		50E9674E1CC4CC4B00E5BF26 /* SendPhotoTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SendPhotoTask.cpp; sourceTree = "<group>"; };
+		50E9674F1CC4CC4B00E5BF26 /* SendPhotoTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SendPhotoTask.h; sourceTree = "<group>"; };
+		50E967501CC4CC4B00E5BF26 /* SendVGiftTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SendVGiftTask.cpp; sourceTree = "<group>"; };
+		50E967511CC4CC4B00E5BF26 /* SendVGiftTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SendVGiftTask.h; sourceTree = "<group>"; };
+		50E967521CC4CC4B00E5BF26 /* SendVoiceTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SendVoiceTask.cpp; sourceTree = "<group>"; };
+		50E967531CC4CC4B00E5BF26 /* SendVoiceTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SendVoiceTask.h; sourceTree = "<group>"; };
+		50E967541CC4CC4B00E5BF26 /* SetStatusTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SetStatusTask.cpp; sourceTree = "<group>"; };
+		50E967551CC4CC4B00E5BF26 /* SetStatusTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetStatusTask.h; sourceTree = "<group>"; };
+		50E967561CC4CC4B00E5BF26 /* ShowPhotoTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ShowPhotoTask.cpp; sourceTree = "<group>"; };
+		50E967571CC4CC4B00E5BF26 /* ShowPhotoTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShowPhotoTask.h; sourceTree = "<group>"; };
+		50E967581CC4CC4B00E5BF26 /* TaskDef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TaskDef.h; sourceTree = "<group>"; };
+		50E967591CC4CC4B00E5BF26 /* TaskManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TaskManager.cpp; sourceTree = "<group>"; };
+		50E9675A1CC4CC4B00E5BF26 /* TaskManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TaskManager.h; sourceTree = "<group>"; };
+		50E9675B1CC4CC4B00E5BF26 /* TaskMapManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TaskMapManager.cpp; sourceTree = "<group>"; };
+		50E9675C1CC4CC4B00E5BF26 /* TaskMapManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TaskMapManager.h; sourceTree = "<group>"; };
+		50E9675D1CC4CC4B00E5BF26 /* TransportDataHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TransportDataHandler.cpp; sourceTree = "<group>"; };
+		50E9675E1CC4CC4B00E5BF26 /* TransportDataHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransportDataHandler.h; sourceTree = "<group>"; };
+		50E9675F1CC4CC4B00E5BF26 /* TransportPacketHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TransportPacketHandler.cpp; sourceTree = "<group>"; };
+		50E967601CC4CC4B00E5BF26 /* TransportPacketHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransportPacketHandler.h; sourceTree = "<group>"; };
+		50E967611CC4CC4B00E5BF26 /* UpdateStatusTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UpdateStatusTask.cpp; sourceTree = "<group>"; };
+		50E967621CC4CC4B00E5BF26 /* UpdateStatusTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UpdateStatusTask.h; sourceTree = "<group>"; };
+		50E967631CC4CC4B00E5BF26 /* UpdateTicketTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UpdateTicketTask.cpp; sourceTree = "<group>"; };
+		50E967641CC4CC4B00E5BF26 /* UpdateTicketTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UpdateTicketTask.h; sourceTree = "<group>"; };
+		50E967651CC4CC4B00E5BF26 /* UploadAutoChargeStatusTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UploadAutoChargeStatusTask.cpp; sourceTree = "<group>"; };
+		50E967661CC4CC4B00E5BF26 /* UploadAutoChargeStatusTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UploadAutoChargeStatusTask.h; sourceTree = "<group>"; };
+		50E967671CC4CC4B00E5BF26 /* UploadDeviceIdTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UploadDeviceIdTask.cpp; sourceTree = "<group>"; };
+		50E967681CC4CC4B00E5BF26 /* UploadDeviceIdTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UploadDeviceIdTask.h; sourceTree = "<group>"; };
+		50E967691CC4CC4B00E5BF26 /* UploadDeviceTypeTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UploadDeviceTypeTask.cpp; sourceTree = "<group>"; };
+		50E9676A1CC4CC4B00E5BF26 /* UploadDeviceTypeTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UploadDeviceTypeTask.h; sourceTree = "<group>"; };
+		50E9676B1CC4CC4B00E5BF26 /* UploadPopLadyAutoInviteTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UploadPopLadyAutoInviteTask.cpp; sourceTree = "<group>"; };
+		50E9676C1CC4CC4B00E5BF26 /* UploadPopLadyAutoInviteTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UploadPopLadyAutoInviteTask.h; sourceTree = "<group>"; };
+		50E9676D1CC4CC4B00E5BF26 /* UploadTicketTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UploadTicketTask.cpp; sourceTree = "<group>"; };
+		50E9676E1CC4CC4B00E5BF26 /* UploadTicketTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UploadTicketTask.h; sourceTree = "<group>"; };
+		50E9676F1CC4CC4B00E5BF26 /* UploadVerTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UploadVerTask.cpp; sourceTree = "<group>"; };
+		50E967701CC4CC4B00E5BF26 /* UploadVerTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UploadVerTask.h; sourceTree = "<group>"; };
+		50E967711CC4CC4B00E5BF26 /* UseTryTicketTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UseTryTicketTask.cpp; sourceTree = "<group>"; };
+		50E967721CC4CC4B00E5BF26 /* UseTryTicketTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UseTryTicketTask.h; sourceTree = "<group>"; };
+		D14A7F3D1CF99A4A00135FA3 /* LCCustomItem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LCCustomItem.cpp; sourceTree = "<group>"; };
+		D14A7F3E1CF99A4A00135FA3 /* LCCustomItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCCustomItem.h; sourceTree = "<group>"; };
+		D16939391CE59724001D40E7 /* GetAllPaidThemeTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GetAllPaidThemeTask.cpp; sourceTree = "<group>"; };
+		D169393A1CE59724001D40E7 /* GetAllPaidThemeTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GetAllPaidThemeTask.h; sourceTree = "<group>"; };
+		D169393B1CE59724001D40E7 /* GetPaidThemeTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GetPaidThemeTask.cpp; sourceTree = "<group>"; };
+		D169393C1CE59724001D40E7 /* GetPaidThemeTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GetPaidThemeTask.h; sourceTree = "<group>"; };
+		D169393D1CE59724001D40E7 /* ManApplyThemeTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ManApplyThemeTask.cpp; sourceTree = "<group>"; };
+		D169393E1CE59724001D40E7 /* ManApplyThemeTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ManApplyThemeTask.h; sourceTree = "<group>"; };
+		D169393F1CE59724001D40E7 /* ManFeeThemeTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ManFeeThemeTask.cpp; sourceTree = "<group>"; };
+		D16939401CE59724001D40E7 /* ManFeeThemeTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ManFeeThemeTask.h; sourceTree = "<group>"; };
+		D16939411CE59724001D40E7 /* PlayThemeMotionTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PlayThemeMotionTask.cpp; sourceTree = "<group>"; };
+		D16939421CE59724001D40E7 /* PlayThemeMotionTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayThemeMotionTask.h; sourceTree = "<group>"; };
+		D16939431CE59724001D40E7 /* RecvThemeMotionTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RecvThemeMotionTask.cpp; sourceTree = "<group>"; };
+		D16939441CE59724001D40E7 /* RecvThemeMotionTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecvThemeMotionTask.h; sourceTree = "<group>"; };
+		D16939451CE59724001D40E7 /* RecvThemeRecommendTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RecvThemeRecommendTask.cpp; sourceTree = "<group>"; };
+		D16939461CE59724001D40E7 /* RecvThemeRecommendTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecvThemeRecommendTask.h; sourceTree = "<group>"; };
+		D16939471CE59724001D40E7 /* UploadThemeListVerTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UploadThemeListVerTask.cpp; sourceTree = "<group>"; };
+		D16939481CE59724001D40E7 /* UploadThemeListVerTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UploadThemeListVerTask.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		505D86891C7EF748006FDAC7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		501BF3661C7EFB430052C59F /* third-party */ = {
+			isa = PBXGroup;
+			children = (
+				504CDA2E1C7FDA4100DBB429 /* amf */,
+				504CDA201C7FDA2D00DBB429 /* xml */,
+				504CDA0B1C7FD6EE00DBB429 /* json */,
+				504CD9E41C7FD6AF00DBB429 /* libpng */,
+				501BF3BA1C7F00400052C59F /* zip */,
+				501BF3671C7EFB430052C59F /* curl */,
+			);
+			path = "third-party";
+			sourceTree = "<group>";
+		};
+		501BF3671C7EFB430052C59F /* curl */ = {
+			isa = PBXGroup;
+			children = (
+				501BF3681C7EFB430052C59F /* include */,
+			);
+			path = curl;
+			sourceTree = "<group>";
+		};
+		501BF3681C7EFB430052C59F /* include */ = {
+			isa = PBXGroup;
+			children = (
+				501BF3691C7EFB430052C59F /* curl */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		501BF3691C7EFB430052C59F /* curl */ = {
+			isa = PBXGroup;
+			children = (
+				501BF36B1C7EFB430052C59F /* curl.h */,
+				501BF36C1C7EFB430052C59F /* curlbuild.h */,
+				501BF3701C7EFB430052C59F /* curlrules.h */,
+				501BF3711C7EFB430052C59F /* curlver.h */,
+				501BF3721C7EFB430052C59F /* easy.h */,
+				501BF3761C7EFB430052C59F /* mprintf.h */,
+				501BF3771C7EFB430052C59F /* multi.h */,
+				501BF3791C7EFB430052C59F /* stdcheaders.h */,
+				501BF37A1C7EFB430052C59F /* typecheck-gcc.h */,
+			);
+			path = curl;
+			sourceTree = "<group>";
+		};
+		501BF3811C7EFF460052C59F /* common */ = {
+			isa = PBXGroup;
+			children = (
+				507FFA261C9FD76D0083EC06 /* CheckMemoryLeak.cpp */,
+				507FFA271C9FD76D0083EC06 /* CheckMemoryLeak.h */,
+				507FFA281C9FD76D0083EC06 /* CheckMemoryList.cpp */,
+				507FFA291C9FD76D0083EC06 /* CheckMemoryList.h */,
+				501BF3821C7EFF460052C59F /* aes.c */,
+				501BF3831C7EFF460052C59F /* aes.h */,
+				501BF3841C7EFF460052C59F /* Android.mk */,
+				501BF3851C7EFF460052C59F /* Arithmetic.cpp */,
+				501BF3861C7EFF460052C59F /* Arithmetic.h */,
+				501BF38B1C7EFF460052C59F /* command.cpp */,
+				501BF38C1C7EFF460052C59F /* command.h */,
+				501BF38D1C7EFF460052C59F /* CommonFunc.cpp */,
+				501BF38E1C7EFF460052C59F /* CommonFunc.h */,
+				501BF38F1C7EFF460052C59F /* config.h */,
+				501BF3901C7EFF460052C59F /* dualmap_lock.h */,
+				501BF3911C7EFF460052C59F /* IAutoLock.cpp */,
+				501BF3921C7EFF460052C59F /* IAutoLock.h */,
+				501BF3931C7EFF460052C59F /* IPAddress.cpp */,
+				501BF3941C7EFF460052C59F /* IPAddress.h */,
+				501BF3951C7EFF460052C59F /* KCond.h */,
+				501BF3961C7EFF460052C59F /* KLog.cpp */,
+				501BF3971C7EFF460052C59F /* KLog.h */,
+				501BF3981C7EFF460052C59F /* KMutex.h */,
+				501BF3991C7EFF460052C59F /* KRunnable.h */,
+				501BF39A1C7EFF460052C59F /* KSafeMap.h */,
+				501BF39B1C7EFF460052C59F /* KSocket.cpp */,
+				501BF39C1C7EFF460052C59F /* KSocket.h */,
+				501BF39D1C7EFF460052C59F /* KTcpSocket.cpp */,
+				501BF39E1C7EFF460052C59F /* KTcpSocket.h */,
+				501BF39F1C7EFF460052C59F /* KThread.cpp */,
+				501BF3A01C7EFF460052C59F /* KThread.h */,
+				501BF3A31C7EFF460052C59F /* KZip.cpp */,
+				501BF3A41C7EFF460052C59F /* KZip.h */,
+				501BF3A51C7EFF460052C59F /* list_lock.h */,
+				501BF3A61C7EFF460052C59F /* map_lock.h */,
+				501BF3A71C7EFF460052C59F /* md5.c */,
+				501BF3A81C7EFF460052C59F /* md5.h */,
+				501BF3A91C7EFF460052C59F /* StringHandle.h */,
+				501BF3AA1C7EFF460052C59F /* vector_lock.h */,
+			);
+			name = common;
+			path = "../../../../common-c-library/common";
+			sourceTree = "<group>";
+		};
+		501BF3BA1C7F00400052C59F /* zip */ = {
+			isa = PBXGroup;
+			children = (
+				501BF3BC1C7F00400052C59F /* crypt.h */,
+				501BF3BD1C7F00400052C59F /* ioapi.c */,
+				501BF3BE1C7F00400052C59F /* ioapi.h */,
+				501BF3BF1C7F00400052C59F /* miniunz.c */,
+				501BF3C01C7F00400052C59F /* minizip.c */,
+				501BF3C11C7F00400052C59F /* mztools.c */,
+				501BF3C21C7F00400052C59F /* mztools.h */,
+				501BF3C31C7F00400052C59F /* unzip.c */,
+				501BF3C41C7F00400052C59F /* unzip.h */,
+				501BF3C51C7F00400052C59F /* zip.c */,
+				501BF3C61C7F00400052C59F /* zip.h */,
+			);
+			name = zip;
+			path = "../../../../../common-c-library/third_party/zip";
+			sourceTree = "<group>";
+		};
+		504CD9E41C7FD6AF00DBB429 /* libpng */ = {
+			isa = PBXGroup;
+			children = (
+				504CD9E61C7FD6AF00DBB429 /* png.c */,
+				504CD9E71C7FD6AF00DBB429 /* png.h */,
+				504CD9E81C7FD6AF00DBB429 /* pngconf.h */,
+				504CD9E91C7FD6AF00DBB429 /* pngdebug.h */,
+				504CD9EA1C7FD6AF00DBB429 /* pngerror.c */,
+				504CD9EB1C7FD6AF00DBB429 /* pngget.c */,
+				504CD9EC1C7FD6AF00DBB429 /* pnginfo.h */,
+				504CD9ED1C7FD6AF00DBB429 /* pnglibconf.h */,
+				504CD9EE1C7FD6AF00DBB429 /* pngmem.c */,
+				504CD9EF1C7FD6AF00DBB429 /* pngpread.c */,
+				504CD9F01C7FD6AF00DBB429 /* pngpriv.h */,
+				504CD9F11C7FD6AF00DBB429 /* pngread.c */,
+				504CD9F21C7FD6AF00DBB429 /* pngrio.c */,
+				504CD9F31C7FD6AF00DBB429 /* pngrtran.c */,
+				504CD9F41C7FD6AF00DBB429 /* pngrutil.c */,
+				504CD9F51C7FD6AF00DBB429 /* pngset.c */,
+				504CD9F61C7FD6AF00DBB429 /* pngstruct.h */,
+				504CD9F71C7FD6AF00DBB429 /* pngtrans.c */,
+				504CD9F81C7FD6AF00DBB429 /* pngwio.c */,
+				504CD9F91C7FD6AF00DBB429 /* pngwrite.c */,
+				504CD9FA1C7FD6AF00DBB429 /* pngwtran.c */,
+				504CD9FB1C7FD6AF00DBB429 /* pngwutil.c */,
+			);
+			name = libpng;
+			path = "../../../../../common-c-library/third_party/libpng";
+			sourceTree = "<group>";
+		};
+		504CDA0B1C7FD6EE00DBB429 /* json */ = {
+			isa = PBXGroup;
+			children = (
+				504CDA0C1C7FD6EE00DBB429 /* Android.mk */,
+				504CDA0D1C7FD6EE00DBB429 /* json */,
+				504CDA161C7FD6EE00DBB429 /* json_batchallocator.h */,
+				504CDA171C7FD6EE00DBB429 /* json_internalarray.inl */,
+				504CDA181C7FD6EE00DBB429 /* json_internalmap.inl */,
+				504CDA191C7FD6EE00DBB429 /* json_reader.cpp */,
+				504CDA1A1C7FD6EE00DBB429 /* json_value.cpp */,
+				504CDA1B1C7FD6EE00DBB429 /* json_valueiterator.inl */,
+				504CDA1C1C7FD6EE00DBB429 /* json_writer.cpp */,
+			);
+			name = json;
+			path = "../../../../../common-c-library/third_party/json";
+			sourceTree = "<group>";
+		};
+		504CDA0D1C7FD6EE00DBB429 /* json */ = {
+			isa = PBXGroup;
+			children = (
+				504CDA0E1C7FD6EE00DBB429 /* autolink.h */,
+				504CDA0F1C7FD6EE00DBB429 /* config.h */,
+				504CDA101C7FD6EE00DBB429 /* features.h */,
+				504CDA111C7FD6EE00DBB429 /* forwards.h */,
+				504CDA121C7FD6EE00DBB429 /* json.h */,
+				504CDA131C7FD6EE00DBB429 /* reader.h */,
+				504CDA141C7FD6EE00DBB429 /* value.h */,
+				504CDA151C7FD6EE00DBB429 /* writer.h */,
+			);
+			path = json;
+			sourceTree = "<group>";
+		};
+		504CDA201C7FDA2D00DBB429 /* xml */ = {
+			isa = PBXGroup;
+			children = (
+				504CDA221C7FDA2D00DBB429 /* tinystr.cpp */,
+				504CDA231C7FDA2D00DBB429 /* tinystr.h */,
+				504CDA241C7FDA2D00DBB429 /* tinyxml.cpp */,
+				504CDA251C7FDA2D00DBB429 /* tinyxml.h */,
+				504CDA261C7FDA2D00DBB429 /* tinyxmlerror.cpp */,
+				504CDA271C7FDA2D00DBB429 /* tinyxmlparser.cpp */,
+				504CDA281C7FDA2D00DBB429 /* xmltest.cpp */,
+			);
+			name = xml;
+			path = "../../../../../common-c-library/third_party/xml";
+			sourceTree = "<group>";
+		};
+		504CDA2E1C7FDA4100DBB429 /* amf */ = {
+			isa = PBXGroup;
+			children = (
+				504CDA2F1C7FDA4100DBB429 /* AMF3.cpp */,
+				504CDA301C7FDA4100DBB429 /* AMF3.h */,
+				504CDA311C7FDA4100DBB429 /* AmfParser.cpp */,
+				504CDA321C7FDA4100DBB429 /* AmfParser.h */,
+			);
+			name = amf;
+			path = "../../../../../common-c-library/third_party/amf";
+			sourceTree = "<group>";
+		};
+		504CDA361C7FDB0500DBB429 /* httpclient */ = {
+			isa = PBXGroup;
+			children = (
+				504CDA371C7FDB0500DBB429 /* Android.mk */,
+				504CDA381C7FDB0500DBB429 /* HttpClient.cpp */,
+				504CDA391C7FDB0500DBB429 /* HttpClient.h */,
+				504CDA3A1C7FDB0500DBB429 /* HttpDownloader.cpp */,
+				504CDA3B1C7FDB0500DBB429 /* HttpDownloader.h */,
+				504CDA3C1C7FDB0500DBB429 /* HttpEntiy.cpp */,
+				504CDA3D1C7FDB0500DBB429 /* HttpEntiy.h */,
+				504CDA3E1C7FDB0500DBB429 /* HttpRequest.cpp */,
+				504CDA3F1C7FDB0500DBB429 /* HttpRequest.h */,
+				504CDA401C7FDB0500DBB429 /* HttpRequestDefine.h */,
+				504CDA411C7FDB0500DBB429 /* HttpRequestHostManager.cpp */,
+				504CDA421C7FDB0500DBB429 /* HttpRequestHostManager.h */,
+				504CDA431C7FDB0500DBB429 /* HttpRequestManager.cpp */,
+				504CDA441C7FDB0500DBB429 /* HttpRequestManager.h */,
+			);
+			name = httpclient;
+			path = "../../../../common-c-library/httpclient";
+			sourceTree = "<group>";
+		};
+		504CDA4B1C7FDD7F00DBB429 /* imghandle */ = {
+			isa = PBXGroup;
+			children = (
+				504CDA4D1C7FDD7F00DBB429 /* PngHandler.cpp */,
+				504CDA4E1C7FDD7F00DBB429 /* PngHandler.h */,
+				504CDA4F1C7FDD7F00DBB429 /* PngReader.cpp */,
+				504CDA501C7FDD7F00DBB429 /* PngReader.h */,
+				504CDA511C7FDD7F00DBB429 /* PngWriter.cpp */,
+				504CDA521C7FDD7F00DBB429 /* PngWriter.h */,
+			);
+			name = imghandle;
+			path = "../../../../common-c-library/imghandle";
+			sourceTree = "<group>";
+		};
+		504CDB2C1C7FE31500DBB429 /* livechatmanmanager */ = {
+			isa = PBXGroup;
+			children = (
+				504CDB2D1C7FE31500DBB429 /* Android.mk */,
+				504CDB2E1C7FE31500DBB429 /* ILiveChatManManager.cpp */,
+				504CDB2F1C7FE31500DBB429 /* ILiveChatManManager.h */,
+				504CDB301C7FE31500DBB429 /* LCBlockManager.cpp */,
+				504CDB311C7FE31500DBB429 /* LCBlockManager.h */,
+				504CDB321C7FE31500DBB429 /* LCContactManager.cpp */,
+				504CDB331C7FE31500DBB429 /* LCContactManager.h */,
+				D14A7F3D1CF99A4A00135FA3 /* LCCustomItem.cpp */,
+				D14A7F3E1CF99A4A00135FA3 /* LCCustomItem.h */,
+				504CDB341C7FE31500DBB429 /* LCEmotionDownloader.cpp */,
+				504CDB351C7FE31500DBB429 /* LCEmotionDownloader.h */,
+				504CDB361C7FE31500DBB429 /* LCEmotionItem.cpp */,
+				504CDB371C7FE31500DBB429 /* LCEmotionItem.h */,
+				504CDB381C7FE31500DBB429 /* LCEmotionManager.cpp */,
+				504CDB391C7FE31500DBB429 /* LCEmotionManager.h */,
+				504CDB3A1C7FE31500DBB429 /* LCInviteManager.cpp */,
+				504CDB3B1C7FE31500DBB429 /* LCInviteManager.h */,
+				504CDB3C1C7FE31500DBB429 /* LCMessageFilter.cpp */,
+				504CDB3D1C7FE31500DBB429 /* LCMessageFilter.h */,
+				504CDB3E1C7FE31500DBB429 /* LCMessageItem.cpp */,
+				504CDB3F1C7FE31500DBB429 /* LCMessageItem.h */,
+				504CDB401C7FE31500DBB429 /* LCPhotoDownloader.cpp */,
+				504CDB411C7FE31500DBB429 /* LCPhotoDownloader.h */,
+				504CDB421C7FE31500DBB429 /* LCPhotoItem.cpp */,
+				504CDB431C7FE31500DBB429 /* LCPhotoItem.h */,
+				504CDB441C7FE31500DBB429 /* LCPhotoManager.cpp */,
+				504CDB451C7FE31500DBB429 /* LCPhotoManager.h */,
+				504CDB461C7FE31500DBB429 /* LCSystemItem.cpp */,
+				504CDB471C7FE31500DBB429 /* LCSystemItem.h */,
+				504CDB481C7FE31500DBB429 /* LCTextItem.cpp */,
+				504CDB491C7FE31500DBB429 /* LCTextItem.h */,
+				504CDB4A1C7FE31500DBB429 /* LCTextManager.cpp */,
+				504CDB4B1C7FE31500DBB429 /* LCTextManager.h */,
+				504CDB4C1C7FE31500DBB429 /* LCUserItem.cpp */,
+				504CDB4D1C7FE31500DBB429 /* LCUserItem.h */,
+				504CDB4E1C7FE31500DBB429 /* LCUserManager.cpp */,
+				504CDB4F1C7FE31500DBB429 /* LCUserManager.h */,
+				504CDB501C7FE31500DBB429 /* LCVideoDownloader.cpp */,
+				504CDB511C7FE31500DBB429 /* LCVideoDownloader.h */,
+				504CDB521C7FE31500DBB429 /* LCVideoItem.cpp */,
+				504CDB531C7FE31500DBB429 /* LCVideoItem.h */,
+				504CDB541C7FE31500DBB429 /* LCVideoManager.cpp */,
+				504CDB551C7FE31500DBB429 /* LCVideoManager.h */,
+				504CDB561C7FE31500DBB429 /* LCVideoPhotoDownloader.cpp */,
+				504CDB571C7FE31500DBB429 /* LCVideoPhotoDownloader.h */,
+				504CDB581C7FE31500DBB429 /* LCVoiceItem.cpp */,
+				504CDB591C7FE31500DBB429 /* LCVoiceItem.h */,
+				504CDB5A1C7FE31500DBB429 /* LCVoiceManager.cpp */,
+				504CDB5B1C7FE31500DBB429 /* LCVoiceManager.h */,
+				504CDB5C1C7FE31500DBB429 /* LCWarningItem.cpp */,
+				504CDB5D1C7FE31500DBB429 /* LCWarningItem.h */,
+				504CDB5E1C7FE31500DBB429 /* LCWarningLinkItem.cpp */,
+				504CDB5F1C7FE31500DBB429 /* LCWarningLinkItem.h */,
+				504CDB601C7FE31500DBB429 /* LiveChatManManager.cpp */,
+				504CDB611C7FE31500DBB429 /* LiveChatManManager.h */,
+			);
+			name = livechatmanmanager;
+			path = "../../../../common-c-library/livechatmanmanager";
+			sourceTree = "<group>";
+		};
+		504CDB871C7FEB1500DBB429 /* manrequesthandler */ = {
+			isa = PBXGroup;
+			children = (
+				504CDB881C7FEB1500DBB429 /* Android.mk */,
+				504CDB891C7FEB1500DBB429 /* HttpRequestHostManager.cpp */,
+				504CDB8A1C7FEB1500DBB429 /* HttpRequestHostManager.h */,
+				504CDB8B1C7FEB1500DBB429 /* HttpRequestManager.cpp */,
+				504CDB8C1C7FEB1500DBB429 /* HttpRequestManager.h */,
+				504CDB8D1C7FEB1500DBB429 /* item */,
+				504CDBA81C7FEB1500DBB429 /* RequestAdvertController.cpp */,
+				504CDBA91C7FEB1500DBB429 /* RequestAdvertController.h */,
+				504CDBAA1C7FEB1500DBB429 /* RequestAdvertDefine.h */,
+				504CDBAB1C7FEB1500DBB429 /* RequestAuthorizationController.cpp */,
+				504CDBAC1C7FEB1500DBB429 /* RequestAuthorizationController.h */,
+				504CDBAD1C7FEB1500DBB429 /* RequestAuthorizationDefine.h */,
+				504CDBAE1C7FEB1500DBB429 /* RequestBaseController.cpp */,
+				504CDBAF1C7FEB1500DBB429 /* RequestBaseController.h */,
+				504CDBB01C7FEB1500DBB429 /* RequestDefine.h */,
+				504CDBB11C7FEB1500DBB429 /* RequestEMFController.cpp */,
+				504CDBB21C7FEB1500DBB429 /* RequestEMFController.h */,
+				504CDBB31C7FEB1500DBB429 /* RequestEMFDefine.h */,
+				504CDBB41C7FEB1500DBB429 /* RequestEnumDefine.cpp */,
+				504CDBB51C7FEB1500DBB429 /* RequestEnumDefine.h */,
+				504CDBB61C7FEB1500DBB429 /* RequestLadyController.cpp */,
+				504CDBB71C7FEB1500DBB429 /* RequestLadyController.h */,
+				504CDBB81C7FEB1500DBB429 /* RequestLadyDefine.h */,
+				504CDBB91C7FEB1500DBB429 /* RequestLiveChatController.cpp */,
+				504CDBBA1C7FEB1500DBB429 /* RequestLiveChatController.h */,
+				504CDBBB1C7FEB1500DBB429 /* RequestLiveChatDefine.h */,
+				504CDBBC1C7FEB1500DBB429 /* RequestLoveCallController.cpp */,
+				504CDBBD1C7FEB1500DBB429 /* RequestLoveCallController.h */,
+				504CDBBE1C7FEB1500DBB429 /* RequestLoveCallDefine.h */,
+				504CDBBF1C7FEB1500DBB429 /* RequestOtherController.cpp */,
+				504CDBC01C7FEB1500DBB429 /* RequestOtherController.h */,
+				504CDBC11C7FEB1500DBB429 /* RequestOtherDefine.h */,
+				504CDBC21C7FEB1500DBB429 /* RequestProfileController.cpp */,
+				504CDBC31C7FEB1500DBB429 /* RequestProfileController.h */,
+				504CDBC41C7FEB1500DBB429 /* RequestProfileDefine.h */,
+				504CDBC51C7FEB1500DBB429 /* RequestQuickMatchController.cpp */,
+				504CDBC61C7FEB1500DBB429 /* RequestQuickMatchController.h */,
+				504CDBC71C7FEB1500DBB429 /* RequestQuickMatchDefine.h */,
+				504CDBC81C7FEB1500DBB429 /* RequestSettingController.cpp */,
+				504CDBC91C7FEB1500DBB429 /* RequestSettingController.h */,
+				504CDBCA1C7FEB1500DBB429 /* RequestSettingDefine.h */,
+				504CDBCB1C7FEB1500DBB429 /* RequestTicketController.cpp */,
+				504CDBCC1C7FEB1500DBB429 /* RequestTicketController.h */,
+				504CDBCD1C7FEB1500DBB429 /* RequestTicketDefine.h */,
+				504CDBCE1C7FEB1500DBB429 /* RequestVideoShowController.cpp */,
+				504CDBCF1C7FEB1500DBB429 /* RequestVideoShowController.h */,
+				504CDBD01C7FEB1500DBB429 /* RequestVideoShowDefine.h */,
+			);
+			name = manrequesthandler;
+			path = "../../../../common-c-library/manrequesthandler";
+			sourceTree = "<group>";
+		};
+		504CDB8D1C7FEB1500DBB429 /* item */ = {
+			isa = PBXGroup;
+			children = (
+				504CDB8E1C7FEB1500DBB429 /* Advert.h */,
+				504CDB8F1C7FEB1500DBB429 /* Coupon.h */,
+				504CDB901C7FEB1500DBB429 /* EMF.h */,
+				504CDB911C7FEB1500DBB429 /* EMFError.h */,
+				504CDB921C7FEB1500DBB429 /* Gift.h */,
+				504CDB931C7FEB1500DBB429 /* Lady.h */,
+				504CDB941C7FEB1500DBB429 /* LadyCall.h */,
+				502D6FA51CA8D883000547F8 /* LadyDetail.cpp */,
+				504CDB951C7FEB1500DBB429 /* LadyDetail.h */,
+				504CDB961C7FEB1500DBB429 /* LadyMatch.h */,
+				504CDB971C7FEB1500DBB429 /* LadyRecentContact.h */,
+				504CDB981C7FEB1500DBB429 /* LadySignListItem.h */,
+				504CDB991C7FEB1500DBB429 /* LCSendPhotoItem.h */,
+				504CDB9A1C7FEB1500DBB429 /* LCVideoItem.h */,
+				504CDB9B1C7FEB1500DBB429 /* LoginErrorItem.h */,
+				504CDB9C1C7FEB1500DBB429 /* LoginFacebookItem.h */,
+				504CDB9D1C7FEB1500DBB429 /* LoginItem.h */,
+				504CDB9E1C7FEB1500DBB429 /* LoveCall.h */,
+				504CDB9F1C7FEB1500DBB429 /* Other.h */,
+				504CDBA01C7FEB1500DBB429 /* ProfileItem.h */,
+				504CDBA11C7FEB1500DBB429 /* QuickMatchLady.h */,
+				504CDBA21C7FEB1500DBB429 /* Record.h */,
+				504CDBA31C7FEB1500DBB429 /* RecordMutiple.h */,
+				504CDBA41C7FEB1500DBB429 /* RegisterItem.h */,
+				504CDBA51C7FEB1500DBB429 /* Ticket.h */,
+				504CDBA61C7FEB1500DBB429 /* VideoItem.h */,
+				504CDBA71C7FEB1500DBB429 /* VideoShow.h */,
+			);
+			path = item;
+			sourceTree = "<group>";
+		};
+		505D86831C7EF748006FDAC7 = {
+			isa = PBXGroup;
+			children = (
+				505D868E1C7EF748006FDAC7 /* Common-C-Library */,
+				505D868D1C7EF748006FDAC7 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		505D868D1C7EF748006FDAC7 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				505D868C1C7EF748006FDAC7 /* libCommon-C-Library.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		505D868E1C7EF748006FDAC7 /* Common-C-Library */ = {
+			isa = PBXGroup;
+			children = (
+				501BF3811C7EFF460052C59F /* common */,
+				505D868F1C7EF748006FDAC7 /* Common_C_Library.h */,
+				505D86911C7EF748006FDAC7 /* Common_C_Library.mm */,
+				504CDA361C7FDB0500DBB429 /* httpclient */,
+				504CDA4B1C7FDD7F00DBB429 /* imghandle */,
+				50E966D11CC4CC4B00E5BF26 /* livechat */,
+				504CDB2C1C7FE31500DBB429 /* livechatmanmanager */,
+				504CDB871C7FEB1500DBB429 /* manrequesthandler */,
+				501BF3661C7EFB430052C59F /* third-party */,
+			);
+			path = "Common-C-Library";
+			sourceTree = "<group>";
+		};
+		50E966D11CC4CC4B00E5BF26 /* livechat */ = {
+			isa = PBXGroup;
+			children = (
+				D16939391CE59724001D40E7 /* GetAllPaidThemeTask.cpp */,
+				D169393A1CE59724001D40E7 /* GetAllPaidThemeTask.h */,
+				D169393B1CE59724001D40E7 /* GetPaidThemeTask.cpp */,
+				D169393C1CE59724001D40E7 /* GetPaidThemeTask.h */,
+				D169393D1CE59724001D40E7 /* ManApplyThemeTask.cpp */,
+				D169393E1CE59724001D40E7 /* ManApplyThemeTask.h */,
+				D169393F1CE59724001D40E7 /* ManFeeThemeTask.cpp */,
+				D16939401CE59724001D40E7 /* ManFeeThemeTask.h */,
+				D16939411CE59724001D40E7 /* PlayThemeMotionTask.cpp */,
+				D16939421CE59724001D40E7 /* PlayThemeMotionTask.h */,
+				D16939431CE59724001D40E7 /* RecvThemeMotionTask.cpp */,
+				D16939441CE59724001D40E7 /* RecvThemeMotionTask.h */,
+				D16939451CE59724001D40E7 /* RecvThemeRecommendTask.cpp */,
+				D16939461CE59724001D40E7 /* RecvThemeRecommendTask.h */,
+				D16939471CE59724001D40E7 /* UploadThemeListVerTask.cpp */,
+				D16939481CE59724001D40E7 /* UploadThemeListVerTask.h */,
+				50E966D21CC4CC4B00E5BF26 /* AmfPublicParse.h */,
+				50E966D31CC4CC4B00E5BF26 /* Android.mk */,
+				50E966D41CC4CC4B00E5BF26 /* CheckVerTask.cpp */,
+				50E966D51CC4CC4B00E5BF26 /* CheckVerTask.h */,
+				50E966D61CC4CC4B00E5BF26 /* CommonParsing.cpp */,
+				50E966D71CC4CC4B00E5BF26 /* CommonParsing.h */,
+				50E966D81CC4CC4B00E5BF26 /* Counter.cpp */,
+				50E966D91CC4CC4B00E5BF26 /* Counter.h */,
+				50E966DA1CC4CC4B00E5BF26 /* EndTalkTask.cpp */,
+				50E966DB1CC4CC4B00E5BF26 /* EndTalkTask.h */,
+				50E966DC1CC4CC4B00E5BF26 /* GetBlockUsersTask.cpp */,
+				50E966DD1CC4CC4B00E5BF26 /* GetBlockUsersTask.h */,
+				50E966DE1CC4CC4B00E5BF26 /* GetContactListTask.cpp */,
+				50E966DF1CC4CC4B00E5BF26 /* GetContactListTask.h */,
+				50E966E01CC4CC4B00E5BF26 /* GetFeeRecentContactListTask.cpp */,
+				50E966E11CC4CC4B00E5BF26 /* GetFeeRecentContactListTask.h */,
+				50E966E21CC4CC4B00E5BF26 /* GetLadyChatInfoTask.cpp */,
+				50E966E31CC4CC4B00E5BF26 /* GetLadyChatInfoTask.h */,
+				50E966E41CC4CC4B00E5BF26 /* GetLadyConditionTask.cpp */,
+				50E966E51CC4CC4B00E5BF26 /* GetLadyConditionTask.h */,
+				50E966E61CC4CC4B00E5BF26 /* GetLadyCustomTemplateTask.cpp */,
+				50E966E71CC4CC4B00E5BF26 /* GetLadyCustomTemplateTask.h */,
+				50E966E81CC4CC4B00E5BF26 /* GetLadyVoiceCodeTask.cpp */,
+				50E966E91CC4CC4B00E5BF26 /* GetLadyVoiceCodeTask.h */,
+				50E966EA1CC4CC4B00E5BF26 /* GetRecentContactListTask.cpp */,
+				50E966EB1CC4CC4B00E5BF26 /* GetRecentContactListTask.h */,
+				50E966EC1CC4CC4B00E5BF26 /* GetTalkInfoTask.cpp */,
+				50E966ED1CC4CC4B00E5BF26 /* GetTalkInfoTask.h */,
+				50E966EE1CC4CC4B00E5BF26 /* GetTalkListTask.cpp */,
+				50E966EF1CC4CC4B00E5BF26 /* GetTalkListTask.h */,
+				50E966F01CC4CC4B00E5BF26 /* GetUserInfoTask.cpp */,
+				50E966F11CC4CC4B00E5BF26 /* GetUserInfoTask.h */,
+				50E966F21CC4CC4B00E5BF26 /* GetUsersInfoTask.cpp */,
+				50E966F31CC4CC4B00E5BF26 /* GetUsersInfoTask.h */,
+				50E966F41CC4CC4B00E5BF26 /* GetUserStatusTask.cpp */,
+				50E966F51CC4CC4B00E5BF26 /* GetUserStatusTask.h */,
+				50E966F61CC4CC4B00E5BF26 /* GetVoiceCodeTask.cpp */,
+				50E966F71CC4CC4B00E5BF26 /* GetVoiceCodeTask.h */,
+				50E966F81CC4CC4B00E5BF26 /* HearbeatTask.cpp */,
+				50E966F91CC4CC4B00E5BF26 /* HearbeatTask.h */,
+				50E966FA1CC4CC4B00E5BF26 /* ILiveChatClient.cpp */,
+				50E966FB1CC4CC4B00E5BF26 /* ILiveChatClient.h */,
+				50E966FC1CC4CC4B00E5BF26 /* ILiveChatClientDef.h */,
+				50E966FD1CC4CC4B00E5BF26 /* ISocketHandler.cpp */,
+				50E966FE1CC4CC4B00E5BF26 /* ISocketHandler.h */,
+				50E966FF1CC4CC4B00E5BF26 /* ITask.cpp */,
+				50E967001CC4CC4B00E5BF26 /* ITask.h */,
+				50E967011CC4CC4B00E5BF26 /* ITaskManager.h */,
+				50E967021CC4CC4B00E5BF26 /* IThreadHandler.cpp */,
+				50E967031CC4CC4B00E5BF26 /* IThreadHandler.h */,
+				50E967041CC4CC4B00E5BF26 /* ITransportDataHandler.cpp */,
+				50E967051CC4CC4B00E5BF26 /* ITransportDataHandler.h */,
+				50E967061CC4CC4B00E5BF26 /* ITransportPacketHandler.cpp */,
+				50E967071CC4CC4B00E5BF26 /* ITransportPacketHandler.h */,
+				50E967081CC4CC4B00E5BF26 /* JniIntToType.cpp */,
+				50E967091CC4CC4B00E5BF26 /* JniIntToType.h */,
+				50E9670A1CC4CC4B00E5BF26 /* LiveChatClient.cpp */,
+				50E9670B1CC4CC4B00E5BF26 /* LiveChatClient.h */,
+				50E9670C1CC4CC4B00E5BF26 /* LiveChatJniCallbackItemDef.h */,
+				50E9670D1CC4CC4B00E5BF26 /* LoginTask.cpp */,
+				50E9670E1CC4CC4B00E5BF26 /* LoginTask.h */,
+				50E9670F1CC4CC4B00E5BF26 /* PlayVideoTask.cpp */,
+				50E967101CC4CC4B00E5BF26 /* PlayVideoTask.h */,
+				50E967111CC4CC4B00E5BF26 /* project */,
+				50E967141CC4CC4B00E5BF26 /* RecvAutoChargeResultTask.cpp */,
+				50E967151CC4CC4B00E5BF26 /* RecvAutoChargeResultTask.h */,
+				50E967161CC4CC4B00E5BF26 /* RecvAutoInviteTask.cpp */,
+				50E967171CC4CC4B00E5BF26 /* RecvAutoInviteTask.h */,
+				50E967181CC4CC4B00E5BF26 /* RecvEditMsgTask.cpp */,
+				50E967191CC4CC4B00E5BF26 /* RecvEditMsgTask.h */,
+				50E9671A1CC4CC4B00E5BF26 /* RecvEMFNoticeTask.cpp */,
+				50E9671B1CC4CC4B00E5BF26 /* RecvEMFNoticeTask.h */,
+				50E9671C1CC4CC4B00E5BF26 /* RecvEmotionTask.cpp */,
+				50E9671D1CC4CC4B00E5BF26 /* RecvEmotionTask.h */,
+				50E9671E1CC4CC4B00E5BF26 /* RecvIdentifyCodeTask.cpp */,
+				50E9671F1CC4CC4B00E5BF26 /* RecvIdentifyCodeTask.h */,
+				50E967201CC4CC4B00E5BF26 /* RecvKickOfflineTask.cpp */,
+				50E967211CC4CC4B00E5BF26 /* RecvKickOfflineTask.h */,
+				50E967221CC4CC4B00E5BF26 /* RecvLadyVoiceCodeTask.cpp */,
+				50E967231CC4CC4B00E5BF26 /* RecvLadyVoiceCodeTask.h */,
+				50E967241CC4CC4B00E5BF26 /* RecvMagicIconTask.cpp */,
+				50E967251CC4CC4B00E5BF26 /* RecvMagicIconTask.h */,
+				50E967261CC4CC4B00E5BF26 /* RecvMsgTask.cpp */,
+				50E967271CC4CC4B00E5BF26 /* RecvMsgTask.h */,
+				50E967281CC4CC4B00E5BF26 /* RecvPhotoTask.cpp */,
+				50E967291CC4CC4B00E5BF26 /* RecvPhotoTask.h */,
+				50E9672A1CC4CC4B00E5BF26 /* RecvShowPhotoTask.cpp */,
+				50E9672B1CC4CC4B00E5BF26 /* RecvShowPhotoTask.h */,
+				50E9672C1CC4CC4B00E5BF26 /* RecvShowVideoTask.cpp */,
+				50E9672D1CC4CC4B00E5BF26 /* RecvShowVideoTask.h */,
+				50E9672E1CC4CC4B00E5BF26 /* RecvTalkEventTask.cpp */,
+				50E9672F1CC4CC4B00E5BF26 /* RecvTalkEventTask.h */,
+				50E967301CC4CC4B00E5BF26 /* RecvTryTalkBeginTask.cpp */,
+				50E967311CC4CC4B00E5BF26 /* RecvTryTalkBeginTask.h */,
+				50E967321CC4CC4B00E5BF26 /* RecvTryTalkEndTask.cpp */,
+				50E967331CC4CC4B00E5BF26 /* RecvTryTalkEndTask.h */,
+				50E967341CC4CC4B00E5BF26 /* RecvVideoTask.cpp */,
+				50E967351CC4CC4B00E5BF26 /* RecvVideoTask.h */,
+				50E967361CC4CC4B00E5BF26 /* RecvVoiceTask.cpp */,
+				50E967371CC4CC4B00E5BF26 /* RecvVoiceTask.h */,
+				50E967381CC4CC4B00E5BF26 /* RecvWarningTask.cpp */,
+				50E967391CC4CC4B00E5BF26 /* RecvWarningTask.h */,
+				50E9673A1CC4CC4B00E5BF26 /* RefreshIdentifyCodeTask.cpp */,
+				50E9673B1CC4CC4B00E5BF26 /* RefreshIdentifyCodeTask.h */,
+				50E9673C1CC4CC4B00E5BF26 /* RefreshInviteTemplateTask.cpp */,
+				50E9673D1CC4CC4B00E5BF26 /* RefreshInviteTemplateTask.h */,
+				50E9673E1CC4CC4B00E5BF26 /* ReplyIdentifyCodeTask.cpp */,
+				50E9673F1CC4CC4B00E5BF26 /* ReplyIdentifyCodeTask.h */,
+				50E967401CC4CC4B00E5BF26 /* SearchOnlineManTask.cpp */,
+				50E967411CC4CC4B00E5BF26 /* SearchOnlineManTask.h */,
+				50E967421CC4CC4B00E5BF26 /* SendEmotionTask.cpp */,
+				50E967431CC4CC4B00E5BF26 /* SendEmotionTask.h */,
+				50E967441CC4CC4B00E5BF26 /* SendLadyEditingMsgTask.cpp */,
+				50E967451CC4CC4B00E5BF26 /* SendLadyEditingMsgTask.h */,
+				50E967461CC4CC4B00E5BF26 /* SendLadyPhotoTask.cpp */,
+				50E967471CC4CC4B00E5BF26 /* SendLadyPhotoTask.h */,
+				50E967481CC4CC4B00E5BF26 /* SendLadyVideoTask.cpp */,
+				50E967491CC4CC4B00E5BF26 /* SendLadyVideoTask.h */,
+				50E9674A1CC4CC4B00E5BF26 /* SendMagicIconTask.cpp */,
+				50E9674B1CC4CC4B00E5BF26 /* SendMagicIconTask.h */,
+				50E9674C1CC4CC4B00E5BF26 /* SendMsgTask.cpp */,
+				50E9674D1CC4CC4B00E5BF26 /* SendMsgTask.h */,
+				50E9674E1CC4CC4B00E5BF26 /* SendPhotoTask.cpp */,
+				50E9674F1CC4CC4B00E5BF26 /* SendPhotoTask.h */,
+				50E967501CC4CC4B00E5BF26 /* SendVGiftTask.cpp */,
+				50E967511CC4CC4B00E5BF26 /* SendVGiftTask.h */,
+				50E967521CC4CC4B00E5BF26 /* SendVoiceTask.cpp */,
+				50E967531CC4CC4B00E5BF26 /* SendVoiceTask.h */,
+				50E967541CC4CC4B00E5BF26 /* SetStatusTask.cpp */,
+				50E967551CC4CC4B00E5BF26 /* SetStatusTask.h */,
+				50E967561CC4CC4B00E5BF26 /* ShowPhotoTask.cpp */,
+				50E967571CC4CC4B00E5BF26 /* ShowPhotoTask.h */,
+				50E967581CC4CC4B00E5BF26 /* TaskDef.h */,
+				50E967591CC4CC4B00E5BF26 /* TaskManager.cpp */,
+				50E9675A1CC4CC4B00E5BF26 /* TaskManager.h */,
+				50E9675B1CC4CC4B00E5BF26 /* TaskMapManager.cpp */,
+				50E9675C1CC4CC4B00E5BF26 /* TaskMapManager.h */,
+				50E9675D1CC4CC4B00E5BF26 /* TransportDataHandler.cpp */,
+				50E9675E1CC4CC4B00E5BF26 /* TransportDataHandler.h */,
+				50E9675F1CC4CC4B00E5BF26 /* TransportPacketHandler.cpp */,
+				50E967601CC4CC4B00E5BF26 /* TransportPacketHandler.h */,
+				50E967611CC4CC4B00E5BF26 /* UpdateStatusTask.cpp */,
+				50E967621CC4CC4B00E5BF26 /* UpdateStatusTask.h */,
+				50E967631CC4CC4B00E5BF26 /* UpdateTicketTask.cpp */,
+				50E967641CC4CC4B00E5BF26 /* UpdateTicketTask.h */,
+				50E967651CC4CC4B00E5BF26 /* UploadAutoChargeStatusTask.cpp */,
+				50E967661CC4CC4B00E5BF26 /* UploadAutoChargeStatusTask.h */,
+				50E967671CC4CC4B00E5BF26 /* UploadDeviceIdTask.cpp */,
+				50E967681CC4CC4B00E5BF26 /* UploadDeviceIdTask.h */,
+				50E967691CC4CC4B00E5BF26 /* UploadDeviceTypeTask.cpp */,
+				50E9676A1CC4CC4B00E5BF26 /* UploadDeviceTypeTask.h */,
+				50E9676B1CC4CC4B00E5BF26 /* UploadPopLadyAutoInviteTask.cpp */,
+				50E9676C1CC4CC4B00E5BF26 /* UploadPopLadyAutoInviteTask.h */,
+				50E9676D1CC4CC4B00E5BF26 /* UploadTicketTask.cpp */,
+				50E9676E1CC4CC4B00E5BF26 /* UploadTicketTask.h */,
+				50E9676F1CC4CC4B00E5BF26 /* UploadVerTask.cpp */,
+				50E967701CC4CC4B00E5BF26 /* UploadVerTask.h */,
+				50E967711CC4CC4B00E5BF26 /* UseTryTicketTask.cpp */,
+				50E967721CC4CC4B00E5BF26 /* UseTryTicketTask.h */,
+			);
+			name = livechat;
+			path = "../../../../common-c-library/livechat";
+			sourceTree = "<group>";
+		};
+		50E967111CC4CC4B00E5BF26 /* project */ = {
+			isa = PBXGroup;
+			children = (
+				50E967121CC4CC4B00E5BF26 /* livehcat */,
+			);
+			path = project;
+			sourceTree = "<group>";
+		};
+		50E967121CC4CC4B00E5BF26 /* livehcat */ = {
+			isa = PBXGroup;
+			children = (
+				50E967131CC4CC4B00E5BF26 /* livehcat.cbp */,
+			);
+			path = livehcat;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		505D868B1C7EF748006FDAC7 /* Common-C-Library */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 505D86951C7EF748006FDAC7 /* Build configuration list for PBXNativeTarget "Common-C-Library" */;
+			buildPhases = (
+				505D86881C7EF748006FDAC7 /* Sources */,
+				505D86891C7EF748006FDAC7 /* Frameworks */,
+				505D868A1C7EF748006FDAC7 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Common-C-Library";
+			productName = "Common-C-Library";
+			productReference = 505D868C1C7EF748006FDAC7 /* libCommon-C-Library.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		505D86841C7EF748006FDAC7 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0720;
+				ORGANIZATIONNAME = qpidnetwork;
+				TargetAttributes = {
+					505D868B1C7EF748006FDAC7 = {
+						CreatedOnToolsVersion = 7.2.1;
+						DevelopmentTeam = 5C84LWKER6;
+					};
+				};
+			};
+			buildConfigurationList = 505D86871C7EF748006FDAC7 /* Build configuration list for PBXProject "Common-C-Library" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 505D86831C7EF748006FDAC7;
+			productRefGroup = 505D868D1C7EF748006FDAC7 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				505D868B1C7EF748006FDAC7 /* Common-C-Library */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		505D86881C7EF748006FDAC7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				507FFA2B1C9FD76D0083EC06 /* CheckMemoryList.cpp in Sources */,
+				504CDB6B1C7FE31500DBB429 /* LCPhotoDownloader.cpp in Sources */,
+				D169394C1CE59724001D40E7 /* ManFeeThemeTask.cpp in Sources */,
+				504CDA451C7FDB0500DBB429 /* HttpClient.cpp in Sources */,
+				50E967981CC4CC4B00E5BF26 /* RecvMagicIconTask.cpp in Sources */,
+				504CDA291C7FDA2D00DBB429 /* tinystr.cpp in Sources */,
+				50E967B01CC4CC4B00E5BF26 /* SetStatusTask.cpp in Sources */,
+				501BF3B41C7EFF460052C59F /* KSocket.cpp in Sources */,
+				504CD9FD1C7FD6AF00DBB429 /* pngerror.c in Sources */,
+				50E967861CC4CC4B00E5BF26 /* ILiveChatClient.cpp in Sources */,
+				504CDA081C7FD6AF00DBB429 /* pngwrite.c in Sources */,
+				504CDA541C7FDD7F00DBB429 /* PngReader.cpp in Sources */,
+				501BF3C81C7F00400052C59F /* miniunz.c in Sources */,
+				50E967941CC4CC4B00E5BF26 /* RecvEmotionTask.cpp in Sources */,
+				504CDBD21C7FEB1500DBB429 /* HttpRequestManager.cpp in Sources */,
+				50E967B21CC4CC4B00E5BF26 /* TaskManager.cpp in Sources */,
+				501BF3C91C7F00400052C59F /* minizip.c in Sources */,
+				504CDBD41C7FEB1500DBB429 /* RequestAuthorizationController.cpp in Sources */,
+				501BF3B51C7EFF460052C59F /* KTcpSocket.cpp in Sources */,
+				D169394F1CE59724001D40E7 /* RecvThemeRecommendTask.cpp in Sources */,
+				50E967AC1CC4CC4B00E5BF26 /* SendMsgTask.cpp in Sources */,
+				504CDB791C7FE31500DBB429 /* LCWarningItem.cpp in Sources */,
+				504CDB6C1C7FE31500DBB429 /* LCPhotoItem.cpp in Sources */,
+				50E967851CC4CC4B00E5BF26 /* HearbeatTask.cpp in Sources */,
+				50E9677F1CC4CC4B00E5BF26 /* GetTalkInfoTask.cpp in Sources */,
+				50E9679E1CC4CC4B00E5BF26 /* RecvTryTalkBeginTask.cpp in Sources */,
+				50E967901CC4CC4B00E5BF26 /* RecvAutoChargeResultTask.cpp in Sources */,
+				D169394B1CE59724001D40E7 /* ManApplyThemeTask.cpp in Sources */,
+				D169394A1CE59724001D40E7 /* GetPaidThemeTask.cpp in Sources */,
+				50E9677E1CC4CC4B00E5BF26 /* GetRecentContactListTask.cpp in Sources */,
+				504CDA1F1C7FD6EE00DBB429 /* json_writer.cpp in Sources */,
+				50E967821CC4CC4B00E5BF26 /* GetUsersInfoTask.cpp in Sources */,
+				504CDA341C7FDA4100DBB429 /* AMF3.cpp in Sources */,
+				50E9677A1CC4CC4B00E5BF26 /* GetLadyChatInfoTask.cpp in Sources */,
+				50E967921CC4CC4B00E5BF26 /* RecvEditMsgTask.cpp in Sources */,
+				50E9679D1CC4CC4B00E5BF26 /* RecvTalkEventTask.cpp in Sources */,
+				50E967A91CC4CC4B00E5BF26 /* SendLadyPhotoTask.cpp in Sources */,
+				50E9677C1CC4CC4B00E5BF26 /* GetLadyCustomTemplateTask.cpp in Sources */,
+				50E967831CC4CC4B00E5BF26 /* GetUserStatusTask.cpp in Sources */,
+				504CDA2D1C7FDA2D00DBB429 /* xmltest.cpp in Sources */,
+				507FFA2A1C9FD76D0083EC06 /* CheckMemoryLeak.cpp in Sources */,
+				50E9678F1CC4CC4B00E5BF26 /* PlayVideoTask.cpp in Sources */,
+				50E967A71CC4CC4B00E5BF26 /* SendEmotionTask.cpp in Sources */,
+				504CDB761C7FE31500DBB429 /* LCVideoPhotoDownloader.cpp in Sources */,
+				501BF3B11C7EFF460052C59F /* IAutoLock.cpp in Sources */,
+				504CDB771C7FE31500DBB429 /* LCVoiceItem.cpp in Sources */,
+				50E967761CC4CC4B00E5BF26 /* EndTalkTask.cpp in Sources */,
+				D16939501CE59724001D40E7 /* UploadThemeListVerTask.cpp in Sources */,
+				50E967AD1CC4CC4B00E5BF26 /* SendPhotoTask.cpp in Sources */,
+				504CDB671C7FE31500DBB429 /* LCEmotionManager.cpp in Sources */,
+				501BF3B01C7EFF460052C59F /* CommonFunc.cpp in Sources */,
+				504CDA071C7FD6AF00DBB429 /* pngwio.c in Sources */,
+				504CDA2B1C7FDA2D00DBB429 /* tinyxmlerror.cpp in Sources */,
+				50E967801CC4CC4B00E5BF26 /* GetTalkListTask.cpp in Sources */,
+				50E967751CC4CC4B00E5BF26 /* Counter.cpp in Sources */,
+				504CDB651C7FE31500DBB429 /* LCEmotionDownloader.cpp in Sources */,
+				504CDA061C7FD6AF00DBB429 /* pngtrans.c in Sources */,
+				501BF3AF1C7EFF460052C59F /* command.cpp in Sources */,
+				50E9679F1CC4CC4B00E5BF26 /* RecvTryTalkEndTask.cpp in Sources */,
+				504CDA051C7FD6AF00DBB429 /* pngset.c in Sources */,
+				50E967B61CC4CC4B00E5BF26 /* UpdateStatusTask.cpp in Sources */,
+				50E967BD1CC4CC4B00E5BF26 /* UploadVerTask.cpp in Sources */,
+				504CDB621C7FE31500DBB429 /* ILiveChatManManager.cpp in Sources */,
+				50E9678B1CC4CC4B00E5BF26 /* ITransportPacketHandler.cpp in Sources */,
+				50E967A41CC4CC4B00E5BF26 /* RefreshInviteTemplateTask.cpp in Sources */,
+				504CDBD61C7FEB1500DBB429 /* RequestEMFController.cpp in Sources */,
+				50E967781CC4CC4B00E5BF26 /* GetContactListTask.cpp in Sources */,
+				504CDA1E1C7FD6EE00DBB429 /* json_value.cpp in Sources */,
+				504CDBDB1C7FEB1500DBB429 /* RequestOtherController.cpp in Sources */,
+				50E967771CC4CC4B00E5BF26 /* GetBlockUsersTask.cpp in Sources */,
+				50E967971CC4CC4B00E5BF26 /* RecvLadyVoiceCodeTask.cpp in Sources */,
+				50E967BC1CC4CC4B00E5BF26 /* UploadTicketTask.cpp in Sources */,
+				50E967991CC4CC4B00E5BF26 /* RecvMsgTask.cpp in Sources */,
+				504CDA351C7FDA4100DBB429 /* AmfParser.cpp in Sources */,
+				50E967A81CC4CC4B00E5BF26 /* SendLadyEditingMsgTask.cpp in Sources */,
+				50E967741CC4CC4B00E5BF26 /* CommonParsing.cpp in Sources */,
+				504CDB711C7FE31500DBB429 /* LCUserItem.cpp in Sources */,
+				504CDBDF1C7FEB1500DBB429 /* RequestTicketController.cpp in Sources */,
+				501BF3B31C7EFF460052C59F /* KLog.cpp in Sources */,
+				501BF3AC1C7EFF460052C59F /* Arithmetic.cpp in Sources */,
+				505D86921C7EF748006FDAC7 /* Common_C_Library.mm in Sources */,
+				504CDBD91C7FEB1500DBB429 /* RequestLiveChatController.cpp in Sources */,
+				50E967911CC4CC4B00E5BF26 /* RecvAutoInviteTask.cpp in Sources */,
+				504CD9FC1C7FD6AF00DBB429 /* png.c in Sources */,
+				50E967AA1CC4CC4B00E5BF26 /* SendLadyVideoTask.cpp in Sources */,
+				50E9679C1CC4CC4B00E5BF26 /* RecvShowVideoTask.cpp in Sources */,
+				50E9678D1CC4CC4B00E5BF26 /* LiveChatClient.cpp in Sources */,
+				50E967A51CC4CC4B00E5BF26 /* ReplyIdentifyCodeTask.cpp in Sources */,
+				504CDB681C7FE31500DBB429 /* LCInviteManager.cpp in Sources */,
+				504CDBD81C7FEB1500DBB429 /* RequestLadyController.cpp in Sources */,
+				504CDA481C7FDB0500DBB429 /* HttpRequest.cpp in Sources */,
+				504CDB741C7FE31500DBB429 /* LCVideoItem.cpp in Sources */,
+				504CD9FF1C7FD6AF00DBB429 /* pngmem.c in Sources */,
+				501BF3CC1C7F00400052C59F /* zip.c in Sources */,
+				D16939491CE59724001D40E7 /* GetAllPaidThemeTask.cpp in Sources */,
+				50E967A61CC4CC4B00E5BF26 /* SearchOnlineManTask.cpp in Sources */,
+				504CD9FE1C7FD6AF00DBB429 /* pngget.c in Sources */,
+				50E9677B1CC4CC4B00E5BF26 /* GetLadyConditionTask.cpp in Sources */,
+				504CDA021C7FD6AF00DBB429 /* pngrio.c in Sources */,
+				504CDB6A1C7FE31500DBB429 /* LCMessageItem.cpp in Sources */,
+				504CDBDA1C7FEB1500DBB429 /* RequestLoveCallController.cpp in Sources */,
+				504CDB781C7FE31500DBB429 /* LCVoiceManager.cpp in Sources */,
+				50E967871CC4CC4B00E5BF26 /* ISocketHandler.cpp in Sources */,
+				50E967811CC4CC4B00E5BF26 /* GetUserInfoTask.cpp in Sources */,
+				504CDBDC1C7FEB1500DBB429 /* RequestProfileController.cpp in Sources */,
+				504CDA001C7FD6AF00DBB429 /* pngpread.c in Sources */,
+				501BF3B81C7EFF460052C59F /* KZip.cpp in Sources */,
+				50E967B41CC4CC4B00E5BF26 /* TransportDataHandler.cpp in Sources */,
+				504CDA091C7FD6AF00DBB429 /* pngwtran.c in Sources */,
+				501BF3B61C7EFF460052C59F /* KThread.cpp in Sources */,
+				502D6FA61CA8D883000547F8 /* LadyDetail.cpp in Sources */,
+				50E967BA1CC4CC4B00E5BF26 /* UploadDeviceTypeTask.cpp in Sources */,
+				50E967841CC4CC4B00E5BF26 /* GetVoiceCodeTask.cpp in Sources */,
+				504CDB6E1C7FE31500DBB429 /* LCSystemItem.cpp in Sources */,
+				50E967A01CC4CC4B00E5BF26 /* RecvVideoTask.cpp in Sources */,
+				504CDA0A1C7FD6AF00DBB429 /* pngwutil.c in Sources */,
+				504CDA461C7FDB0500DBB429 /* HttpDownloader.cpp in Sources */,
+				504CDB6D1C7FE31500DBB429 /* LCPhotoManager.cpp in Sources */,
+				504CDBD11C7FEB1500DBB429 /* HttpRequestHostManager.cpp in Sources */,
+				504CDB721C7FE31500DBB429 /* LCUserManager.cpp in Sources */,
+				50E967AE1CC4CC4B00E5BF26 /* SendVGiftTask.cpp in Sources */,
+				50E967961CC4CC4B00E5BF26 /* RecvKickOfflineTask.cpp in Sources */,
+				504CDB751C7FE31500DBB429 /* LCVideoManager.cpp in Sources */,
+				504CDBD31C7FEB1500DBB429 /* RequestAdvertController.cpp in Sources */,
+				50E967AB1CC4CC4B00E5BF26 /* SendMagicIconTask.cpp in Sources */,
+				50E967A21CC4CC4B00E5BF26 /* RecvWarningTask.cpp in Sources */,
+				50E967931CC4CC4B00E5BF26 /* RecvEMFNoticeTask.cpp in Sources */,
+				50E967951CC4CC4B00E5BF26 /* RecvIdentifyCodeTask.cpp in Sources */,
+				50E9678C1CC4CC4B00E5BF26 /* JniIntToType.cpp in Sources */,
+				504CDA2C1C7FDA2D00DBB429 /* tinyxmlparser.cpp in Sources */,
+				D169394D1CE59724001D40E7 /* PlayThemeMotionTask.cpp in Sources */,
+				501BF3B21C7EFF460052C59F /* IPAddress.cpp in Sources */,
+				501BF3CA1C7F00400052C59F /* mztools.c in Sources */,
+				504CDA4A1C7FDB0500DBB429 /* HttpRequestManager.cpp in Sources */,
+				50E967B51CC4CC4B00E5BF26 /* TransportPacketHandler.cpp in Sources */,
+				D14A7F3F1CF99A4A00135FA3 /* LCCustomItem.cpp in Sources */,
+				501BF3CB1C7F00400052C59F /* unzip.c in Sources */,
+				504CDB7A1C7FE31500DBB429 /* LCWarningLinkItem.cpp in Sources */,
+				504CDB6F1C7FE31500DBB429 /* LCTextItem.cpp in Sources */,
+				501BF3B91C7EFF460052C59F /* md5.c in Sources */,
+				504CDA031C7FD6AF00DBB429 /* pngrtran.c in Sources */,
+				504CDA011C7FD6AF00DBB429 /* pngread.c in Sources */,
+				501BF3C71C7F00400052C59F /* ioapi.c in Sources */,
+				504CDBE01C7FEB1500DBB429 /* RequestVideoShowController.cpp in Sources */,
+				50E967BB1CC4CC4B00E5BF26 /* UploadPopLadyAutoInviteTask.cpp in Sources */,
+				504CDA2A1C7FDA2D00DBB429 /* tinyxml.cpp in Sources */,
+				504CDB691C7FE31500DBB429 /* LCMessageFilter.cpp in Sources */,
+				504CDB731C7FE31500DBB429 /* LCVideoDownloader.cpp in Sources */,
+				50E967791CC4CC4B00E5BF26 /* GetFeeRecentContactListTask.cpp in Sources */,
+				504CDBD71C7FEB1500DBB429 /* RequestEnumDefine.cpp in Sources */,
+				50E967731CC4CC4B00E5BF26 /* CheckVerTask.cpp in Sources */,
+				504CDBD51C7FEB1500DBB429 /* RequestBaseController.cpp in Sources */,
+				504CDA041C7FD6AF00DBB429 /* pngrutil.c in Sources */,
+				50E967A31CC4CC4B00E5BF26 /* RefreshIdentifyCodeTask.cpp in Sources */,
+				50E967BE1CC4CC4B00E5BF26 /* UseTryTicketTask.cpp in Sources */,
+				504CDA531C7FDD7F00DBB429 /* PngHandler.cpp in Sources */,
+				50E967B11CC4CC4B00E5BF26 /* ShowPhotoTask.cpp in Sources */,
+				50E9677D1CC4CC4B00E5BF26 /* GetLadyVoiceCodeTask.cpp in Sources */,
+				50E967AF1CC4CC4B00E5BF26 /* SendVoiceTask.cpp in Sources */,
+				504CDA551C7FDD7F00DBB429 /* PngWriter.cpp in Sources */,
+				504CDA471C7FDB0500DBB429 /* HttpEntiy.cpp in Sources */,
+				50E967A11CC4CC4B00E5BF26 /* RecvVoiceTask.cpp in Sources */,
+				504CDB7B1C7FE31500DBB429 /* LiveChatManManager.cpp in Sources */,
+				D169394E1CE59724001D40E7 /* RecvThemeMotionTask.cpp in Sources */,
+				504CDA1D1C7FD6EE00DBB429 /* json_reader.cpp in Sources */,
+				50E9679B1CC4CC4B00E5BF26 /* RecvShowPhotoTask.cpp in Sources */,
+				504CDB631C7FE31500DBB429 /* LCBlockManager.cpp in Sources */,
+				50E967891CC4CC4B00E5BF26 /* IThreadHandler.cpp in Sources */,
+				50E9679A1CC4CC4B00E5BF26 /* RecvPhotoTask.cpp in Sources */,
+				501BF3AB1C7EFF460052C59F /* aes.c in Sources */,
+				504CDBDD1C7FEB1500DBB429 /* RequestQuickMatchController.cpp in Sources */,
+				504CDBDE1C7FEB1500DBB429 /* RequestSettingController.cpp in Sources */,
+				50E967B71CC4CC4B00E5BF26 /* UpdateTicketTask.cpp in Sources */,
+				50E9678A1CC4CC4B00E5BF26 /* ITransportDataHandler.cpp in Sources */,
+				50E9678E1CC4CC4B00E5BF26 /* LoginTask.cpp in Sources */,
+				50E967B31CC4CC4B00E5BF26 /* TaskMapManager.cpp in Sources */,
+				504CDB661C7FE31500DBB429 /* LCEmotionItem.cpp in Sources */,
+				504CDB701C7FE31500DBB429 /* LCTextManager.cpp in Sources */,
+				504CDA491C7FDB0500DBB429 /* HttpRequestHostManager.cpp in Sources */,
+				50E967881CC4CC4B00E5BF26 /* ITask.cpp in Sources */,
+				50E967B81CC4CC4B00E5BF26 /* UploadAutoChargeStatusTask.cpp in Sources */,
+				50E967B91CC4CC4B00E5BF26 /* UploadDeviceIdTask.cpp in Sources */,
+				504CDB641C7FE31500DBB429 /* LCContactManager.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		505D86931C7EF748006FDAC7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		505D86941C7EF748006FDAC7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		505D86961C7EF748006FDAC7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMMON_C_CURL_ROOT = "${SRCROOT}/third-party/curl";
+				COMMON_C_SRC_ROOT = "${SRCROOT}/../../../common-c-library";
+				COMMON_C_SRC_THIRD_PARTY_ROOT = "${COMMON_C_SRC_ROOT}/third_party";
+				GCC_INPUT_FILETYPE = automatic;
+				HEADER_SEARCH_PATHS = (
+					"${COMMON_C_CURL_ROOT}/include",
+					"${COMMON_C_SRC_ROOT}",
+					"${COMMON_C_SRC_THIRD_PARTY_ROOT}",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"${COMMON_C_CURL_ROOT}/lib/${PLATFORM_NAME}/${NATIVE_ARCH}",
+				);
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_CFLAGS = (
+					"-DIOS",
+					"-fpermissive",
+					"-DPRINT_JNI_LOG",
+					"-DFILE_JNI_LOG",
+				);
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				WARNING_CFLAGS = "-Wno-shorten-64-to-32";
+			};
+			name = Debug;
+		};
+		505D86971C7EF748006FDAC7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMMON_C_CURL_ROOT = "${SRCROOT}/third-party/curl";
+				COMMON_C_SRC_ROOT = "${SRCROOT}/../../../common-c-library";
+				COMMON_C_SRC_THIRD_PARTY_ROOT = "${COMMON_C_SRC_ROOT}/third_party";
+				GCC_INPUT_FILETYPE = automatic;
+				HEADER_SEARCH_PATHS = (
+					"${COMMON_C_CURL_ROOT}/include",
+					"${COMMON_C_SRC_ROOT}",
+					"${COMMON_C_SRC_THIRD_PARTY_ROOT}",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"${COMMON_C_CURL_ROOT}/lib/${PLATFORM_NAME}/${NATIVE_ARCH}",
+				);
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_CFLAGS = (
+					"-DIOS",
+					"-fpermissive",
+				);
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				WARNING_CFLAGS = "-Wno-shorten-64-to-32";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		505D86871C7EF748006FDAC7 /* Build configuration list for PBXProject "Common-C-Library" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				505D86931C7EF748006FDAC7 /* Debug */,
+				505D86941C7EF748006FDAC7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		505D86951C7EF748006FDAC7 /* Build configuration list for PBXNativeTarget "Common-C-Library" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				505D86961C7EF748006FDAC7 /* Debug */,
+				505D86971C7EF748006FDAC7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 505D86841C7EF748006FDAC7 /* Project object */;
+}

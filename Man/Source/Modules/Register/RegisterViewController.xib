@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="RegisterViewController">
+            <connections>
+                <outlet property="continueBtn" destination="Srm-aA-5Cu" id="ov3-VG-KNk"/>
+                <outlet property="continueBtnBottom" destination="JRj-nk-KIq" id="9mL-tH-URj"/>
+                <outlet property="photoLabel" destination="66n-fr-kFA" id="axl-q7-d2h"/>
+                <outlet property="tableView" destination="8DT-45-ewl" id="Nog-Af-l60"/>
+                <outlet property="topHeight" destination="Dly-2g-enG" id="wI7-93-Ls5"/>
+                <outlet property="topImageView" destination="b9x-hf-13E" id="eEI-19-cXY"/>
+                <outlet property="topView" destination="t7x-9q-0lF" id="p3E-m0-ZRh"/>
+                <outlet property="topViewTop" destination="AdJ-vY-Cs2" id="eCf-h8-8ce"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="64" width="414" height="672"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="8DT-45-ewl" userLabel="中间内容">
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="622"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="y4U-Sy-gxn"/>
+                        <outlet property="delegate" destination="-1" id="HAj-pD-WhZ"/>
+                    </connections>
+                </tableView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Srm-aA-5Cu" userLabel="下一页按钮">
+                    <rect key="frame" x="0.0" y="622" width="414" height="50"/>
+                    <color key="backgroundColor" red="0.071951680810000002" green="0.64821803649999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="50" id="Z8G-Qp-ITX"/>
+                    </constraints>
+                    <state key="normal" title="Continue"/>
+                    <connections>
+                        <action selector="continue2NextPage:" destination="-1" eventType="touchUpInside" id="A80-9G-xCH"/>
+                    </connections>
+                </button>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="t7x-9q-0lF" userLabel="顶部视图">
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="150"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="b9x-hf-13E">
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="150"/>
+                            <color key="backgroundColor" red="0.074509803921568626" green="0.5725490196078431" blue="0.90980392156862744" alpha="1" colorSpace="calibratedRGB"/>
+                        </imageView>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="66n-fr-kFA" userLabel="图片按钮">
+                            <rect key="frame" x="10" y="106" width="105" height="34"/>
+                            <state key="normal" title="+ Your Photo"/>
+                            <connections>
+                                <action selector="choosePhoto:" destination="-1" eventType="touchUpInside" id="MQF-Y7-vsi"/>
+                            </connections>
+                        </button>
+                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Register-UploadPhoto" translatesAutoresizingMaskIntoConstraints="NO" id="JV2-iL-sLw" userLabel="图片">
+                            <rect key="frame" x="10" y="18" width="80" height="80"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="80" id="5ct-s3-T4a"/>
+                                <constraint firstAttribute="width" constant="80" id="gVF-IV-Yy6"/>
+                            </constraints>
+                        </imageView>
+                    </subviews>
+                    <color key="backgroundColor" red="0.074509803921568626" green="0.68235294117647061" blue="0.9137254901960784" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="b9x-hf-13E" secondAttribute="trailing" id="8em-R4-hgP"/>
+                        <constraint firstAttribute="height" constant="150" id="Dly-2g-enG"/>
+                        <constraint firstItem="JV2-iL-sLw" firstAttribute="leading" secondItem="66n-fr-kFA" secondAttribute="leading" id="H1L-gZ-1uU"/>
+                        <constraint firstItem="b9x-hf-13E" firstAttribute="top" secondItem="t7x-9q-0lF" secondAttribute="top" id="I6H-2o-lkr"/>
+                        <constraint firstItem="66n-fr-kFA" firstAttribute="top" secondItem="JV2-iL-sLw" secondAttribute="bottom" constant="8" id="Q9V-JU-VDX"/>
+                        <constraint firstAttribute="bottom" secondItem="b9x-hf-13E" secondAttribute="bottom" id="Qdc-46-5jh"/>
+                        <constraint firstItem="JV2-iL-sLw" firstAttribute="top" secondItem="t7x-9q-0lF" secondAttribute="top" constant="18" id="VIR-Er-VsM"/>
+                        <constraint firstAttribute="bottom" secondItem="66n-fr-kFA" secondAttribute="bottom" constant="10" id="eai-2g-WYx"/>
+                        <constraint firstItem="66n-fr-kFA" firstAttribute="leading" secondItem="t7x-9q-0lF" secondAttribute="leading" constant="10" id="gD9-E9-Qy4"/>
+                        <constraint firstItem="b9x-hf-13E" firstAttribute="leading" secondItem="t7x-9q-0lF" secondAttribute="leading" id="twb-zr-BJm"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="t7x-9q-0lF" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="AdJ-vY-Cs2"/>
+                <constraint firstItem="8DT-45-ewl" firstAttribute="trailing" secondItem="i5M-Pr-FkT" secondAttribute="trailing" id="ImT-gp-FAl"/>
+                <constraint firstItem="Srm-aA-5Cu" firstAttribute="bottom" secondItem="i5M-Pr-FkT" secondAttribute="bottom" id="JRj-nk-KIq"/>
+                <constraint firstItem="t7x-9q-0lF" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="YpE-S2-VpG"/>
+                <constraint firstItem="Srm-aA-5Cu" firstAttribute="trailing" secondItem="i5M-Pr-FkT" secondAttribute="trailing" id="aFm-Sq-iZT"/>
+                <constraint firstItem="Srm-aA-5Cu" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="isz-xo-zDb"/>
+                <constraint firstItem="8DT-45-ewl" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="lt4-3m-n88"/>
+                <constraint firstItem="Srm-aA-5Cu" firstAttribute="top" secondItem="8DT-45-ewl" secondAttribute="bottom" id="uv8-M4-yHL"/>
+                <constraint firstItem="8DT-45-ewl" firstAttribute="top" secondItem="t7x-9q-0lF" secondAttribute="bottom" constant="-150" id="wc3-tY-rXK"/>
+                <constraint firstItem="t7x-9q-0lF" firstAttribute="trailing" secondItem="i5M-Pr-FkT" secondAttribute="trailing" id="wqX-ze-REd"/>
+            </constraints>
+            <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
+            <point key="canvasLocation" x="347" y="354"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="Register-UploadPhoto" width="73" height="73"/>
+    </resources>
+</document>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="RegisterSecondStepViewController">
+            <connections>
+                <outlet property="activityLoad" destination="iDe-yH-kfU" id="o3u-No-fYD"/>
+                <outlet property="bottomNum" destination="Q7L-NL-Yzu" id="uxK-0f-1xU"/>
+                <outlet property="finishBtn" destination="Cim-KU-DCf" id="DqB-qh-l6X"/>
+                <outlet property="tableView" destination="D7A-7A-xaR" id="emc-Pg-8Vr"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="64" width="414" height="672"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="D7A-7A-xaR" userLabel="内容">
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="622"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="CIG-my-Gts"/>
+                        <outlet property="delegate" destination="-1" id="iMc-qx-Ch4"/>
+                    </connections>
+                </tableView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cim-KU-DCf" userLabel="创建账号">
+                    <rect key="frame" x="0.0" y="622" width="414" height="50"/>
+                    <color key="backgroundColor" red="0.074509803921568626" green="0.68235294117647061" blue="0.9137254901960784" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="50" id="ijZ-cd-SWR"/>
+                    </constraints>
+                    <state key="normal" title="Create account"/>
+                    <connections>
+                        <action selector="createAccount:" destination="-1" eventType="touchUpInside" id="bMv-Gy-vza"/>
+                    </connections>
+                </button>
+                <view alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="J72-OQ-oRg" userLabel="LoadingView">
+                    <rect key="frame" x="167" y="296" width="80" height="80"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="80" id="a4t-Pb-YIA"/>
+                        <constraint firstAttribute="width" constant="80" id="ltw-CI-btU"/>
+                    </constraints>
+                </view>
+                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="iDe-yH-kfU">
+                    <rect key="frame" x="189" y="317" width="37" height="37"/>
+                    <color key="color" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                </activityIndicatorView>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="D7A-7A-xaR" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="0hS-iS-b0e"/>
+                <constraint firstItem="D7A-7A-xaR" firstAttribute="trailing" secondItem="i5M-Pr-FkT" secondAttribute="trailing" id="34b-zU-Lk1"/>
+                <constraint firstItem="Cim-KU-DCf" firstAttribute="trailing" secondItem="i5M-Pr-FkT" secondAttribute="trailing" id="B4u-7T-cbc"/>
+                <constraint firstItem="Cim-KU-DCf" firstAttribute="bottom" secondItem="i5M-Pr-FkT" secondAttribute="bottom" id="Q7L-NL-Yzu"/>
+                <constraint firstItem="iDe-yH-kfU" firstAttribute="centerX" secondItem="J72-OQ-oRg" secondAttribute="centerX" id="UYb-mN-xPI"/>
+                <constraint firstItem="D7A-7A-xaR" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="ZvE-Rm-1Uy"/>
+                <constraint firstItem="J72-OQ-oRg" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="aSb-Il-Fe6"/>
+                <constraint firstItem="J72-OQ-oRg" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="btN-KK-Tlp"/>
+                <constraint firstItem="iDe-yH-kfU" firstAttribute="centerY" secondItem="J72-OQ-oRg" secondAttribute="centerY" id="hC5-HG-AZj"/>
+                <constraint firstItem="Cim-KU-DCf" firstAttribute="top" secondItem="D7A-7A-xaR" secondAttribute="bottom" id="pD9-XJ-Hth"/>
+                <constraint firstItem="Cim-KU-DCf" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="rIN-TG-LT4"/>
+            </constraints>
+            <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
+            <point key="canvasLocation" x="-78" y="420"/>
+        </view>
+    </objects>
+</document>

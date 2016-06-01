@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="gray" indentationWidth="10" reuseIdentifier="CommonContentTableViewCell" id="KGk-i7-Jjw" customClass="CommonContentTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="120"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="119"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ubh-fa-0cK" userLabel="编辑">
+                        <rect key="frame" x="291" y="5" width="24" height="24"/>
+                        <state key="normal" image="MyProfile-Edit"/>
+                        <connections>
+                            <action selector="edit:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="gEZ-Rs-2sQ"/>
+                        </connections>
+                    </button>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="YOUR SELF-DESCRIPTION" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n35-gQ-bxK" userLabel="你的自我描述">
+                        <rect key="frame" x="10" y="5" width="158" height="15"/>
+                        <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Cek-rB-XvT">
+                        <rect key="frame" x="10" y="27" width="305" height="82"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done"/>
+                    </textView>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="n35-gQ-bxK" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="3j9-vw-Jqm"/>
+                    <constraint firstItem="Ubh-fa-0cK" firstAttribute="top" secondItem="n35-gQ-bxK" secondAttribute="top" id="BfD-65-b0t"/>
+                    <constraint firstAttribute="trailing" secondItem="Cek-rB-XvT" secondAttribute="trailing" constant="5" id="F3H-Zg-RVh"/>
+                    <constraint firstAttribute="trailing" secondItem="Cek-rB-XvT" secondAttribute="trailing" constant="10" id="Vne-J0-sND"/>
+                    <constraint firstItem="Cek-rB-XvT" firstAttribute="top" secondItem="n35-gQ-bxK" secondAttribute="bottom" constant="7" id="aA6-hW-t0V"/>
+                    <constraint firstItem="Cek-rB-XvT" firstAttribute="leading" secondItem="n35-gQ-bxK" secondAttribute="leading" id="i4h-aG-MLI"/>
+                    <constraint firstAttribute="bottom" secondItem="Cek-rB-XvT" secondAttribute="bottom" constant="10" id="iOj-9t-kcb"/>
+                    <constraint firstItem="Cek-rB-XvT" firstAttribute="leading" secondItem="n35-gQ-bxK" secondAttribute="leading" id="rZw-6F-ws8"/>
+                    <constraint firstItem="Cek-rB-XvT" firstAttribute="top" secondItem="n35-gQ-bxK" secondAttribute="bottom" constant="7" id="tyh-Oc-Kgz"/>
+                    <constraint firstItem="n35-gQ-bxK" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="vf4-TX-8ew"/>
+                    <constraint firstAttribute="trailing" secondItem="Ubh-fa-0cK" secondAttribute="trailing" constant="5" id="wcm-Yz-b5O"/>
+                </constraints>
+                <variation key="default">
+                    <mask key="constraints">
+                        <exclude reference="Vne-J0-sND"/>
+                        <exclude reference="aA6-hW-t0V"/>
+                        <exclude reference="rZw-6F-ws8"/>
+                    </mask>
+                </variation>
+            </tableViewCellContentView>
+            <edgeInsets key="layoutMargins" top="8" left="0.0" bottom="8" right="8"/>
+            <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+            <connections>
+                <outlet property="descriptionLabel" destination="n35-gQ-bxK" id="uc5-kx-MTe"/>
+                <outlet property="detailText" destination="Cek-rB-XvT" id="qMx-oC-xjB"/>
+                <outlet property="editBtn" destination="Ubh-fa-0cK" id="xj5-d5-M4y"/>
+            </connections>
+            <point key="canvasLocation" x="1073" y="711"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="MyProfile-Edit" width="24" height="24"/>
+    </resources>
+</document>
