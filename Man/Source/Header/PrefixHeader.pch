@@ -24,12 +24,9 @@
 #import "FileCacheManager.h"
 #import "AppDelegate.h"
 
-#import "UIView+Ellipsis.h"
-#import "UIScrollView+Ellipsis.h"
 #import <objc/message.h>
 #import "UIImage+Circle.h"
 
 
-NSString * const userDefaultKeyRecent = @"recentList";
 
 #endif /* PrefixHeader_pch */

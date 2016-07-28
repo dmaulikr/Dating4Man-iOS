@@ -16,8 +16,4 @@
     }
     return self;
 }
-//- (void)setEmotion:(ChatEmotion *)emotion {
-//    _emotion = emotion;
-//    self.image = emotion.image;
-//}
 @end

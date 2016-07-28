@@ -27,6 +27,10 @@
 -(NSString*)toString2YMDHM;
 // NsDate to NSString. ie if(today){ hh:mm } else { yy-mm-dd }
 -(NSString*)toStringToday;
+/** CrashFileDate */
+-(NSString*)toStringCrashDate;
+/** CrashZipDate */
+-(NSString*)toStringCrashZipDate;
 
 // return the time set for start hour. ie yyyy-mm-dd 00:00:00
 -(NSDate*)getDayStartTime;

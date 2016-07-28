@@ -15,7 +15,7 @@
 }
 //高度
 + (NSInteger)cellHeight {
-    return 56;
+    return 74;
 }
 //根据标识符创建
 + (id)getUITableViewCell:(UITableView*)tableView {
@@ -26,6 +26,9 @@
         cell = [nib objectAtIndex:0];
     }
     
+    
+    cell.bgView.layer.cornerRadius = 8.0f;
+    cell.bgView.layer.masksToBounds = YES;
     cell.profileMessage.text = @"";
     [cell.profileLocation setTitle:@"" forState:UIControlStateNormal];
     

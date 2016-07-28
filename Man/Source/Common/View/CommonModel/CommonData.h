@@ -14,4 +14,6 @@
 @property (nonatomic,strong) NSString *creditLevel;
 /** credits价钱 */
 @property (nonatomic,strong) NSString *creditPrice;
+/** 套餐 */
+@property (nonatomic,strong) NSString *creditSet;
 @end

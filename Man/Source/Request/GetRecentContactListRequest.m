@@ -31,11 +31,10 @@
     return NO;
 }
 
-- (void)callRespond:(NSString* _Nullable)errnum errmsg:(NSString* _Nullable)errmsg {
-    if( self.finishHandler ) {
+- (void)callRespond:(BOOL)success errnum:(NSString* _Nullable)errnum errmsg:(NSString* _Nullable)errmsg {
+    if( self.finishHandler && !success ) {
         NSArray* array = [NSArray array];
-        self.finishHandler(YES, array, errnum, errmsg);
+        self.finishHandler(NO, array, errnum, errmsg);
     }
 }
-
 @end

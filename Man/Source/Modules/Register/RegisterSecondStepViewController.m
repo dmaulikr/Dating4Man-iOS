@@ -11,12 +11,28 @@
 #import "CommonTextFieldTableViewCell.h"
 #import "RequestManager.h"
 #import "RegisterProfileObject.h"
-#import "CreditsTipView.h"
 #import "CoverView.h"
 #import "FileCacheManager.h"
 #import "ConfigManager.h"
+#import "ServerManager.h"
+#import "LoginManager.h"
 #import "SessionRequestManager.h"
 #import "UploadHeaderPhoto.h"
+
+
+typedef enum : NSUInteger {
+    RegisterAccountTypeEmail,
+    RegisterAccountTypePassword,
+    RegisterAccountTypeCheckPassword
+} RegisterAccountType;
+
+
+typedef enum : NSUInteger {
+    RegisterTipTypeSuccess = 9009,
+    RegisterTipTypeFail,
+    RegisterTipTypeOther,
+} RegisterTipType;
+
 
 
 @interface RegisterSecondStepViewController ()<UITextFieldDelegate,UIAlertViewDelegate>{
@@ -40,39 +56,22 @@
 /** 任务管理 */
 @property (nonatomic,strong) SessionRequestManager *sessionManager;
 
-/** <#detail#> */
+/** tips */
 @property (nonatomic,strong) UIAlertView *alertView;
+
+/** <#detail#> */
+@property (nonatomic,strong) NSArray *tableViewArray;
 
 @end
 
 @implementation RegisterSecondStepViewController
-
-#pragma mark - lazy
-- (NSArray *)dataName{
-    if (!_dataName) {
-        _dataName = @[@"Your email address     |",
-                      @"Your password",
-                      @"Confirm password"];
-    }
-    return _dataName;
-}
-
-- (NSArray *)placeholderText{
-    if (!_placeholderText) {
-        _placeholderText = @[@"e.g@domain.com",
-                             @"Enter",
-                             @"Enter"
-                             ];
-    }
-    return _placeholderText;
-}
 
 
 #pragma mark - view生命周期
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.activityLoad.hidden = YES;
+
     
 
 }
@@ -97,11 +96,14 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
     
+    self.loadingView.hidden = YES;
+    [self reloadData:YES];
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
-    [self reloadData:YES];
+ 
 }
 
 
@@ -113,8 +115,8 @@
 }
 
 #pragma mark - 界面逻辑
-- (void)initNavigationItems {
-    self.customBackTitle = @"step1";
+- (void)initCustomParam {
+    [super initCustomParam];
 }
 
 //设置导航栏
@@ -122,7 +124,7 @@
     [super setupNavigationBar];
     UILabel *Register = [[UILabel alloc] init];
     Register.textColor = [UIColor whiteColor];
-    Register.text = @"Register";
+    Register.text = NSLocalizedString(@"Register", nil);
     [Register sizeToFit];
     self.navigationItem.titleView = Register;
 
@@ -130,12 +132,12 @@
 }
 
 - (void)setupTableView {
-    self.tableView.separatorColor = [UIColor grayColor];
+//    self.tableView.separatorColor = [UIColor grayColor];
     
-    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 1)];
-    headerView.backgroundColor = self.tableView.separatorColor;
-    headerView.alpha = 0.4f;
-    [self.tableView setTableHeaderView:headerView];
+//    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 1)];
+//    headerView.backgroundColor = self.tableView.separatorColor;
+//    headerView.alpha = 0.4f;
+//    [self.tableView setTableHeaderView:headerView];
     
     UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
     [self.tableView setTableFooterView:footerView];
@@ -149,7 +151,36 @@
 
 #pragma mark - 数据逻辑
 - (void)reloadData:(BOOL)isReloadView{
-
+    // 主tableView
+    NSMutableArray *array = [NSMutableArray array];
+    
+    NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
+    CGSize viewSize;
+    NSValue *rowSize;
+    
+    dictionary = [NSMutableDictionary dictionary];
+    viewSize = CGSizeMake(self.tableView.frame.size.width, [CommonTextFieldTableViewCell cellHeight]);
+    rowSize = [NSValue valueWithCGSize:viewSize];
+    [dictionary setValue:rowSize forKey:ROW_SIZE];
+    [dictionary setValue:[NSNumber numberWithInteger:RegisterAccountTypeEmail] forKey:ROW_TYPE];
+    [array addObject:dictionary];
+    
+    dictionary = [NSMutableDictionary dictionary];
+    viewSize = CGSizeMake(self.tableView.frame.size.width, [CommonTextFieldTableViewCell cellHeight]);
+    rowSize = [NSValue valueWithCGSize:viewSize];
+    [dictionary setValue:rowSize forKey:ROW_SIZE];
+    [dictionary setValue:[NSNumber numberWithInteger:RegisterAccountTypePassword] forKey:ROW_TYPE];
+    [array addObject:dictionary];
+    
+    dictionary = [NSMutableDictionary dictionary];
+    viewSize = CGSizeMake(self.tableView.frame.size.width, [CommonTextFieldTableViewCell cellHeight]);
+    rowSize = [NSValue valueWithCGSize:viewSize];
+    [dictionary setValue:rowSize forKey:ROW_SIZE];
+    [dictionary setValue:[NSNumber numberWithInteger:RegisterAccountTypeCheckPassword] forKey:ROW_TYPE];
+    [array addObject:dictionary];
+    
+    self.tableViewArray = array;
+    
     if (isReloadView) {
         [self.tableView reloadData];
     }
@@ -169,34 +200,100 @@
     NSInteger number = 0;
     if([tableView isEqual:self.tableView]) {
         // 主tableview
-        number = self.dataName.count;
+        number = self.tableViewArray.count;
     }
     return number;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    CGFloat height = 0;
+    if([tableView isEqual:self.tableView]) {
+        // 主tableview
+        NSDictionary *dictionarry = [self.tableViewArray objectAtIndex:indexPath.row];
+        CGSize viewSize;
+        NSValue *value = [dictionarry valueForKey:ROW_SIZE];
+        [value getValue:&viewSize];
+        height = viewSize.height;
+    }
+    
+    return height;
+}
+
+
+
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
 
-    UITableViewCell *result = nil;
-    CommonTextFieldTableViewCell *commomTextCell = [CommonTextFieldTableViewCell getUITableViewCell:tableView];
-    result = commomTextCell;
-    commomTextCell.detailLabel.text = self.dataName[indexPath.row];
-    commomTextCell.contentTextField.placeholder = self.placeholderText[indexPath.row];
-    [commomTextCell setSelectionStyle:UITableViewCellSelectionStyleNone];
-    if (indexPath.row == 0) {
-        self.emailTextField  = commomTextCell.contentTextField;
-        self.emailTextField.delegate = self;
-    }else if (indexPath.row == 1){
-        self.passwordTextField = commomTextCell.contentTextField;
-        self.passwordTextField.delegate = self;
-        self.passwordTextField.secureTextEntry = YES;
-    }else{
-        commomTextCell.contentTextField.returnKeyType = UIReturnKeyDone;
-        self.checkPasswordTextField = commomTextCell.contentTextField;
-        self.checkPasswordTextField.delegate = self;
-        self.checkPasswordTextField.secureTextEntry = YES;
+//    UITableViewCell *result = nil;
+//    CommonTextFieldTableViewCell *commomTextCell = [CommonTextFieldTableViewCell getUITableViewCell:tableView];
+//    result = commomTextCell;
+//    commomTextCell.detailLabel.text = self.dataName[indexPath.row];
+//    commomTextCell.contentTextField.placeholder = self.placeholderText[indexPath.row];
+//    [commomTextCell setSelectionStyle:UITableViewCellSelectionStyleNone];
+//    if (indexPath.row == 0) {
+//        self.emailTextField  = commomTextCell.contentTextField;
+//        self.emailTextField.delegate = self;
+//    }else if (indexPath.row == 1){
+//        self.passwordTextField = commomTextCell.contentTextField;
+//        self.passwordTextField.delegate = self;
+//        self.passwordTextField.secureTextEntry = YES;
+//    }else{
+//        commomTextCell.contentTextField.returnKeyType = UIReturnKeyDone;
+//        self.checkPasswordTextField = commomTextCell.contentTextField;
+//        self.checkPasswordTextField.delegate = self;
+//        self.checkPasswordTextField.secureTextEntry = YES;
+//    }
+// 
+//    return result;
+    
+
+        UITableViewCell *result = nil;
+    if([tableView isEqual:self.tableView]) {
+        // 主tableview
+        NSDictionary *dictionarry = [self.tableViewArray objectAtIndex:indexPath.row];
+        
+        // 大小
+        CGSize viewSize;
+        NSValue *value = [dictionarry valueForKey:ROW_SIZE];
+        [value getValue:&viewSize];
+        CommonTextFieldTableViewCell *commomCell = [CommonTextFieldTableViewCell getUITableViewCell:tableView];
+        result = commomCell;
+        [commomCell setSelectionStyle:UITableViewCellSelectionStyleNone];
+        
+        // 类型
+        RegisterAccountType type = (RegisterAccountType)[[dictionarry valueForKey:ROW_TYPE] intValue];
+        switch (type) {
+            case RegisterAccountTypeEmail:{
+                    commomCell.detailLabel.text = NSLocalizedStringFromSelf(@"YOUR_EMAIL_ADDRESS");
+                    commomCell.contentTextField.placeholder = NSLocalizedStringFromSelf(@"EMAIL_PLACEHOLDER");
+                        self.emailTextField  = commomCell.contentTextField;
+                        self.emailTextField.delegate = self;
+
+            }break;
+            case RegisterAccountTypePassword:{
+                commomCell.detailLabel.text = NSLocalizedStringFromSelf(@"YOUR_PASSWORD");
+                commomCell.contentTextField.placeholder = NSLocalizedStringFromSelf(@"ENTER");
+                        self.passwordTextField = commomCell.contentTextField;
+                        self.passwordTextField.delegate = self;
+                        self.passwordTextField.secureTextEntry = YES;
+
+            }break;
+            case RegisterAccountTypeCheckPassword:{
+                commomCell.detailLabel.text = NSLocalizedStringFromSelf(@"CONFIRM_PASSWORD");
+                commomCell.contentTextField.placeholder = NSLocalizedStringFromSelf(@"ENTER");
+                        commomCell.contentTextField.returnKeyType = UIReturnKeyDone;
+                        self.checkPasswordTextField = commomCell.contentTextField;
+                        self.checkPasswordTextField.delegate = self;
+                        self.checkPasswordTextField.secureTextEntry = YES;
+
+            }break;
+
+                      default:
+                break;
+        }
     }
- 
+    
     return result;
+
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -213,78 +310,98 @@
 
 //创建账号
 - (IBAction)createAccount:(id)sender {
-
-
-    [self closeKeyBoard];
-
-    RequestManager *manager = [RequestManager manager];
-
-    NSString *year;
-    NSString *month;
-    NSString *day;
-    //分别获取年月日
-    if (self.lastProfileObject.birthday.length > 0) {
-        year = [self.lastProfileObject.birthday substringToIndex:4];
-        month = [self.lastProfileObject.birthday substringWithRange:NSMakeRange(5, 3)];
-        day = [self.lastProfileObject.birthday substringFromIndex:8];
-    }
+    self.loadingView.hidden = NO;
     
-    //将self改为弱引用的self
-    __weak typeof(self) weakSelf = self;
-    if (self.lastProfileObject.email && self.lastProfileObject.email.length > 0  && self.lastProfileObject.password && self.lastProfileObject.password.length > 0  && self.lastProfileObject.name && self.lastProfileObject.name.length > 0 ) {
-
-                if (HTTPREQUEST_INVALIDREQUESTID != [manager registerUser:self.lastProfileObject.email password:self.lastProfileObject.password sex:self.lastProfileObject.isMale firstname:self.lastProfileObject.name lastname:self.lastProfileObject.name country:self.countryIndex birthday_y:year birthday_m:month birthday_d:day weeklymail:NO  finishHandler:^(BOOL success, RegisterItemObject * _Nonnull item, NSString * _Nonnull errnum, NSString * _Nonnull errmsg) {
-                    
-                    @synchronized(self) {
-                            if (success) {
-                                
-                                dispatch_async(dispatch_get_main_queue(), ^{
-                                    if (weakSelf.profileImage.image) {
-                                        [self upLoadHeaderPhoto];
-                                        
-                                    }else{
-                                        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"注册成功" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil ,nil];
-                                        alertView.tag = 9009;
-                                        [alertView show];
-                                    }
-                                });
-    
-                                
-
-                        }else{
-                            dispatch_async(dispatch_get_main_queue(), ^{
-                                  UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:[NSString stringWithFormat:@"注册失败  %@ \n  %@ 请重新注册",errnum,errmsg] delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil ,nil];
-                                [alertView show];
-                            });
+    if ([self.emailTextField isFirstResponder] || [self.passwordTextField isFirstResponder] || [self.checkPasswordTextField isFirstResponder]) {
+        [self closeKeyBoard];
+        [self checkPassword];
+        self.loadingView.hidden = YES;
+        
+    }else{
+        
+        RequestManager *manager = [RequestManager manager];
+        
+        NSString *year;
+        NSString *month;
+        NSString *day;
+        //分别获取年月日
+        if (self.lastProfileObject.birthday.length > 0) {
+            year = [self.lastProfileObject.birthday substringToIndex:4];
+            month = [self.lastProfileObject.birthday substringWithRange:NSMakeRange(5, 2)];
+            day = [self.lastProfileObject.birthday substringFromIndex:8];
+        }
+        
+        //将self改为弱引用的self
+        __weak typeof(self) weakSelf = self;
+        if (self.lastProfileObject.email && self.lastProfileObject.email.length > 0  && self.lastProfileObject.password && self.lastProfileObject.password.length > 0  && self.lastProfileObject.name && self.lastProfileObject.name.length > 0 && self.lastProfileObject.birthday.length > 0 && self.lastProfileObject.birthday) {
+            
+            // 配置假服务器路径
+            [[ConfigManager manager] clean];
+            [[ServerManager manager] clean];
+            [AppDelegate() setRequestHost:NO];
+            
+            [manager registerUser:self.lastProfileObject.email password:self.lastProfileObject.password sex:self.lastProfileObject.isMale firstname:self.lastProfileObject.name lastname:self.lastProfileObject.name country:self.countryIndex birthday_y:year birthday_m:month birthday_d:day weeklymail:NO  finishHandler:^(BOOL success, RegisterItemObject * _Nonnull item, NSString * _Nonnull errnum, NSString * _Nonnull errmsg) {
+                
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    self.loadingView.hidden = YES;
+            
+                    if (success) {
+                        if (weakSelf.profileImage) {
+                            [self upLoadHeaderPhoto];
+                            
+                        } else {
+                            NSString *tips = NSLocalizedStringFromSelf(@"TIPS");
+                            NSString *tipsMessage = NSLocalizedStringFromSelf(@"TIPS_REGISTERMESSAGE_SUCCESS");
+                            NSString *confirm = NSLocalizedStringFromSelf(@"OK");
+                            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:tips message:tipsMessage delegate:self cancelButtonTitle:nil otherButtonTitles:confirm, nil ,nil];
+                            alertView.tag = RegisterTipTypeSuccess;
+                            [alertView show];
                         }
 
+                    } else {
+
+                        NSString *tips = NSLocalizedStringFromSelf(@"TIPS");
+                        NSString *tipsMessage = NSLocalizedStringFromSelf(@"TIPS_REGISTERMESSAGE_FAIL");
+                        NSString *confirm = NSLocalizedStringFromSelf(@"OK");
+                        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:tips message:[NSString stringWithFormat:@"%@  %@ ",tipsMessage,errmsg] delegate:self cancelButtonTitle:nil otherButtonTitles:confirm, nil ,nil];
+                        alertView.tag = RegisterTipTypeFail;
+                        [alertView show];
                     }
-          
-                }]) {
                     
-
-
-                    
-                }
-           
+                });
+                
+            }];
             
-        
-       
-    }else{
-        //弹出提示
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"注册信息不能为空" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil ,nil];
-        [alertView show];
-        
+        }else{
+            self.loadingView.hidden = YES;
+            //弹出提示
+            NSString *tips = NSLocalizedStringFromSelf(@"TIPS");
+            NSString *tipsMessage = NSLocalizedStringFromSelf(@"TIPS_REGISTERMESSAGE_NULL");
+            NSString *confirm = NSLocalizedStringFromSelf(@"OK");
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:tips message:tipsMessage delegate:self cancelButtonTitle:nil otherButtonTitles:confirm, nil ,nil];
+            [alertView show];
+            
+        }
+
     }
+
+   
+    
 
 }
 
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (alertView.tag == 9009) {
+    LoginManager* manager = [LoginManager manager];
+    if (alertView.tag == RegisterTipTypeSuccess) {
         [self.navigationController popToRootViewControllerAnimated:YES];
-    }else if (alertView.tag == 9010){
+        [manager login:self.lastProfileObject.email password:self.lastProfileObject.password checkcode:nil];
+    }else if (alertView.tag == RegisterTipTypeOther){
         [self.navigationController popToRootViewControllerAnimated:YES];
+        [manager login:self.lastProfileObject.email password:self.lastProfileObject.password checkcode:nil];
+    }else if (alertView.tag == RegisterTipTypeFail){
+        self.passwordTextField.text = nil;
+        self.checkPasswordTextField.text = nil;
     }
 }
 
@@ -298,21 +415,22 @@
 
 
 - (BOOL)upLoadHeaderPhoto{
+    self.loadingView.hidden = NO;
     self.sessionManager = [SessionRequestManager manager];
     UploadHeaderPhoto *request = [[UploadHeaderPhoto alloc] init];
     request.fileName = self.profilePhoto;
     request.finishHandler = ^(BOOL success,NSString *error,NSString *errmsg){
-        if (success) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"注册成功" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil ,nil];
-                alertView.tag = 9010;
-                [alertView show];
-            });
-        }
         
+        dispatch_async(dispatch_get_main_queue(), ^{
+            self.loadingView.hidden = YES;
+            NSString *tips = NSLocalizedStringFromSelf(@"TIPS");
+            NSString *tipsMessage = NSLocalizedStringFromSelf(@"TIPS_REGISTERMESSAGE_SUCCESS");
+            NSString *confirm = NSLocalizedStringFromSelf(@"OK");
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:tips message:tipsMessage delegate:self cancelButtonTitle:nil otherButtonTitles:confirm, nil ,nil];
+            alertView.tag = RegisterTipTypeSuccess;
+            [alertView show];
+        });
 
-
-        
     };
     return [self.sessionManager sendRequest:request];
     
@@ -334,10 +452,13 @@
     self.lastProfileObject.password = self.passwordTextField.text;
 }
 
-- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
-    if ([text isEqualToString:@"\n"]){
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
+    if ([string isEqualToString:@"\n"]){
         // 判断输入的字是否是回车，即按下return
-        [textView resignFirstResponder];
+        [textField resignFirstResponder];
+        return NO;
+    }
+    if (range.location >= 30) {
         return NO;
     }
     return YES;
@@ -358,19 +479,32 @@
         [self.checkPasswordTextField becomeFirstResponder];
         
     } else {
-        // 确认密码
-        if (self.passwordTextField.text != self.checkPasswordTextField.text) {
-            //提示两次密码错误,重新输入密码
-            NSLog(@"请重新输入密码");
-            self.passwordTextField.text = nil;
-            self.checkPasswordTextField.text = nil;
-            [self.passwordTextField becomeFirstResponder];
-        }
+        [self checkPassword];
+
         [self.checkPasswordTextField resignFirstResponder];
     }
     return YES;
 }
 
+
+
+
+- (void)checkPassword{
+    
+    // 确认密码
+    if (![self.passwordTextField.text isEqualToString:self.checkPasswordTextField.text]) {
+    //提示两次密码错误,重新输入密码
+    NSString *tips = NSLocalizedStringFromSelf(@"TIPS");
+    NSString *tipsMessage = NSLocalizedStringFromSelf(@"TIPS_CONFIRMPASSWORD_FAIL");
+    NSString *confirm = NSLocalizedStringFromSelf(@"OK");
+    UIAlertView *falsePassword = [[UIAlertView alloc] initWithTitle:tips message:tipsMessage delegate:self cancelButtonTitle:confirm otherButtonTitles:nil, nil];
+//    falsePassword.tag = 9011;
+    [falsePassword show];
+    self.passwordTextField.text = nil;
+    self.checkPasswordTextField.text = nil;
+    [self.passwordTextField becomeFirstResponder];
+    }
+}
 
 #pragma mark - 处理键盘回调
 - (void)moveInputBarWithKeyboardHeight:(CGFloat)height withDuration:(NSTimeInterval)duration {

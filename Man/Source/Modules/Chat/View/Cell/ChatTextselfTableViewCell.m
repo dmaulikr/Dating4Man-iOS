@@ -14,7 +14,7 @@
 }
 
 + (NSInteger)cellHeight:(CGFloat)width detailString:(NSAttributedString *)detailString {
-    NSInteger height = 20;
+    NSInteger height = 15;
     
     if(detailString.length > 0) {
         CGRect rect = [detailString boundingRectWithSize:CGSizeMake(width - 125, MAXFLOAT)
@@ -22,7 +22,7 @@
 
         height += ceil(rect.size.height);
     }
-    height += 20;
+    height += 15;
     
     return height;
 }
@@ -36,6 +36,8 @@
     }
     
     cell.detailLabel.text = @"";
+    cell.backgroundImageView.layer.cornerRadius = 21.0f;
+    cell.backgroundImageView.layer.masksToBounds = YES;
 
     return cell;
 }
@@ -51,7 +53,10 @@
 - (void)layoutSubviews {
     [super layoutSubviews];
     
+//    [self.detailLabel sizeToFit];
+    
 }
+
 - (IBAction)retryBtnClick:(id)sender {
     if ( self.delegate && [self.delegate respondsToSelector:@selector(chatTextSelfRetryButtonClick:)] ) {
         [self.delegate chatTextSelfRetryButtonClick:self];

@@ -17,11 +17,12 @@
 #import "LadyDetailItemObject.h"
 #import "AddFavouriteLadyRequest.h"
 #import "RemoveFavouriteLadyRequest.h"
+#import "ReportLadyRequest.h"
 #import "KKCheckButton.h"
 #import "ContactManager.h"
 #import "UIImage+Resize.h"
 #import "LadyDetailPhototViewController.h"
-
+#import "LiveChatManager.h"
 
 typedef enum {
     RowTypePhoto,
@@ -30,47 +31,55 @@ typedef enum {
     RowTypeDescription,
 } RowType;
 
-@interface LadyDetailViewController () <PZPhotoViewDelegate, PZPagingScrollViewDelegate, UIActionSheetDelegate, KKCheckButtonDelegate, ContactManagerDelegate>
-@property (nonatomic, assign) NSInteger curIndex;
-@property (nonatomic, strong) NSArray* items;
-@property (nonatomic, strong) NSArray* imageViewLoaders;
+
+typedef enum : NSUInteger {
+    ActionSheetBtnActionTypeCancel,
+    ActionSheetBtnActionTypeReport,
+} ActionSheetBtnActionType;
+
+
+@interface LadyDetailViewController () <PZPhotoViewDelegate, PZPagingScrollViewDelegate, UIActionSheetDelegate, KKCheckButtonDelegate, ContactManagerDelegate, ImageViewLoaderDelegate,LadyDetailNameTableViewCellDelegate,UIAlertViewDelegate>
+/**
+ *  详情分栏
+ */
 @property (nonatomic, strong) NSArray* tableViewArray;
+
+/**
+ *  相册当前下标
+ */
+@property (nonatomic, assign) NSInteger photoIndex;
+
+/**
+ *  相册列表
+ */
+@property (nonatomic, strong) NSArray* imageList;
+
 /** 请求管理者 */
 @property (nonatomic,strong) SessionRequestManager *sessionManager;
-/** 女士详情内容 */
+
+/**
+ *  女士详情
+ */
 @property (nonatomic,strong) LadyDetailItemObject *item;
-/** 图片管理 */
-@property (nonatomic,strong) ImageViewLoader *imageViewLoader;
 
-/** 女士图片大图 */
-@property (nonatomic,strong) UIImageView *ladyImageView;
-@property (weak, nonatomic) IBOutlet UIButton *chatBtn;
-@property (weak, nonatomic) IBOutlet KKCheckButton *addFavouriteBtn;
-
-/** 图片地址 */
-@property (nonatomic,strong) NSMutableArray *pathArray;
-/** contactlist */
+/**
+ *  联系人管理器
+ */
 @property (nonatomic,strong) ContactManager *contactManager;
+
+/**
+ *  点击手势
+ */
+@property (nonatomic,strong) UITapGestureRecognizer *tap;
+
 @end
 
 @implementation LadyDetailViewController
-
-- (NSMutableArray *)pathArray{
-    if (!_pathArray) {
-        _pathArray = [NSMutableArray array];
-    }
-    return _pathArray;
-}
-
-
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    
-    _curIndex = 0;
-    self.contactManager = [ContactManager manager];
-    [self.contactManager addDelegate:self];
+
+    self.addFavouriesBtn.userInteractionEnabled = NO;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -80,10 +89,9 @@ typedef enum {
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
+        
     if( !self.viewDidAppearEver ) {
         [self getLadyDetail];
-        [self reloadData:YES];
     }
 }
 
@@ -92,8 +100,18 @@ typedef enum {
 }
 
 #pragma mark - 界面逻辑
-- (void)initNavigationItems {
-    self.customBackTitle = @"Home";
+- (void)initCustomParam{
+    // 初始化父类参数
+    [super initCustomParam];
+    
+    self.sessionManager = [SessionRequestManager manager];
+    self.contactManager = [ContactManager manager];
+    self.photoIndex = 0;
+    self.backToChat = NO;
+}
+
+- (void)unInitCustomParam {
+
 }
 
 - (void)setupNavigationBar {
@@ -106,15 +124,17 @@ typedef enum {
     button = [UIButton buttonWithType:UIButtonTypeCustom];
     image = [UIImage imageNamed:@"LadyDetail-Camera"];
     [button setImage:image forState:UIControlStateDisabled];
-    NSString* title = [NSString stringWithFormat:@"%ld/%lu", self.items.count > 0?(long)_curIndex + 1:0, (unsigned long)self.items.count];
+    NSString* title = [NSString stringWithFormat:@" %ld / %lu", self.imageList.count > 0?(long)self.photoIndex + 1:0, (unsigned long)self.imageList.count];
     [button setTitle:title forState:UIControlStateNormal];
+    button.titleLabel.font = [UIFont systemFontOfSize:16];
     [button sizeToFit];
     [button setEnabled:NO];
     self.navigationItem.titleView = button;
     
-    if (self.items.count == 0) {
-        self.navigationItem.titleView.hidden = YES;
-    }
+    // 隐藏附件数目
+//    if (self.items.count == 0) {
+//        self.navigationItem.titleView.hidden = YES;
+//    }
     
     // 右边按钮
     NSMutableArray *array = [NSMutableArray array];
@@ -128,18 +148,21 @@ typedef enum {
     [array addObject:barButtonItem];
     
     self.navigationItem.rightBarButtonItems = array;
-    
-    
-    
 }
 
 - (void)setupContainView {
     [super setupContainView];
-
     [self setupTableView];
-    self.addFavouriteBtn.adjustsImageWhenHighlighted = NO;
-    self.addFavouriteBtn.selectedChangeDelegate = self;
+    [self setupLoadingView];
+    
+    self.chatBtn.enabled = NO;
+}
 
+- (void)setupLoadingView {
+    // 初始化菊花
+    self.loadingView.layer.cornerRadius = 5.0f;
+    self.loadingView.layer.masksToBounds = YES;
+    self.loadingView.hidden = YES;
 }
 
 - (void)setupTableView {
@@ -152,56 +175,55 @@ typedef enum {
     UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
     [self.tableView setTableFooterView:footerView];
     
-    
+//    self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 78, 0);
 }
 
 - (IBAction)reportAction:(id)sender {
     UIActionSheet* sheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Report", nil];
-    
     [sheet showInView:self.view];
 }
 
 - (IBAction)chatAction:(id)sender {
-    ChatViewController* vc = [[ChatViewController alloc] initWithNibName:nil bundle:nil];
-    vc.firstname = self.item.firstname;
-    vc.womanId = self.item.womanid;
-    vc.photoURL = self.item.photoURL;
-    [self.navigationController pushViewController:vc animated:YES];
+    if( self.backToChat ) {
+        // 从聊天界面进入, 直接退出
+        [self.navigationController popViewControllerAnimated:YES];
+    } else {
+        // 进入聊天界面
+        ChatViewController* vc = [[ChatViewController alloc] initWithNibName:nil bundle:nil];
+        vc.firstname = self.item.firstname;
+        vc.womanId = self.item.womanid;
+        vc.photoURL = self.item.photoURL;
+        [self.navigationController pushViewController:vc animated:YES];
+    }
+
 }
 
-
-
-- (void)selectedChanged:(id)sender {
-    UIButton *favoriteBtn = (UIButton *)sender;
-    if (favoriteBtn.selected == YES) {
-        [favoriteBtn setImage:[UIImage imageNamed:@"LadyDetail-Favorite"] forState:UIControlStateSelected];
-        self.item.isFavorite = YES;
-        [self addFavouriesLady];
-
-    } else {
-        [favoriteBtn setImage:[UIImage imageNamed:@"LadyDetail-UnFavorite" ] forState:UIControlStateSelected];
-        self.item.isFavorite = NO;
-
+- (IBAction)favouriteChange:(id)sender {
+    if( self.item.isFavorite ) {
+        // 取消收藏
         [self removeFavouriesLady];
+       
+    } else {
+        // 增加收藏
+        [self addFavouriesLady];
     }
 }
 
-
 #pragma mark - 图片点击手势方法
 - (void)lookBigPicture{
+    LadyDetailPhototViewController *photo = [[LadyDetailPhototViewController alloc] initWithNibName:nil bundle:nil];
+    photo.ladyListArray = self.imageList;
+    photo.ladyListPath = self.imageList;
+    photo.photoIndex = self.photoIndex;
+    photo.enableScroll = NO;
 
-    LadyDetailPhototViewController *photo = [[LadyDetailPhototViewController alloc] init];
-    photo.ladyListArray = self.items;
-    photo.ladyListPath = self.pathArray;
-    [self presentViewController:photo animated:YES completion:nil];
+    [self presentViewController:photo animated:NO completion:^{
+        [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide];
+    }];
 }
-
 
 #pragma mark - 数据逻辑
 - (void)reloadData:(BOOL)isReloadView {
-    
-    
-    
     // 主tableView
     NSMutableArray *array = [NSMutableArray array];
     
@@ -211,7 +233,7 @@ typedef enum {
     
     // 图片
     dictionary = [NSMutableDictionary dictionary];
-    viewSize = CGSizeMake(self.tableView.frame.size.width, self.view.frame.size.width);
+    viewSize = CGSizeMake(self.tableView.frame.size.width, [UIScreen mainScreen].bounds.size.height - 64 - 140);
     rowSize = [NSValue valueWithCGSize:viewSize];
     [dictionary setValue:rowSize forKey:ROW_SIZE];
     [dictionary setValue:[NSNumber numberWithInteger:RowTypePhoto] forKey:ROW_TYPE];
@@ -225,17 +247,17 @@ typedef enum {
     [dictionary setValue:[NSNumber numberWithInteger:RowTypeName] forKey:ROW_TYPE];
     [array addObject:dictionary];
     
-    // 国家
-    dictionary = [NSMutableDictionary dictionary];
-    viewSize = CGSizeMake(self.tableView.frame.size.width, [CommonTitleTableViewCell cellHeight]);
-    rowSize = [NSValue valueWithCGSize:viewSize];
-    [dictionary setValue:rowSize forKey:ROW_SIZE];
-    [dictionary setValue:[NSNumber numberWithInteger:RowTypeLocation] forKey:ROW_TYPE];
-    [array addObject:dictionary];
+//    // 国家
+//    dictionary = [NSMutableDictionary dictionary];
+//    viewSize = CGSizeMake(self.tableView.frame.size.width, [CommonTitleTableViewCell cellHeight]);
+//    rowSize = [NSValue valueWithCGSize:viewSize];
+//    [dictionary setValue:rowSize forKey:ROW_SIZE];
+//    [dictionary setValue:[NSNumber numberWithInteger:RowTypeLocation] forKey:ROW_TYPE];
+//    [array addObject:dictionary];
     
     // 描述
     dictionary = [NSMutableDictionary dictionary];
-    viewSize = CGSizeMake(self.tableView.frame.size.width, [CommonDetailTableViewCell cellHeight:self.tableView.frame.size.width detailString:self.item.resume]);
+    viewSize = CGSizeMake(self.tableView.frame.size.width, [CommonDetailTableViewCell cellHeight:self.tableView.frame.size.width detailAttributedString:[self parseResume:self.item.resume font:[UIFont systemFontOfSize:17]]] + 128);
     rowSize = [NSValue valueWithCGSize:viewSize];
     [dictionary setValue:rowSize forKey:ROW_SIZE];
     [dictionary setValue:[NSNumber numberWithInteger:RowTypeDescription] forKey:ROW_TYPE];
@@ -243,146 +265,114 @@ typedef enum {
     
     self.tableViewArray = array;
     
-    
+    // 增加相册
+    NSMutableArray* imageList = [NSMutableArray array];
+    if( self.item.photoList && self.item.photoList.count > 0 ) {
+        // 复制附件图片
+        [imageList addObjectsFromArray:self.item.photoList];
+    }else if (self.item.photoList.count == 0 && ![AppDelegate().errorUrlConnect isEqualToString:self.ladyListImageUrl]){
+        [imageList addObject:self.ladyListImageUrl];
+    }
+    self.imageList = imageList;
+
     if( isReloadView ) {
         [self setupNavigationBar];
         [self.tableView reloadData];
-        if (self.item.isFavorite) {
-             self.addFavouriteBtn.selected = YES;
-            [self.addFavouriteBtn setImage:[UIImage imageNamed:@"LadyDetail-Favorite"] forState:UIControlStateSelected];
-        }else{
-            [self.addFavouriteBtn setImage:[UIImage imageNamed:@"LadyDetail-UnFavorite"] forState:UIControlStateSelected];
+        
+        if( self.item.isFavorite ) {
+            // 显示取消收藏
+            [self.addFavouriesBtn setImage:[UIImage imageNamed:@"LadyDetail-FavoriteNormal"] forState:UIControlStateNormal];
+            [self.addFavouriesBtn setImage:[UIImage imageNamed:@"LadyDetail-FavoriteHighlight"] forState:UIControlStateHighlighted];
+        } else {
+            // 显示收藏
+            [self.addFavouriesBtn setImage:[UIImage imageNamed:@"LadyDetail-FavoriteRemoveNormal"] forState:UIControlStateNormal];
+            [self.addFavouriesBtn setImage:[UIImage imageNamed:@"LadyDetail-FavoriteRemoveHighlight"] forState:UIControlStateHighlighted];
+            
         }
-
     }
     
+}
+
+- (NSAttributedString* )parseResume:(NSString* )text font:(UIFont* )font {
+    NSMutableString* htmlString = [[NSMutableString alloc] initWithString:@"<html><body style='color:#888888;font-family:sans-serif;'><font size=\"5\">"];
+    if( text != nil ) {
+        [htmlString appendString:text];
+    }
+    [htmlString appendString:@"</font></body></html>"];
     
+    NSData* data = [htmlString dataUsingEncoding:NSUnicodeStringEncoding];
+    
+    NSMutableAttributedString *attributeString = [[NSMutableAttributedString alloc] initWithData:data
+                                                                                         options:@{ NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType,
+                                                                                                    NSFontAttributeName : font
+                                                                                                    }
+                                                                              documentAttributes:nil
+                                                                                           error:nil];
+    return attributeString;
+}
+
+- (void)showLoading {
+    self.loadingView.hidden = NO;
+    self.view.userInteractionEnabled = NO;
+}
+- (void)hideLoading {
+    self.loadingView.hidden = YES;
+    self.view.userInteractionEnabled = YES;
+
 }
 
 #pragma mark - 画廊回调 (PZPagingScrollViewDelegate)
 - (Class)pagingScrollView:(PZPagingScrollView *)pagingScrollView classForIndex:(NSUInteger)index {
-    return [UIImageView class];
+    return [UIImageViewTopFit class];
 }
 
 - (NSUInteger)pagingScrollViewPagingViewCount:(PZPagingScrollView *)pagingScrollView {
-    
-    //    return (nil == self.items)?0:self.items.count;
     NSUInteger count = 0;
-    if (self.items == nil) {
-        count = 0;
-        
-    }else{
-        count = self.items.count;
-        if (count == 0) {
-            count = 1;
-        }
+    if (self.imageList != nil) {
+        count = self.imageList.count;
     }
     return count;
 }
 
 - (UIView *)pagingScrollView:(PZPagingScrollView *)pagingScrollView pageViewForIndex:(NSUInteger)index {
-    UIImageView* view = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, pagingScrollView.frame.size.width, pagingScrollView.frame.size.height)];
-    [view setContentMode:UIViewContentModeScaleAspectFill];
-//    [view setContentMode:UIViewContentModeScaleToFill];
+    UIImageViewTopFit* view = [[UIImageViewTopFit alloc] initWithFrame:CGRectMake(0, 0, pagingScrollView.frame.size.width, pagingScrollView.frame.size.height)];
+    [view setContentMode:UIViewContentModeScaleAspectFit];
     return view;
 }
 
 - (void)pagingScrollView:(PZPagingScrollView *)pagingScrollView preparePageViewForDisplay:(UIView *)pageView forIndex:(NSUInteger)index {
-
-    ImageViewLoader *imageViewLoader = [[ImageViewLoader alloc] init];
-    if (self.item.photoList.count > 0) {
-        imageViewLoader = [self.imageViewLoaders objectAtIndex:index];
-        imageViewLoader.view = pageView;
-        imageViewLoader.url = [self.item.photoList objectAtIndex:index];
-        imageViewLoader.path = [[FileCacheManager manager] imageCachePathWithUrl:imageViewLoader.url];
-        [self.pathArray addObject:imageViewLoader.path];
-        dispatch_async(dispatch_get_global_queue(0, 0), ^{
-                [imageViewLoader loadImage];
-            dispatch_async(dispatch_get_main_queue(), ^{
-                UIImageView *topImageView = (UIImageView *)imageViewLoader.view;
-        
-                topImageView.image = [self clipImage:topImageView.image toRect:pageView.frame.size];
-
-                imageViewLoader.view = topImageView;
-
-            });
-        });
-        
-        
-    
-
-    }else{
-        UIImageView* view = (UIImageView *)pageView;
-        imageViewLoader.view = view;
-        if (self.itemObject.photoURL.length > 0) {
-            imageViewLoader.url = self.itemObject.photoURL;
-            imageViewLoader.path = [[FileCacheManager manager] imageCachePathWithUrl:imageViewLoader.url];
-            [imageViewLoader loadImage];
-        }else{
-            [view setImage:[UIImage imageNamed:@"LadyList-Lady-Default"]];
-        }
-
-    }
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(lookBigPicture)];
-    imageViewLoader.view.userInteractionEnabled = YES;
-    [imageViewLoader.view addGestureRecognizer:tap];
-    self.imageViewLoader = imageViewLoader;
-
-
+    pageView.userInteractionEnabled = YES;
+    [pageView addGestureRecognizer:tap];
+    
+    // 还原默认图片
+    UIImageViewTopFit* imageView = (UIImageViewTopFit *)pageView;
+    [imageView setImage:nil];
+    
+    // 图片路径
+    NSString* url = [self.imageList objectAtIndex:index];
+    // 停止旧的
+    static NSString *imageViewLoaderKey = @"imageViewLoaderKey";
+    ImageViewLoader* imageViewLoader = objc_getAssociatedObject(pageView, &imageViewLoaderKey);
+    [imageViewLoader stop];
+    
+    // 创建新的
+    imageViewLoader = [ImageViewLoader loader];
+    objc_setAssociatedObject(pageView, &imageViewLoaderKey, imageViewLoader, OBJC_ASSOCIATION_RETAIN);
+    
+    // 加载图片
+    imageViewLoader.delegate = self;
+    imageViewLoader.view = imageView;
+    imageViewLoader.url = url;
+    imageViewLoader.path = [[FileCacheManager manager] imageCachePathWithUrl:imageViewLoader.url];
+    [imageViewLoader loadImage];
     
 }
-
-/**
- *  返回指定尺寸的图片
- *
- *  @param image  需要改变的图片
- *  @param reSize 需要改变的大小
- *
- *  @return 指定尺寸的图片
- */
-
-
-
-- (UIImage *)imageFromImage:(UIImage *)image inRect:(CGRect)rect{
-
-    CGImageRef sourceImageRef = [image CGImage];
-    CGImageRef newImageRef = CGImageCreateWithImageInRect(sourceImageRef, rect);
-    UIImage *newImage = [UIImage imageWithCGImage:newImageRef];
-
-    return newImage;
-}
-
-/**
- *  计算图片比例
- *
- *  @param image 图片的大小
- *  @param size  截取的大小
- *
- *  @return 截取完成的图片
- */
-- (UIImage *)clipImage:(UIImage *)image toRect:(CGSize)size{
-    if (image.size.width * size.height <= image.size.height * size.width) {
-        CGFloat width  = image.size.width;
-        CGFloat height = image.size.width * size.height / size.width;
-        return [self imageFromImage:image inRect:CGRectMake(0, 0, width, height)];
-    }else{
-        CGFloat width  = image.size.height * size.width / size.height;
-        CGFloat height = image.size.height;
-        return [self imageFromImage:image inRect:CGRectMake((image.size.width - width) / 2, 0, width, height)];
-    }
-    return nil;
-}
-
-
-
 
 - (void)pagingScrollView:(PZPagingScrollView *)pagingScrollView didShowPageViewForDisplay:(NSUInteger)index {
-    
-    _curIndex = index;
+    self.photoIndex = index;
     [self setupNavigationBar];
 }
-
-
 
 #pragma mark - 列表界面回调 (UITableViewDataSource / UITableViewDelegate)
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
@@ -409,6 +399,7 @@ typedef enum {
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     CGFloat height = 0;
+    
     if([tableView isEqual:self.tableView]) {
         // 主tableview
         NSDictionary *dictionarry = [self.tableViewArray objectAtIndex:indexPath.row];
@@ -442,12 +433,12 @@ typedef enum {
                 result = cell;
                 
                 cell.pagingScrollView.pagingViewDelegate = self;
-                cell.curIndex = _curIndex;
                 self.pagingScrollView = cell.pagingScrollView;
+                
                 if (self.item.isonline) {
-                    [cell.onlineView setBackgroundColor:[UIColor colorWithIntRGB:102 green:153 blue:0 alpha:255]];
-                }else {
-                    [cell.onlineView setBackgroundColor:[UIColor colorWithIntRGB:161 green:161 blue:161 alpha:255]];
+                    [cell.onlineView setBackgroundColor:[UIColor colorWithIntRGB:1 green:170 blue:1 alpha:255]];
+                } else {
+                    [cell.onlineView setBackgroundColor:[UIColor colorWithIntRGB:160 green:160 blue:160 alpha:255]];
                 }
                 
                 
@@ -456,14 +447,26 @@ typedef enum {
                 // 姓名
                 LadyDetailNameTableViewCell *cell = [LadyDetailNameTableViewCell getUITableViewCell:tableView];
                 result = cell;
-                cell.titleLabel.text = [NSString stringWithFormat:@"%@, %d",self.item.firstname,self.item.age];
+                cell.delegate = self;
+                
+                if( self.item.firstname && self.item.age ) {
+                    cell.titleLabel.text = [NSString stringWithFormat:@"%@, %d", self.item.firstname, self.item.age];
+                } else {
+                    cell.titleLabel.text = @"";
+                }
+                
+                if( self.item.country ) {
+                    cell.countryLabel.text = self.item.country;
+                } else {
+                    cell.countryLabel.text = @"";
+                }
+                
                 if (self.item.isonline) {
-                    cell.detailLabel.text = @"Online";
                     self.chatBtn.enabled = YES;
-                }else {
-                    cell.detailLabel.text = @"Offine";
+                } else {
                     self.chatBtn.enabled = NO;
                 }
+                
             }break;
             case RowTypeLocation:{
                 // 国家
@@ -478,14 +481,8 @@ typedef enum {
                 // 描述
                 CommonDetailTableViewCell *cell = [CommonDetailTableViewCell getUITableViewCell:tableView];
                 result = cell;
-                NSString *resume;
-                if ([self.item.resume containsString:@"<br />"]) {
-                    resume  = [self.item.resume stringByReplacingOccurrencesOfString:@"<br />" withString:@""];
-                }else{
-                    resume = self.item.resume;
-                }
-                cell.detailLabel.text = resume;
-                
+                cell.detailLabel.attributedText = [self parseResume:self.item.resume font:[UIFont systemFontOfSize:17]];
+
             }break;
             default:break;
         }
@@ -505,8 +502,6 @@ typedef enum {
         switch (type) {
             case RowTypePhoto:{
                 // 照片
-                
-                
             }break;
             case RowTypeName:{
                 
@@ -525,67 +520,123 @@ typedef enum {
     
 }
 
-
-
-
 #pragma mark - 接口处理
-- (BOOL)getLadyDetail{
-    self.sessionManager = [SessionRequestManager manager];
+- (BOOL)getLadyDetail {
+    [self showLoading];
     GetLadyDetailRequest *request = [[GetLadyDetailRequest alloc] init];
-    request.womanId = self.itemObject.womanid;
+    request.womanId = self.womanId;
     self.item = [[LadyDetailItemObject alloc] init];
     request.finishHandler = ^(BOOL success, LadyDetailItemObject *item, NSString * _Nullable errnum, NSString * _Nullable errmsg){
-        if (success) {
-            
-        }
         dispatch_async(dispatch_get_main_queue(), ^{
-            self.item = item;
-            self.items = self.item.photoList;
-            NSMutableArray* mutableArray = [NSMutableArray array];
-            for (int count = 0; count < self.item.photoList.count; count++) {
-                [mutableArray addObject:[[ImageViewLoader alloc] init]];
-            }
-            self.imageViewLoaders = mutableArray;
-
-            [self reloadData:YES];
-        });
-        
-    };
-    
-    return [self.sessionManager sendRequest:request];
-}
-
-- (BOOL)addFavouriesLady{
-    self.sessionManager = [SessionRequestManager manager];
-    AddFavouriteLadyRequest *request = [[AddFavouriteLadyRequest alloc] init];
-    request.womanId = self.item.womanid;
-    request.finishHandler = ^(BOOL success,NSString *error,NSString *errmsg){
-        if (success) {
-            // 收藏成功, 增加最近联系人
-            LadyRecentContactObject* recent = [[LadyRecentContactObject alloc] init];
-            recent.womanId = self.item.womanid;
-            recent.firstname = self.item.firstname;
-            recent.photoURL = self.item.photoURL;
-            recent.lasttime = [[NSDate dateWithTimeIntervalSinceNow:0] timeIntervalSinceReferenceDate];
+            [self hideLoading];
             
-            [self.contactManager addRecentContact:recent];
-        }
+            if (success) {
+                self.addFavouriesBtn.userInteractionEnabled = YES;
+                
+                self.item = item;
+                [self reloadData:YES];
+                
+            } else {
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:errmsg delegate:nil cancelButtonTitle:nil otherButtonTitles:NSLocalizedString(@"OK", nil) , nil];
+                [alertView show];
+            }
+        });
+    };
+    
+    return [self.sessionManager sendRequest:request];
+}
+
+- (BOOL)addFavouriesLady {
+    [self showLoading];
+    AddFavouriteLadyRequest *request = [[AddFavouriteLadyRequest alloc] init];
+    request.womanId = self.womanId;
+    request.finishHandler = ^(BOOL success,NSString *error,NSString *errmsg) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self hideLoading];
+            
+            if (success) {
+                // 收藏成功, 更新最近联系人数据
+                LadyRecentContactObject* recent = [self.contactManager getOrNewRecentWithId:self.item.womanid];
+                recent.firstname = self.item.firstname;
+//                recent.photoURL = self.item.photoURL;
+                [ContactManager updateLasttime:recent];
+                self.item.isFavorite = YES;
+                
+                // 更新联系人列表
+                [self.contactManager updateRecents];
+                
+                // 刷新界面
+                [self reloadData:YES];
+                
+                // 获取女士详情
+                [[LiveChatManager manager] getUserInfo:self.item.womanid];
+            }
+            
+        });
     };
     return [self.sessionManager sendRequest:request];
     
 }
 
-- (BOOL)removeFavouriesLady{
-    self.sessionManager = [SessionRequestManager manager];
+- (BOOL)removeFavouriesLady {
+    [self showLoading];
+    
     RemoveFavouriteLadyRequest *request = [[RemoveFavouriteLadyRequest alloc] init];
     request.womanId = self.item.womanid;
     request.finishHandler = ^(BOOL success,NSString *error,NSString *errmsg){
-
-
-        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self hideLoading];
+            
+            if (success) {
+                // 标记女士为未收藏
+                self.item.isFavorite = NO;
+                
+                // 刷新界面
+                [self reloadData:YES];
+            }
+            
+        });
     };
     return [self.sessionManager sendRequest:request];
-    
 }
+
+- (BOOL)reportLady {
+    [self showLoading];
+    
+    ReportLadyRequest *request = [[ReportLadyRequest alloc] init];
+    request.womanId = self.item.womanid;
+    request.finishHandler = ^(BOOL success,NSString *error,NSString *errmsg){
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self hideLoading];
+            
+            // 弹窗
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:NSLocalizedStringFromSelf(@"Report_Tips") delegate:self cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil, nil];
+            [alertView show];
+        });
+    };
+    return [self.sessionManager sendRequest:request];
+}
+
+#pragma mark - 代理方法回调
+- (void)LadyDetailNameTableViewCellReportBtnClick:(LadyDetailNameTableViewCell *)cell {
+    UIActionSheet* sheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:nil destructiveButtonTitle:NSLocalizedString(@"Cancel", nil) otherButtonTitles:NSLocalizedStringFromSelf(@"Report_Button_Tips"), nil];
+    
+    [sheet showInView:self.view];
+}
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    switch (buttonIndex) {
+        case ActionSheetBtnActionTypeReport:{
+            [self reportLady];
+            
+        }break;
+        case ActionSheetBtnActionTypeCancel:{
+            
+        }break;
+        default:
+            break;
+    }
+}
+
 
 @end

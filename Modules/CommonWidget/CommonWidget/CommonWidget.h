@@ -18,7 +18,7 @@
 
 #import "NSString+MD5HexDigest.h"
 #import "NSString+UrlCode.h"
-#import "NSStringCheck.h"
+#import "NSString+Check.h"
 #import "NSMutableString+MITAdditions.h"
 
 #import "URLShortener.h"

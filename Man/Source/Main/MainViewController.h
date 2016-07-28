@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "GoogleAnalyticsViewController.h"
 
-@interface MainViewController : KKViewController
+@interface MainViewController : GoogleAnalyticsViewController
 
 @property (nonatomic, weak) IBOutlet PZPagingScrollView* pagingScrollView;
 

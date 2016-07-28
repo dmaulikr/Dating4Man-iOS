@@ -9,19 +9,24 @@
 #import "RequestManager.h"
 #include <manrequesthandler/HttpRequestManager.h>
 #include <manrequesthandler/HttpRequestHostManager.h>
+#include <manrequesthandler/RequestFakeController.h>
 #include <manrequesthandler/RequestAuthorizationController.h>
 #include <manrequesthandler/RequestLadyController.h>
 #include <manrequesthandler/RequestOtherController.h>
 #include <manrequesthandler/RequestProfileController.h>
+#include <manrequesthandler/RequestPaidController.h>
+#include "common/KZip.h"
 
 static RequestManager* gManager = nil;
 @interface RequestManager () {
     HttpRequestManager mHttpRequestManager;
     HttpRequestHostManager mHttpRequestHostManager;
+    RequestFakeController* mpRequestFakeController;
     RequestAuthorizationController* mpRequestAuthorizationController;
     RequestLadyController* mpRequestLadyController;
     RequestOtherController* mpRequestOtherController;
     RequestProfileController *mpRequestProfileController;
+    RequestPaidController* mpRequestPaidController;
 }
 
 @property (nonatomic, strong) NSMutableDictionary* delegateDictionary;
@@ -29,6 +34,18 @@ static RequestManager* gManager = nil;
 @end
 
 @implementation RequestManager
+
+#pragma mark - 真假服务器模块回调
+class RequestFakeControllerCallback : public IRequestFakeControllerCallback {
+public:
+    RequestFakeControllerCallback() {};
+    virtual ~RequestFakeControllerCallback() {};
+    
+public:
+    void OnCheckServer(long requestId, bool success, CheckServerItem item, string errnum, string errmsg);
+};
+
+static RequestFakeControllerCallback gRequestFakeControllerCallback;
 
 #pragma mark - 登陆认证模块回调
 void onLoginWithFacebook(long requestId, bool success, LoginFacebookItem item, string errnum, string errmsg,
@@ -57,6 +74,7 @@ void onAddFavouritesLady(long requestId, bool success, string errnum, string err
 void onRemoveFavouritesLady(long requestId, bool success, string errnum, string errmsg);
 void onRecentContact(long requestId, bool success, const string& errnum, const string& errmsg, const list<LadyRecentContact>& list);
 void onRemoveContactList(long requestId, bool success, string errnum, string errmsg);
+void onReportLady(long requestId, bool success, const string& errnum, const string& errmsg);
 
 RequestLadyControllerCallback gRequestLadyControllerCallback {
     NULL,
@@ -70,6 +88,7 @@ RequestLadyControllerCallback gRequestLadyControllerCallback {
     onRemoveContactList,
     NULL,
     NULL,
+    onReportLady
 };
 
 #pragma mark - 其他模块回调
@@ -80,17 +99,25 @@ public:
     
 public:
     virtual void OnEmotionConfig(long requestId, bool success, const string& errnum, const string& errmsg, const OtherEmotionConfigItem& item){};
-    virtual void OnGetCount(long requestId, bool success, const string& errnum, const string& errmsg, const OtherGetCountItem& item){};
+    virtual void OnGetCount(long requestId, bool success, const string& errnum, const string& errmsg, const OtherGetCountItem& item);
     virtual void OnPhoneInfo(long requestId, bool success, const string& errnum, const string& errmsg){};
     virtual void OnIntegralCheck(long requestId, bool success, const string& errnum, const string& errmsg, const OtherIntegralCheckItem& item){};
     virtual void OnVersionCheck(long requestId, bool success, const string& errnum, const string& errmsg, const OtherVersionCheckItem& item){};
     virtual void OnSynConfig(long requestId, bool success, const string& errnum, const string& errmsg, const OtherSynConfigItem& item);
     virtual void OnOnlineCount(long requestId, bool success, const string& errnum, const string& errmsg, const OtherOnlineCountList& countList){};
-    virtual void OnUploadCrashLog(long requestId, bool success, const string& errnum, const string& errmsg){};
+    virtual void OnUploadCrashLog(long requestId, bool success, const string& errnum, const string& errmsg);
     virtual void OnInstallLogs(long requestId, bool success, const string& errnum, const string& errmsg){};
 };
 
 static RequestOtherControllerCallback gRequestOtherControllerCallback;
+
+#pragma mark - 支付回调
+void onGetPaymentOrder(long requestId, bool success, const string& code, const string& orderNo, const string& productId);
+void onCheckPayment(long requestId, bool success, const string& code);
+RequestPaidControllerCallback gRequestPaidControllerCallback {
+    onGetPaymentOrder,
+    onCheckPayment
+};
 
 #pragma mark - 获取实例
 + (instancetype)manager {
@@ -103,24 +130,31 @@ static RequestOtherControllerCallback gRequestOtherControllerCallback;
 - (id)init {
     if( self = [super init] ) {
         self.delegateDictionary = [NSMutableDictionary dictionary];
-        self.versionCode = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
+        self.versionCode = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"Version"];
         
         HttpClient::Init();
         
         mHttpRequestManager.SetHostManager(&mHttpRequestHostManager);
+        mHttpRequestManager.SetVersionCode([self.versionCode UTF8String]);
+        mpRequestFakeController = new RequestFakeController(&mHttpRequestManager, &gRequestFakeControllerCallback);
         mpRequestAuthorizationController = new RequestAuthorizationController(&mHttpRequestManager, gRequestAuthorizationControllerCallback);
         mpRequestLadyController = new RequestLadyController(&mHttpRequestManager, gRequestLadyControllerCallback);
         mpRequestOtherController = new RequestOtherController(&mHttpRequestManager, &gRequestOtherControllerCallback);
         mpRequestProfileController = new RequestProfileController(&mHttpRequestManager,gRequestProfileControllerCallback);
+        mpRequestPaidController = new RequestPaidController(&mHttpRequestManager, gRequestPaidControllerCallback);
+        
     }
     return self;
 }
 
 #pragma mark - 公共模块
+- (void)setLogEnable:(BOOL)enable {
+    KLog::SetLogEnable(enable);
+}
+
 - (void)setLogDirectory:(NSString *)directory {
     KLog::SetLogDirectory([directory UTF8String]);
-    HttpClient::SetLogDirectory([directory UTF8String]);
-    
+//    HttpClient::SetLogDirectory([directory UTF8String]);
 }
 
 //- (void)setVersionCode:(NSString *)version {
@@ -132,9 +166,12 @@ static RequestOtherControllerCallback gRequestOtherControllerCallback;
 - (void)setWebSite:(NSString *)webSite appSite:(NSString *)appSite {
     mHttpRequestHostManager.SetWebSite([webSite UTF8String]);
     mHttpRequestHostManager.SetAppSite([appSite UTF8String]);
-    
+
 }
 
+- (void)setFakeSite:(NSString * _Nonnull)fakeSite {
+    mHttpRequestHostManager.SetFakeSite([fakeSite UTF8String]);
+}
 
 - (NSString *)getWebSite{
     return [NSString stringWithUTF8String:mHttpRequestHostManager.GetWebSite().c_str()];
@@ -174,11 +211,48 @@ static RequestOtherControllerCallback gRequestOtherControllerCallback;
 }
 
 - (NSString *)getDeviceId {
-    return @"";
+    return [UIDevice currentDevice].identifierForVendor.UUIDString;
 }
 
 - (NSString *)getRefferer{
     return @"";
+}
+
+#pragma mark - 真假服务器模块
+void RequestFakeControllerCallback::OnCheckServer(long requestId, bool success, CheckServerItem item, string errnum, string errmsg) {
+    FileLog("httprequest", "RequestManager::OnCheckServer( success : %s )", success?"true":"false");
+    RequestManager *manager = [RequestManager manager];
+    
+    CheckServerItemObject *obj = [[CheckServerItemObject alloc] init];
+    if (success) {
+        obj.webhost = [NSString stringWithUTF8String:item.webhost.c_str()];
+        obj.apphost = [NSString stringWithUTF8String:item.apphost.c_str()];
+        obj.waphost = [NSString stringWithUTF8String:item.waphost.c_str()];
+        obj.pay_api = [NSString stringWithUTF8String:item.pay_api.c_str()];
+        obj.fake = item.fake;
+    }
+    
+    CheckServerFinishHandler handler = nil;
+    @synchronized(manager.delegateDictionary) {
+        handler = [manager.delegateDictionary objectForKey:@(requestId)];
+        [manager.delegateDictionary removeObjectForKey:@(requestId)];
+    }
+    
+    if (handler) {
+        handler(success, obj, [NSString stringWithUTF8String:errnum.c_str()], [NSString stringWithUTF8String:errmsg.c_str()]);
+    }
+}
+
+- (NSInteger)checkServer:(NSString * _Nonnull)user finishHandler:(CheckServerFinishHandler _Nullable)finishHandler {
+    NSInteger requestId = HTTPREQUEST_INVALIDREQUESTID;
+    requestId = mpRequestFakeController->CheckServer([user UTF8String]);
+    if( requestId != HTTPREQUEST_INVALIDREQUESTID ) {
+        @synchronized(self.delegateDictionary) {
+            [self.delegateDictionary setObject:finishHandler forKey:@(requestId)];
+        }
+    }
+    
+    return requestId;
 }
 
 #pragma mark - 登陆认证模块
@@ -227,15 +301,14 @@ void onRegister(long requestId, bool success, RegisterItem item, string errnum, 
                weeklymail:(BOOL)isWeeklymail
             finishHandler:(registerFinishHandler)finishHandler{
     NSInteger requestId = HTTPREQUEST_INVALIDREQUESTID;
-    @synchronized(self.delegateDictionary) {
-        
-        requestId = mpRequestAuthorizationController->Register([user UTF8String], [password UTF8String], isMale, [firstname UTF8String], [lastname UTF8String],country , [birthday_y UTF8String], [birthday_m UTF8String], [birthday_d UTF8String], isWeeklymail, [[[UIDevice currentDevice] model] UTF8String], [[self getDeviceId] UTF8String], "apple", [self.getRefferer UTF8String]);
-        if( requestId != HTTPREQUEST_INVALIDREQUESTID ) {
+    
+    requestId = mpRequestAuthorizationController->Register([user UTF8String], [password UTF8String], isMale, [firstname UTF8String], [lastname UTF8String],country , [birthday_y UTF8String], [birthday_m UTF8String], [birthday_d UTF8String], isWeeklymail, [[[UIDevice currentDevice] model] UTF8String], [[self getDeviceId] UTF8String], "apple", [self.getRefferer UTF8String]);
+    if( requestId != HTTPREQUEST_INVALIDREQUESTID ) {
+        @synchronized(self.delegateDictionary) {
             [self.delegateDictionary setObject:finishHandler forKey:@(requestId)];
         }
     }
-    
-    
+
     return requestId;
 }
 
@@ -257,6 +330,7 @@ void onLogin(long requestId, bool success, LoginItem item, string errnum, string
         obj.telephone_cc = item.telephone_cc;
         obj.sessionid = [NSString stringWithUTF8String:item.sessionid.c_str()];
         obj.ga_uid = [NSString stringWithUTF8String:item.ga_uid.c_str()];
+        obj.ga_activity = [NSString stringWithUTF8String:item.gaActivity.c_str()];
         obj.ticketid = [NSString stringWithUTF8String:item.ticketid.c_str()];
         obj.photosend = item.photosend;
         obj.photoreceived = item.photoreceived;
@@ -289,7 +363,6 @@ void onLogin(long requestId, bool success, LoginItem item, string errnum, string
         if( requestId != HTTPREQUEST_INVALIDREQUESTID ) {
             [self.delegateDictionary setObject:finishHandler forKey:@(requestId)];
         }
-        
     }
     
     return requestId;
@@ -314,16 +387,13 @@ void onGetCheckCode(long requestId, bool success, const char* data, int len, str
 
 - (NSInteger)getCheckCode:(GetCheckCodeFinishHandler)finishHandler {
     NSInteger requestId = HTTPREQUEST_INVALIDREQUESTID;
-    
-    @synchronized(self.delegateDictionary) {
-        requestId = mpRequestAuthorizationController->GetCheckCode();
-        
-        if( requestId != HTTPREQUEST_INVALIDREQUESTID ) {
+    requestId = mpRequestAuthorizationController->GetCheckCode();
+    if( requestId != HTTPREQUEST_INVALIDREQUESTID ) {
+        @synchronized(self.delegateDictionary) {
             [self.delegateDictionary setObject:finishHandler forKey:@(requestId)];
         }
         
     }
-    
     return requestId;
 }
 
@@ -331,11 +401,6 @@ void onFindPassword(long requestId, bool success, string tips, string errnum, st
     FileLog("httprequest", "RequestManager::::onFindPassword( success : %s )", success?"true":"false");
     
 }
-
-
-
-
-
 
 #pragma mark - 个人信息模块回调
 void onGetMyProfile(long requestId, bool success, ProfileItem item, string errnum, string errmsg);
@@ -351,13 +416,7 @@ RequestProfileControllerCallback gRequestProfileControllerCallback {
     onUploadHeaderPhoto
 };
 
-
-
-
-
-
 #pragma mark - 个人资料模块
-
 void onGetMyProfile(long requestId, bool success, ProfileItem item, string errnum, string errmsg){
     FileLog("httprequest", "RequestManager::onGetMyProfile( success : %s )", success?"true":"false");
         PersonalProfile *profile = [[PersonalProfile alloc] init];;
@@ -383,8 +442,8 @@ void onGetMyProfile(long requestId, bool success, ProfileItem item, string errnu
         profile.income = item.income;
         profile.children = item.children;
         profile.resume = [NSString stringWithUTF8String:item.resume.c_str()];
-        profile.resumeCheck = [NSString stringWithUTF8String:item.resume_content.c_str()];
-        profile.resumeCount = item.resume_status;
+        profile.resume_content = [NSString stringWithUTF8String:item.resume_content.c_str()];
+        profile.resume_status = item.resume_status;
         profile.address1 = [NSString stringWithUTF8String:item.address1.c_str()];
         profile.address2 = [NSString stringWithUTF8String:item.address2.c_str()];
         profile.city = [NSString stringWithUTF8String:item.city.c_str()];
@@ -427,14 +486,13 @@ void onGetMyProfile(long requestId, bool success, ProfileItem item, string errnu
 }
 
 - (NSInteger)getMyProfileFinishHandler:(getMyProfileFinishHandler)finishHandler{
-    NSInteger requestId = HTTPREQUEST_INVALIDREQUESTID;
-    @synchronized(self.delegateDictionary) {
-        requestId = mpRequestProfileController->GetMyProfile();
-        if( requestId != HTTPREQUEST_INVALIDREQUESTID ) {
+    NSInteger requestId = mpRequestProfileController->GetMyProfile();
+    if( requestId != HTTPREQUEST_INVALIDREQUESTID ) {
+        @synchronized(self.delegateDictionary) {
             [self.delegateDictionary setObject:finishHandler forKey:@(requestId)];
         }
-        return requestId;
     }
+    return requestId;
 }
 
 
@@ -450,7 +508,6 @@ void onUpdateMyProfile(long requestId, bool success, bool rsModified, string err
         [manger.delegateDictionary removeObjectForKey:@(requestId)];
     }
     
-    
     if (handler) {
         handler(success,rsModified,[NSString stringWithUTF8String:errnum.c_str()],[NSString stringWithUTF8String:errmsg.c_str()]);
     }
@@ -465,14 +522,14 @@ void onUpdateMyProfile(long requestId, bool success, bool rsModified, string err
         const char* pStr = [str UTF8String];
         strList.push_back(pStr);
     }
-
-    @synchronized(self.delegateDictionary) {
-        requestId = mpRequestProfileController->UpdateProfile(weight, height, language, ethnicity, religion, education, profession, income, children, smoke, drink, [resume UTF8String], strList);
-        if( requestId != HTTPREQUEST_INVALIDREQUESTID ) {
+    requestId = mpRequestProfileController->UpdateProfile(weight, height, language, ethnicity, religion, education, profession, income, children, smoke, drink, [resume UTF8String], strList);
+    if( requestId != HTTPREQUEST_INVALIDREQUESTID ) {
+        @synchronized(self.delegateDictionary) {
             [self.delegateDictionary setObject:finishHandler forKey:@(requestId)];
         }
-        return requestId;
+        
     }
+    return requestId;
 }
 
 
@@ -485,7 +542,6 @@ void onStartEditResume(long requestId, bool success, string errnum, string errms
         [manger.delegateDictionary removeObjectForKey:@(requestId)];
     }
     
-    
     if (handler) {
         handler(success,[NSString stringWithUTF8String:errnum.c_str()],[NSString stringWithUTF8String:errmsg.c_str()]);
     }
@@ -494,14 +550,13 @@ void onStartEditResume(long requestId, bool success, string errnum, string errms
 
 - (NSInteger)startEditResumeFinishHandler:(startEditResumeFinishHandler)finishHandler{
     NSInteger requestId = HTTPREQUEST_INVALIDREQUESTID;
-    @synchronized(self.delegateDictionary) {
-        requestId = mpRequestProfileController->StartEditResume();
-        if( requestId != HTTPREQUEST_INVALIDREQUESTID ) {
+    requestId = mpRequestProfileController->StartEditResume();
+    if( requestId != HTTPREQUEST_INVALIDREQUESTID ) {
+        @synchronized(self.delegateDictionary) {
             [self.delegateDictionary setObject:finishHandler forKey:@(requestId)];
         }
-        return requestId;
     }
-    
+    return requestId;
 }
 
 
@@ -514,7 +569,6 @@ void onUploadHeaderPhoto(long reqeustId, bool success, string  errnum, string er
         [manger.delegateDictionary removeObjectForKey:@(reqeustId)];
     }
     
-    
     if (handler) {
           handler(success,[NSString stringWithUTF8String:errnum.c_str()],[NSString stringWithUTF8String:errmsg.c_str()]);
     }
@@ -524,14 +578,13 @@ void onUploadHeaderPhoto(long reqeustId, bool success, string  errnum, string er
 - (NSInteger)uploadHeaderPhoto:(NSString *)fileName finishHandler:(uploadHeaderPhotoFinishHandler)finishHandler{
     
     NSInteger requestId = HTTPREQUEST_INVALIDREQUESTID;
-    @synchronized(self.delegateDictionary) {
-        requestId = mpRequestProfileController->UploadHeaderPhoto([fileName UTF8String]);
-        if( requestId != HTTPREQUEST_INVALIDREQUESTID ) {
+    requestId = mpRequestProfileController->UploadHeaderPhoto([fileName UTF8String]);
+    if( requestId != HTTPREQUEST_INVALIDREQUESTID ) {
+        @synchronized(self.delegateDictionary) {
             [self.delegateDictionary setObject:finishHandler forKey:@(requestId)];
         }
-        return requestId;
     }
-    
+    return requestId;
 }
 
 
@@ -583,9 +636,10 @@ void onQueryLadyList(long requestId, bool success, list<Lady> ladyList, int tota
                            ageRangeTo:(int)ageRangeTo
                               country:(NSString *)country
                               orderBy:(int)orderBy
+                           genderType:(LadyGenderType)genderType
                         finishHandler:(onlineListFinishHandler)finishHandler{
     NSInteger requestId = HTTPREQUEST_INVALIDREQUESTID;
-     requestId = mpRequestLadyController->QueryLadyList(pageIndex, pageSize, searchType, [womanId UTF8String], isOnline, ageRangeFrom, ageRangeTo, [country UTF8String], orderBy, [[[UIDevice currentDevice] model] UTF8String]);
+    requestId = mpRequestLadyController->QueryLadyList(pageIndex, pageSize, searchType, [womanId UTF8String], isOnline, ageRangeFrom, ageRangeTo, [country UTF8String], orderBy, [[[UIDevice currentDevice] model] UTF8String], genderType);
     @synchronized(self.delegateDictionary) {
         if( requestId != HTTPREQUEST_INVALIDREQUESTID ) {
             [self.delegateDictionary setObject:finishHandler forKey:@(requestId)];
@@ -595,7 +649,6 @@ void onQueryLadyList(long requestId, bool success, list<Lady> ladyList, int tota
     
     return requestId;
 }
-
 
 void onQueryLadyDetail(long requestId, bool success, LadyDetail item, string errnum, string errmsg) {
         FileLog("httprequest", "RequestManager::::onQueryLadyDetail( success : %s )", success?"true":"false");
@@ -669,8 +722,6 @@ void onQueryLadyDetail(long requestId, bool success, LadyDetail item, string err
     
 }
 
-
-
 /**
  *  获取指定人物的详情
  *
@@ -691,8 +742,6 @@ void onQueryLadyDetail(long requestId, bool success, LadyDetail item, string err
     return requestId;
 }
 
-
-
 void onAddFavouritesLady(long requestId, bool success, string errnum, string errmsg) {
     FileLog("httprequest", "RequestManager::onAddFavouritesLady( success : %s )", success?"true":"false");
     RequestManager *manger = [RequestManager manager];
@@ -701,7 +750,10 @@ void onAddFavouritesLady(long requestId, bool success, string errnum, string err
         handler = [manger.delegateDictionary objectForKey:@(requestId)];
         [manger.delegateDictionary removeObjectForKey:@(requestId)];
     }
-    handler(success,[NSString stringWithUTF8String:errnum.c_str()],[NSString stringWithUTF8String:errmsg.c_str()]);
+    
+    if( handler ) {
+        handler(success,[NSString stringWithUTF8String:errnum.c_str()],[NSString stringWithUTF8String:errmsg.c_str()]);
+    }
 }
 
 /**
@@ -732,7 +784,10 @@ void onRemoveFavouritesLady(long requestId, bool success, string errnum, string 
         handler = [manager.delegateDictionary objectForKey:@(requestId)];
         [manager.delegateDictionary removeObjectForKey:@(requestId)];
     }
-    handler(success,[NSString stringWithUTF8String:errnum.c_str()],[NSString stringWithUTF8String:errmsg.c_str()]);
+    
+    if( handler ) {
+        handler(success,[NSString stringWithUTF8String:errnum.c_str()],[NSString stringWithUTF8String:errmsg.c_str()]);
+    }
 }
 
 
@@ -754,8 +809,6 @@ void onRemoveFavouritesLady(long requestId, bool success, string errnum, string 
     }
     return requestId;
 }
-
-
 
 void onRecentContact(long requestId, bool success, const string& errnum, const string& errmsg, const list<LadyRecentContact>& items) {
     FileLog("httprequest", "RequestManager::onRecentContact( success : %s )", success?"true":"false");
@@ -806,10 +859,6 @@ void onRecentContact(long requestId, bool success, const string& errnum, const s
     return requestId;
 }
 
-
-
-
-
 void onRemoveContactList(long requestId, bool success, string errnum, string errmsg) {
     FileLog("httprequest", "RequestManager::onRemoveContactList( success : %s )", success?"true":"false");
     RequestManager *manger = [RequestManager manager];
@@ -818,12 +867,11 @@ void onRemoveContactList(long requestId, bool success, string errnum, string err
         handler = [manger.delegateDictionary objectForKey:@(requestId)];
         [manger.delegateDictionary removeObjectForKey:@(requestId)];
     }
-    handler(success,[NSString stringWithUTF8String:errnum.c_str()],[NSString stringWithUTF8String:errmsg.c_str()]);
     
+    if ( handler ) {
+        handler(success,[NSString stringWithUTF8String:errnum.c_str()],[NSString stringWithUTF8String:errmsg.c_str()]);
+    }
 }
-
-
-
 
 /**
  *  移除联系人列表
@@ -850,6 +898,42 @@ void onRemoveContactList(long requestId, bool success, string errnum, string err
     return requestId;
 }
 
+
+void onReportLady(long requestId, bool success, const string& errnum, const string& errmsg)
+{
+    FileLog("httprequest", "RequestManager::onReportLady( success : %s )", success?"true":"false");
+    RequestManager *manger = [RequestManager manager];
+    reportLadyFinishHandler handler = nil;
+    @synchronized(manger.delegateDictionary) {
+        handler = [manger.delegateDictionary objectForKey:@(requestId)];
+        [manger.delegateDictionary removeObjectForKey:@(requestId)];
+    }
+    
+    if (nil != handler) {
+        handler(success, [NSString stringWithUTF8String:errnum.c_str()], [NSString stringWithUTF8String:errmsg.c_str()]);
+    }
+}
+
+/**
+ *  举报女士
+ *
+ *  @param womanId       女士ID
+ *
+ *  @return 成功:请求Id/失败:无效Id
+ */
+- (NSInteger)reportLady:(NSString* _Nonnull)womanId finishHandler:(reportLadyFinishHandler _Nullable)finishHandler
+{
+    NSInteger requestId = HTTPREQUEST_INVALIDREQUESTID;
+    
+    string strWomanId = [womanId UTF8String];
+    requestId = mpRequestLadyController->ReportLady(strWomanId);
+    if (requestId != HTTPREQUEST_INVALIDREQUESTID) {
+        @synchronized(self.delegateDictionary) {
+            [self.delegateDictionary setObject:finishHandler forKey:@(requestId)];
+        }
+    }
+    return requestId;
+}
 
 
 #pragma mark - 其他模块
@@ -971,6 +1055,156 @@ void RequestOtherControllerCallback::OnSynConfig(long requestId, bool success, c
     
     requestId = mpRequestOtherController->SynConfig();
     if( requestId != HTTPREQUEST_INVALIDREQUESTID ) {
+        @synchronized(self.delegateDictionary) {
+            [self.delegateDictionary setObject:finishHandler forKey:@(requestId)];
+        }
+    }
+    
+    return requestId;
+}
+
+void RequestOtherControllerCallback::OnGetCount(long requestId, bool success, const string& errnum, const string& errmsg, const OtherGetCountItem& item) {
+    FileLog("httprequest", "RequestManager::OnGetCount( success : %s )", success?"true":"false");
+    
+    OtherGetCountItemObject* obj = [[OtherGetCountItemObject alloc] init];
+    if( success ) {
+        obj.money = item.money;
+        obj.coupon = item.coupon;
+        obj.integral = item.integral;
+        obj.regstep = item.regstep;
+        obj.allowAlbum = item.allowAlbum;
+        obj.admirerUr = item.admirerUr;
+    }
+    
+    GetCountFinishHandler handler = nil;
+    RequestManager *manager = [RequestManager manager];
+    @synchronized(manager.delegateDictionary) {
+        handler = [manager.delegateDictionary objectForKey:@(requestId)];
+        [manager.delegateDictionary removeObjectForKey:@(requestId)];
+    }
+    
+    if( handler ) {
+        handler(success, obj, [NSString stringWithUTF8String:errnum.c_str()], [NSString stringWithUTF8String:errmsg.c_str()]);
+    }
+    
+}
+
+- (NSInteger)getCount:(GetCountFinishHandler _Nullable)finishHandler {
+    NSInteger requestId = HTTPREQUEST_INVALIDREQUESTID;
+    
+    requestId = mpRequestOtherController->GetCount(true, true, true, true, true, true);
+    if( requestId != HTTPREQUEST_INVALIDREQUESTID ) {
+        @synchronized(self.delegateDictionary) {
+            [self.delegateDictionary setObject:finishHandler forKey:@(requestId)];
+        }
+    }
+    
+    return requestId;
+}
+
+void RequestOtherControllerCallback::OnUploadCrashLog(long requestId, bool success, const string& errnum, const string& errmsg){
+    FileLog("httprequest", "RequestManager::OnUploadCrashLog( success : %s )", success?"true":"false");
+    UploadCrashLogFinishHandler handler = nil;
+    RequestManager *manager = [RequestManager manager];
+    @synchronized(manager.delegateDictionary) {
+        handler = [manager.delegateDictionary objectForKey:@(requestId)];
+        [manager.delegateDictionary removeObjectForKey:@(requestId)];
+    }
+    
+    if( handler ) {
+        handler(success, [NSString stringWithUTF8String:errnum.c_str()], [NSString stringWithUTF8String:errmsg.c_str()]);
+    }
+}
+
+- (NSInteger)uploadCrashLogWithFile:(NSString *)file tmpDirectory:(NSString *)tmpDirectory finishHandler:(UploadCrashLogFinishHandler _Nullable)finishHandler{
+    NSInteger requestId = HTTPREQUEST_INVALIDREQUESTID;
+    
+    // create zip
+    KZip zip;
+    NSString *comment = @"";
+    //    NSArray *zipPassword = @[@0x51, @0x70, @0x69, @0x64, @0x5F, @0x44, @0x61, @0x74, @0x69, @0x6E, @0x67, @0x00];
+    //压缩的密码
+    const char password[] = {
+        0x51, 0x70, 0x69, 0x64, 0x5F, 0x44, 0x61, 0x74, 0x69, 0x6E, 0x67, 0x00
+    };
+    char pZipFileName[1024] = {'\0'};
+    
+    //压缩文件名称
+    NSDate *curDate = [NSDate date];
+    
+    snprintf(pZipFileName, sizeof(pZipFileName), "%s/crash-%s.zip", \
+             [tmpDirectory  UTF8String], [[curDate toStringCrashZipDate] UTF8String]);
+    
+    //创建压缩文件
+    BOOL bFlag = zip.CreateZipFromDir([file UTF8String], pZipFileName,password,[comment UTF8String]);
+    //压缩成功执行上传压缩文件到服务器
+    if (bFlag) {
+        requestId = mpRequestOtherController->UploadCrashLog([[self getDeviceId] UTF8String] , pZipFileName);
+        if( requestId != HTTPREQUEST_INVALIDREQUESTID ) {
+            @synchronized(self.delegateDictionary) {
+                [self.delegateDictionary setObject:finishHandler forKey:@(requestId)];
+            }
+        }
+    }
+    
+    return requestId;
+}
+
+#pragma mark - 支付
+void onGetPaymentOrder(long requestId, bool success, const string& code, const string& orderNo, const string& productId)
+{
+    GetPaymentOrderFinishHandler handler = nil;
+    RequestManager *manager = [RequestManager manager];
+    @synchronized(manager.delegateDictionary) {
+        handler = [manager.delegateDictionary objectForKey:@(requestId)];
+        [manager.delegateDictionary removeObjectForKey:@(requestId)];
+    }
+    
+    if( nil != handler ) {
+        handler(success
+            , [NSString stringWithUTF8String:code.c_str()]
+            , [NSString stringWithUTF8String:orderNo.c_str()]
+            , [NSString stringWithUTF8String:productId.c_str()]);
+    }
+}
+
+- (NSInteger)getPaymentOrder:(NSString* _Nonnull)manId sid:(NSString* _Nonnull)sid number:(NSString* _Nonnull)number finishHandler:(GetPaymentOrderFinishHandler _Nullable)finishHandler
+{
+    const char* pManId = [manId UTF8String];
+    const char* pSid = [sid UTF8String];
+    const char* pNumber = [number UTF8String];
+    NSInteger requestId = mpRequestPaidController->GetPaymentOrder(pManId, pSid, pNumber);
+    if( requestId != HTTPREQUEST_INVALIDREQUESTID ) {
+        @synchronized(self.delegateDictionary) {
+            [self.delegateDictionary setObject:finishHandler forKey:@(requestId)];
+        }
+    }
+    
+    return requestId;
+}
+
+void onCheckPayment(long requestId, bool success, const string& code)
+{
+    CheckPaymentFinishHandler handler = nil;
+    RequestManager *manager = [RequestManager manager];
+    @synchronized(manager.delegateDictionary) {
+        handler = [manager.delegateDictionary objectForKey:@(requestId)];
+        [manager.delegateDictionary removeObjectForKey:@(requestId)];
+    }
+    
+    if( nil != handler ) {
+        handler(success, [NSString stringWithUTF8String:code.c_str()]);
+    }
+}
+
+- (NSInteger)checkPayment:(NSString* _Nonnull)manId sid:(NSString* _Nonnull)sid receipt:(NSString* _Nonnull)receipt orderNo:(NSString* _Nonnull)orderNo finishHandler:(CheckPaymentFinishHandler _Nullable)finishHandler
+{
+    const char* pManId = [manId UTF8String];
+    const char* pSid = [sid UTF8String];
+    const char* pReceipt = [receipt UTF8String];
+    const char* pOrderNo = [orderNo UTF8String];
+    NSInteger requestId = mpRequestPaidController->CheckPayment(pManId, pSid, pReceipt, pOrderNo);
+    if ( requestId != HTTPREQUEST_INVALIDREQUESTID ) {
         @synchronized(self.delegateDictionary) {
             [self.delegateDictionary setObject:finishHandler forKey:@(requestId)];
         }

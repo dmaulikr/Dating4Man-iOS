@@ -13,7 +13,9 @@
 #import "RegisterItemObject.h"
 #import <AssetsLibrary/AssetsLibrary.h>
 #import "SelectSwitch.h"
+#import "RegisterHeaderViewCell.h"
 
+#define maxInput 30
 
 typedef enum : NSUInteger {
     Afghanistan,
@@ -257,13 +259,31 @@ typedef enum : NSUInteger {
 } CountryListName;
 
 
-@interface RegisterViewController ()<UIImagePickerControllerDelegate,UINavigationControllerDelegate,UITextFieldDelegate,UIActionSheetDelegate,UIPickerViewDataSource,UIPickerViewDelegate,NSXMLParserDelegate>
+typedef enum : NSUInteger {
+    RegisterMsgTypeHeaderPhoto,
+    RegisterMsgTypeGender,
+    RegisterMsgTypeName,
+    RegisterMsgTypeBirthDay,
+    RegisterMsgTypeNationality,
+    RegisterMsgTypeDecribe
+} RegisterMsgType;
+
+typedef enum : NSUInteger {
+    RegisterTextfieldTypeName = 70,
+    RegisterTextfieldTypeDate,
+    RegisterTextfieldTypeNationlity,
+    RegisterTextfieldTypeDescribe,
+} RegisterTextfieldType;
+
+
+
+@interface RegisterViewController ()<UIImagePickerControllerDelegate,UINavigationControllerDelegate,UITextFieldDelegate,UIActionSheetDelegate,UIPickerViewDataSource,UIPickerViewDelegate,NSXMLParserDelegate,RegisterHeaderViewCellDelegate>
 
 /** cell名称 */
 @property (nonatomic,strong) NSArray *dataName;
 /** 辅助视图 */
 @property (nonatomic,copy) NSArray *dataAccessory;
-@property (weak, nonatomic) IBOutlet UIButton *continueBtn;
+
 
 /** 名字 */
 @property (nonatomic,strong) UITextField *nameTextField;
@@ -274,9 +294,6 @@ typedef enum : NSUInteger {
 /** 国家 */
 @property (nonatomic,strong) UITextField *countryField;
 
-@property (weak, nonatomic) IBOutlet UIView *topView;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *continueBtnBottom;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *topViewTop;
 /** 字典 */
 @property (nonatomic,strong) NSMutableDictionary *dataDict;
 /** basicData */
@@ -307,32 +324,13 @@ typedef enum : NSUInteger {
 /** 标签 */
 @property (nonatomic,strong) NSString *elementTag;
 
+@property (nonatomic, strong) NSArray *tableViewArray;
+
 @end
 
 @implementation RegisterViewController
 
-BOOL selectResult;
-
 #pragma mark - lazy
-- (NSArray *)dataName{
-    if (!_dataName) {
-        _dataName = @[@"Your gender",
-                      @"Your name",
-                      @"Your birthday",
-                      @"Your nationality",
-                      @"Decribe yourself"];
-    }
-    return _dataName;
-}
-
-- (NSMutableDictionary *)dataDict{
-    if (!_dataDict) {
-        _dataDict  = [NSMutableDictionary dictionary];
-    }
-    
-    return _dataDict;
-}
-
 
 - (NSMutableArray *)countryList{
     if (!_countryList) {
@@ -354,10 +352,10 @@ BOOL selectResult;
 #pragma mark - lifeCycle
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    
     [self setupXMLParser];
-    [self setupSexSwitch];
-   
+    
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -367,23 +365,52 @@ BOOL selectResult;
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    
+    self.navigationController.navigationBar.hidden = NO;
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+
+    self.automaticallyAdjustsScrollViewInsets = NO;
     
+    
+    self.continueBtn.adjustsImageWhenHighlighted = YES;
+    if ([self.navigationController.navigationBar respondsToSelector:@selector(setBackgroundImage:forBarMetrics:)]){
+        //取出导航控制器的子控件
+        NSArray *NavigationList = self.navigationController.navigationBar.subviews;
+        //遍历
+        for (id NavigationListObj in NavigationList) {
+            //取出图片
+            if ([NavigationListObj isKindOfClass:[UIImageView class]]) {
+                //获取图片
+                UIImageView *imageView = (UIImageView *)NavigationListObj;
+                //取出图片的子控件
+                NSArray *imageViewLineList = imageView.subviews;
+                //遍历
+                for (id imageViewLineListObj in imageViewLineList) {
+                    //获取边线图
+                    if ([imageViewLineListObj isKindOfClass:[UIImageView class]]) {
+                        UIImageView *bottomLine = (UIImageView *)imageViewLineListObj;
+                        bottomLine.hidden = YES;
+                    }
+                }
+            }
+        }
+    }
+    [self reloadData:YES];
 }
 
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
-
-    [self reloadData:YES];
+    
+    
 }
 
 - (void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:animated];
-
+    
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
-
 }
 
 
@@ -396,10 +423,12 @@ BOOL selectResult;
 }
 
 #pragma mark - 界面逻辑
-- (void)initNavigationItems {
-    self.customBackTitle = @"Login";
-    
+- (void)initCustomParam {
+//    self.customBackTitle = NSLocalizedString(@"Login", nil);
+    [super initCustomParam];
+    self.backTitle = NSLocalizedString(@"Register", nil);
 }
+
 //设置导航栏
 - (void)setupNavigationBar{
     [super setupNavigationBar];
@@ -407,52 +436,39 @@ BOOL selectResult;
     
     UILabel *Register = [[UILabel alloc] init];
     Register.textColor = [UIColor whiteColor];
-    Register.text = @"Register";
+    Register.text = NSLocalizedString(@"Register", nil);
     [Register sizeToFit];
     self.navigationItem.titleView = Register;
-
-
+    
+    
 }
 
 - (void)setupTableView {
-    self.tableView.separatorColor = [UIColor grayColor];
-    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 1)];
-    headerView.backgroundColor = self.tableView.separatorColor;
-    headerView.alpha = 0.4f;
-    [self.tableView setTableHeaderView:headerView];
+    self.mainVC.pagingScrollView.delaysContentTouches = NO;
+    self.tableView.delaysContentTouches = NO;
+    
+//    self.tableView.backgroundColor = self.navigationController.navigationBar.barTintColor;
+    
     
     UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
     [self.tableView setTableFooterView:footerView];
- 
-    _lastScrollOffset = -self.topView.frame.size.height;
-    self.tableView.contentInset = UIEdgeInsetsMake(self.topView.frame.size.height, 0, 0, 0);
-    self.mainVC.automaticallyAdjustsScrollViewInsets = NO;
+    
 }
 
 - (void)setupContainView{
     [super setupContainView];
-    [self setupChoosePhotoImage];
     [self setupTableView];
-
+    [self setupSexSwitch];
 }
 
 
-//设置头部选择图片
-- (void)setupChoosePhotoImage{
-    self.choosePhotoImage.layer.cornerRadius = self.choosePhotoImage.frame.size.height * 0.5f;
-    self.choosePhotoImage.layer.masksToBounds = YES;
-    self.choosePhotoImage.userInteractionEnabled = YES;
-    UITapGestureRecognizer *tapPhotoGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(choosePhoto:)];
-    [self.choosePhotoImage addGestureRecognizer:tapPhotoGesture];
-
-}
 
 //设置xml解析
 - (void)setupXMLParser{
     NSString *path = [[NSBundle mainBundle] pathForResource:@"country_without_code" ofType:@"xml"];
     NSFileHandle *file = [NSFileHandle fileHandleForReadingAtPath:path];
     NSData *data = [file readDataToEndOfFile];
-
+    
     NSXMLParser* xmlRead = [[NSXMLParser alloc] initWithData:data];
     [xmlRead setDelegate:self];
     [xmlRead parse];
@@ -461,10 +477,11 @@ BOOL selectResult;
 
 //设置性别选择
 - (void)setupSexSwitch{
-    //宽度一般是高度的2倍
-    SelectSwitch *item = [[SelectSwitch alloc] initWithFrame:CGRectMake(0, 0, 122, 36)];
+    SelectSwitch *item = [[SelectSwitch alloc] initWithFrame:CGRectMake(0, 0, 160, 36)];
     item.yesLabel.text = @"Male";
+    item.yesLabel.font = [UIFont systemFontOfSize:16];
     item.noLabel.text = @"Female";
+        item.noLabel.font = [UIFont systemFontOfSize:16];
     //默认为女士
     if (self.registerObj.isMale == YES) {
         item.isYes = YES;
@@ -478,10 +495,68 @@ BOOL selectResult;
 
 #pragma mark - 数据逻辑
 - (void)reloadData:(BOOL)isReloadView{
-  
+    
+    
+    // 主tableView
+    NSMutableArray *array = [NSMutableArray array];
+    
+    NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
+    CGSize viewSize;
+    NSValue *rowSize;
+    
+    // 头部
+    dictionary = [NSMutableDictionary dictionary];
+    viewSize = CGSizeMake(self.tableView.frame.size.width, [RegisterHeaderViewCell cellHeight]);
+    rowSize = [NSValue valueWithCGSize:viewSize];
+    [dictionary setValue:rowSize forKey:ROW_SIZE];
+    [dictionary setValue:[NSNumber numberWithInteger:RegisterMsgTypeHeaderPhoto] forKey:ROW_TYPE];
+    [array addObject:dictionary];
+    
+    // 性别
+    dictionary = [NSMutableDictionary dictionary];
+    viewSize = CGSizeMake(self.tableView.frame.size.width, [CommonTextFieldTableViewCell cellHeight]);
+    rowSize = [NSValue valueWithCGSize:viewSize];
+    [dictionary setValue:rowSize forKey:ROW_SIZE];
+    [dictionary setValue:[NSNumber numberWithInteger:RegisterMsgTypeGender] forKey:ROW_TYPE];
+    [array addObject:dictionary];
+    
+    // 姓名
+    dictionary = [NSMutableDictionary dictionary];
+    viewSize = CGSizeMake(self.tableView.frame.size.width, [CommonTextFieldTableViewCell cellHeight]);
+    rowSize = [NSValue valueWithCGSize:viewSize];
+    [dictionary setValue:rowSize forKey:ROW_SIZE];
+    [dictionary setValue:[NSNumber numberWithInteger:RegisterMsgTypeName] forKey:ROW_TYPE];
+    [array addObject:dictionary];
+    
+    //出生日期
+    dictionary = [NSMutableDictionary dictionary];
+    viewSize = CGSizeMake(self.tableView.frame.size.width, [CommonTextFieldTableViewCell cellHeight]);
+    rowSize = [NSValue valueWithCGSize:viewSize];
+    [dictionary setValue:rowSize forKey:ROW_SIZE];
+    [dictionary setValue:[NSNumber numberWithInteger:RegisterMsgTypeBirthDay] forKey:ROW_TYPE];
+    [array addObject:dictionary];
+    
+    //国家
+    dictionary = [NSMutableDictionary dictionary];
+    viewSize = CGSizeMake(self.tableView.frame.size.width, [CommonTextFieldTableViewCell cellHeight]);
+    rowSize = [NSValue valueWithCGSize:viewSize];
+    [dictionary setValue:rowSize forKey:ROW_SIZE];
+    [dictionary setValue:[NSNumber numberWithInteger:RegisterMsgTypeNationality] forKey:ROW_TYPE];
+    [array addObject:dictionary];
+    
+//    //个人描述
+//    dictionary = [NSMutableDictionary dictionary];
+//    viewSize = CGSizeMake(self.tableView.frame.size.width, [CommonTextFieldTableViewCell cellHeight]);
+//    rowSize = [NSValue valueWithCGSize:viewSize];
+//    [dictionary setValue:rowSize forKey:ROW_SIZE];
+//    [dictionary setValue:[NSNumber numberWithInteger:RegisterMsgTypeDecribe] forKey:ROW_TYPE];
+//    [array addObject:dictionary];
+    
+    self.tableViewArray = array;
+    
     if (isReloadView) {
         [self.tableView reloadData];
-
+        
     }
 }
 
@@ -500,65 +575,170 @@ BOOL selectResult;
     NSInteger number = 0;
     if([tableView isEqual:self.tableView]) {
         // 主tableview
-      number = self.dataName.count;
+        number = self.tableViewArray.count;
     }
     return number;
 }
 
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    CGFloat height = 0;
+    if([tableView isEqual:self.tableView]) {
+        // 主tableview
+        NSDictionary *dictionarry = [self.tableViewArray objectAtIndex:indexPath.row];
+        CGSize viewSize;
+        NSValue *value = [dictionarry valueForKey:ROW_SIZE];
+        [value getValue:&viewSize];
+        height = viewSize.height;
+    }
+    
+    return height;
+}
+
+
+
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     UITableViewCell *result = nil;
-    CommonTextFieldTableViewCell *commomCell = [CommonTextFieldTableViewCell getUITableViewCell:tableView];
-    result = commomCell;
-    commomCell.contentTextField.delegate = self;
-    commomCell.detailLabel.text = self.dataName[indexPath.row];
-    [commomCell setSelectionStyle:UITableViewCellSelectionStyleNone];
-    if (indexPath.row == 0) {
-        commomCell.contentTextField.hidden = YES;
-        commomCell.accessoryView = self.selectItem;
-        commomCell.accessoryView.backgroundColor = [UIColor colorWithRed:229/255.0 green:229/255.0 blue:229/255.0 alpha:1.0];
-    }
-    if (indexPath.row == 1) {
-        commomCell.contentTextField.hidden = NO;
-        commomCell.contentTextField.returnKeyType = UIReturnKeyDone;
-        self.nameTextField = commomCell.contentTextField;
-        self.nameTextField.delegate = self;
-    }
-    if (indexPath.row == 2 ) {
-        commomCell.contentTextField.hidden = NO;
-        commomCell.contentTextField.placeholder = @"Select >";
-        UIDatePicker *picker = [[UIDatePicker alloc] init];
-        picker.datePickerMode = UIDatePickerModeDate;
-        self.picker = picker;
-        commomCell.contentTextField.inputView = picker;
-        UIToolbar *toolBar = [[UIToolbar alloc]initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 44)];
-        UIBarButtonItem *right = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(cancelDatePicker)];
-        toolBar.items = [NSArray arrayWithObject:right];
-        commomCell.contentTextField.inputAccessoryView = toolBar;
-        self.dateTextField = commomCell.contentTextField;
+    
+    if([tableView isEqual:self.tableView]) {
+        // 主tableview
+        NSDictionary *dictionarry = [self.tableViewArray objectAtIndex:indexPath.row];
         
+        // 大小
+        CGSize viewSize;
+        NSValue *value = [dictionarry valueForKey:ROW_SIZE];
+        [value getValue:&viewSize];
+        CommonTextFieldTableViewCell *commomCell = [CommonTextFieldTableViewCell getUITableViewCell:tableView];
+        result = commomCell;
+        [commomCell setSelectionStyle:UITableViewCellSelectionStyleNone];
+        
+        // 类型
+        RegisterMsgType type = (RegisterMsgType)[[dictionarry valueForKey:ROW_TYPE] intValue];
+        switch (type) {
+            case RegisterMsgTypeHeaderPhoto:{
+                RegisterHeaderViewCell *headerCell = [RegisterHeaderViewCell getUITableViewCell:tableView];
+                [headerCell setSelectionStyle:UITableViewCellSelectionStyleNone];
+                headerCell.backgroundColor = self.navigationController.navigationBar.barTintColor;
+                result = headerCell;
+                headerCell.delegate = self;
+//                headerCell.headerPhoto.image = self.registerObj.headerImage;
+                if (self.registerObj.headerImage) {
+                    headerCell.addPhotoImageView.image = self.registerObj.headerImage;
+                }else{
+                    headerCell.addPhotoImageView.image = [UIImage imageNamed:@"Register-UploadPhoto"];
+                }
+               
+//                if (headerCell.headerPhoto.image) {
+//                    headerCell.headerPhoto.backgroundColor = [UIColor clearColor];
+//                }else{
+//                    headerCell.headerPhoto.backgroundColor = self.navigationController.navigationBar.barTintColor;
+//                }
+                
+            }break;
+            case RegisterMsgTypeGender:{
+                CommonTextFieldTableViewCell *commomCell = [CommonTextFieldTableViewCell getUITableViewCell:tableView];
+                result = commomCell;
+                [commomCell setSelectionStyle:UITableViewCellSelectionStyleNone];
+                commomCell.detailLabel.text = NSLocalizedStringFromSelf(@"YOUR_GENDER");
+                commomCell.contentTextField.hidden = YES;
+                commomCell.accessoryView = self.selectItem;
+                commomCell.contentTextField.inputView = nil;
+                commomCell.contentTextField.inputAccessoryView = nil;
+                commomCell.accessoryView.backgroundColor = [UIColor colorWithRed:229/255.0 green:229/255.0 blue:229/255.0 alpha:1.0];
+            }break;
+            case RegisterMsgTypeName:{
+                commomCell.accessoryView = nil;
+                commomCell.contentTextField.inputView = nil;
+                commomCell.contentTextField.inputAccessoryView = nil;
+                commomCell.contentTextField.delegate = self;
+                commomCell.detailLabel.text = NSLocalizedStringFromSelf(@"YOUR_NAME");
+                commomCell.contentTextField.placeholder = NSLocalizedStringFromSelf(@"ENTER");
+                commomCell.contentTextField.hidden = NO;
+                commomCell.contentTextField.returnKeyType = UIReturnKeyDone;
+                commomCell.contentTextField.tag = RegisterTextfieldTypeName;
+                self.nameTextField = commomCell.contentTextField;
+                commomCell.contentTextField.text = self.registerObj.name;
+            }break;
+            case RegisterMsgTypeBirthDay:{
+                commomCell.accessoryView = nil;
+                [commomCell setSelectionStyle:UITableViewCellSelectionStyleNone];
+                commomCell.contentTextField.delegate = self;
+                commomCell.contentTextField.hidden = NO;
+                commomCell.detailLabel.text = NSLocalizedStringFromSelf(@"YOUR_BIRTHDAY");
+                commomCell.contentTextField.placeholder = NSLocalizedStringFromSelf(@"SELECT");
+                UIDatePicker *picker = [[UIDatePicker alloc] init];
+                picker.datePickerMode = UIDatePickerModeDate;
+                NSTimeInterval interval =  60 * 60 * 24 * 365 * 18;
+                NSDate *eighteenDate = [NSDate dateWithTimeIntervalSinceNow:-interval];
+                picker.maximumDate = eighteenDate;
+                  interval =  float(60.0f * 60.0f * 24.0f * 365.0f * 99.0f);
+                eighteenDate = [NSDate dateWithTimeIntervalSinceNow:-interval];
+                picker.minimumDate = eighteenDate;
+                if (self.registerObj.birthday.length > 0) {
+                    NSDateFormatter *formatter = [[NSDateFormatter alloc] init] ;
+                    [formatter setDateFormat:@"yyyy-MM-dd"];
+                    NSDate *date=[formatter dateFromString:self.registerObj.birthday];
+                    [picker setDate:date animated:NO];
+                }
+                
+                UIToolbar *toolBar = [[UIToolbar alloc]initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 44)];
+                UIBarButtonItem *space = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+                UIBarButtonItem *right = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(cancelDatePicker)];
+                //                toolBar.items = [NSArray arrayWithObject:right];
+                toolBar.items = [NSArray arrayWithObjects:space,right, nil];
+                commomCell.contentTextField.inputAccessoryView = toolBar;
+                commomCell.contentTextField.inputView = picker;
+                self.picker = picker;
+                
+                commomCell.contentTextField.tag = RegisterTextfieldTypeDate;
+                self.dateTextField = commomCell.contentTextField;
+                commomCell.contentTextField.text = self.registerObj.birthday;
+                
+                
+            }break;
+            case RegisterMsgTypeNationality:{
+                commomCell.accessoryView = nil;
+                commomCell.contentTextField.delegate = self;
+                commomCell.contentTextField.hidden = NO;
+                commomCell.detailLabel.text = NSLocalizedStringFromSelf(@"YOUR_NATIONALITY");
+                commomCell.contentTextField.placeholder = NSLocalizedStringFromSelf(@"SELECT");
+//                UIPickerView *pickerView = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 215)];
+                UIPickerView *pickerView = [[UIPickerView alloc] init];
+                pickerView.dataSource = self;
+                pickerView.delegate = self;
+                if (self.registerObj.country.length > 0) {
+                    [pickerView selectRow:[self.countryList indexOfObject:self.registerObj.country] inComponent:0 animated:NO];
+                }
+                UIToolbar *toolBar = [[UIToolbar alloc]initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 44)];
+                UIBarButtonItem *space = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+                UIBarButtonItem *right = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(cancelCountryPicker)];
+                toolBar.items = [NSArray arrayWithObjects:space,right, nil];
+                commomCell.contentTextField.inputAccessoryView = toolBar;
+                commomCell.contentTextField.inputView = pickerView;
+                self.pickerView = pickerView;
+                commomCell.contentTextField.tag = RegisterTextfieldTypeNationlity;
+                self.countryField = commomCell.contentTextField;
+                commomCell.contentTextField.text = self.registerObj.country;
+                
+            }break;
+            case RegisterMsgTypeDecribe:{
+                commomCell.accessoryView = nil;
+                commomCell.contentTextField.inputAccessoryView = nil;
+                commomCell.contentTextField.inputView = nil;
+                commomCell.detailLabel.text = NSLocalizedStringFromSelf(@"DECRIBE_YOURSELF");
+                commomCell.contentTextField.placeholder =  NSLocalizedStringFromSelf(@"ENTER");
+                commomCell.contentTextField.delegate = self;
+                commomCell.contentTextField.hidden = NO;
+                commomCell.contentTextField.returnKeyType = UIReturnKeyDone;
+                self.descriptionTextField = commomCell.contentTextField;
+                commomCell.contentTextField.tag = RegisterTextfieldTypeDescribe;
+                commomCell.contentTextField.text = self.registerObj.decribe;
+            }break;
+            default:
+                break;
+        }
     }
     
-    if (indexPath.row == 3){
-        commomCell.contentTextField.hidden = NO;
-        commomCell.contentTextField.placeholder = @"Select >";
-        UIPickerView *pickerView = [[UIPickerView alloc] init];
-        pickerView.dataSource = self;
-        pickerView.delegate = self;
-        self.pickerView = pickerView;
-        commomCell.contentTextField.inputView = pickerView;
-        UIToolbar *toolBar = [[UIToolbar alloc]initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 44)];
-        UIBarButtonItem *right = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(cancelCountryPicker)];
-        toolBar.items = [NSArray arrayWithObject:right];
-        commomCell.contentTextField.inputAccessoryView = toolBar;
-        self.countryField = commomCell.contentTextField;
-    }
-    if (indexPath.row == 4) {
-        commomCell.contentTextField.hidden = NO;
-        commomCell.contentTextField.returnKeyType = UIReturnKeyDone;
-        self.descriptionTextField = commomCell.contentTextField;
-    }
-    
-
     return result;
 }
 
@@ -570,35 +750,6 @@ BOOL selectResult;
 }
 
 
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
-
-    CGFloat offsetY = scrollView.contentOffset.y;
-    CGFloat delta = offsetY - self.lastScrollOffset;
-    CGFloat height = self.topView.frame.size.height - delta;
-    
-    if (height < 0) {
-        height = 0;
-    }
-
-    self.topHeight.constant = height;
-    if (height == 0) {
-        self.topView.hidden = YES;
-    }else{
-        self.topView.hidden = NO;
-    }
-    
-    if (self.topView.frame.size.height > 150) {
-        CGRect frame = self.topView.frame;
-        frame.size.height = 150;
-        self.topView.frame = frame;
-    }else if (self.topView.frame.size.height > 50){
-        self.photoLabel.hidden = NO;
-    }else if (self.topView.frame.size.height < 50){
-        self.photoLabel.hidden = YES;
-    }
-
-}
-
 #pragma mark - XML
 - (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName
 
@@ -607,14 +758,14 @@ BOOL selectResult;
     attributes: (NSDictionary *)attributeDict{
     
     self.elementTag = elementName;
-
+    
     if ([elementName isEqualToString:@"resources"]){
         
-   
+        
         
     }else if ([elementName isEqualToString:@"country_without_code"]){
         
-            self.countryList = [[NSMutableArray alloc] init];
+        self.countryList = [[NSMutableArray alloc] init];
         
     }
     
@@ -629,8 +780,8 @@ BOOL selectResult;
     
     if ([self.elementTag isEqualToString:@"item"]) {
         
-               self.countryName = string;
-        }
+        self.countryName = string;
+    }
     
 }
 
@@ -645,8 +796,8 @@ BOOL selectResult;
 
 
 - (void)parserDidEndDocument:(NSXMLParser *)parser{
-
-
+    
+    
 }
 
 
@@ -672,36 +823,94 @@ BOOL selectResult;
     self.countryField.text = [self.countryList objectAtIndex:row];
 }
 
-#pragma mark - 监听返回按钮
-
+#pragma mark - 按钮点击事件
 
 //点击选择相册图片
-- (IBAction)choosePhoto:(id)sender {
+- (void)registerHeaderViewAddPhoto:(RegisterHeaderViewCell *)cell{
     [self closeKeyBoard];
     [self callSheet];
 }
+
+
+
 //点击跳转页面
 - (IBAction)continue2NextPage:(id)sender {
-    [self closeKeyBoard];
-
-    RegisterSecondStepViewController *step2 = [[RegisterSecondStepViewController alloc] init];
-    if (self.topImageView.image) {
-        step2.profileImage = self.topImageView;
-        step2.profilePhoto = self.profilePhotoPath;
+    
+    if ([self.nameTextField isFirstResponder] || [self.dateTextField isFirstResponder] || [self.countryField isFirstResponder] || [self.descriptionTextField isFirstResponder]) {
+        if ([self.dateTextField isFirstResponder]) {
+            [self cancelDatePicker];
+        }
+        
+        if ([self.countryField isFirstResponder]) {
+//            [self cancelCountryPicker];
+        }
+        
+        [self closeKeyBoard];
+    }else{
+        
+        NSString *tipsPhoto = NSLocalizedStringFromSelf(@"TIPS_REGISTERMESSAGE_PHOTO");
+         NSString *tipsName = NSLocalizedStringFromSelf(@"TIPS_REGISTERMESSAGE_NAME");
+         NSString *tipsBirthday = NSLocalizedStringFromSelf(@"TIPS_REGISTERMESSAGE_BIRTHDAY");
+         NSString *tipsNationality = NSLocalizedStringFromSelf(@"TIPS_REGISTERMESSAGE_NATIONALITY");
+        NSString *confirm = NSLocalizedStringFromSelf(@"OK");
+        
+        if (!self.registerObj.headerImage) {
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:tipsPhoto delegate:self cancelButtonTitle:confirm otherButtonTitles:nil, nil];
+            [alertView show];
+            return;
+        }
+        
+        if (self.registerObj.name.length == 0) {
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:tipsName delegate:self cancelButtonTitle:confirm otherButtonTitles:nil, nil];
+            [alertView show];
+            return;
+        }
+        
+        if (self.registerObj.birthday.length == 0) {
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:tipsBirthday delegate:self cancelButtonTitle:confirm otherButtonTitles:nil, nil];
+            [alertView show];
+            return;
+        }
+        
+        // 检测国家是否为空
+//        if (self.registerObj.country.length == 0) {
+//            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:tipsNationality delegate:self cancelButtonTitle:confirm otherButtonTitles:nil, nil];
+//            [alertView show];
+//            return;
+//        }
+        
+        
+        
+        
+        RegisterSecondStepViewController *step2 = [[RegisterSecondStepViewController alloc] init];
+        if (self.registerObj.headerImage) {
+            step2.profileImage = self.registerObj.headerImage;
+            step2.profilePhoto = self.profilePhotoPath;
+        }
+        step2.lastProfileObject = self.registerObj;
+        
+        [self.navigationController pushViewController:step2 animated:YES];
+        
+        NSInteger countryIndex = -1;
+        if( self.registerObj.country.length > 0 ) {
+            countryIndex = [self.countryList indexOfObject:self.registerObj.country];
+        } else {
+            countryIndex = self.countryList.count - 1;
+        }
+        step2.countryIndex = (int)countryIndex;
     }
-    step2.lastProfileObject = self.registerObj;
-
-    [self.navigationController pushViewController:step2 animated:YES];
-
-    NSInteger countryIndex = [self.countryList indexOfObject:self.registerObj.country];
-    step2.countryIndex = (int)countryIndex;
+    
+    //    [self closeKeyBoard];
+    
+    
 }
 
 //关闭键盘
 - (void)closeKeyBoard {
     [self.nameTextField resignFirstResponder];
     [self.descriptionTextField resignFirstResponder];
-
+    [self.countryField resignFirstResponder];
+    [self.dateTextField resignFirstResponder];
 }
 
 
@@ -711,16 +920,17 @@ BOOL selectResult;
  *  退出选择日期
  */
 - (void)cancelDatePicker {
-    NSDate *selectDate = [self.picker date];
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
-    NSString *birthday =  [dateFormatter stringFromDate:selectDate];
-    self.dateTextField.text = birthday;
-    self.registerObj.birthday = self.dateTextField.text;
-    [self.dateTextField resignFirstResponder];
     
-
-    
+    if (self.dateTextField.tag == RegisterTextfieldTypeDate) {
+        NSDate *selectDate = [self.picker date];
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+        NSString *birthday =  [dateFormatter stringFromDate:selectDate];
+        self.dateTextField.text = birthday;
+        self.registerObj.birthday = self.dateTextField.text;
+        [self.dateTextField resignFirstResponder];
+        [self reloadData:YES];
+    }
 }
 
 
@@ -739,21 +949,30 @@ BOOL selectResult;
  *  退出国家选择
  */
 - (void)cancelCountryPicker{
-    if (self.countryField.text.length == 0) {
-        [self pickerView:self.pickerView didSelectRow:0 inComponent:1];
+    
+    if (self.countryField.tag == RegisterTextfieldTypeNationlity) {
+        if (self.countryField.text.length == 0) {
+            [self pickerView:self.pickerView didSelectRow:0 inComponent:1];
+        }
+        self.registerObj.country = self.countryField.text;
+        [self.countryField resignFirstResponder];
+        [self reloadData:YES];
     }
-    self.registerObj.country = self.countryField.text;
-    [self.countryField resignFirstResponder];
-
+    
 }
 
 
 #pragma mark - 相册逻辑
 - (void)callSheet{
+    
+//    NSString *photoTips = NSLocalizedStringFromSelf(@"Photo_Type_Choose");
+    NSString *photoTypeLibrary = NSLocalizedStringFromSelf(@"PHOTO_LIBRARY");
+    NSString *photoTypeTakePhoto = NSLocalizedStringFromSelf(@"PHOTO_TAKING");
+    NSString *photoCancel = NSLocalizedStringFromSelf(@"Cancel");
     if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
-        self.actionSheet = [[UIActionSheet alloc] initWithTitle:@"选择图像" delegate:self cancelButtonTitle:nil destructiveButtonTitle:@"取消" otherButtonTitles:@"拍照",@"从相册选择", nil,nil];
+        self.actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:nil destructiveButtonTitle:photoCancel otherButtonTitles:photoTypeTakePhoto,photoTypeLibrary, nil,nil];
     }else{
-        self.actionSheet = [[UIActionSheet alloc] initWithTitle:@"选择图像" delegate:self cancelButtonTitle:nil destructiveButtonTitle:@"取消" otherButtonTitles:@"从相册选择", nil,nil];
+        self.actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:nil destructiveButtonTitle:photoCancel otherButtonTitles:photoTypeLibrary, nil,nil];
     }
     self.actionSheet.tag = 1001;
     [self.actionSheet showInView:self.view];
@@ -788,10 +1007,13 @@ BOOL selectResult;
         
         //点击打开相册
         UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
-        imagePicker.allowsEditing = YES;
-        imagePicker.delegate = self;
         imagePicker.sourceType = sourceType;
-        
+        imagePicker.allowsEditing = NO;
+        imagePicker.delegate = self;
+        //        if (imagePicker.sourceType == UIImagePickerControllerSourceTypeCamera) {
+        //            imagePicker.allowsEditing = NO;
+        //            imagePicker.cameraViewTransform = CGAffineTransformMakeScale(1, 1);
+        //        }
         [self presentViewController:imagePicker animated:YES completion:nil];
         
     }
@@ -800,50 +1022,73 @@ BOOL selectResult;
 
 #pragma mark - 相册代理方法
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info{
-
+    
     [picker dismissViewControllerAnimated:YES completion:^{
-
-        self.topImageView.image = info[UIImagePickerControllerOriginalImage];
- 
-       FileCacheManager *manager = [FileCacheManager manager];
         
-       self.profilePhotoPath =  [manager imageUploadCachePath:self.topImageView.image uploadImageName:@"test.png"];
+        self.registerObj.headerImage = info[UIImagePickerControllerOriginalImage];
         
+        FileCacheManager *manager = [FileCacheManager manager];
+        
+        self.profilePhotoPath =  [manager imageUploadCachePath:self.registerObj.headerImage uploadImageName:@"headPhoto.png"];
+        
+        [self reloadData:YES];
+        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
 
+        
     }];
     
 }
 
+
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker{
     [picker dismissViewControllerAnimated:YES completion:nil];
+    
 }
 
 #pragma mark - 输入回调
-//文本框文字的改变
-- (void)textViewDidChange:(UITextView *)textView {
-}
 
-- (BOOL)textViewShouldBeginEditing:(UITextView *)textView {
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField{
+    
     return YES;
 }
 
-- (void)textFieldDidEndEditing:(UITextField *)textField{
-    self.registerObj.name = self.nameTextField.text;
-    self.registerObj.decribe = self.descriptionTextField.text;
 
+- (void)textFieldDidEndEditing:(UITextField *)textField{
+    if (textField.tag == RegisterTextfieldTypeName) {
+        self.registerObj.name = self.nameTextField.text;
+    }else if (textField.tag == RegisterTextfieldTypeDate){
+        self.registerObj.birthday = self.dateTextField.text;
+    }else if (textField.tag == RegisterTextfieldTypeNationlity){
+        self.registerObj.country = self.countryField.text;
+    }else if (textField.tag == RegisterTextfieldTypeDescribe){
+        self.registerObj.decribe = self.descriptionTextField.text;
+    }
+    
+    
 }
 
-- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
-    if ([text isEqualToString:@"\n"]){
+
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
+    if ([string isEqualToString:@"\n"]){
         // 判断输入的字是否是回车，即按下return
-        [textView resignFirstResponder];
+        [textField resignFirstResponder];
+        return NO;
+    }
+    if (range.location >= maxInput) {
+        return NO;
+    }
+    
+    //国家和日期不允许输入
+    if (textField.tag == RegisterTextfieldTypeDate || textField.tag == RegisterTextfieldTypeNationlity) {
         return NO;
     }
     return YES;
 }
 
+
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
-//    self.registerObj = [[RegisterProfileObject alloc] init];
+    //    self.registerObj = [[RegisterProfileObject alloc] init];
     if( self.nameTextField == textField ) {
         self.registerObj.name = self.nameTextField.text;
         [self.nameTextField resignFirstResponder];
@@ -851,26 +1096,41 @@ BOOL selectResult;
         self.registerObj.decribe = self.descriptionTextField.text;
         [self.descriptionTextField resignFirstResponder];
     }
-
+    
     return YES;
 }
 
+
+
 #pragma mark - 处理键盘回调
 - (void)moveInputBarWithKeyboardHeight:(CGFloat)height withDuration:(NSTimeInterval)duration {
+    __block BOOL bFlag = NO;
     [UIView animateWithDuration:duration animations:^{
         if(height > 0) {
             // 弹出键盘
             self.continueBtnBottom.constant = -height;
+            bFlag = YES;
         } else {
             self.continueBtnBottom.constant = 0;
         }
     } completion:^(BOOL finished) {
+        if (bFlag) {
+            [self.view setNeedsDisplay];
+            if( self.tableViewArray.count > 0 ) {
+                // 拉到最底
+                NSIndexPath* indexPath = [NSIndexPath indexPathForRow:self.tableViewArray.count - 1 inSection:0];
+                [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+            }
+        }
         
     }];
 }
 
 
+
+
 - (void)keyboardWillShow:(NSNotification *)notification {
+    
     NSDictionary *userInfo = [notification userInfo];
     // Get the origin of the keyboard when it's displayed.
     NSValue* aValue = [userInfo objectForKey:UIKeyboardFrameEndUserInfoKey];
@@ -884,19 +1144,36 @@ BOOL selectResult;
     NSTimeInterval animationDuration;
     [animationDurationValue getValue:&animationDuration];
     
+   
+    
+//        if( self.tableViewArray.count > 0 ) {
+//            // 拉到最底
+//            NSIndexPath* indexPath = [NSIndexPath indexPathForRow:self.tableViewArray.count - 1 inSection:0];
+//            [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+//        }
+    
     // Animate the resize of the text view's frame in sync with the keyboard's appearance.
     [self moveInputBarWithKeyboardHeight:keyboardRect.size.height withDuration:animationDuration];
+//    if( self.tableViewArray.count > 0 ) {
+//        // 拉到最底
+//        NSIndexPath* indexPath = [NSIndexPath indexPathForRow:self.tableViewArray.count - 1 inSection:0];
+//        [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+//    }
 }
 
+
+
+
 - (void)keyboardWillHide:(NSNotification *)notification {
+    
     NSDictionary* userInfo = [notification userInfo];
     NSValue *animationDurationValue = [userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
     
     NSTimeInterval animationDuration;
     [animationDurationValue getValue:&animationDuration];
     [self moveInputBarWithKeyboardHeight:0.0 withDuration:animationDuration];
-}
 
+}
 
 
 @end

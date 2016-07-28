@@ -32,5 +32,6 @@
 
 //个人资料图片
 @property (weak, nonatomic) IBOutlet UIImageView *profilePicture;
+@property (weak, nonatomic) IBOutlet UIButton *takePhotoBtn;
 
 @end

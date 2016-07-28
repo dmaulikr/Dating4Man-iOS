@@ -13,7 +13,7 @@
 
 @optional
 
-//点击按钮操作
+/** 点击按钮操作 */
 - (void)commonContentCellBtnDidClick:(CommonContentTableViewCell *)cell;
 
 @end
@@ -27,6 +27,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *editBtn;
 
 @property (weak, nonatomic) IBOutlet UITextView *detailText;
+@property (weak, nonatomic) IBOutlet UIView *bgView;
 
 /** 代理 */
 @property (nonatomic, weak ) id<CommonContentCellDelegate> delegate;
@@ -35,9 +36,10 @@
 + (NSString *)cellIdentifier;
 //根据算内容的高度
 + (NSInteger)cellHeight:(CGFloat)width detailString:(NSString *)detailString;
++ (NSInteger)cellHeight;
 //创建cell
 + (id)getUITableViewCell:(UITableView*)tableView;
 
-+ (CGFloat)heightForString:(UITextView *)textView andWidth:(CGFloat)width;
+
 
 @end

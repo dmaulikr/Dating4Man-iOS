@@ -80,6 +80,16 @@ static FileCacheManager* gManager = nil;
     }
 }
 
+#pragma mark - 临时目录
+- (NSString *)tmpPath {
+    NSString* path = [[self cacheDirectory] stringByAppendingPathComponent:@"tmp/"];
+    if( [self createDirectory:path] ) {
+        return path;
+    } else {
+        return nil;
+    }
+}
+
 #pragma mark - 图片缓存目录
 - (NSString* )imageCachePathWithUrl:(NSString* )url {
     NSString* filePath = nil;

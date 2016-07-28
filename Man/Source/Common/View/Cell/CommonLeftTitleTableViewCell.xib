@@ -7,42 +7,56 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="CommonLeftTitleTableViewCell" id="KGk-i7-Jjw" customClass="CommonLeftTitleTableViewCell">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="CommonLeftTitleTableViewCell" rowHeight="94" id="KGk-i7-Jjw" customClass="CommonLeftTitleTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="351" height="94"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                <rect key="frame" x="0.0" y="0.0" width="351" height="93"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Micheal,28" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eED-LJ-zxm" userLabel="个人信息">
-                        <rect key="frame" x="10" y="5" width="92" height="33"/>
-                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
-                        <color key="textColor" red="0.2627450980392157" green="0.2627450980392157" blue="0.2627450980392157" alpha="1" colorSpace="calibratedRGB"/>
-                        <nil key="highlightedColor"/>
-                    </label>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iFd-br-qCQ" userLabel="个人位置信息">
-                        <rect key="frame" x="249" y="5" width="61" height="33"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                        <state key="normal" title="China" image="MyProfile-Location">
-                            <color key="titleColor" red="0.52549019607843139" green="0.52549019607843139" blue="0.52549019607843139" alpha="1" colorSpace="calibratedRGB"/>
-                        </state>
-                    </button>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QVI-bj-cPv">
+                        <rect key="frame" x="10" y="6" width="331" height="84"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Micheal,28" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eED-LJ-zxm" userLabel="个人信息">
+                                <rect key="frame" x="16" y="31" width="92" height="21"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                <color key="textColor" red="0.2627450980392157" green="0.2627450980392157" blue="0.2627450980392157" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iFd-br-qCQ" userLabel="个人位置信息">
+                                <rect key="frame" x="249" y="31" width="66" height="24"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <state key="normal" title="China" image="MyProfile-Location">
+                                    <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="eED-LJ-zxm" firstAttribute="centerY" secondItem="QVI-bj-cPv" secondAttribute="centerY" id="Dtg-2p-vye"/>
+                            <constraint firstItem="iFd-br-qCQ" firstAttribute="centerY" secondItem="QVI-bj-cPv" secondAttribute="centerY" id="UPu-hy-gkk"/>
+                            <constraint firstItem="eED-LJ-zxm" firstAttribute="leading" secondItem="QVI-bj-cPv" secondAttribute="leading" constant="16" id="ryO-SF-1d4"/>
+                            <constraint firstAttribute="trailing" secondItem="iFd-br-qCQ" secondAttribute="trailing" constant="16" id="xUT-n0-7CP"/>
+                        </constraints>
+                    </view>
                 </subviews>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                 <constraints>
-                    <constraint firstItem="eED-LJ-zxm" firstAttribute="bottom" secondItem="H2p-sc-9uM" secondAttribute="bottom" constant="-5" id="AYu-zf-6VJ"/>
-                    <constraint firstItem="iFd-br-qCQ" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailing" constant="-10" id="EdB-uy-Gfd"/>
-                    <constraint firstItem="eED-LJ-zxm" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="EgW-xQ-2c3"/>
-                    <constraint firstItem="iFd-br-qCQ" firstAttribute="bottom" secondItem="H2p-sc-9uM" secondAttribute="bottom" constant="-5" id="j05-xN-QGb"/>
-                    <constraint firstItem="eED-LJ-zxm" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="qNB-td-h1c"/>
-                    <constraint firstItem="iFd-br-qCQ" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="y1d-fd-wW6"/>
+                    <constraint firstItem="QVI-bj-cPv" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="IqK-93-eZY"/>
+                    <constraint firstAttribute="trailing" secondItem="QVI-bj-cPv" secondAttribute="trailing" constant="10" id="Ocw-Eu-Luj"/>
+                    <constraint firstAttribute="bottom" secondItem="QVI-bj-cPv" secondAttribute="bottom" constant="3" id="bbf-uz-5o3"/>
+                    <constraint firstItem="QVI-bj-cPv" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="6" id="cwg-66-ITy"/>
                 </constraints>
             </tableViewCellContentView>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <edgeInsets key="layoutMargins" top="8" left="0.0" bottom="8" right="8"/>
             <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
             <connections>
+                <outlet property="bgView" destination="QVI-bj-cPv" id="ttz-zl-OeK"/>
                 <outlet property="profileLocation" destination="iFd-br-qCQ" id="8M8-70-13q"/>
                 <outlet property="profileMessage" destination="eED-LJ-zxm" id="m7j-Pe-xJy"/>
             </connections>
+            <point key="canvasLocation" x="578.5" y="403"/>
         </tableViewCell>
     </objects>
     <resources>

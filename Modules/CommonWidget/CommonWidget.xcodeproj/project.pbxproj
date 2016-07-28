@@ -19,7 +19,7 @@
 		CA23B7C51721282C00458560 /* NSDateFormatter+RelativeString.m in Sources */ = {isa = PBXBuildFile; fileRef = CA23B79B1721282C00458560 /* NSDateFormatter+RelativeString.m */; };
 		CA23B7C61721282C00458560 /* NSString+MD5HexDigest.m in Sources */ = {isa = PBXBuildFile; fileRef = CA23B7A01721282C00458560 /* NSString+MD5HexDigest.m */; };
 		CA23B7C71721282C00458560 /* NSString+UrlCode.m in Sources */ = {isa = PBXBuildFile; fileRef = CA23B7A11721282C00458560 /* NSString+UrlCode.m */; };
-		CA23B7C81721282C00458560 /* NSStringCheck.m in Sources */ = {isa = PBXBuildFile; fileRef = CA23B7A31721282C00458560 /* NSStringCheck.m */; };
+		CA23B7C81721282C00458560 /* NSString+Check.m in Sources */ = {isa = PBXBuildFile; fileRef = CA23B7A31721282C00458560 /* NSString+Check.m */; };
 		CA23B7C91721282C00458560 /* URLShortener.m in Sources */ = {isa = PBXBuildFile; fileRef = CA23B7A61721282C00458560 /* URLShortener.m */; };
 		CA23B7D11721282C00458560 /* ZipArchive.mm in Sources */ = {isa = PBXBuildFile; fileRef = CA23B7BD1721282C00458560 /* ZipArchive.mm */; };
 		CA257D6E17AB5E1C00FA80B4 /* NSData+AES.m in Sources */ = {isa = PBXBuildFile; fileRef = CA257D6D17AB5E1C00FA80B4 /* NSData+AES.m */; };
@@ -68,8 +68,8 @@
 		CA23B79F1721282C00458560 /* NSString+UrlCode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+UrlCode.h"; sourceTree = "<group>"; };
 		CA23B7A01721282C00458560 /* NSString+MD5HexDigest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MD5HexDigest.m"; sourceTree = "<group>"; };
 		CA23B7A11721282C00458560 /* NSString+UrlCode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+UrlCode.m"; sourceTree = "<group>"; };
-		CA23B7A21721282C00458560 /* NSStringCheck.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSStringCheck.h; sourceTree = "<group>"; };
-		CA23B7A31721282C00458560 /* NSStringCheck.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSStringCheck.m; sourceTree = "<group>"; };
+		CA23B7A21721282C00458560 /* NSString+Check.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Check.h"; sourceTree = "<group>"; };
+		CA23B7A31721282C00458560 /* NSString+Check.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Check.m"; sourceTree = "<group>"; };
 		CA23B7A51721282C00458560 /* URLShortener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = URLShortener.h; sourceTree = "<group>"; };
 		CA23B7A61721282C00458560 /* URLShortener.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = URLShortener.m; sourceTree = "<group>"; };
 		CA23B7BC1721282C00458560 /* ZipArchive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZipArchive.h; sourceTree = "<group>"; };
@@ -181,8 +181,8 @@
 				CA4D7BE6180F879C00CAF1DA /* NSMutableString+MITAdditions.m */,
 				CA23B79F1721282C00458560 /* NSString+UrlCode.h */,
 				CA23B7A11721282C00458560 /* NSString+UrlCode.m */,
-				CA23B7A21721282C00458560 /* NSStringCheck.h */,
-				CA23B7A31721282C00458560 /* NSStringCheck.m */,
+				CA23B7A21721282C00458560 /* NSString+Check.h */,
+				CA23B7A31721282C00458560 /* NSString+Check.m */,
 			);
 			path = NSString;
 			sourceTree = "<group>";
@@ -284,7 +284,7 @@
 				CA4D7BE7180F879C00CAF1DA /* NSMutableString+MITAdditions.m in Sources */,
 				CA23B7C61721282C00458560 /* NSString+MD5HexDigest.m in Sources */,
 				CA23B7C71721282C00458560 /* NSString+UrlCode.m in Sources */,
-				CA23B7C81721282C00458560 /* NSStringCheck.m in Sources */,
+				CA23B7C81721282C00458560 /* NSString+Check.m in Sources */,
 				CA23B7C91721282C00458560 /* URLShortener.m in Sources */,
 				CA23B7D11721282C00458560 /* ZipArchive.mm in Sources */,
 				CA9C29FB173795FD00C70E16 /* NSData+MGTwitterBase64.m in Sources */,

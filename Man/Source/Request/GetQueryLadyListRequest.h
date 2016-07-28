@@ -26,9 +26,10 @@ typedef enum {
 
 typedef enum {
     OrderTypeDEFAULT = -1,
-    OrderTypeNEWST ,
+    OrderTypeNEWST,
     OrderTypeAGEUP ,
-    OrderTypeAGEDOWN
+    OrderTypeAGEDOWN,
+    OrderTypeOnline,
 } OrderType;
 
 @interface GetQueryLadyListRequest : SessionRequest
@@ -52,6 +53,8 @@ typedef enum {
 @property (nonatomic,strong) NSString * _Nullable country;
 /** 排序 */
 @property (nonatomic,assign) OrderType orderBy;
+/** 性别 */
+@property (nonatomic,assign) LadyGenderType genderType;
 
 
 /**
@@ -59,10 +62,5 @@ typedef enum {
  */
 
 @property (nonatomic, strong) onlineListFinishHandler _Nullable finishHandler;
-
-- (BOOL)sendRequest;
-
-//- (void)callRespond:(NSString* _Nullable)errnum errmsg:(NSString* _Nullable)errmsg;
-- (void)callRespond:(NSString* _Nullable)errnum errmsg:(NSString * _Nullable)errmsg  pageCount:(int)pageCount;
 
 @end

@@ -11,7 +11,7 @@
 #import "ChatViewController.h"
 
 #import "LadyListTableViewCell.h"
-#import "UIScrollView+Refresh.h"
+#import "UIScrollView+PullRefresh.h"
 
 #import "QueryLadyListItemObject.h"
 #import "GetQueryLadyListRequest.h"
@@ -21,15 +21,18 @@
 
 #define MinAgeRange 18
 #define MaxAgeRange 100
-#define defaultOffset 64.0
-#define PageSize 10
+#define DefaultOffset 64.0
+#define PageSize 100
+#define SearchTableAnimationDuration 0.2
+#define ShadowHeight 4
+
 
 typedef enum {
     OnlineTypeOFFLINE = 0,
     OnlineTypeONLINE = 1
 } OnlineType;
 
-@interface LadyListViewController () <LadyListTableViewDelegate, LiveChatManagerDelegate, LoginManagerDelegate>
+@interface LadyListViewController () <LadyListTableViewDelegate, LiveChatManagerDelegate, LoginManagerDelegate, UIScrollViewRefreshDelegate>
 #pragma mark - 变量
 /**
  *  接口管理器
@@ -70,28 +73,6 @@ typedef enum {
  *  点击手势
  */
 @property (nonatomic,strong) UITapGestureRecognizer *tap;
-#pragma mark - 方法
-/**
- *  刷新界面
- *
- *  @param isReloadView
- */
-- (void)reloadData:(BOOL)isReloadView;
-
-/**
- *  下拉刷新
- */
-- (void)pullDownRefresh;
-
-/**
- *  上拉更多
- */
-- (void)pullUpRefresh;
-
-/**
- *  刷新邀请人数
- */
-- (void)reloadInviteUsers;
 
 @end
 
@@ -101,21 +82,20 @@ typedef enum {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
-    self.chatNowBtn.adjustsImageWhenHighlighted = NO;
+    self.chatNowBtn.enabled = NO;
+
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-   
-    [self.loginManager addDelegate:self];
-    [self.liveChatManager addDelegate:self];
     
     if( self.womanArray.count == 0 && self.loginManager.status == LOGINED ) {
         // 已登陆, 没有女士, 下拉控件, 触发调用刷新女士列表
-        [self.tableView headerBeginRefreshing];
+        [self.tableView startPullDown:YES];
     }
-
+    
     [self reloadInviteUsers];
+    [self reloadData:YES];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -124,9 +104,7 @@ typedef enum {
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    
-    [self.liveChatManager removeDelegate:self];
-    [self.loginManager removeDelegate:self];
+
 }
 
 - (void)didReceiveMemoryWarning {
@@ -136,14 +114,27 @@ typedef enum {
 
 #pragma mark - 界面逻辑
 - (void)initCustomParam {
+    // 初始化父类参数
+    [super initCustomParam];
+    self.backTitle = NSLocalizedString(@"Home", nil);
+    
     //设置默认搜索状态
-    self.online = YES;
+    self.online = NO;
     
     self.womanArray = [NSMutableArray array];
     self.sessionManager = [SessionRequestManager manager];
     
     self.liveChatManager = [LiveChatManager manager];
+    [self.liveChatManager addDelegate:self];
+    
     self.loginManager = [LoginManager manager];
+    [self.loginManager addDelegate:self];
+
+}
+
+- (void)unInitCustomParam {
+    [self.liveChatManager removeDelegate:self];
+    [self.loginManager removeDelegate:self];
 }
 
 - (void)setupNavigationBar {
@@ -157,7 +148,8 @@ typedef enum {
     button = [UIButton buttonWithType:UIButtonTypeCustom];
     image = [UIImage imageNamed:@"Navigation-Qpid"];
     [button setImage:image forState:UIControlStateDisabled];
-    [button setTitle:@"QDate" forState:UIControlStateNormal];
+    [button setTitle:NSLocalizedString(@"QDating", nil) forState:UIControlStateNormal];
+    [button setImageEdgeInsets:UIEdgeInsetsMake(0, -10, 0, 0)];
     [button sizeToFit];
     [button setEnabled:NO];
     self.navigationItem.titleView = button;
@@ -181,8 +173,8 @@ typedef enum {
     self.navRightButton = [BadgeButton buttonWithType:UIButtonTypeCustom];
     image = [UIImage imageNamed:@"Navigation-ChatList"];
     [self.navRightButton setImage:image forState:UIControlStateNormal];
-    image = [UIImage imageNamed:@"Navigation-Badge"];
-    self.navRightButton.imageBadge = image;
+//    image = [UIImage imageNamed:@"Navigation-Badge"];
+//    self.navRightButton.imageBadge = image;
     self.navRightButton.badgeValue = nil;
     [self.navRightButton sizeToFit];
     [self.navRightButton addTarget:self.mainVC action:@selector(pageRightAction:) forControlEvents:UIControlEventTouchUpInside];
@@ -204,8 +196,11 @@ typedef enum {
 }
 
 - (void)setupTableView {
-    [self.tableView addHeaderWithTarget:self action:@selector(pullDownRefresh)];
-    [self.tableView addFooterWithTarget:self action:@selector(pullUpRefresh)];
+    self.mainVC.pagingScrollView.delaysContentTouches = NO;
+    self.tableView.delaysContentTouches = NO;
+
+    // 初始化下拉
+    [self.tableView initPullRefresh:self pullDown:YES pullUp:YES];
 }
 
 - (void)setupSearchView{
@@ -218,7 +213,7 @@ typedef enum {
     // 设置年龄选择
     [self setupAgeSlider];
     
-    
+    // 收起搜索控件手势
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissSearchTable)];
     [self.searchTable addGestureRecognizer:tap];
     
@@ -228,19 +223,17 @@ typedef enum {
     // 设置搜索按钮
     self.searchBtn.layer.cornerRadius = 5.0f;
     self.searchBtn.layer.borderWidth = 1;
-    self.searchBtn.layer.borderColor = [UIColor grayColor].CGColor;
+    self.searchBtn.layer.borderColor = [UIColor colorWithIntRGB:200 green:200 blue:200 alpha:255].CGColor;
     self.searchBtn.layer.masksToBounds = YES;
 }
 
 - (void)setupSexChooseView {
     
-    [self.sexSegment setTitle:@"Both" forSegmentAtIndex:0];
-    [self.sexSegment setTitle:@"Female" forSegmentAtIndex:1];
-    [self.sexSegment setTitle:@"Male" forSegmentAtIndex:2];
+    [self.sexSegment setTitle:NSLocalizedStringFromSelf(@"Both") forSegmentAtIndex:0];
+    [self.sexSegment setTitle:NSLocalizedStringFromSelf(@"Female") forSegmentAtIndex:1];
+    [self.sexSegment setTitle:NSLocalizedStringFromSelf(@"Male") forSegmentAtIndex:2];
     
     self.sexSegment.selectedSegmentIndex = 1;
-    
-    
 
 }
 
@@ -250,7 +243,7 @@ typedef enum {
     self.ageSlider.positionMaxValue = MaxAgeRange - MinAgeRange;
     
     // 右边位置
-    self.ageSlider.positionValue = MaxAgeRange - MinAgeRange - 1;
+    self.ageSlider.positionValue = MaxAgeRange - MinAgeRange - 45;
     
     // 背景填充
     self.ageSlider.trackBackgroundImage = [self createImageWithColor:[UIColor colorWithIntRGB:201 green:201 blue:201 alpha:255] imageRect:CGRectMake(0.0f, 0.0f, 1.0f, 3.0f)];
@@ -273,8 +266,7 @@ typedef enum {
     self.maxValueLabel.text = [NSString stringWithFormat:@"%d",(int)self.ageSlider.rightValue + MinAgeRange];
 }
 
-
-
+#pragma mark - 颜色画图
 - (UIImage *)createImageWithColor:(UIColor *)color imageRect:(CGRect)rect{
     UIGraphicsBeginImageContext(rect.size);
     CGContextRef context = UIGraphicsGetCurrentContext();
@@ -286,19 +278,49 @@ typedef enum {
 }
 
 #pragma mark - 数据逻辑
+/**
+ *  刷新界面
+ *
+ *  @param isReloadView
+ */
 - (void)reloadData:(BOOL)isReloadView {
     // 数据填充
     if( isReloadView ) {
         self.tableView.items = self.womanArray;
+        if(self.tableView.items.count > 0) {
+            self.pullUpBtn.hidden = NO;
+        } else {
+            self.pullUpBtn.hidden = YES;
+        }
+        self.chatNowBtn.enabled = NO;
         [self.tableView reloadData];
+        
+        LadyListTableViewCell *currentCell = [self.tableView visibleCells].firstObject;
+        NSIndexPath *currentLadyIndex = [self.tableView indexPathForCell:currentCell];
+        NSInteger row = currentLadyIndex.row;
+        
+        if( self.womanArray.count > 0) {
+            if( row < self.womanArray.count ) {
+                NSIndexPath* nextLadyIndex = [NSIndexPath indexPathForRow:row inSection:0];
+                [self.tableView scrollToRowAtIndexPath:nextLadyIndex atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+            }
+        }
     }
 }
 
+/**
+ *  下拉刷新
+ */
 - (void)pullDownRefresh {
+    self.view.userInteractionEnabled = NO;
     [self getQueryLadyList:NO];
 }
 
+/**
+ *  上拉更多
+ */
 - (void)pullUpRefresh {
+    self.view.userInteractionEnabled = NO;
     [self getQueryLadyList:YES];
 }
 
@@ -327,20 +349,25 @@ typedef enum {
     request.onlineStatus = (self.online)?LADY_ONLINE:LADY_OSTATUS_DEFAULT;
     request.searchWay = SearchTypeDEFAULT;
     
+    // 性别
+    request.genderType = [self getGenderType];
+    
     // 调用接口
     request.finishHandler = ^(BOOL success, NSMutableArray<QueryLadyListItemObject *> * _Nonnull itemArray,int totalCount, NSString * _Nonnull errnum, NSString * _Nonnull errmsg) {
         if( success ) {
-            NSLog(@"LadyListViewController::getQueryLadyList( 获取女士列表成功, count : %ld )", (long)itemArray.count);
+            NSLog(@"LadyListViewController::getQueryLadyList( 获取女士列表成功, loadMore : %d, count : %ld )", loadMore, (long)itemArray.count);
             dispatch_async(dispatch_get_main_queue(), ^{
                 if( !loadMore ) {
                     // 清空列表
                     [self.womanArray removeAllObjects];
                     
                     // 停止头部
-                    [self.tableView headerEndRefreshing];
+                    [self.tableView finishPullDown:YES];
+                    
                 } else {
                     // 停止底部
-                    [self.tableView footerEndRefreshing];
+                    [self.tableView finishPullUp:YES];
+
                 }
                 
                 for(QueryLadyListItemObject* item in itemArray) {
@@ -351,22 +378,27 @@ typedef enum {
                 
                 if( !loadMore ) {
                     if( self.womanArray.count > 0 ) {
-                        // 拉到最顶
-                        NSIndexPath *indexPath = [NSIndexPath indexPathForItem:0 inSection:0];
-                        [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:NO];
+                        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.1 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+                            // 拉到最顶
+                            NSIndexPath *indexPath = [NSIndexPath indexPathForItem:0 inSection:0];
+                            [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:NO];
+                        });
                     }
                 }
                 
+                self.view.userInteractionEnabled = YES;
             });
         } else {
             NSLog(@"LadyListViewController::getQueryLadyList( 获取女士列表失败 )");
             dispatch_async(dispatch_get_main_queue(), ^{
                 if( !loadMore ) {
                     // 停止头部
-                    [self.tableView headerEndRefreshing];
+                    [self.tableView finishPullDown:YES];
+                    
                 } else {
                     // 停止底部
-                    [self.tableView footerEndRefreshing];
+                    [self.tableView finishPullUp:YES];
+                    
                 }
                 
                 [self reloadData:YES];
@@ -374,6 +406,28 @@ typedef enum {
         }
     };
     return [self.sessionManager sendRequest:request];
+}
+
+/**
+ *  根据界面选项获取性别类型
+ *
+ *  @return 性别类型
+ */
+- (LadyGenderType)getGenderType
+{
+    LadyGenderType genderType = LadyGenderType::LADY_GENDER_DEFAULT;
+    switch (self.sexSegment.selectedSegmentIndex) {
+        case 0:
+            genderType = LadyGenderType::LADY_GENDER_DEFAULT;
+            break;
+        case 1:
+            genderType = LadyGenderType::LADY_GENDER_FEMALE;
+            break;
+        case 2:
+            genderType = LadyGenderType::LADY_GENDER_MALE;
+            break;
+    }
+    return genderType;
 }
 
 - (void)addLadyIfNotExist:(QueryLadyListItemObject* _Nonnull)lady {
@@ -392,24 +446,32 @@ typedef enum {
     }
 }
 
+/**
+ *  刷新邀请人数
+ */
 - (void)reloadInviteUsers {
-    // 刷邀请人数
-    NSArray* array = [self.liveChatManager getInviteUsers];
-    self.navRightButton.badgeValue = array.count > 0?[NSString stringWithFormat:@"%ld", (long)array.count]:nil;
-//    [self setupNavigationBar];
+    NSArray<LiveChatUserItemObject*>* array = [self.liveChatManager getInviteUsers];
+    NSInteger badge = MIN(array.count, 99);
+    self.navRightButton.badgeValue = badge > 0?[NSString stringWithFormat:@"%ld", (long)badge]:nil;
 }
 
 #pragma mark - 界面事件
 - (IBAction)backToLastLady:(id)sender {
     LadyListTableViewCell *currentCell = [self.tableView visibleCells].firstObject;
     NSIndexPath *currentLadyIndex = [self.tableView indexPathForCell:currentCell];
-    NSIndexPath *lastLadyIndex = [NSIndexPath indexPathForItem:currentLadyIndex.item + 1 inSection:currentLadyIndex.section];
-    if( currentLadyIndex.item < self.womanArray.count - 1 ) {
-        [self.tableView scrollToRowAtIndexPath:lastLadyIndex atScrollPosition:UITableViewScrollPositionBottom animated:YES];
-        
-    } else {
-        // 执行下拉刷新操作
-        [self.tableView footerBeginRefreshing];
+    NSInteger row = currentLadyIndex.row + 1;
+
+    if( self.womanArray.count > 0) {
+        if( row < self.womanArray.count ) {
+            // 显示下一个
+            NSIndexPath* nextLadyIndex = [NSIndexPath indexPathForRow:row inSection:0];
+            [self.tableView scrollToRowAtIndexPath:nextLadyIndex atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+            
+        } else {
+            // 最后一个
+            // 执行下拉刷新操作
+            [self.tableView startPullUp:YES];
+        }
     }
 
 }
@@ -441,7 +503,7 @@ typedef enum {
     
     [self.tableView setAllowsSelection:NO];
     // 搜素按钮点击弹出搜索栏
-    [UIView animateWithDuration:0.5 animations:^{
+    [UIView animateWithDuration:SearchTableAnimationDuration animations:^{
         self.searchTop.constant = 0;
         [self.view layoutIfNeeded];
     }];
@@ -449,18 +511,21 @@ typedef enum {
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissSearchTable)];
     [self.tableView addGestureRecognizer:tap];
     self.tap = tap;
+    self.pullUpBtn.enabled = NO;
     
 }
 
 - (IBAction)searchFinish:(id)sender {
     // 搜索栏搜索按钮的点击
-    [UIView animateWithDuration:0.5 animations:^{
-        self.searchTop.constant = -self.searchTable.bounds.size.height;  
+    [UIView animateWithDuration:SearchTableAnimationDuration animations:^{
+        self.searchTop.constant = -self.searchTable.bounds.size.height - ShadowHeight;
         [self.view layoutIfNeeded];
     }];
     [self.tableView setAllowsSelection:YES];
     [self.tableView removeGestureRecognizer:self.tap];
-    [self getQueryLadyList:NO];
+    self.pullUpBtn.enabled = YES;
+    
+    [self.tableView startPullDown:YES];
 }
 
 - (IBAction)chatNowAction:(id)sender {
@@ -473,16 +538,18 @@ typedef enum {
     vc.firstname = currentItem.firstname;
     vc.womanId = currentItem.womanid;
     vc.photoURL = currentItem.photoURL;
-    
-    [self.navigationController pushViewController:vc animated:YES];
+     KKNavigationController *nvc = (KKNavigationController *)self.navigationController;
+    [nvc pushViewController:vc animated:YES];
+//    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (void)dismissSearchTable {
     [self.tableView setAllowsSelection:YES];
     [self.tableView removeGestureRecognizer:self.tap];
+    self.pullUpBtn.enabled = YES;
     // 点击view搜索的View退回
-    [UIView animateWithDuration:0.5 animations:^{
-        self.searchTop.constant = -self.searchTable.bounds.size.height;
+    [UIView animateWithDuration:SearchTableAnimationDuration animations:^{
+        self.searchTop.constant = -self.searchTable.bounds.size.height - ShadowHeight;
         [self.view layoutIfNeeded];
     }];
 }
@@ -490,53 +557,69 @@ typedef enum {
 #pragma mark - 列表界面回调
 - (void)tableView:(LadyListTableView *)tableView didSelectLady:(QueryLadyListItemObject *)item {
     LadyDetailViewController* vc = [[LadyDetailViewController alloc] initWithNibName:nil bundle:nil];
-    vc.itemObject = item;
+    vc.womanId = item.womanid;
+    vc.ladyListImageUrl = item.photoURL;
     KKNavigationController* nvc = (KKNavigationController* )self.mainVC.navigationController;
     [nvc pushViewController:vc animated:YES];
 }
 
 - (void)tableView:(LadyListTableView *)tableView didShowLady:(QueryLadyListItemObject *)item {
     if( item.onlineStatus == LADY_ONLINE ) {
-        self.chatNowBtn.backgroundColor = [UIColor colorWithRed:102/255.0 green:153/255.0 blue:0/255.0 alpha:1.0];
         self.chatNowBtn.enabled = YES;
     } else {
-        self.chatNowBtn.backgroundColor = [UIColor colorWithRed:179/255.0 green:179/255.0 blue:179/255.0 alpha:1.0];
         self.chatNowBtn.enabled = NO;
+    }
+    self.pullUpBtn.enabled = YES;
+    self.searchShowBtn.enabled = YES;
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    if (scrollView == self.tableView) {
+        self.chatNowBtn.enabled = NO;
+        self.pullUpBtn.enabled = NO;
+        self.searchShowBtn.enabled = NO;
     }
 }
 
-#pragma mark - 代理方法回调
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
-    // 控制拖拽偏移量,保持头部不回弹
-    if (scrollView.contentOffset.y < -defaultOffset) {
-        CGPoint offsetY = scrollView.contentOffset;
-        offsetY.y = -defaultOffset;
-        scrollView.contentOffset = offsetY;
-    }else if (scrollView.contentOffset.y - scrollView.contentSize.height + defaultOffset - scrollView.frame.size.height < 0 && scrollView.contentSize.height - scrollView.contentOffset.y < scrollView.frame.size.height){
-        //保持底部不回弹
-        CGPoint offsetY = scrollView.contentOffset;
-        offsetY.y = scrollView.contentOffset.y + defaultOffset ;
-        scrollView.contentOffset = offsetY;
-    }
+#pragma mark - PullRefreshView回调
+- (void)pullDownRefresh:(UIScrollView *)scrollView {
+    // 下拉刷新回调
+    [self pullDownRefresh];
+}
+
+- (void)pullUpRefresh:(UIScrollView *)scrollView {
+    // 上拉更多回调
+    [self pullUpRefresh];
 }
 
 #pragma mark - LivechatManager回调
 - (void)onRecvTextMsg:(LiveChatMsgItemObject* _Nonnull)msg {
     dispatch_async(dispatch_get_main_queue(), ^{
-        NSLog(@"LadyListViewController::onRecvTextMsg( 接收文本消息回调 fromId : %@ )", msg.fromId);
+//        NSLog(@"LadyListViewController::onRecvTextMsg( 接收文本消息回调 fromId : %@ )", msg.fromId);
         [self reloadInviteUsers];
     });
 }
 
 #pragma mark - 登陆管理器回调 (LoginManagerDelegate)
 - (void)manager:(LoginManager *)manager onLogin:(BOOL)success loginItem:(LoginItemObject *)loginItem errnum:(NSString *)errnum errmsg:(NSString *)errmsg {
-    NSLog(@"LadyListViewController::onLogin( success : %d )", success);
-    if( success ) {
-        if( self.womanArray.count == 0 ) {
-            // 已登陆, 没有女士, 下拉控件, 触发调用刷新女士列表
-            [self.tableView headerBeginRefreshing];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        NSLog(@"LadyListViewController::onLogin( success : %d )", success);
+        if( success ) {
+            if( self.womanArray.count == 0 ) {
+                // 已登陆, 没有女士, 下拉控件, 触发调用刷新女士列表
+                [self.tableView startPullDown:YES];
+            }
         }
-        
+    });
+}
+
+- (void)manager:(LoginManager * _Nonnull)manager onLogout:(BOOL)kick {
+    if( kick ) {
+        self.womanArray = [NSMutableArray array];
+        self.pageCount = 1;
+        [self reloadData:YES];
     }
 }
+
 @end

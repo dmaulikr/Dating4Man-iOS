@@ -1,0 +1,27 @@
+/* Class = "UILabel"; text = "Notification"; ObjectID = "o43-0E-pA8"; */
+"o43-0E-pA8.text" = "Notification";
+
+/* Class = "UILabel"; text = "Chat Notification"; ObjectID = "1aj-Lq-9wM"; */
+"1aj-Lq-9wM.text" = "Chat Notification";
+
+/* Class = "UILabel"; text = "Status"; ObjectID = "OQY-Kw-W4f"; */
+"OQY-Kw-W4f.text" = "Status";
+
+/* Class = "UILabel"; text = "Push  news & offers"; ObjectID = "ggV-jH-lMp"; */
+"ggV-jH-lMp.text" = "Push  news & offers";
+
+/* Class = "UILabel"; text = "Status"; ObjectID = "mTR-g5-DmK"; */
+"mTR-g5-DmK.text" = "Status";
+
+/* Class = "UILabel"; text = "App Setting"; ObjectID = "hd6-8D-pFh"; */
+"hd6-8D-pFh.text" = "App Setting";
+
+/* Class = "UILabel"; text = "Clean cache"; ObjectID = "Y31-GY-iL6"; */
+"Y31-GY-iL6.text" = "Clean cache";
+
+
+/* Class = "UILabel"; text = "Verson"; ObjectID = "DrK-Ot-afw"; */
+"DrK-Ot-afw.text" = "Version";
+
+
+"Tips_CleanCache" = "Are you sure you wish to clean the app cache";

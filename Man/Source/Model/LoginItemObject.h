@@ -23,6 +23,7 @@
 @property (nonatomic, strong) NSString* sessionid;
 @property (nonatomic, strong) NSString* ga_uid;
 @property (nonatomic, strong) NSString* ticketid;
+@property (nonatomic, strong) NSString* ga_activity;
 @property (nonatomic, assign) BOOL photosend;
 @property (nonatomic, assign) BOOL photoreceived;
 @property (nonatomic, assign) BOOL premit;

@@ -42,10 +42,9 @@
     return NO;
 }
 
-- (void)callRespond:(NSString* _Nullable)errnum errmsg:(NSString* _Nullable)errmsg {
-    if( self.finishHandler ) {
-        self.finishHandler(YES, errnum, errmsg);
+- (void)callRespond:(BOOL)success errnum:(NSString* _Nullable)errnum errmsg:(NSString* _Nullable)errmsg {
+    if( self.finishHandler && !success ) {
+        self.finishHandler(NO, errnum, errmsg);
     }
 }
-
 @end

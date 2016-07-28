@@ -7,8 +7,9 @@
 //
 
 #import "KKViewController.h"
+#import "GoogleAnalyticsViewController.h"
 
-@interface LoginViewController : KKViewController
+@interface LoginViewController : GoogleAnalyticsViewController
 
 @property (nonatomic, weak) IBOutlet UIView* loadingView;
 @property (nonatomic, weak) IBOutlet UIView* inputView;
@@ -19,6 +20,23 @@
 @property (nonatomic, weak) IBOutlet UIImageView* checkcodeImageView;
 @property (nonatomic, weak) IBOutlet UIButton* loginButton;
 @property (nonatomic, weak) IBOutlet UIButton* signUpButton;
+@property (weak, nonatomic) IBOutlet UIView *separated2;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *separatedHeight;
+
+/**
+ *  验证码高度约束
+ */
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint* checkCodeHight;
+
+/**
+ *  输入框高度约束
+ */
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint* inputViewHeight;
+
+/**
+ *  输入框底部约束
+ */
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint* inputViewBottom;
 
 /**
  *  点击登陆

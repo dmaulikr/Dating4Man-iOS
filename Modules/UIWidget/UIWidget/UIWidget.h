@@ -34,6 +34,12 @@
 
 #pragma mark - Label
 
+#pragma mark - UISlider
+#import "AgeRangeSlider.h"
+
+#pragma mark - UISwitch
+#import "SelectSwitch.h"
+
 #pragma mark - Navigation
 #import "KKNavigationController.h"
 
@@ -49,10 +55,16 @@
 #pragma mark - TabBar
 
 #pragma mark - TableView
+#import "UIScrollView+PullRefresh.h"
 
 #pragma mark - TextView
 #import "KKTextField.h"
 #import "KKTextView.h"
+
+#pragma mark - UIImage 
+#import "UIImageViewTopFit.h"
+#import "UIImageViewBottomFit.h"
+#import "UIImage+SolidColor.h"
 
 #pragma mark - ToolBar
 

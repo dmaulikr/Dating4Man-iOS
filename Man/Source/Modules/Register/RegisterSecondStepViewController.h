@@ -10,18 +10,18 @@
 #import "MainViewController.h"
 #import "RegisterItemObject.h"
 #import "registerProfileObject.h"
+#import "GoogleAnalyticsViewController.h"
 
 
 
-
-@interface RegisterSecondStepViewController : KKViewController
+@interface RegisterSecondStepViewController : GoogleAnalyticsViewController
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, weak) MainViewController* mainVC;
 @property (weak, nonatomic) IBOutlet UIButton *finishBtn;
 /** 模型数据 */
 @property (nonatomic,strong) RegisterItemObject *registerItem;
 /** 个人图片 */
-@property (nonatomic,strong) UIImageView *profileImage;
+@property (nonatomic,strong) UIImage *profileImage;
 /** 上一页的模型数据 */
 @property (nonatomic,strong) RegisterProfileObject *lastProfileObject;
 /** 上一页的国家 */
@@ -31,5 +31,6 @@
 /** 底部约束 */
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomNum;
 /** 加载 */
-@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityLoad;
+@property (weak, nonatomic) IBOutlet UIView *loadingView;
+
 @end

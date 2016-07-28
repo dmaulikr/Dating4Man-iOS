@@ -8,6 +8,20 @@
 
 #import <Foundation/Foundation.h>
 
+typedef enum PhotoStatus {
+    None,
+    Yes,
+    Verifing,
+    InstitutionsFail,
+    Fail,
+} PhotoStatus;
+
+typedef enum ResumeStatus {
+    UnVerify = 1,
+    Verified = 2,
+    NotVerified = 3,
+} ResumeStatus;
+
 @interface PersonalProfile : NSObject
 
 /** 男士ID */
@@ -52,10 +66,10 @@
 @property (nonatomic,assign) int children;
 /** 描述 */
 @property (nonatomic,strong) NSString *resume;
-/** 描述审核状态 */
-@property (nonatomic,strong) NSString *resumeCheck;
 /** 审核中的个人描述 */
-@property (nonatomic,assign) int resumeCount;
+@property (nonatomic,strong) NSString *resume_content;
+/** 描述审核状态 */
+@property (nonatomic,assign) int resume_status;
 /** 地址1 */
 @property (nonatomic,strong) NSString *address1;
 /** 地址2 */
@@ -102,5 +116,19 @@
 @property (nonatomic,assign) int landlineStatus;
 /** 兴趣爱好 */
 @property (nonatomic,strong) NSArray *interests;
+
+/**
+ *  是否允许上传头像
+ *
+ *  @return <#return value description#>
+ */
+- (BOOL)canUpdatePhoto;
+
+/**
+ *  是否允修改描述
+ *
+ *  @return <#return value description#>
+ */
+- (BOOL)canUpdateResume;
 
 @end

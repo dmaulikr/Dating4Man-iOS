@@ -8,14 +8,17 @@
 
 #import "KKViewController.h"
 #import "MainViewController.h"
+#import "GoogleAnalyticsViewController.h"
 
-@interface SettingViewController : KKViewController
+@interface SettingViewController : GoogleAnalyticsViewController
 
 @property (nonatomic, weak) IBOutlet UIImageView* imageViewHead;
 @property (nonatomic, weak) IBOutlet UILabel* titleLabel;
 @property (nonatomic, weak) IBOutlet UITableView* tableView;
 @property (nonatomic, weak) MainViewController* mainVC;
 @property (nonatomic, weak) IBOutlet UIButton* navRightButton;
-@property (weak, nonatomic) IBOutlet UILabel *CreditsBalanceCount;
+//@property (weak, nonatomic) IBOutlet UILabel *CreditsBalanceCount;
+@property (weak, nonatomic) IBOutlet UIView *CreditBar;
+@property (weak, nonatomic) IBOutlet UIButton *CreditsBalanceCount;
 
 @end

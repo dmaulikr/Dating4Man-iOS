@@ -19,11 +19,10 @@
     if (nil == cell){
         NSArray *nib = [[NSBundle mainBundle] loadNibNamedWithFamily:[CommonPageViewTableViewCell cellIdentifier] owner:tableView options:nil];
         cell = [nib objectAtIndex:0];
-        cell.curIndex = 0;
         
     }
     
-    cell.onlineView.layer.cornerRadius = 3.0f;
+    cell.onlineView.layer.cornerRadius = 4.0f;
     cell.onlineView.layer.masksToBounds = YES;
     
         
@@ -34,7 +33,6 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         // Initialization code
-        _curIndex = 0;
     }
     return self;
 }
@@ -42,7 +40,10 @@
 - (void)layoutSubviews {
     [super layoutSubviews];
     [self.contentView layoutIfNeeded];
-    [self.pagingScrollView displayPagingViewAtIndex:_curIndex animated:YES];
+    
+    if( self.pagingScrollView.currentPagingIndex == 0 ) {
+        [self.pagingScrollView displayPagingViewAtIndex:0 animated:YES];
+    }
 }
 
 @end

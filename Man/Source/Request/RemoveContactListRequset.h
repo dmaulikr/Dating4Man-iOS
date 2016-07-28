@@ -9,14 +9,7 @@
 #import "SessionRequest.h"
 
 @interface RemoveContactListRequset : SessionRequest
-
 /** 女士id */
 @property (nonatomic,strong) NSArray * _Nullable womanIdArray;
-
 @property (nonatomic, strong) removeContactLishFinishHandler _Nullable finishHandler;
-
-- (BOOL)sendRequest;
-
-- (void)callRespond:(NSString* _Nullable)errnum errmsg:(NSString* _Nullable)errmsg;
-
 @end

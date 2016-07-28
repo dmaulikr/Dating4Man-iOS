@@ -12,6 +12,7 @@
 #import "LiveChatWarningItemObject.h"
 #import "LiveChatSystemItemObject.h"
 #import "LiveChatCustomItemObject.h"
+#import "LiveChatMsgProcResultObject.h"
 
 @interface LiveChatMsgItemObject : NSObject
 
@@ -29,6 +30,8 @@
 @property (nonatomic,assign) NSInteger createTime;
 /** 处理状态 */
 @property (nonatomic,assign) LCMessageItem::StatusType statusType;
+/** 处理结果 */
+@property (nonatomic,strong) LiveChatMsgProcResultObject* procResult;
 /** 消息类型 */
 @property (nonatomic,assign) LCMessageItem::MessageType msgType;
 /** 文本消息 */

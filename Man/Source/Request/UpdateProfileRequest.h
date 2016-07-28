@@ -39,8 +39,4 @@
 
 @property (nonatomic,strong) updateMyProfileFinishHandler _Nullable finishHandler;
 
-- (BOOL)sendRequest;
-
-- (void)callRespond:(NSString* _Nullable)errnum errmsg:(NSString* _Nullable)errmsg;
-
 @end

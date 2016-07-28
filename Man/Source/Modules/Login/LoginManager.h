@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 
 #import "LoginItemObject.h"
+#import "RegisterItemObject.h"
+#import "LoginViewController.h"
 
 @class LoginManager;
 @protocol LoginManagerDelegate <NSObject>
@@ -29,9 +31,9 @@
  *  注销回调
  *
  *  @param manager 登陆状态管理器实例
- *  @param timeout  是否超时注销(YES:超时/NO:主动)
+ *  @param kick  是否主动注销(YES:主动/NO:超时)
  */
-- (void)manager:(LoginManager * _Nonnull)manager onLogout:(BOOL)timeout;
+- (void)manager:(LoginManager * _Nonnull)manager onLogout:(BOOL)kick;
 
 @end
 
@@ -42,7 +44,6 @@ typedef enum {
 } LoginStatus;
 
 @interface LoginManager : NSObject
-
 /**
  *  登陆状态
  */
@@ -57,6 +58,16 @@ typedef enum {
  *  密码
  */
 @property (nonatomic, strong, readonly) NSString* _Nullable password;
+
+/**
+ *  上一次输入用户名
+ */
+@property (nonatomic, strong, readonly) NSString* _Nullable lastInputEmail;
+
+/**
+ *  上一次输入密码
+ */
+@property (nonatomic, strong, readonly) NSString* _Nullable lastInputPassword;
 
 /**
  *  用户信息
@@ -93,7 +104,7 @@ typedef enum {
  *
  *  @return 是否进入登陆中状态
  */
-- (BOOL)login:(NSString * _Nullable)user password:(NSString * _Nullable)password checkcode:(NSString * _Nullable)checkcode;
+- (LoginStatus)login:(NSString * _Nullable)user password:(NSString * _Nullable)password checkcode:(NSString * _Nullable)checkcode;
 
 /**
  *  注销接口

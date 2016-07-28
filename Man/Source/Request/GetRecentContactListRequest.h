@@ -14,11 +14,5 @@
  *  获取最近联系人接口
  */
 @interface GetRecentContactListRequest : SessionRequest
-
 @property (nonatomic, strong) RecentContactListFinishHandler _Nullable finishHandler;
-
-- (BOOL)sendRequest;
-
-- (void)callRespond:(NSString* _Nullable)errnum errmsg:(NSString* _Nullable)errmsg;
-
 @end

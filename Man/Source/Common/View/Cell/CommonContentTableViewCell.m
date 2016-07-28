@@ -8,6 +8,11 @@
 
 #import "CommonContentTableViewCell.h"
 
+@interface CommonContentTableViewCell()<UITextViewDelegate>
+
+@end
+
+
 @implementation CommonContentTableViewCell
 //标识符
 + (NSString *)cellIdentifier{
@@ -16,27 +21,30 @@
 //根据算内容的高度
 + (NSInteger)cellHeight:(CGFloat)width detailString:(NSString *)detailString {
 
-    NSInteger height = 40;
+//    NSInteger height = 43;
+    NSInteger height = 65;
     
     if(detailString.length > 0) {
-        NSDictionary* dict = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:14], NSFontAttributeName, nil];
+        NSDictionary* dict = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:16], NSFontAttributeName, nil];
         
-        height += [detailString boundingRectWithSize:CGSizeMake(width - 20, MAXFLOAT)
+        CGRect rect= [detailString boundingRectWithSize:CGSizeMake(width - 40, MAXFLOAT)
                                              options:(NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading)
-                                          attributes:dict context:nil].size.height;
-    }
-    height += 40;
+                                          attributes:dict context:nil];
 
+            height += ceil(rect.size.height);
+    }
+    
+//    height += 6;
+    height += 65;
     
     return height;
 
+
 }
 
-+ (CGFloat)heightForString:(UITextView *)textView andWidth:(CGFloat)width{
-    CGSize sizeToFit = [textView sizeThatFits:CGSizeMake(width, MAXFLOAT)];
-    return sizeToFit.height;
++ (NSInteger)cellHeight{
+        return [UIScreen mainScreen].bounds.size.height * 0.5;
 }
-
 
 //创建cell
 + (id)getUITableViewCell:(UITableView *)tableView {
@@ -47,10 +55,17 @@
         cell = [nib objectAtIndex:0];
     }
     
+    
+    cell.bgView.layer.cornerRadius = 8.0f;
+    cell.bgView.layer.masksToBounds = YES;
+    cell.editBtn.layer.cornerRadius = 8.0f;
+    cell.editBtn.layer.masksToBounds = YES;
     cell.descriptionLabel.text = @"";
+    cell.detailText.text = nil;
     
 //    cell.detaiLabel.text = @"";
-  
+    
+
     
     return cell;
 }
@@ -59,6 +74,7 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         // Initialization code
+
     }
     return self;
 }
@@ -69,5 +85,7 @@
         [self.delegate commonContentCellBtnDidClick:self];
     }
 }
+
+
 
 @end

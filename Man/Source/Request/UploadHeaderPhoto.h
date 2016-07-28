@@ -15,10 +15,4 @@
 
 @property (nonatomic,strong) uploadHeaderPhotoFinishHandler _Nullable finishHandler;
 
-- (BOOL)sendRequest;
-
-- (void)callRespond:(NSString* _Nullable)errnum errmsg:(NSString* _Nullable)errmsg;
-
-
-
 @end

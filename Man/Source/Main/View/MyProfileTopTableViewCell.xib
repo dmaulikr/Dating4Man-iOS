@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -7,21 +7,22 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="MyProfileTopTableViewCell" id="KGk-i7-Jjw" customClass="MyProfileTopTableViewCell">
-            <rect key="frame" x="0.0" y="0.0" width="375" height="375"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="MyProfileTopTableViewCell" id="KGk-i7-Jjw" customClass="MyProfileTopTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="376"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="375" height="374"/>
+                <rect key="frame" x="0.0" y="0.0" width="375" height="375"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MyProfile-DefaultPhoto" translatesAutoresizingMaskIntoConstraints="NO" id="Pu0-fj-wzP" userLabel="个人背景">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="374"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MyProfile-PersonalHead" translatesAutoresizingMaskIntoConstraints="NO" id="Pu0-fj-wzP" userLabel="个人背景">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="375"/>
                     </imageView>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ocx-Q1-911" userLabel="保存图片按钮">
-                        <rect key="frame" x="325" y="314" width="40" height="40"/>
+                    <button opaque="NO" alpha="0.59999999999999998" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ocx-Q1-911" userLabel="保存图片按钮">
+                        <rect key="frame" x="299" y="299" width="56" height="56"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="40" id="SFB-MX-3sZ"/>
-                            <constraint firstAttribute="height" constant="40" id="TeA-NR-Wqc"/>
+                            <constraint firstAttribute="width" constant="56" id="SFB-MX-3sZ"/>
+                            <constraint firstAttribute="height" constant="56" id="TeA-NR-Wqc"/>
                         </constraints>
                         <edgeInsets key="layoutMargins" top="8" left="0.0" bottom="8" right="8"/>
                         <state key="normal" image="MyProfile-Camera"/>
@@ -31,23 +32,24 @@
                     </button>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="Pu0-fj-wzP" firstAttribute="bottom" secondItem="H2p-sc-9uM" secondAttribute="bottom" id="5PW-1c-Hr8"/>
                     <constraint firstItem="Pu0-fj-wzP" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="Cv4-Tq-yOd"/>
-                    <constraint firstItem="ocx-Q1-911" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailing" constant="-10" id="ZvN-WU-Hoo"/>
-                    <constraint firstItem="Pu0-fj-wzP" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailing" id="cA6-ca-bzf"/>
+                    <constraint firstItem="ocx-Q1-911" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailing" constant="-20" id="ZvN-WU-Hoo"/>
                     <constraint firstItem="ocx-Q1-911" firstAttribute="bottom" secondItem="H2p-sc-9uM" secondAttribute="bottom" constant="-20" id="eXs-fU-DSd"/>
+                    <constraint firstItem="Pu0-fj-wzP" firstAttribute="width" secondItem="H2p-sc-9uM" secondAttribute="width" id="g1f-yA-fQd"/>
+                    <constraint firstItem="Pu0-fj-wzP" firstAttribute="height" secondItem="H2p-sc-9uM" secondAttribute="height" id="jOJ-H8-HvO"/>
                     <constraint firstItem="Pu0-fj-wzP" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="r3Z-UV-Dar"/>
                 </constraints>
             </tableViewCellContentView>
-            <edgeInsets key="layoutMargins" top="0.0" left="0.0" bottom="0.0" right="8"/>
+            <edgeInsets key="layoutMargins" top="8" left="0.0" bottom="8" right="8"/>
             <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
             <connections>
                 <outlet property="profilePicture" destination="Pu0-fj-wzP" id="3h3-a4-Nye"/>
+                <outlet property="takePhotoBtn" destination="ocx-Q1-911" id="HGG-Ao-GkE"/>
             </connections>
         </tableViewCell>
     </objects>
     <resources>
         <image name="MyProfile-Camera" width="24" height="24"/>
-        <image name="MyProfile-DefaultPhoto" width="100" height="100"/>
+        <image name="MyProfile-PersonalHead" width="430" height="430"/>
     </resources>
 </document>

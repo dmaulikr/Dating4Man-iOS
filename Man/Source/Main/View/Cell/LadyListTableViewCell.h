@@ -10,15 +10,16 @@
 
 @interface LadyListTableViewCell : UITableViewCell
 
-@property (nonatomic, weak) IBOutlet UIImageView *ladyImageView;
+@property (nonatomic, weak) IBOutlet UIImageViewTopFit *ladyImageView;
 
 @property (nonatomic, weak) IBOutlet UIImageView *onlineImageView;
 @property (nonatomic, weak) IBOutlet UILabel *leftLabel;
 
 @property (nonatomic, weak) IBOutlet UILabel *rightlLabel;
 @property (nonatomic, weak) IBOutlet UIImageView *countryImageView;
-@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *loadingActivity;
-@property (weak, nonatomic) IBOutlet UIView *loadingView;
+@property (nonatomic, weak) IBOutlet UIActivityIndicatorView *loadingActivity;
+@property (nonatomic, weak) IBOutlet UIView *loadingView;
+@property (nonatomic, strong) ImageViewLoader* imageViewLoader;
 
 + (NSString *)cellIdentifier;
 + (NSInteger)cellHeight;

@@ -7,12 +7,13 @@
 //
 
 #import "KKViewController.h"
-#import "LadyListTableView.h"
 #import "MainViewController.h"
+#import "GoogleAnalyticsViewController.h"
 
 #import "AgeRangeSlider.h"
+#import "LadyListTableView.h"
 
-@interface LadyListViewController : KKViewController
+@interface LadyListViewController : GoogleAnalyticsViewController
 #pragma mark - 界面控件
 /**
  *  导航栏
@@ -62,6 +63,14 @@
  */
 @property (weak, nonatomic) IBOutlet UIView *searchTable;
 
+/**
+ *  搜索按钮
+ */
+@property (weak, nonatomic) IBOutlet UIButton *searchShowBtn;
+/**
+ *  上拉按钮
+ */
+@property (weak, nonatomic) IBOutlet UIButton *pullUpBtn;
 #pragma mark - 界面事件
 /**
  *  点击搜索栏选择器

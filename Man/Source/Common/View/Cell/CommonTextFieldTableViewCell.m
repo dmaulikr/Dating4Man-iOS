@@ -39,6 +39,9 @@
     return self;
 }
 
-
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    [self.detailLabel sizeToFit];
+}
 
 @end

@@ -15,30 +15,10 @@
     return @"CommonDetailAndAccessoryTableViewCell";
 }
 //高度
-+ (NSInteger)cellHeight:(CGFloat)width detailString:(NSString *)detailString accessoryString:(NSString *)accessoryString{
-    NSInteger height = 5;
-    
-    if(detailString.length > 0) {
-        NSDictionary *detailDict = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:15], NSFontAttributeName, nil];
-        
-        height += [detailString boundingRectWithSize:CGSizeMake(width - 20, MAXFLOAT)
-                                             options:(NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading)
-                                          attributes:detailDict context:nil].size.height;
-        
-    }
-    
-    
-    if (accessoryString.length > 0) {
-        NSDictionary *accessoryDict = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:13],NSFontAttributeName, [UIColor grayColor],NSForegroundColorAttributeName ,nil];
-        height += [detailString boundingRectWithSize:CGSizeMake(width - 20, MAXFLOAT)
-                                             options:(NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading)
-                                          attributes:accessoryDict context:nil].size.height;
-    }
-    height += 5;
-    
-    
-    return height;
++ (NSInteger)cellHeight{
+    return 106;
 }
+
 
 //根据标识符生成
 + (id)getUITableViewCell:(UITableView *)tableView {
@@ -49,8 +29,13 @@
         cell = [nib objectAtIndex:0];
     }
     
+    cell.titleBtn.layer.cornerRadius = cell.titleBtn.frame.size.height * 0.5;
+    cell.titleBtn.layer.masksToBounds = YES;
+    cell.bgView.layer.cornerRadius = 8.0f;
+    cell.bgView.layer.masksToBounds = YES;
     cell.detailLabel.text = @"";
     cell.accessoryLabel.text = @"";
+    
     
     return cell;
 }

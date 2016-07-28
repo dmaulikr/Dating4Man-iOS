@@ -115,6 +115,36 @@
         return [self toStringYMD];
 }
 
+-(NSString*)toStringCrashDate
+{
+    NSUInteger componentFlags = NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit;
+    NSDateComponents *comoponents = [[NSCalendar currentCalendar] components:componentFlags fromDate:self];
+    NSInteger year = [comoponents year];
+    NSInteger month = [comoponents month] + 1;
+    NSInteger day = [comoponents day];
+    NSInteger hour = [comoponents hour];
+    NSInteger minute = [comoponents minute];
+    
+    return [NSString stringWithFormat:@"%.4ld-%.2ld-%.2ld %.2ld:%.2ld", (long)year, (long)month, (long)day, (long)hour, (long)minute];
+    
+}
+
+- (NSString *)toStringCrashZipDate
+{
+    NSUInteger componentFlags = NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit;
+    NSDateComponents *comoponents = [[NSCalendar currentCalendar] components:componentFlags fromDate:self];
+    NSInteger year = [comoponents year] + 1900;
+    NSInteger month = [comoponents month] + 1;
+    NSInteger day = [comoponents day] ;
+    NSInteger hour = [comoponents hour];
+    NSInteger minute = [comoponents minute];
+    NSInteger sec = [comoponents second];
+    return [NSString stringWithFormat:@"%ld-%02ld-%02ld_[%02ld-%02ld-%02ld]",(long)year, (long)month, \
+            (long)day, (long)hour, (long)minute, (long)sec];
+    
+}
+
+
 - (NSString *)dateStringWithDateStyle:(NSDateFormatterStyle)dateStyle timeStyle:(NSDateFormatterStyle)timeStyle{
 	NSDateFormatter *formatter = [[[NSDateFormatter alloc] init] autorelease];
     
@@ -141,6 +171,22 @@
         return (NSDateFormatterNoStyle!=dateStyle ? dateString : timeString);
     }
 }
+
+/** 崩溃日志日期 */
+-(NSString*)toCrashLogStringYMDHM
+{
+    NSUInteger componentFlags = NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit;
+    NSDateComponents *comoponents = [[NSCalendar currentCalendar] components:componentFlags fromDate:self];
+    NSInteger year = [comoponents year];
+    NSInteger month = [comoponents month] + 1;
+    NSInteger day = [comoponents day];
+    NSInteger hour = [comoponents hour];
+    NSInteger minute = [comoponents minute];
+    
+    return [NSString stringWithFormat:@"%.4ld-%.2ld-%.2ld %.2ld:%.2ld", (long)year, (long)month, (long)day, (long)hour, (long)minute];
+}
+
+
 
 // return the time set for start hour. ie yyyy-mm-dd 00:00:00
 -(NSDate*)getDayStartTime
@@ -188,4 +234,6 @@
     [componentsToAdd release];
     return date;
 }
+
+
 @end

@@ -9,15 +9,7 @@
 #import "SessionRequest.h"
 
 @interface GetLadyDetailRequest : SessionRequest
-
-
 /** 女士id */
 @property (nonatomic,strong) NSString * _Nullable womanId;
-
-
 @property (nonatomic, strong) LadyDetailFinishHandler _Nullable finishHandler;
-
-- (BOOL)sendRequest;
-
-- (void)callRespond:(NSString* _Nullable)errnum errmsg:(NSString* _Nullable)errmsg;
 @end

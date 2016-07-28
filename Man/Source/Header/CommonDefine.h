@@ -12,24 +12,25 @@
 // 仅Debug模式输出log
 #ifndef __OPTIMIZE__
 #define NSLog(...) NSLog(__VA_ARGS__)
+#define printf(...) printf{__VA_ARGS__}
 #else
 #define NSLog(...) {}
+#define printf(...) {}
 #endif
 
 #define ROW_TYPE    @"ROW_TYPE"
 #define ROW_SIZE    @"ROW_SIZE"
 
+#define NSLocalizedStringFromSelf(key) NSLocalizedStringFromTable(key, [[self class] description], nil)
 
 // objc_msgSend
 #define msgSend(...) ((void (*)(void *, SEL, UIView *))objc_msgSend)(__VA_ARGS__)
 #define msgTarget(target) (__bridge void *)(target)
 
 #define Color(r, g, b) [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:1.0]
-// 文字颜色
-#define RefreshLabelTextColor Color(150, 150, 150)
 
-// 图片路径
-#define RefreshSrcName(file) [@"Refresh.bundle" stringByAppendingPathComponent:file]
+//#define errorUrl @"http://mobile.chnlove.com/Public/images/photo_unavailable.gif"
+//#define errorDemoUrl @"http://demo-ios.qpidnetwork.com/Public/images/photo_unavailable.gif"
 
 
 #endif

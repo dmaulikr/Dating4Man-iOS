@@ -1,0 +1,24 @@
+
+
+/* Class = "UIButton"; normalTitle = "Continue"; ObjectID = "Srm-aA-5Cu"; */
+"Srm-aA-5Cu.normalTitle" = "Continue";
+
+
+"Photo_Type_Choose" = "Choose personal photo";
+"PHOTO_LIBRARY" = "Photo Library";
+"PHOTO_TAKING" = "Take Photo";
+"Cancel" = "Cancel";
+
+"TIPS_REGISTERMESSAGE_PHOTO" = "Please add your profile photo.";
+"TIPS_REGISTERMESSAGE_NAME" = "Please enter your name.";
+"TIPS_REGISTERMESSAGE_BIRTHDAY" = "Please select your birthday.";
+"TIPS_REGISTERMESSAGE_NATIONALITY" = "Please select your nationality.";
+
+
+"YOUR_GENDER" = "Your gender";
+"YOUR_NAME" = "Your name";
+"ENTER" = "Enter";
+"YOUR_BIRTHDAY" = "Your birthday";
+"SELECT" = "Select >";
+"YOUR_NATIONALITY" = "Your nationality";
+"DECRIBE_YOURSELF" = "Decribe yourself";

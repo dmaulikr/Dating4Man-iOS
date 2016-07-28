@@ -7,12 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "LiveChatMsgItemObject.h"
 
 @interface Message : NSObject
 
 @property (nonatomic, assign) NSInteger msgId;
 @property (nonatomic, strong) NSAttributedString* attText;
 @property (nonatomic, strong) NSString* text;
+@property (nonatomic, strong) LiveChatMsgItemObject* liveChatMsgItemObject;
 
 typedef enum {
     MessageSenderUnknow = 0,
@@ -37,6 +39,8 @@ typedef enum {
     MessageStatusFinish,
     MessageStatusFail,
 } Status;
+
 @property (nonatomic, assign) Status status;
+
 
 @end

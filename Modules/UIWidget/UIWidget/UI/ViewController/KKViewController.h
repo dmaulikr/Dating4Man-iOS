@@ -10,6 +10,7 @@
 
 @interface KKViewController : UIViewController
 @property (nonatomic, assign) BOOL viewDidAppearEver;
+@property (nonatomic, strong) NSString* backTitle;
 
 #pragma mark - 横屏切换
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation;
@@ -17,7 +18,20 @@
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations;
 
 #pragma mark - 界面布局
+/**
+ *  初始化
+ */
 - (void)initCustomParam;
+/**
+ *  反初始化
+ */
+- (void)unInitCustomParam;
+/**
+ *  初始化导航栏
+ */
 - (void)setupNavigationBar;
+/**
+ *  初始化界面
+ */
 - (void)setupContainView;
 @end

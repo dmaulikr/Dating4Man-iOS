@@ -11,8 +11,8 @@
 
 @implementation ChatEmotionChooseView 
 
-+ (instancetype)emotionChooseView {
-    NSArray *nibs = [[NSBundle mainBundle] loadNibNamedWithFamily:@"ChatEmotionChooseView" owner:nil options:nil];
++ (instancetype)emotionChooseView:(id)owner {
+    NSArray *nibs = [[NSBundle mainBundle] loadNibNamedWithFamily:@"ChatEmotionChooseView" owner:owner options:nil];
     ChatEmotionChooseView* view = [nibs objectAtIndex:0];
     
     view.sendButton.layer.cornerRadius = view.sendButton.frame.size.height / 4;
@@ -26,6 +26,7 @@
 
 - (void)reloadData {
     [self.emotionCollectionView reloadData];
+//    self.emotionCollectionView.collectionViewLayout.collectionViewContentSize = CGSizeMake(self.frame.size.width, self.emotionCollectionView.contentSize.height);
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
@@ -35,7 +36,8 @@
 // The cell that is returned must be retrieved from a call to -dequeueReusableCellWithReuseIdentifier:forIndexPath:
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     ChatEmotionChooseCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:[ChatEmotionChooseCollectionViewCell cellIdentifier] forIndexPath:indexPath];
-    cell.imageView.image = [self.emotions objectAtIndex:indexPath.item];
+    ChatEmotion* item = [self.emotions objectAtIndex:indexPath.item];
+    cell.imageView.image = item.image;
     return cell;
 }
 
@@ -52,5 +54,13 @@
     // Drawing code
 }
 */
+
+- (void)layoutSubviews {
+    [super layoutSubviews];
+//    NSLog(@"layoutSubviews( self.emotionCollectionView.frame.size.width : %f )", self.emotionCollectionView.frame.size.width);
+//    self.emotionCollectionView.contentSize = CGSizeMake(self.frame.size.width, self.emotionCollectionView.contentSize.height);
+//    [self.emotionCollectionView layoutIfNeeded];
+//    [self.emotionCollectionView reloadData];
+}
 
 @end

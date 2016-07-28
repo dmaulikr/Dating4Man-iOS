@@ -17,76 +17,88 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ContactList-Bookmark" translatesAutoresizingMaskIntoConstraints="NO" id="GWn-Rf-4V4" userLabel="Bookmark">
-                        <rect key="frame" x="135" y="13" width="15" height="15"/>
+                        <rect key="frame" x="154" y="11" width="15" height="15"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="15" id="9Dv-Zl-ryk"/>
                             <constraint firstAttribute="width" secondItem="GWn-Rf-4V4" secondAttribute="height" multiplier="1:1" id="b7s-qF-Nu5"/>
                         </constraints>
                     </imageView>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ContactList-InChatType" translatesAutoresizingMaskIntoConstraints="NO" id="Q2U-tP-gGL" userLabel="In Chat Image View">
-                        <rect key="frame" x="160" y="13" width="15" height="15"/>
+                        <rect key="frame" x="179" y="11" width="15" height="15"/>
                         <constraints>
                             <constraint firstAttribute="width" secondItem="Q2U-tP-gGL" secondAttribute="height" multiplier="1:1" id="RnD-yK-ueg"/>
                             <constraint firstAttribute="width" constant="15" id="ftM-Ha-K26"/>
                         </constraints>
                     </imageView>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ContactList-LadyImage-Test" translatesAutoresizingMaskIntoConstraints="NO" id="x9x-tb-UCe">
-                        <rect key="frame" x="10" y="10" width="36" height="36"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ContactList-LadyImage-Test" translatesAutoresizingMaskIntoConstraints="NO" id="x9x-tb-UCe" customClass="UIImageViewFill">
+                        <rect key="frame" x="10" y="4" width="48" height="48"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="36" id="5jY-vX-v7P"/>
-                            <constraint firstAttribute="width" constant="36" id="7Q5-ka-tOV"/>
-                        </constraints>
-                    </imageView>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LadyList-GreenPoint" translatesAutoresizingMaskIntoConstraints="NO" id="WHc-da-64k">
-                        <rect key="frame" x="34" y="34" width="12" height="12"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="12" id="Sbn-DZ-jm3"/>
-                            <constraint firstAttribute="width" constant="12" id="ic9-4c-spr"/>
+                            <constraint firstAttribute="height" constant="48" id="5jY-vX-v7P"/>
+                            <constraint firstAttribute="width" constant="48" id="7Q5-ka-tOV"/>
                         </constraints>
                     </imageView>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Jennifer" lineBreakMode="characterWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fk5-ne-pw3">
-                        <rect key="frame" x="66" y="10" width="59" height="21"/>
+                        <rect key="frame" x="78" y="8" width="66" height="21"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="21" id="YAU-0u-IJ2"/>
                         </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
                         <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </label>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Last contact: 24 Jan" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4">
-                        <rect key="frame" x="66" y="30" width="124" height="16"/>
+                        <rect key="frame" x="78" y="28" width="148" height="20"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ContactList-Online" translatesAutoresizingMaskIntoConstraints="NO" id="dbU-Oq-bRH" userLabel="Online Image View">
+                        <rect key="frame" x="40" y="34" width="18" height="18"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="18" id="Jsc-mD-z31"/>
+                            <constraint firstAttribute="height" constant="18" id="TU6-Ej-vWA"/>
+                        </constraints>
+                    </imageView>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="dbU-Oq-bRH" firstAttribute="bottom" secondItem="x9x-tb-UCe" secondAttribute="bottom" id="0oh-5w-YVU"/>
                     <constraint firstItem="fk5-ne-pw3" firstAttribute="top" secondItem="x9x-tb-UCe" secondAttribute="top" id="7Ih-mS-4f1"/>
                     <constraint firstItem="GWn-Rf-4V4" firstAttribute="leading" secondItem="fk5-ne-pw3" secondAttribute="trailing" constant="10" id="Aph-Da-gmz"/>
                     <constraint firstItem="fk5-ne-pw3" firstAttribute="leading" secondItem="x9x-tb-UCe" secondAttribute="trailing" constant="20" id="HWr-wM-jp2"/>
+                    <constraint firstItem="fk5-ne-pw3" firstAttribute="centerY" secondItem="x9x-tb-UCe" secondAttribute="centerY" constant="-10" id="HhE-V9-65b"/>
                     <constraint firstItem="4" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="zji-PO-4zO" secondAttribute="trailingMargin" constant="-10" id="JCw-eu-ang"/>
                     <constraint firstItem="x9x-tb-UCe" firstAttribute="leading" secondItem="zji-PO-4zO" secondAttribute="leadingMargin" constant="10" id="OQS-fi-CTZ"/>
+                    <constraint firstItem="4" firstAttribute="centerY" secondItem="x9x-tb-UCe" secondAttribute="centerY" constant="10" id="Ojz-Qg-BZj"/>
                     <constraint firstItem="x9x-tb-UCe" firstAttribute="centerY" secondItem="zji-PO-4zO" secondAttribute="centerY" id="Xg2-nQ-jlJ"/>
                     <constraint firstItem="4" firstAttribute="leading" secondItem="fk5-ne-pw3" secondAttribute="leading" id="fSF-Ao-S74"/>
                     <constraint firstItem="Q2U-tP-gGL" firstAttribute="centerY" secondItem="fk5-ne-pw3" secondAttribute="centerY" id="gBr-xU-Z6G"/>
                     <constraint firstItem="Q2U-tP-gGL" firstAttribute="leading" secondItem="GWn-Rf-4V4" secondAttribute="trailing" constant="10" id="gDs-2n-HJ2"/>
                     <constraint firstItem="4" firstAttribute="bottom" secondItem="x9x-tb-UCe" secondAttribute="bottom" id="hhE-ia-rmm"/>
-                    <constraint firstItem="WHc-da-64k" firstAttribute="bottom" secondItem="x9x-tb-UCe" secondAttribute="bottom" id="r0T-Ue-mmV"/>
-                    <constraint firstItem="WHc-da-64k" firstAttribute="trailing" secondItem="x9x-tb-UCe" secondAttribute="trailing" id="xWU-1B-dkQ"/>
+                    <constraint firstItem="dbU-Oq-bRH" firstAttribute="trailing" secondItem="x9x-tb-UCe" secondAttribute="trailing" id="jfX-B4-agz"/>
                     <constraint firstItem="GWn-Rf-4V4" firstAttribute="centerY" secondItem="fk5-ne-pw3" secondAttribute="centerY" id="xko-8m-Wc6"/>
                 </constraints>
                 <edgeInsets key="layoutMargins" top="0.0" left="0.0" bottom="0.0" right="0.0"/>
+                <variation key="default">
+                    <mask key="constraints">
+                        <exclude reference="7Ih-mS-4f1"/>
+                        <exclude reference="hhE-ia-rmm"/>
+                    </mask>
+                </variation>
             </tableViewCellContentView>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <edgeInsets key="layoutMargins" top="0.0" left="0.0" bottom="0.0" right="0.0"/>
             <inset key="separatorInset" minX="64" minY="0.0" maxX="0.0" maxY="0.0"/>
             <connections>
                 <outlet property="bookmarkImageView" destination="GWn-Rf-4V4" id="qDO-g8-4zp"/>
+                <outlet property="bookmarkImageViewLeading" destination="Aph-Da-gmz" id="mVK-1z-kT9"/>
+                <outlet property="bookmarkImageViewWidth" destination="9Dv-Zl-ryk" id="RTy-IA-Awb"/>
                 <outlet property="detailLabel" destination="4" id="3NK-bc-Ruc"/>
                 <outlet property="inchatImageView" destination="Q2U-tP-gGL" id="wqc-EB-MMo"/>
+                <outlet property="inchatImageViewLeading" destination="gDs-2n-HJ2" id="bfW-hk-VyQ"/>
+                <outlet property="inchatImageViewWidth" destination="ftM-Ha-K26" id="owX-Y0-3jp"/>
                 <outlet property="ladyImageView" destination="x9x-tb-UCe" id="U5I-j5-ygo"/>
-                <outlet property="onlineImageView" destination="WHc-da-64k" id="zQf-ZI-3bv"/>
+                <outlet property="onlineImageView" destination="dbU-Oq-bRH" id="EVd-oD-kxf"/>
                 <outlet property="titleLabel" destination="fk5-ne-pw3" id="MBE-ue-KsZ"/>
             </connections>
             <point key="canvasLocation" x="396" y="403"/>
@@ -96,6 +108,6 @@
         <image name="ContactList-Bookmark" width="18" height="18"/>
         <image name="ContactList-InChatType" width="24" height="24"/>
         <image name="ContactList-LadyImage-Test" width="40" height="40"/>
-        <image name="LadyList-GreenPoint" width="8" height="8"/>
+        <image name="ContactList-Online" width="1" height="1"/>
     </resources>
 </document>

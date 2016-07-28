@@ -24,6 +24,8 @@
 @property (nonatomic,strong) NSString *email;
 /** 密码 */
 @property (nonatomic,strong) NSString *password;
+/** 图片 */
+@property (nonatomic,strong) UIImage *headerImage;
 
 
 

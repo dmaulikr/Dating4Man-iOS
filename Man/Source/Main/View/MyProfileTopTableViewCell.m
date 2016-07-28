@@ -30,6 +30,9 @@
         cell = [nib objectAtIndex:0];
     }
     
+    cell.takePhotoBtn.layer.cornerRadius = cell.takePhotoBtn.frame.size.width * 0.5;
+    cell.takePhotoBtn.layer.masksToBounds = YES;
+    
 
     
     return cell;
@@ -51,4 +54,8 @@
     }
 }
 
+- (void)layoutSubviews {
+    [super layoutSubviews];
+//    [self.contentView layoutSubviews];
+}
 @end

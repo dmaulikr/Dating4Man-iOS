@@ -26,7 +26,8 @@
     }
     
     cell.titleLabel.text = @"";
-    cell.detailLabel.hidden = NO;
+    cell.detailLabel.hidden = YES;
+    cell.countryLabel.text = @"";
     
     return cell;
 }
@@ -40,5 +41,12 @@
 }
 
 
+- (IBAction)reportAction:(id)sender {
+    if ([self.delegate respondsToSelector:@selector(LadyDetailNameTableViewCellReportBtnClick:)]) {
+        [self.delegate LadyDetailNameTableViewCellReportBtnClick:self];
+    }
+    
+    
+}
 
 @end

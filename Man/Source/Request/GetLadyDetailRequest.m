@@ -40,10 +40,10 @@
     return NO;
 }
 
-- (void)callRespond:(NSString* _Nullable)errnum errmsg:(NSString* _Nullable)errmsg {
-    if( self.finishHandler ) {
-        LadyDetailItemObject *item = [[LadyDetailItemObject alloc] init];
-        self.finishHandler(YES, item, errnum, errmsg);
+- (void)callRespond:(BOOL)success errnum:(NSString* _Nullable)errnum errmsg:(NSString* _Nullable)errmsg {
+    if( self.finishHandler && !success ) {
+        LadyDetailItemObject* item = [[LadyDetailItemObject alloc] init];
+        self.finishHandler(NO, item, errnum, errmsg);
     }
 }
 

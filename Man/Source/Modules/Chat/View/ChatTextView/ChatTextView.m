@@ -82,7 +82,21 @@
         [attStr addAttributes:@{NSFontAttributeName : self.font} range:NSMakeRange(0, attStr.length)];
         self.attributedText = attStr;
         self.selectedRange = NSMakeRange(loc + 1, 0);
+        
+        // 刷新界面
+        [self setNeedsDisplay];
     }
+}
+
+- (void)awakeFromNib {
+    // 注册通知
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textChange:) name:UITextViewTextDidChangeNotification object:nil];
+    
+}
+
+- (void)textChange:(NSNotification* )notice {
+    // 刷新界面
+    [self setNeedsDisplay];
 }
 
 - (NSString* )text {
@@ -101,41 +115,55 @@
     
     return [fullText copy];
 }
-//- (NSString *)copyText:(NSAttributedString *)atts {
-//    NSMutableString *fullText = [NSMutableString string];
-//    
-//    [atts enumerateAttributesInRange:NSMakeRange(0, atts.length) options:0 usingBlock:^(NSDictionary *attrs, NSRange range, BOOL *stop) {
-//        
-//        ChatTextAttachment *attachment = attrs[@"NSAttachment"];
-//        if( attachment ) {
-////            [fullText appendString:attch.emotion.text];
-//            
-//        } else {
-////            NSAttributedString *str = [atts attributedSubstringFromRange:range];
-////            [fullText appendString:str.string];
-//        }
-//    }];
-//    
-//    return [fullText copy];
-//}
 
-//// 将富文本转换为文本,供以发送给服务器
-//- (NSString *)fullText
-//{
-//    NSMutableString *fullText = [NSMutableString string];
-//    
-//    [self.attributedText enumerateAttributesInRange:NSMakeRange(0, self.attributedText.length) options:0 usingBlock:^(NSDictionary *attrs, NSRange range, BOOL *stop) {
-//        
-//        ChatTextAttachment *attch = attrs[@"NSAttachment"];
-//        if (attch) {
-//            [fullText appendString:attch.emotion.chs];
-//        }else {
-//            NSAttributedString *str = [self.attributedText attributedSubstringFromRange:range];
-//            [fullText appendString:str.string];
-//        }
-//    }];
-//    
-//    return [fullText copy];
-//}
+- (void)drawRect:(CGRect)rect {
+    [super drawRect:rect];
+    
+    CGFloat x = 5;
+    CGFloat w = rect.size.width - 2 * x;
+    CGFloat y = 8;
+    CGFloat h;
+    
+    CGRect textRect;
+    CGRect drawRect;
+    NSMutableAttributedString* attributedText = nil;
+    
+    // 加入默认提示
+    if( self.attributedText.length == 0 && self.placeholder ) {
+        NSMutableDictionary *attrs = [NSMutableDictionary dictionary];
+        attrs[NSFontAttributeName] = self.font;
+        attrs[NSForegroundColorAttributeName] = self.placeholderColor?self.placeholderColor:[UIColor grayColor];
+        
+        attributedText = [[NSMutableAttributedString alloc] initWithString:self.placeholder attributes:attrs];
+        
+        // 计算高度
+        textRect = [attributedText boundingRectWithSize:CGSizeMake(self.frame.size.width - 2 * x, MAXFLOAT)
+                                                            options:(NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading) context:nil];
+        h = ceil(textRect.size.height);
+        
+        drawRect = CGRectMake(x, y, w, h);
+        [attributedText drawInRect:drawRect];
+        
+        h += y * 2;
+    
+    } else {
+        attributedText = [[NSMutableAttributedString alloc] initWithAttributedString:self.attributedText];
+        
+        // 计算高度
+        textRect = [attributedText boundingRectWithSize:CGSizeMake(self.frame.size.width - 2 * x, MAXFLOAT)
+                                                     options:(NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading) context:nil];
+        h = ceil(textRect.size.height);
+
+        h += y * 2;
+    }
+
+    if( self.height != h ) {
+        if( [self.chatTextViewDelegate respondsToSelector:@selector(textViewChangeHeight:height:)] ) {
+            [self.chatTextViewDelegate textViewChangeHeight:self height:h];
+        }
+        self.height = h;
+    }
+    
+}
 
 @end

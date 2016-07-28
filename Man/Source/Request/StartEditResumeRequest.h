@@ -9,12 +9,5 @@
 #import "SessionRequest.h"
 
 @interface StartEditResumeRequest : SessionRequest
-
-
 @property (nonatomic,strong) startEditResumeFinishHandler _Nullable finishHandler;
-
-- (BOOL)sendRequest;
-
-- (void)callRespond:(NSString* _Nullable)errnum errmsg:(NSString* _Nullable)errmsg;
-
 @end

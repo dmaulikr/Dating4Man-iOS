@@ -23,14 +23,18 @@
         NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"LadyListTableViewCell" owner:tableView options:nil];
         cell = [nib objectAtIndex:0];
         
+        cell.imageViewLoader = nil;
     }
     
     cell.loadingView.hidden = YES;
     cell.loadingActivity.hidden = YES;
     cell.ladyImageView.hidden = NO;
-    cell.onlineImageView.hidden = YES;
+    cell.onlineImageView.hidden = NO;
     cell.leftLabel.text = @"";
     cell.rightlLabel.text = @"";
+    
+    cell.onlineImageView.layer.cornerRadius = 4.0f;
+    cell.onlineImageView.layer.masksToBounds = YES;
     
     return cell;
 }
@@ -40,6 +44,7 @@
     if( self ) {
         // Initialization code
         self.contentView.backgroundColor = [UIColor clearColor];
+        
     }
     return self;
 }

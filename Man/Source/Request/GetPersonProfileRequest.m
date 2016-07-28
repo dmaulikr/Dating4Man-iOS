@@ -17,8 +17,6 @@
     return self;
 }
 
-
-
 - (BOOL)sendRequest {
     if( self.manager ) {
         return HTTPREQUEST_INVALIDREQUESTID != [self.manager getMyProfileFinishHandler:^(BOOL success, PersonalProfile * _Nonnull item, NSString * _Nonnull errnum, NSString * _Nonnull errmsg) {
@@ -41,10 +39,11 @@
     return NO;
 }
 
-- (void)callRespond:(NSString* _Nullable)errnum errmsg:(NSString* _Nullable)errmsg {
-    if( self.finishHandler ) {
-        PersonalProfile *profile = [[PersonalProfile alloc] init];
-        self.finishHandler(YES,profile,errnum,errmsg);
+- (void)callRespond:(BOOL)success errnum:(NSString* _Nullable)errnum errmsg:(NSString* _Nullable)errmsg {
+    if( self.finishHandler && !success ) {
+        PersonalProfile* item = [[PersonalProfile alloc] init];
+        self.finishHandler(NO, item, errnum, errmsg);
     }
 }
+
 @end

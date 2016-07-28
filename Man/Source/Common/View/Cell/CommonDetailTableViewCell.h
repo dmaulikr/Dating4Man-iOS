@@ -14,6 +14,7 @@
 
 + (NSString *)cellIdentifier;
 + (NSInteger)cellHeight:(CGFloat)width detailString:(NSString *)detailString;
++ (NSInteger)cellHeight:(CGFloat)width detailAttributedString:(NSAttributedString *)detailString;
 + (id)getUITableViewCell:(UITableView*)tableView;
 
 @end

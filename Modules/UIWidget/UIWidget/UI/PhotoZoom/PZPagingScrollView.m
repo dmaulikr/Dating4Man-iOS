@@ -140,6 +140,7 @@
     
     // Calculate which pages are visible
     CGRect visibleBounds = self.bounds;
+    visibleBounds = CGRectMake(self.contentOffset.x, 0, self.bounds.size.width, 0);
     int firstNeededPageIndex = floorf(CGRectGetMinX(visibleBounds) / CGRectGetWidth(visibleBounds));
     int lastNeededPageIndex  = floorf((CGRectGetMaxX(visibleBounds)-1) / CGRectGetWidth(visibleBounds));
     firstNeededPageIndex = MAX(firstNeededPageIndex, 0);
@@ -169,16 +170,20 @@
     }
 }
 
+- (void)layoutSubviews {
+    [super layoutSubviews];
+}
+
 #pragma mark - Layout Debugging Support
 #pragma mark -
 
 - (void)logRect:(CGRect)rect withName:(NSString *)name {
-//    DebugLog(@"%@: %f, %f / %f, %f", name, rect.origin.x, rect.origin.y, rect.size.width, rect.size.height);
+    NSLog(@"%@ : [%f, %f / %f, %f]", name, rect.origin.x, rect.origin.y, rect.size.width, rect.size.height);
 }
 
 - (void)logLayout {
 //    DebugLog(@"#### PZPagingScrollView ###");
-//    
+    
 //    [self logRect:self.bounds withName:@"self.bounds"];
 //    [self logRect:self.frame withName:@"self.frame"];
 //    
@@ -260,13 +265,24 @@
     if(self.pagingViewDelegate == nil) {
         return;
     }
-    
     _currentPagingIndex = index;
     
     self.contentSize = [self contentSizeForPagingScrollView];
+    
+    CGPoint offset = [self scrollPositionForIndex:index];
+    CGPoint offsetOld = self.contentOffset;
+    
+    if( animated && !CGPointEqualToPoint(offset, offsetOld) ) {
+        self.userInteractionEnabled = NO;
+    }
     [self setContentOffset:[self scrollPositionForIndex:index] animated:animated];
     
     [self tilePages];
+    
+    if( !animated ) {
+        _currentPagingIndex = [self currentPagingIndex];
+        [self.pagingViewDelegate pagingScrollView:self didShowPageViewForDisplay:_currentPagingIndex];
+    }
 }
 
 - (void)resetDisplay {
@@ -300,15 +316,18 @@
 #pragma mark -
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-//    DebugLog(@"scrollViewDidScroll");
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.1 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-        [self tilePages];
-    });
+    [self tilePages];
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+    self.userInteractionEnabled = YES;
     _currentPagingIndex = [self currentPagingIndex];
     [self.pagingViewDelegate pagingScrollView:self didShowPageViewForDisplay:_currentPagingIndex];
 }
 
+- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
+    self.userInteractionEnabled = YES;
+    _currentPagingIndex = [self currentPagingIndex];
+    [self.pagingViewDelegate pagingScrollView:self didShowPageViewForDisplay:_currentPagingIndex];
+}
 @end

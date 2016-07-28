@@ -22,4 +22,9 @@
  */
 - (BOOL)synConfig:(SynConfigFinishHandler _Nullable)finishHandler;
 
+/**
+ *  清除
+ */
+- (void)clean;
+
 @end

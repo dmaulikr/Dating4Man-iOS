@@ -1,0 +1,22 @@
+
+/* Class = "UILabel"; text = "0.0"; ObjectID = "3D2-Vf-aFn"; */
+"3D2-Vf-aFn.text" = "0.0";
+
+/* Class = "UILabel"; text = "Micheal"; ObjectID = "bty-cg-oWT"; */
+"bty-cg-oWT.text" = "Micheal";
+
+/* Class = "UILabel"; text = "Credit Balance"; ObjectID = "f5b-Kh-TYO"; */
+"f5b-Kh-TYO.text" = "Credit Balance";
+
+
+"MY_PROFILE" = "My Profile";
+
+"EDIT_VIEW_PROFILE" = "Edit / view profile";
+
+"APP_SETTINGS" = "App Settings";
+
+"NOTIFICATION_ACCOUNT_AND_OTHER" = "Notification account and other";
+
+"ADD_CREDITS" = "Add Credits";
+
+"CREDITS_ARE_USED_TO_CONNECT_PEOPLE" = "Credits are used to connect people";

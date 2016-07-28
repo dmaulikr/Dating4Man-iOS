@@ -19,17 +19,17 @@
         self.age1 = -11;
         self.age2 = -1;
         self.country = @"";
-        self.orderBy = OrderTypeDEFAULT;
+        self.orderBy = OrderTypeOnline;
         self.onlineStatus = LADY_OFFLINE;
+        self.genderType = LADY_GENDER_DEFAULT;
     }
     return self;
 }
 
-
 #pragma mark - 发送请求
 - (BOOL)sendRequest {
     if( self.manager ) {
-        return HTTPREQUEST_INVALIDREQUESTID != [self.manager getQueryLadyListPageIndex:self.page pageSize:self.pageSize searchType:self.searchWay womanId:self.womanId isOnline:self.onlineStatus ageRangeFrom:self.age1 ageRangeTo:self.age2 country:self.country orderBy:self.orderBy finishHandler:^(BOOL success, NSMutableArray * _Nonnull itemArray, int totalCount, NSString * _Nonnull errnum, NSString * _Nonnull errmsg) {
+        return HTTPREQUEST_INVALIDREQUESTID != [self.manager getQueryLadyListPageIndex:self.page pageSize:self.pageSize searchType:self.searchWay womanId:self.womanId isOnline:self.onlineStatus ageRangeFrom:self.age1 ageRangeTo:self.age2 country:self.country orderBy:self.orderBy genderType:self.genderType finishHandler:^(BOOL success, NSMutableArray * _Nonnull itemArray, int totalCount, NSString * _Nonnull errnum, NSString * _Nonnull errmsg) {
                 BOOL bFlag = NO;
                 // 没有处理过, 才进入SessionRequestManager处理
                 if( !self.isHandleAlready && self.delegate && [self.delegate respondsToSelector:@selector(request:handleRespond:errnum:errmsg:)] ) {
@@ -48,13 +48,11 @@
     return NO;
 }
 
-- (void)callRespond:(NSString* _Nullable)errnum errmsg:(NSString* _Nullable)errmsg  pageCount:(int)totalCount{
-    if( self.finishHandler ) {
+- (void)callRespond:(BOOL)success errnum:(NSString* _Nullable)errnum errmsg:(NSString* _Nullable)errmsg {
+    if( self.finishHandler && !success ) {
         NSMutableArray* array = [NSMutableArray array];
-        self.finishHandler(YES, array, totalCount,errnum, errmsg);
+        self.finishHandler(NO, array, 0,errnum, errmsg);
     }
 }
-
-
 
 @end

@@ -17,15 +17,12 @@
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" id="i5M-Pr-FkT">
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eZb-Qf-Isy">
-                    <rect key="frame" x="0.0" y="50" width="375" height="537"/>
-                </scrollView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cly-y1-pLB" userLabel="loadingView">
-                    <rect key="frame" x="157" y="304" width="60" height="60"/>
+                    <rect key="frame" x="158" y="304" width="60" height="60"/>
                     <subviews>
                         <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="Zmf-YU-aCs">
                             <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
@@ -45,8 +42,17 @@
                 <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="6" translatesAutoresizingMaskIntoConstraints="NO" id="5RD-7C-vCc">
                     <rect key="frame" x="144" y="550" width="87" height="37"/>
                 </pageControl>
-                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3p1-q0-1yJ" userLabel="重新加载图片按钮">
-                    <rect key="frame" x="129" y="374" width="116" height="32"/>
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eZb-Qf-Isy">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                </scrollView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Trouble loading full-sized image." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cOV-zF-Vmc" userLabel="错误信息">
+                    <rect key="frame" x="0.0" y="274" width="375" height="20"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3p1-q0-1yJ" userLabel="重新加载图片按钮">
+                    <rect key="frame" x="123" y="374" width="130" height="32"/>
                     <color key="backgroundColor" red="0.074509803920000006" green="0.68235294120000001" blue="0.91372549020000005" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="32" id="CgU-R2-nib"/>
@@ -58,15 +64,14 @@
                         <action selector="retryAction:" destination="-1" eventType="touchUpInside" id="rnZ-sP-NnB"/>
                     </connections>
                 </button>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Trouble loading full-sized image." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cOV-zF-Vmc" userLabel="错误信息">
-                    <rect key="frame" x="0.0" y="274" width="375" height="20"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k5g-lc-5AL">
-                    <rect key="frame" x="10" y="10" width="12" height="30"/>
-                    <state key="normal" image="LadyDetail-CloseBtn"/>
+                <button hidden="YES" opaque="NO" alpha="0.59999999999999998" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k5g-lc-5AL">
+                    <rect key="frame" x="16" y="16" width="32" height="32"/>
+                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="32" id="9rb-hm-D9r"/>
+                        <constraint firstAttribute="width" constant="32" id="ZHA-2m-7By"/>
+                    </constraints>
+                    <state key="normal" image="ic_close_white_24pt_2x"/>
                     <connections>
                         <action selector="closeAction:" destination="-1" eventType="touchUpInside" id="YFq-U9-08p"/>
                     </connections>
@@ -75,29 +80,34 @@
             <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
                 <constraint firstItem="cOV-zF-Vmc" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="2rt-kU-16E"/>
-                <constraint firstItem="k5g-lc-5AL" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="10" id="5K2-Ly-Dko"/>
-                <constraint firstItem="eZb-Qf-Isy" firstAttribute="top" secondItem="k5g-lc-5AL" secondAttribute="bottom" constant="10" id="Cdb-Zw-Fgs"/>
+                <constraint firstItem="k5g-lc-5AL" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="16" id="5K2-Ly-Dko"/>
+                <constraint firstItem="5RD-7C-vCc" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="6Y3-35-MGG"/>
                 <constraint firstItem="cly-y1-pLB" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="FLY-tt-I4X"/>
-                <constraint firstAttribute="trailing" secondItem="eZb-Qf-Isy" secondAttribute="trailing" id="FZr-3k-fN9"/>
-                <constraint firstItem="eZb-Qf-Isy" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Loh-bC-MaK"/>
+                <constraint firstItem="eZb-Qf-Isy" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="M95-Qb-T2C"/>
+                <constraint firstItem="5RD-7C-vCc" firstAttribute="bottom" secondItem="i5M-Pr-FkT" secondAttribute="bottom" constant="-80" id="POL-UH-eeK"/>
+                <constraint firstItem="eZb-Qf-Isy" firstAttribute="leading" secondItem="cOV-zF-Vmc" secondAttribute="leading" id="TOw-4G-cdl"/>
                 <constraint firstItem="3p1-q0-1yJ" firstAttribute="centerX" secondItem="cly-y1-pLB" secondAttribute="centerX" id="URg-fh-wuu"/>
-                <constraint firstItem="k5g-lc-5AL" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="10" id="VVn-s5-s9X"/>
-                <constraint firstItem="5RD-7C-vCc" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="dRv-Un-M2G"/>
-                <constraint firstItem="eZb-Qf-Isy" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="50" id="n3X-W1-Jdb"/>
+                <constraint firstItem="k5g-lc-5AL" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="16" id="VVn-s5-s9X"/>
+                <constraint firstItem="eZb-Qf-Isy" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="n3X-W1-Jdb"/>
                 <constraint firstItem="3p1-q0-1yJ" firstAttribute="top" secondItem="cly-y1-pLB" secondAttribute="bottom" constant="10" id="nHW-3q-T5c"/>
                 <constraint firstItem="cly-y1-pLB" firstAttribute="top" secondItem="cOV-zF-Vmc" secondAttribute="bottom" constant="10" id="oSh-DP-gWx"/>
-                <constraint firstItem="5RD-7C-vCc" firstAttribute="bottom" secondItem="eZb-Qf-Isy" secondAttribute="bottom" id="oso-Gg-MFO"/>
-                <constraint firstAttribute="trailing" secondItem="cOV-zF-Vmc" secondAttribute="trailing" id="qqE-eZ-0HG"/>
+                <constraint firstItem="cOV-zF-Vmc" firstAttribute="trailing" secondItem="i5M-Pr-FkT" secondAttribute="trailing" id="qqE-eZ-0HG"/>
                 <constraint firstItem="cly-y1-pLB" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="tk0-z2-zrl"/>
+                <constraint firstItem="eZb-Qf-Isy" firstAttribute="width" secondItem="i5M-Pr-FkT" secondAttribute="width" id="tmb-M6-Zwo"/>
                 <constraint firstItem="cOV-zF-Vmc" firstAttribute="centerX" secondItem="cly-y1-pLB" secondAttribute="centerX" id="xf2-Xs-vKf"/>
-                <constraint firstAttribute="bottom" secondItem="eZb-Qf-Isy" secondAttribute="bottom" constant="80" id="y2n-Ho-KSm"/>
+                <constraint firstAttribute="bottom" secondItem="eZb-Qf-Isy" secondAttribute="bottom" id="y2n-Ho-KSm"/>
             </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="TOw-4G-cdl"/>
+                </mask>
+            </variation>
             <point key="canvasLocation" x="240" y="156"/>
         </view>
     </objects>
     <resources>
-        <image name="LadyDetail-CloseBtn" width="12" height="12"/>
         <image name="LookBigPhoto-Refresh" width="24" height="24"/>
+        <image name="ic_close_white_24pt_2x" width="24" height="24"/>
     </resources>
 </document>

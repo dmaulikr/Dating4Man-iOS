@@ -25,6 +25,7 @@
         self.telephone_cc = [coder decodeIntegerForKey:@"telephone_cc"];
         self.sessionid = [coder decodeObjectForKey:@"sessionid"];
         self.ga_uid = [coder decodeObjectForKey:@"ga_uid"];
+        self.ga_activity = [coder decodeObjectForKey:@"ga_activity"];
         self.ticketid = [coder decodeObjectForKey:@"ticketid"];
         self.photosend = [coder decodeBoolForKey:@"photosend"];
         self.photoreceived = [coder decodeBoolForKey:@"photoreceived"];
@@ -52,6 +53,7 @@
     [coder encodeInteger:self.telephone_cc forKey:@"telephone_cc"];
     [coder encodeObject:self.sessionid forKey:@"sessionid"];
     [coder encodeObject:self.ga_uid forKey:@"ga_uid"];
+    [coder encodeObject:self.ga_activity forKey:@"ga_activity"];
     [coder encodeObject:self.ticketid forKey:@"ticketid"];
     [coder encodeBool:self.photosend forKey:@"photosend"];
     [coder encodeBool:self.photoreceived forKey:@"photoreceived"];

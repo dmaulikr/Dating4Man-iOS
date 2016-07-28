@@ -10,19 +10,32 @@
 #import <UIKit/UIKit.h>
 #import "AFNetworking.h"
 
+@class ImageViewLoader;
+@protocol ImageViewLoaderDelegate <NSObject>
+@optional
+- (void)loadImageFinish:(ImageViewLoader *)imageViewLoader success:(BOOL)success;
+@end
+
 @interface ImageViewLoader : NSObject
 
 @property (nonatomic, retain) AFHTTPSessionManager *manager;
 @property (nonatomic, retain) NSString* url;
 @property (nonatomic, retain) NSString* path;
-@property (nonatomic, retain) UIImage* imageDefaul;
-@property (nonatomic, retain) UIView *view;
+@property (nonatomic, weak) UIView *view;
 @property (nonatomic, assign) BOOL animated;
+@property (weak) id<ImageViewLoaderDelegate> delegate;
 
 /**
- *  重置
+ *  创建实例
+ *
+ *  @return 实例
  */
-- (void)reset;
++ (instancetype)loader;
+
+/**
+ *  停止请求
+ */
+- (void)stop;
 
 /**
  *  加载图片

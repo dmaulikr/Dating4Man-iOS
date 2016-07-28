@@ -182,6 +182,8 @@
 		50E967BC1CC4CC4B00E5BF26 /* UploadTicketTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E9676D1CC4CC4B00E5BF26 /* UploadTicketTask.cpp */; };
 		50E967BD1CC4CC4B00E5BF26 /* UploadVerTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E9676F1CC4CC4B00E5BF26 /* UploadVerTask.cpp */; };
 		50E967BE1CC4CC4B00E5BF26 /* UseTryTicketTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E967711CC4CC4B00E5BF26 /* UseTryTicketTask.cpp */; };
+		50ECE5FD1D06A9F500FAAC1F /* RequestMonthlyFeeController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ECE5FA1D06A9F500FAAC1F /* RequestMonthlyFeeController.cpp */; };
+		50ECE6011D06AA2600FAAC1F /* RequestFakeController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ECE5FE1D06AA2600FAAC1F /* RequestFakeController.cpp */; };
 		D14A7F3F1CF99A4A00135FA3 /* LCCustomItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D14A7F3D1CF99A4A00135FA3 /* LCCustomItem.cpp */; };
 		D16939491CE59724001D40E7 /* GetAllPaidThemeTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D16939391CE59724001D40E7 /* GetAllPaidThemeTask.cpp */; };
 		D169394A1CE59724001D40E7 /* GetPaidThemeTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D169393B1CE59724001D40E7 /* GetPaidThemeTask.cpp */; };
@@ -191,6 +193,7 @@
 		D169394E1CE59724001D40E7 /* RecvThemeMotionTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D16939431CE59724001D40E7 /* RecvThemeMotionTask.cpp */; };
 		D169394F1CE59724001D40E7 /* RecvThemeRecommendTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D16939451CE59724001D40E7 /* RecvThemeRecommendTask.cpp */; };
 		D16939501CE59724001D40E7 /* UploadThemeListVerTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D16939471CE59724001D40E7 /* UploadThemeListVerTask.cpp */; };
+		D17487C61D18E1EA008AE3C2 /* RequestPaidController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D17487C31D18E1EA008AE3C2 /* RequestPaidController.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -207,15 +210,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		501BF36B1C7EFB430052C59F /* curl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = curl.h; sourceTree = "<group>"; };
-		501BF36C1C7EFB430052C59F /* curlbuild.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = curlbuild.h; sourceTree = "<group>"; };
-		501BF3701C7EFB430052C59F /* curlrules.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = curlrules.h; sourceTree = "<group>"; };
-		501BF3711C7EFB430052C59F /* curlver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = curlver.h; sourceTree = "<group>"; };
-		501BF3721C7EFB430052C59F /* easy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = easy.h; sourceTree = "<group>"; };
-		501BF3761C7EFB430052C59F /* mprintf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mprintf.h; sourceTree = "<group>"; };
-		501BF3771C7EFB430052C59F /* multi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = multi.h; sourceTree = "<group>"; };
-		501BF3791C7EFB430052C59F /* stdcheaders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stdcheaders.h; sourceTree = "<group>"; };
-		501BF37A1C7EFB430052C59F /* typecheck-gcc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "typecheck-gcc.h"; sourceTree = "<group>"; };
 		501BF3821C7EFF460052C59F /* aes.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = aes.c; sourceTree = "<group>"; };
 		501BF3831C7EFF460052C59F /* aes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aes.h; sourceTree = "<group>"; };
 		501BF3841C7EFF460052C59F /* Android.mk */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Android.mk; sourceTree = "<group>"; };
@@ -623,6 +617,13 @@
 		50E967701CC4CC4B00E5BF26 /* UploadVerTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UploadVerTask.h; sourceTree = "<group>"; };
 		50E967711CC4CC4B00E5BF26 /* UseTryTicketTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UseTryTicketTask.cpp; sourceTree = "<group>"; };
 		50E967721CC4CC4B00E5BF26 /* UseTryTicketTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UseTryTicketTask.h; sourceTree = "<group>"; };
+		50ECE5FA1D06A9F500FAAC1F /* RequestMonthlyFeeController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RequestMonthlyFeeController.cpp; sourceTree = "<group>"; };
+		50ECE5FB1D06A9F500FAAC1F /* RequestMonthlyFeeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequestMonthlyFeeController.h; sourceTree = "<group>"; };
+		50ECE5FC1D06A9F500FAAC1F /* RequestMonthlyFeeDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequestMonthlyFeeDefine.h; sourceTree = "<group>"; };
+		50ECE5FE1D06AA2600FAAC1F /* RequestFakeController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RequestFakeController.cpp; sourceTree = "<group>"; };
+		50ECE5FF1D06AA2600FAAC1F /* RequestFakeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequestFakeController.h; sourceTree = "<group>"; };
+		50ECE6001D06AA2600FAAC1F /* RequestFakeDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequestFakeDefine.h; sourceTree = "<group>"; };
+		50ECE6021D06AA8F00FAAC1F /* CheckServerItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckServerItem.h; sourceTree = "<group>"; };
 		D14A7F3D1CF99A4A00135FA3 /* LCCustomItem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LCCustomItem.cpp; sourceTree = "<group>"; };
 		D14A7F3E1CF99A4A00135FA3 /* LCCustomItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCCustomItem.h; sourceTree = "<group>"; };
 		D16939391CE59724001D40E7 /* GetAllPaidThemeTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GetAllPaidThemeTask.cpp; sourceTree = "<group>"; };
@@ -641,6 +642,10 @@
 		D16939461CE59724001D40E7 /* RecvThemeRecommendTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecvThemeRecommendTask.h; sourceTree = "<group>"; };
 		D16939471CE59724001D40E7 /* UploadThemeListVerTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UploadThemeListVerTask.cpp; sourceTree = "<group>"; };
 		D16939481CE59724001D40E7 /* UploadThemeListVerTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UploadThemeListVerTask.h; sourceTree = "<group>"; };
+		D17487C31D18E1EA008AE3C2 /* RequestPaidController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RequestPaidController.cpp; sourceTree = "<group>"; };
+		D17487C41D18E1EA008AE3C2 /* RequestPaidController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequestPaidController.h; sourceTree = "<group>"; };
+		D17487C51D18E1EA008AE3C2 /* RequestPaidDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequestPaidDefine.h; sourceTree = "<group>"; };
+		D180B77A1D3CD25D00DCFBA5 /* DeviceTypeDef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceTypeDef.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -658,45 +663,12 @@
 			isa = PBXGroup;
 			children = (
 				504CDA2E1C7FDA4100DBB429 /* amf */,
-				504CDA201C7FDA2D00DBB429 /* xml */,
 				504CDA0B1C7FD6EE00DBB429 /* json */,
 				504CD9E41C7FD6AF00DBB429 /* libpng */,
+				504CDA201C7FDA2D00DBB429 /* xml */,
 				501BF3BA1C7F00400052C59F /* zip */,
-				501BF3671C7EFB430052C59F /* curl */,
 			);
 			path = "third-party";
-			sourceTree = "<group>";
-		};
-		501BF3671C7EFB430052C59F /* curl */ = {
-			isa = PBXGroup;
-			children = (
-				501BF3681C7EFB430052C59F /* include */,
-			);
-			path = curl;
-			sourceTree = "<group>";
-		};
-		501BF3681C7EFB430052C59F /* include */ = {
-			isa = PBXGroup;
-			children = (
-				501BF3691C7EFB430052C59F /* curl */,
-			);
-			path = include;
-			sourceTree = "<group>";
-		};
-		501BF3691C7EFB430052C59F /* curl */ = {
-			isa = PBXGroup;
-			children = (
-				501BF36B1C7EFB430052C59F /* curl.h */,
-				501BF36C1C7EFB430052C59F /* curlbuild.h */,
-				501BF3701C7EFB430052C59F /* curlrules.h */,
-				501BF3711C7EFB430052C59F /* curlver.h */,
-				501BF3721C7EFB430052C59F /* easy.h */,
-				501BF3761C7EFB430052C59F /* mprintf.h */,
-				501BF3771C7EFB430052C59F /* multi.h */,
-				501BF3791C7EFB430052C59F /* stdcheaders.h */,
-				501BF37A1C7EFB430052C59F /* typecheck-gcc.h */,
-			);
-			path = curl;
 			sourceTree = "<group>";
 		};
 		501BF3811C7EFF460052C59F /* common */ = {
@@ -976,6 +948,9 @@
 				504CDBB31C7FEB1500DBB429 /* RequestEMFDefine.h */,
 				504CDBB41C7FEB1500DBB429 /* RequestEnumDefine.cpp */,
 				504CDBB51C7FEB1500DBB429 /* RequestEnumDefine.h */,
+				50ECE5FE1D06AA2600FAAC1F /* RequestFakeController.cpp */,
+				50ECE5FF1D06AA2600FAAC1F /* RequestFakeController.h */,
+				50ECE6001D06AA2600FAAC1F /* RequestFakeDefine.h */,
 				504CDBB61C7FEB1500DBB429 /* RequestLadyController.cpp */,
 				504CDBB71C7FEB1500DBB429 /* RequestLadyController.h */,
 				504CDBB81C7FEB1500DBB429 /* RequestLadyDefine.h */,
@@ -985,9 +960,15 @@
 				504CDBBC1C7FEB1500DBB429 /* RequestLoveCallController.cpp */,
 				504CDBBD1C7FEB1500DBB429 /* RequestLoveCallController.h */,
 				504CDBBE1C7FEB1500DBB429 /* RequestLoveCallDefine.h */,
+				50ECE5FA1D06A9F500FAAC1F /* RequestMonthlyFeeController.cpp */,
+				50ECE5FB1D06A9F500FAAC1F /* RequestMonthlyFeeController.h */,
+				50ECE5FC1D06A9F500FAAC1F /* RequestMonthlyFeeDefine.h */,
 				504CDBBF1C7FEB1500DBB429 /* RequestOtherController.cpp */,
 				504CDBC01C7FEB1500DBB429 /* RequestOtherController.h */,
 				504CDBC11C7FEB1500DBB429 /* RequestOtherDefine.h */,
+				D17487C31D18E1EA008AE3C2 /* RequestPaidController.cpp */,
+				D17487C41D18E1EA008AE3C2 /* RequestPaidController.h */,
+				D17487C51D18E1EA008AE3C2 /* RequestPaidDefine.h */,
 				504CDBC21C7FEB1500DBB429 /* RequestProfileController.cpp */,
 				504CDBC31C7FEB1500DBB429 /* RequestProfileController.h */,
 				504CDBC41C7FEB1500DBB429 /* RequestProfileDefine.h */,
@@ -1012,6 +993,7 @@
 			isa = PBXGroup;
 			children = (
 				504CDB8E1C7FEB1500DBB429 /* Advert.h */,
+				50ECE6021D06AA8F00FAAC1F /* CheckServerItem.h */,
 				504CDB8F1C7FEB1500DBB429 /* Coupon.h */,
 				504CDB901C7FEB1500DBB429 /* EMF.h */,
 				504CDB911C7FEB1500DBB429 /* EMFError.h */,
@@ -1061,6 +1043,7 @@
 		505D868E1C7EF748006FDAC7 /* Common-C-Library */ = {
 			isa = PBXGroup;
 			children = (
+				D180B7791D3CD25D00DCFBA5 /* ProtocolCommon */,
 				501BF3811C7EFF460052C59F /* common */,
 				505D868F1C7EF748006FDAC7 /* Common_C_Library.h */,
 				505D86911C7EF748006FDAC7 /* Common_C_Library.mm */,
@@ -1273,6 +1256,15 @@
 			path = livehcat;
 			sourceTree = "<group>";
 		};
+		D180B7791D3CD25D00DCFBA5 /* ProtocolCommon */ = {
+			isa = PBXGroup;
+			children = (
+				D180B77A1D3CD25D00DCFBA5 /* DeviceTypeDef.h */,
+			);
+			name = ProtocolCommon;
+			path = "../../../../common-c-library/ProtocolCommon";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1314,6 +1306,18 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				da,
+				de,
+				English,
+				es,
+				fr,
+				it,
+				ja,
+				nl,
+				no,
+				sl,
+				sv,
+				tr,
 			);
 			mainGroup = 505D86831C7EF748006FDAC7;
 			productRefGroup = 505D868D1C7EF748006FDAC7 /* Products */;
@@ -1371,6 +1375,7 @@
 				50E967831CC4CC4B00E5BF26 /* GetUserStatusTask.cpp in Sources */,
 				504CDA2D1C7FDA2D00DBB429 /* xmltest.cpp in Sources */,
 				507FFA2A1C9FD76D0083EC06 /* CheckMemoryLeak.cpp in Sources */,
+				D17487C61D18E1EA008AE3C2 /* RequestPaidController.cpp in Sources */,
 				50E9678F1CC4CC4B00E5BF26 /* PlayVideoTask.cpp in Sources */,
 				50E967A71CC4CC4B00E5BF26 /* SendEmotionTask.cpp in Sources */,
 				504CDB761C7FE31500DBB429 /* LCVideoPhotoDownloader.cpp in Sources */,
@@ -1431,6 +1436,7 @@
 				504CDA021C7FD6AF00DBB429 /* pngrio.c in Sources */,
 				504CDB6A1C7FE31500DBB429 /* LCMessageItem.cpp in Sources */,
 				504CDBDA1C7FEB1500DBB429 /* RequestLoveCallController.cpp in Sources */,
+				50ECE6011D06AA2600FAAC1F /* RequestFakeController.cpp in Sources */,
 				504CDB781C7FE31500DBB429 /* LCVoiceManager.cpp in Sources */,
 				50E967871CC4CC4B00E5BF26 /* ISocketHandler.cpp in Sources */,
 				50E967811CC4CC4B00E5BF26 /* GetUserInfoTask.cpp in Sources */,
@@ -1442,6 +1448,7 @@
 				501BF3B61C7EFF460052C59F /* KThread.cpp in Sources */,
 				502D6FA61CA8D883000547F8 /* LadyDetail.cpp in Sources */,
 				50E967BA1CC4CC4B00E5BF26 /* UploadDeviceTypeTask.cpp in Sources */,
+				50ECE5FD1D06A9F500FAAC1F /* RequestMonthlyFeeController.cpp in Sources */,
 				50E967841CC4CC4B00E5BF26 /* GetVoiceCodeTask.cpp in Sources */,
 				504CDB6E1C7FE31500DBB429 /* LCSystemItem.cpp in Sources */,
 				50E967A01CC4CC4B00E5BF26 /* RecvVideoTask.cpp in Sources */,
@@ -1602,23 +1609,27 @@
 		505D86961C7EF748006FDAC7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COMMON_C_CURL_ROOT = "${SRCROOT}/third-party/curl";
+				COMMON_C_CURL_ROOT = "${SRCROOT}/Common-C-Library/third-party/curl/${PLATFORM_NAME}/";
+				COMMON_C_OPENSSL_ROOT = "${SRCROOT}/Common-C-Library/third-party/openssl/${PLATFORM_NAME}/";
 				COMMON_C_SRC_ROOT = "${SRCROOT}/../../../common-c-library";
 				COMMON_C_SRC_THIRD_PARTY_ROOT = "${COMMON_C_SRC_ROOT}/third_party";
 				GCC_INPUT_FILETYPE = automatic;
 				HEADER_SEARCH_PATHS = (
+					"${COMMON_C_OPENSSL_ROOT}/include",
 					"${COMMON_C_CURL_ROOT}/include",
 					"${COMMON_C_SRC_ROOT}",
 					"${COMMON_C_SRC_THIRD_PARTY_ROOT}",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"${COMMON_C_CURL_ROOT}/lib/${PLATFORM_NAME}/${NATIVE_ARCH}",
+					"${COMMON_C_CURL_ROOT}/lib",
+					"${COMMON_C_OPENSSL_ROOT}/lib",
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = (
 					"-DIOS",
 					"-fpermissive",
+					"-D_HTTPS_SUPPORT",
 					"-DPRINT_JNI_LOG",
 					"-DFILE_JNI_LOG",
 				);
@@ -1632,23 +1643,27 @@
 		505D86971C7EF748006FDAC7 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COMMON_C_CURL_ROOT = "${SRCROOT}/third-party/curl";
+				COMMON_C_CURL_ROOT = "${SRCROOT}/Common-C-Library/third-party/curl/${PLATFORM_NAME}/";
+				COMMON_C_OPENSSL_ROOT = "${SRCROOT}/Common-C-Library/third-party/openssl/${PLATFORM_NAME}/";
 				COMMON_C_SRC_ROOT = "${SRCROOT}/../../../common-c-library";
 				COMMON_C_SRC_THIRD_PARTY_ROOT = "${COMMON_C_SRC_ROOT}/third_party";
 				GCC_INPUT_FILETYPE = automatic;
 				HEADER_SEARCH_PATHS = (
+					"${COMMON_C_OPENSSL_ROOT}/include",
 					"${COMMON_C_CURL_ROOT}/include",
 					"${COMMON_C_SRC_ROOT}",
 					"${COMMON_C_SRC_THIRD_PARTY_ROOT}",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"${COMMON_C_CURL_ROOT}/lib/${PLATFORM_NAME}/${NATIVE_ARCH}",
+					"${COMMON_C_CURL_ROOT}/lib",
+					"${COMMON_C_OPENSSL_ROOT}/lib",
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = (
 					"-DIOS",
 					"-fpermissive",
+					"-D_HTTPS_SUPPORT",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";

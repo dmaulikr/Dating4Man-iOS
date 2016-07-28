@@ -13,6 +13,7 @@
 
 @property (nonatomic, weak) IBOutlet UIImageView *leftImageView;
 @property (nonatomic, weak) IBOutlet TTTAttributedLabel *detailLabel;
+@property (weak, nonatomic) IBOutlet UIView *bgView;
 
 + (NSString *)cellIdentifier;
 + (NSInteger)cellHeight:(CGFloat)width detailString:(NSAttributedString *)detailString;

@@ -24,6 +24,10 @@
     return self;
 }
 
+- (void)dealloc {
+    [self unInitCustomParam];
+}
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     NSString *nibNameOrNilReal = nibNameOrNil;
     
@@ -66,7 +70,7 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    
+    [self initCustomParam];
 }
 
 - (void)viewDidLoad {
@@ -110,7 +114,21 @@
 }
 
 #pragma mark － 界面布局
+- (NSString *)backTitle {
+    return self.navigationItem.backBarButtonItem.title;
+}
+
+- (void)setBackTitle:(NSString *)backTitle {
+    UINavigationItem *item = self.navigationItem;
+    UIBarButtonItem* barButtonItem = [[UIBarButtonItem alloc] initWithTitle:backTitle style:UIBarButtonItemStyleBordered target:self action:@selector(backAction:)];
+    item.backBarButtonItem = barButtonItem;
+}
+
 - (void)initCustomParam {
+    self.backTitle = NSLocalizedString(@"Back", nil);
+}
+
+- (void)unInitCustomParam {
     
 }
 
@@ -122,4 +140,6 @@
 
 }
 
+- (void)backAction:(id)sender {
+}
 @end

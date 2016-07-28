@@ -9,11 +9,12 @@
 #import "KKViewController.h"
 #import "MainViewController.h"
 #import "registerProfileObject.h"
+#import "GoogleAnalyticsViewController.h"
 
-@interface RegisterViewController : KKViewController
-@property (weak, nonatomic) IBOutlet UIImageView *choosePhotoImage;
+@interface RegisterViewController : GoogleAnalyticsViewController
+
 @property (nonatomic, weak) MainViewController* mainVC;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-
-
+@property (weak, nonatomic) IBOutlet UIButton *continueBtn;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *continueBtnBottom;
 @end

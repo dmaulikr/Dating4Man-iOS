@@ -15,12 +15,14 @@
 /** 辅助视图 */
 @property (weak, nonatomic) IBOutlet UILabel *accessoryLabel;
 
+@property (weak, nonatomic) IBOutlet UIButton *titleBtn;
 
+@property (weak, nonatomic) IBOutlet UIView *bgView;
 
 //标识符
 + (NSString *)cellIdentifier;
-//高度
-+ (NSInteger)cellHeight:(CGFloat)width detailString:(NSString *)detailString accessoryString:(NSString *)accessoryString;
+/* 高度 */
++ (NSInteger)cellHeight;
 //根据标识符生成
 + (id)getUITableViewCell:(UITableView *)tableView;
 @end

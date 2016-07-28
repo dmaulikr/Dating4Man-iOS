@@ -10,15 +10,19 @@
 
 #include <httpclient/HttpRequestDefine.h>
 
-#import "LoginItemObject.h"
-#import "SynConfigItemObject.h"
-#import "LadyRecentContactObject.h"
 #import "RequestErrorCode.h"
+
+#import "LoginItemObject.h"
 #import "RegisterItemObject.h"
-#import "QueryLadyListItemObject.h"
+
+#import "LadyRecentContactObject.h"
 #import "LadyDetailItemObject.h"
+#import "QueryLadyListItemObject.h"
 #import "VideoItemObject.h"
 #import "PersonalProfile.h"
+#import "SynConfigItemObject.h"
+#import "OtherGetCountItemObject.h"
+#import "CheckServerItemObject.h"
 
 @interface RequestManager : NSObject
 @property (nonatomic, strong) NSString* _Nonnull versionCode;
@@ -31,6 +35,13 @@
 + (instancetype _Nonnull)manager;
 
 #pragma mark - 公共模块
+/**
+ *  设置是否打印日志
+ *
+ *  @param enable <#enable description#>
+ */
+- (void)setLogEnable:(BOOL)enable;
+
 /**
  *  设置接口目录
  *
@@ -52,6 +63,14 @@
  *  @param appSite App接口服务器域名
  */
 - (void)setWebSite:(NSString * _Nonnull)webSite appSite:(NSString * _Nonnull)appSite;
+
+/**
+ *  设置假服务器域名
+ *
+ *  @param fakeSite 假服务器域名
+ */
+- (void)setFakeSite:(NSString * _Nonnull)fakeSite;
+
 /**
  *  获取Web服务器域名
  */
@@ -107,6 +126,27 @@
  *  @return 设备Id
  */
 - (NSString * _Nonnull)getDeviceId;
+
+#pragma mark - 真假服务器模块
+/**
+ *  获取服务器接口回调
+ *
+ *  @param success 成功失败
+ *  @param item    成功Item
+ *  @param errnum  错误码
+ *  @param errmsg  错误提示
+ */
+typedef void (^CheckServerFinishHandler)(BOOL success, CheckServerItemObject * _Nonnull item, NSString * _Nonnull errnum, NSString * _Nonnull errmsg);
+
+/**
+ *  获取服务器接口
+ *
+ *  @param user          用户
+ *  @param finishHandler 接口回调
+ *
+ *  @return 成功:请求Id/失败:无效Id
+ */
+- (NSInteger)checkServer:(NSString * _Nonnull)user finishHandler:(CheckServerFinishHandler _Nullable)finishHandler;
 
 #pragma mark - 登陆认证模块
 /**
@@ -365,7 +405,15 @@ typedef void(^removeFavouritesLadyFinishHandler)(BOOL success, NSString * _Nonnu
 
 - (NSInteger)removeFavouritesLadyWithWomanId:(NSString * _Nonnull)womanId finishHandler:(removeFavouritesLadyFinishHandler _Nullable)finishHandler;
 
-
+typedef void(^reportLadyFinishHandler)(BOOL success, NSString* _Nonnull errnum, NSString* _Nonnull errmsg);
+/**
+ *  举报女士
+ *
+ *  @param womanId 女士id
+ *
+ *  @return 成功:请求Id/失败:无效Id
+ */
+- (NSInteger)reportLady:(NSString* _Nonnull)womanId finishHandler:(reportLadyFinishHandler _Nullable)finishHandler;
 
 
 #pragma mark - online列表
@@ -381,6 +429,7 @@ typedef void (^onlineListFinishHandler)(BOOL success, NSMutableArray * _Nonnull 
                            ageRangeTo:(int)ageRangeTo
                               country:(NSString * _Nonnull)country
                               orderBy:(int)orderBy
+                           genderType:(LadyGenderType)genderType
                         finishHandler:(onlineListFinishHandler _Nullable)finishHandler;
 
 #pragma mark - 女士详细列表
@@ -400,5 +449,50 @@ typedef void (^LadyDetailFinishHandler)(BOOL success, LadyDetailItemObject * _No
 typedef void (^SynConfigFinishHandler)(BOOL success, SynConfigItemObject * _Nonnull item, NSString * _Nonnull errnum, NSString * _Nonnull errmsg);
 
 - (NSInteger)synConfig:(SynConfigFinishHandler _Nullable)finishHandler;
+
+/**
+ *  统计男士数据接口回调
+ *
+ *  @param success 成功失败
+ *  @param errnum  错误码
+ *  @param errmsg  错误提示
+ */
+typedef void (^GetCountFinishHandler)(BOOL success, OtherGetCountItemObject * _Nonnull item, NSString * _Nonnull errnum, NSString * _Nonnull errmsg);
+
+- (NSInteger)getCount:(GetCountFinishHandler _Nullable)finishHandler;
+
+/**
+ *  收集程序崩溃数据
+ *
+ *  @param success 成功失败
+ *  @param errnum  错误码
+ *  @param errmsg  错误提示
+ */
+typedef void (^UploadCrashLogFinishHandler)(BOOL success, NSString * _Nonnull errnum, NSString * _Nonnull errmsg);
+
+- (NSInteger)uploadCrashLogWithFile:(NSString * _Nonnull)srcDirectory tmpDirectory:(NSString * _Nonnull)tmpDirectory finishHandler:(UploadCrashLogFinishHandler _Nullable)finishHandler;
+
+#pragma mark - 支付
+/**
+ *  获取订单信息接口回调
+ *
+ *  @param success   成功失败
+ *  @param code      错误码
+ *  @param orderNo   订单号
+ *  @param productId 产品号
+ */
+typedef void (^GetPaymentOrderFinishHandler)(BOOL success, NSString* _Nonnull code, NSString* _Nonnull orderNo, NSString* _Nonnull productId);
+
+- (NSInteger)getPaymentOrder:(NSString* _Nonnull)manId sid:(NSString* _Nonnull)sid number:(NSString* _Nonnull)number finishHandler:(GetPaymentOrderFinishHandler _Nullable)finishHandler;
+
+/**
+ *  验证订单信息
+ *
+ *  @param success 成功失败
+ *  @param code    错误码
+ */
+typedef void (^CheckPaymentFinishHandler)(BOOL success, NSString* _Nonnull code);
+
+- (NSInteger)checkPayment:(NSString* _Nonnull)manId sid:(NSString* _Nonnull)sid receipt:(NSString* _Nonnull)receipt orderNo:(NSString* _Nonnull)orderNo finishHandler:(CheckPaymentFinishHandler _Nullable)finishHandler;
 
 @end

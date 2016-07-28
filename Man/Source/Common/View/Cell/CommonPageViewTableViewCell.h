@@ -13,7 +13,6 @@
 //@property (nonatomic, weak) IBOutlet UIImageView* onlineImageView;
 @property (weak, nonatomic) IBOutlet UIView *onlineView;
 @property (nonatomic, weak) IBOutlet PZPagingScrollView* pagingScrollView;
-@property (nonatomic, assign) NSInteger curIndex;
 
 + (NSString *)cellIdentifier;
 + (id)getUITableViewCell:(UITableView*)tableView;

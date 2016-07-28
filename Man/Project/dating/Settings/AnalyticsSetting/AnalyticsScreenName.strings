@@ -1,0 +1,20 @@
+/* 
+  AnalyticsScreenName.strings
+  dating
+
+  Created by  Samson on 6/29/16.
+  Copyright © 2016 qpidnetwork. All rights reserved.
+*/
+
+"MainViewController_0" = "Home.Overview";
+"MainViewController_1" = "Home.Home";
+"MainViewController_2" = "Home.Chatlist";
+"ChatViewController" = "LiveChat.Chat";
+"LadyDetailViewController" = "Lady.Detail";
+"LadyDetailPhototViewController" = "Lady.PhotoAlbum.NormalPhoto";
+"LoginViewController" = "Auth.Login";
+"AddCreditsViewController" = "BuyCredit";
+"AppSettingViewController" = "Setting.Main";
+"MyProfileViewController" = "MyProfile.Main";
+"RegisterViewController" = "Auth.Register";
+"RegisterSecondStepViewController" = "Auth.RegisterByEmail";

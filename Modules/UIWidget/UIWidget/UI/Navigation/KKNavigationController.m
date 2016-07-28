@@ -78,8 +78,6 @@
 }
 
 - (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
-    self.canReceiveTouch = NO;
-    
     // 改变KKNavigationControllerDelegate回调对象为最顶层界面
     self.kkDelegate = (id<KKNavigationControllerDelegate>) viewController;
     if(self.kkDelegate && [self.kkDelegate respondsToSelector:@selector(navigationController:willShowViewController:animated:)]){
@@ -119,15 +117,20 @@
         
         [backButton setTitle:title forState:UIControlStateNormal];
         [backButton setImage:self.customDefaultBackImage forState:UIControlStateNormal];
+        [backButton setTitleColor:[UIColor colorWithRed:179 / 255.0 green:179 / 255.0 blue:179 / 255.0 alpha:0.7] forState:UIControlStateHighlighted];
+        [backButton setImage:self.customDefaultBackHighlightImage forState:UIControlStateHighlighted];
+        backButton.contentEdgeInsets = UIEdgeInsetsMake(0, -10, 0, 0);
+        backButton.titleEdgeInsets = UIEdgeInsetsMake(0, -10, 0, 0);
         [backButton sizeToFit];
         [backButton addTarget:self action:@selector(backAction:) forControlEvents:UIControlEventTouchUpInside];
         
         UINavigationItem *item = viewController.navigationItem;
         UIBarButtonItem *leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
         item.leftBarButtonItem = leftBarButtonItem;
-        
     }
 
+    self.canReceiveTouch = NO;
+    
     [super pushViewController:viewController animated:animated];
 }
 
@@ -136,6 +139,7 @@
     self.kkDelegate = nil;
     UIViewController *uIViewController = [super popViewControllerAnimated:animated];
     [self removeGestureRecognizers:uIViewController];
+    
     return uIViewController;
 }
 
@@ -146,6 +150,7 @@
     for(UIViewController *uIViewController in array) {
         [self removeGestureRecognizers:uIViewController];
     }
+
     return array;
 }
 
@@ -155,6 +160,7 @@
     for(UIViewController *uIViewController in array) {
         [self removeGestureRecognizers:uIViewController];
     }
+
     return array;
 }
 

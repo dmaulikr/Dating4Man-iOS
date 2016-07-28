@@ -32,7 +32,7 @@
         self.statusWindow.backgroundColor = [UIColor blackColor];
         self.messageLabel = [[UILabel alloc] initWithFrame:_statusWindow.bounds];
         self.messageLabel.backgroundColor = [UIColor blackColor];
-        self.messageLabel.textAlignment = UITextAlignmentCenter;
+        self.messageLabel.textAlignment = NSTextAlignmentCenter;
         self.messageLabel.textColor = [UIColor whiteColor];
         self.messageLabel.font = [UIFont boldSystemFontOfSize:13.0];
         [self moveMessageOut:NO];

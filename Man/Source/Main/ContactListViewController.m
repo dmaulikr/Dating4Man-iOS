@@ -42,7 +42,7 @@
 /**
  *  数据列表
  */
-@property (nonatomic,strong) NSArray *items;
+@property (nonatomic,strong) NSArray<LadyRecentContactObject*> *items;
 
 /**
  *  LiveChat管理器
@@ -71,14 +71,13 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
-    [self.navLeftButton  addTarget:self.mainVC action:@selector(pageLeftAction:) forControlEvents:UIControlEventTouchUpInside];
-    
-    self.liveChatManager = [LiveChatManager manager];
-    self.contactManager = [ContactManager manager];
+    [self.navLeftButton addTarget:self.mainVC action:@selector(pageLeftAction:) forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    
+    [self reloadInviteCount];
     
     if ([self.navigationController.navigationBar respondsToSelector:@selector(setBackgroundImage:forBarMetrics:)]){
        //取出导航控制器的子控件
@@ -102,16 +101,19 @@
             }
         }
     }
-
-    [self.liveChatManager addDelegate:self];
-    [self.contactManager addDelegate:self];
-    
-    [self.contactManager getRecentContact];
-    
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
+    
+    if( self.contactBtn.isSelected ) {
+        // 刷新联系人
+        [self.contactManager getRecentContact];
+    } else {
+        // 刷新邀请
+        [self reloadInviteList];
+    }
+
 }
 
 - (void)didReceiveMemoryWarning {
@@ -121,15 +123,26 @@
 
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
-
-    [self.liveChatManager removeDelegate:self];
-    [self.contactManager removeDelegate:self];
-    
 }
 
 #pragma mark - 界面逻辑
 - (void)initCustomParam {
+    // 初始化父类参数
+    [super initCustomParam];
+    self.backTitle = NSLocalizedString(@"Home", nil);
+    
     self.sessionManager = [SessionRequestManager manager];
+    self.liveChatManager = [LiveChatManager manager];
+    [self.liveChatManager addDelegate:self];
+    
+    self.contactManager = [ContactManager manager];
+    [self.contactManager addDelegate:self];
+
+}
+
+- (void)unInitCustomParam {
+    [self.liveChatManager removeDelegate:self];
+    [self.contactManager removeDelegate:self];
 }
 
 - (void)setupNavigationBar {
@@ -142,7 +155,7 @@
     button = [UIButton buttonWithType:UIButtonTypeCustom];
     image = [UIImage imageNamed:@"Navigation-ChatList"];
     [button setImage:image forState:UIControlStateDisabled];
-    [button setTitle:@"Chat" forState:UIControlStateNormal];
+    [button setTitle:NSLocalizedString(@"Chat", nil) forState:UIControlStateNormal];
     [button sizeToFit];
     [button setEnabled:NO];
     self.navigationItem.titleView = button;
@@ -184,7 +197,7 @@
     buttonChatList.layer.masksToBounds = YES;
     UIImage *backgroundImage = [self createImageWithColor:self.navigationController.navigationBar.barTintColor];
     [buttonChatList setBackgroundImage:backgroundImage forState:UIControlStateSelected];
-    [buttonChatList setTitle:@"Chat List" forState:UIControlStateNormal];
+    [buttonChatList setTitle:NSLocalizedStringFromSelf(@"CHAT_LIST") forState:UIControlStateNormal];
     [buttonChatList setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
     [buttonChatList setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
     [buttonChatList addTarget:self action:@selector(getContactLadyList:) forControlEvents:UIControlEventTouchUpInside];
@@ -197,12 +210,12 @@
     buttonInvitation.layer.masksToBounds = YES;
     [buttonInvitation setTitleColor:self.navigationController.navigationBar.barTintColor forState:UIControlStateNormal];
     [buttonInvitation setBackgroundImage:backgroundImage forState:UIControlStateSelected];
-    [buttonInvitation setTitle:@"Invitation" forState:UIControlStateNormal];
+    [buttonInvitation setTitle:NSLocalizedStringFromSelf(@"INVITITATION") forState:UIControlStateNormal];
     [buttonInvitation setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
     [buttonInvitation setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
     [buttonInvitation addTarget:self action:@selector(getInvitationLadyList:) forControlEvents:UIControlEventTouchUpInside];
-    buttonChatList.tag = 1;
-
+    buttonInvitation.tag = 1;
+    
     [array addObject:buttonInvitation];
     
     self.kkButtonBar.isVertical = NO;
@@ -216,6 +229,8 @@
     // 默认选中第一项
     self.contactBtn.selected = YES;
     self.invitationBtn.selected = NO;
+    self.contactBtn.userInteractionEnabled = NO;
+    self.invitationBtn.userInteractionEnabled = YES;
 }
 
 - (void)setupTableView {
@@ -236,24 +251,33 @@
 
 #pragma mark - 数据逻辑
 - (void)reloadData:(BOOL)isReloadView {
-    self.tableView.items = self.items;
     
+    self.tableView.items = self.items;
+    if (self.items.count == 0) {
+        self.tipsNote.hidden = NO;
+    }else{
+        self.tipsNote.hidden = YES;
+    }
     if( isReloadView ){
         [self.tableView reloadData];
     }
 }
 
 - (void)reloadInviteList {
-    NSArray* array = [self.liveChatManager getInviteUsers];
-    NSMutableArray* items = [NSMutableArray array];
+    NSArray<LiveChatUserItemObject*>* array = [self.liveChatManager getInviteUsers];
+    NSMutableArray<LadyRecentContactObject*>* items = [NSMutableArray array];
     for(LiveChatUserItemObject* user in array) {
         LadyRecentContactObject* item = [[LadyRecentContactObject alloc] init];
         item.womanId = user.userId;
         item.firstname = user.userName;
-
-        // 获取女士详情
-//        [self getLadyDetail:item.womanId];
-        [self.liveChatManager getUserInfo:item.womanId];
+        
+        if ([user.imageUrl length] > 0) {
+            item.photoURL = user.imageUrl;
+        }
+        else {
+            // 获取女士详情
+            [self.liveChatManager getUserInfo:item.womanId];
+        }
         
         // 获取最后一条消息
         LiveChatMsgItemObject* msg = [self.liveChatManager getLastMsg:item.womanId];
@@ -268,11 +292,30 @@
     [self reloadData:YES];
 }
 
+- (void)reloadInviteCount{
+    self.inviteCount.layer.cornerRadius = self.inviteCount.frame.size.width * 0.5;
+    self.inviteCount.layer.masksToBounds = YES;
+//    [self.inviteCount setTitle:[NSString stringWithFormat:@"%ld",(unsigned long)array.count] forState:UIControlStateNormal];
+    NSArray<LiveChatUserItemObject*>* array = [self.liveChatManager getInviteUsers];
+    if (array.count > 0) {
+            self.inviteCount.hidden = NO;
+    }else{
+        self.inviteCount.hidden = YES;
+    }
+
+    NSInteger badge = MIN(array.count, 99);
+    NSString* title = badge > 0?[NSString stringWithFormat:@"%ld", (long)badge]:nil;
+    [self.inviteCount setTitle:title forState:UIControlStateDisabled];
+
+}
+
+
 - (void)getContactLadyList:(UIButton *)btn {
     // 点击联系人按钮
     self.contactBtn.selected = YES;
     self.invitationBtn.selected = NO;
-    
+    self.contactBtn.userInteractionEnabled = NO;
+    self.invitationBtn.userInteractionEnabled = YES;
     // 清空列表
     self.items = [NSArray array];
     [self reloadData:YES];
@@ -284,7 +327,9 @@
     // 点击邀请按钮
     self.invitationBtn.selected = YES;
     self.contactBtn.selected = NO;
-        
+    self.contactBtn.userInteractionEnabled = YES;
+    self.invitationBtn.userInteractionEnabled = NO;
+    self.tipsNote.text = NSLocalizedStringFromSelf(@"NO_CHAT_INVITATIONS");
     [self reloadInviteList];
 }
 
@@ -346,7 +391,7 @@
         emotionString = [findString substringWithRange:valueRange];
         
         // 创建表情
-        image = [UIImage imageNamed:[NSString stringWithFormat:@"e%@", emotionString]];
+        image = [UIImage imageNamed:[NSString stringWithFormat:@"img%@", emotionString]];
         attachment.image = image;
         attachment.text = emotionOriginalString;
         
@@ -367,7 +412,7 @@
     
 }
 
-#pragma mark - contactListTableView回调
+#pragma mark - ContactListTableView回调
 - (void)tableView:(ContactListTableView *)tableView didSelectContact:(LadyRecentContactObject *)item {
     ChatViewController *vc = [[ChatViewController alloc] initWithNibName:nil bundle:nil];
     vc.firstname = item.firstname;
@@ -377,24 +422,33 @@
     [self.navigationController pushViewController:vc animated:YES];
 }
 
-#pragma mark - 联系人管理器回调
+#pragma mark - ContactManager回调
 - (void)manager:(ContactManager * _Nonnull)manager onGetRecentContact:(BOOL)success items:(NSArray * _Nonnull)items errnum:(NSString * _Nonnull)errnum errmsg:(NSString * _Nonnull)errmsg {
-    NSLog(@"ContactListViewController::onGetRecentContact( 获取联系人列表回调 )");
     if( self.contactBtn.isSelected ) {
-        self.items = items;
-        [self reloadData:YES];
+//        NSLog(@"ContactListViewController::onGetRecentContact( 获取联系人列表回调, [联系人列表界面] )");
+        NSMutableArray<LadyRecentContactObject*>* itemsCopy = [NSMutableArray array];
+        for(LadyRecentContactObject* item in items) {
+            LadyRecentContactObject* user = [item copy];
+            
+            // 获取最后一条消息
+            LiveChatMsgItemObject* msg = [self.liveChatManager getLastMsg:item.womanId];
+            if( msg != nil && msg.msgType == LCMessageItem::MessageType::MT_Text && msg.textMsg ) {
+                user.lastInviteMessage = [self parseMessageTextEmotion:msg.textMsg.message font:[UIFont systemFontOfSize:15]];
+            }
+            
+            [itemsCopy addObject:user];
+        }
+        self.items = itemsCopy;
         
-//        for(LadyRecentContactObject* user in items) {
-//            // 获取女士详情
-//            //        [self getLadyDetail:item.womanId];
-//            [self.liveChatManager getUserInfo:user.womanId];
-//        }
+        self.tipsNote.text = NSLocalizedStringFromSelf(@"YOUR_CHAT_LIST_IS_EMPTY");
+        [self reloadData:YES];
+        [self.tableView finishPullDown:YES];
     }
 }
 
 - (void)onChangeRecentContactStatus:(ContactManager * _Nonnull)manager {
-    NSLog(@"ContactListViewController::onChangeRecentContactStatus( 联系人状态改变 )");
     if( self.contactBtn.isSelected ) {
+//        NSLog(@"ContactListViewController::onChangeRecentContactStatus( 联系人状态改变, [联系人列表界面] )");
         [self.contactManager getRecentContact];
     }
 }
@@ -402,8 +456,9 @@
 #pragma mark - LivechatManager回调
 - (void)onRecvTextMsg:(LiveChatMsgItemObject* _Nonnull)msg {
     dispatch_async(dispatch_get_main_queue(), ^{
-        NSLog(@"ContactListViewController::onRecvTextMsg( 接收文本消息回调 fromId : %@ )", msg.fromId);
+        [self reloadInviteCount];
         if( self.invitationBtn.isSelected ) {
+//            NSLog(@"ContactListViewController::onRecvTextMsg( 接收文本消息回调, [联系人列表界面], fromId : %@ )", msg.fromId);
             [self reloadInviteList];
         }
     });
@@ -411,18 +466,22 @@
 
 - (void)onGetUserInfo:(LCC_ERR_TYPE)errType errMsg:(NSString* _Nonnull)errMsg userId:(NSString* _Nonnull)userId userInfo:(LiveChatUserInfoItemObject* _Nullable)userInfo {
     dispatch_async(dispatch_get_main_queue(), ^{
-        NSLog(@"ContactListViewController::onGetUserInfo( 获取用户信息回调 userId : %@ )", userInfo.userId);
         if( self.invitationBtn.isSelected ) {
-            for(LadyRecentContactObject* contact in self.items) {
-                if( [userInfo.userId isEqualToString:contact.womanId] ) {
-                    contact.isOnline = (userInfo.status == USTATUS_ONLINE);
-                    contact.photoURL = userInfo.imgUrl;
-                    break;
+//            NSLog(@"ContactListViewController::onGetUserInfo( 获取用户信息回调, [邀请列表界面], userId : %@, errType : %d )", userInfo.userId, errType);
+            if( LCC_ERR_SUCCESS == errType ) {
+                for(LadyRecentContactObject* contact in self.items) {
+                    if( [userInfo.userId isEqualToString:contact.womanId] ) {
+                        // 邀请列表不显示在线状态
+    //                        contact.isOnline = (userInfo.status == USTATUS_ONLINE);
+                        contact.photoURL = userInfo.imgUrl;
+                        break;
+                    }
                 }
+                [self reloadData:YES];
+                
             }
-            [self reloadData:YES];
-            
         }
+
     });
 }
 

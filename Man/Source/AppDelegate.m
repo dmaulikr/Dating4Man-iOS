@@ -12,18 +12,24 @@
 #import "LoginManager.h"
 #import "LiveChatManager.h"
 #import "ContactManager.h"
+#import "PaymentManager.h"
+#import "CrashLogManager.h"
+#import "AnalyticsManager.h"
+#define errorLocal @"/Public/images/photo_unavailable.gif"
+
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
-    
+
     // 设置公共属性
     _demo = YES;
+    _debug = NO;
+    self.siteType = OTHER_SITE_UNKNOW;
     
     // 初始化Crash Log捕捉
-    _handler = NSGetUncaughtExceptionHandler();
-    NSSetUncaughtExceptionHandler(UncaughtExceptionHandler);
+    [CrashLogManager manager];
     
     // 状态栏白色
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
@@ -37,26 +43,37 @@
     
     // 设置导航默认返回键
     KKNavigationController *nvc = (KKNavigationController *)self.window.rootViewController;
-    nvc.customDefaultBackTitle = @"Back";
-    nvc.customDefaultBackImage = [UIImage imageNamed:@"Navigation-Back"];
+    [nvc.navigationBar setTintColor:[UIColor whiteColor]];
+//    nvc.customDefaultBackTitle = NSLocalizedString(@"Back", nil);
+//    nvc.customDefaultBackImage = [UIImage imageNamed:@"Navigation-Back"];
     
     // 设置接口管理类属性
     RequestManager* manager = [RequestManager manager];
+    [manager setLogEnable:YES];
     [manager setLogDirectory:[[FileCacheManager manager] requestLogPath]];
-    [manager setWebSite:@"http://demo.chnlove.com" appSite:@"http://demo-mobile.chnlove.com"];
-    if( _demo ) {
-        [manager setAuthorization:@"test" password:@"5179"];
-    }
     
+    // 设置接口请求环境
+    // 如果调试模式, 直接进入正式环境
+    [self setRequestHost:_debug];
+    
+    // 初始化跟踪管理器(默认为真实环境)
+    [[AnalyticsManager manager] initGoogleAnalytics:YES];
+
     // 初始化livechat
     [LiveChatManager manager];
     
-    // 初始化联系人
+    // 初始化联系人管理器
     [ContactManager manager];
+    
+    // 初始化支付管理器
+    [PaymentManager manager];
     
     // 自动登陆
     [[LoginManager manager] autoLogin];
-
+    
+    // 延长启动画面时间
+    usleep(1000 * 1000);
+    
     return YES;
 }
 
@@ -82,47 +99,40 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
-#pragma mark - Crash处理
-- (BOOL)logCrashToFile:(NSString *)errorString {
-    BOOL bFlag = NO;
+- (void)setRequestHost:(BOOL)formal {
+//    self.siteType = OTHER_SITE_CL;
+    self.siteType = OTHER_SITE_CD;
     
-    // Crash Log写入到文件
-    NSDate *curDate = [NSDate date];
-    NSString *fileName = [NSString stringWithFormat:@"%@.crash", [curDate toStringYMDHM], nil];
-    NSString *filePath = [[[FileCacheManager manager] crashLogPath] stringByAppendingPathComponent:fileName];
+    RequestManager* manager = [RequestManager manager];
     
-    bFlag = [errorString writeToFile:filePath atomically:YES encoding:NSUTF8StringEncoding error:nil];
-    if(bFlag) {
-        NSLog(@"AppDelegate::logCrashToFile( crash log has been save : %@ )", filePath);
+    if( formal ) {
+        // 真服务器环境
+        if( _demo ) {
+            // Demo环境
+            [manager setAuthorization:@"test" password:@"5179"];
+//            [manager setWebSite:@"http://demo.chnlove.com" appSite:@"http://demo-mobile.chnlove.com"];
+            [manager setWebSite:@"http://demo.charmdate.com" appSite:@"http://demo-mobile.charmdate.com"];
+
+        } else {
+            [manager setAuthorization:@"" password:@""];
+//            [manager setWebSite:@"http://www.chnlove.com" appSite:@"http://mobile.chnlove.com"];
+            [manager setWebSite:@"http://www.charmdate.com" appSite:@"http://mobile.charmdate.com"];
+        }
+        
+    } else {
+        // 配置假服务器路径
+        if( _demo ) {
+            [manager setAuthorization:@"test" password:@"5179"];
+            [manager setWebSite:@"http://demo-ios.qpidnetwork.com" appSite:@"http://demo-ios.qpidnetwork.com"];
+            [manager setFakeSite:@"http://demo-ios.qpidnetwork.com"];
+        } else {
+            [manager setWebSite:@"http://www.qdating.net" appSite:@"http://www.qdating.net"];
+            [manager setFakeSite:@"http://www.qdating.net"];
+        }
+
     }
-    return bFlag;
-}
+    
+    self.errorUrlConnect = [[manager getAppSite] stringByAppendingString:errorLocal];
 
-void UncaughtExceptionHandler(NSException *exception) {
-    // Objective-C 异常处理,BAD_ACCESS等错误不能捕捉
-    NSArray *stack = [exception callStackReturnAddresses];
-    NSArray *symbols = [exception callStackSymbols];
-    NSString *reason = [exception reason];
-    NSString *name = [exception name];
-    
-    NSMutableString *reportString = [NSMutableString string];
-    
-    // 设备
-    [reportString appendFormat:@"Name : %@\n", [[UIDevice currentDevice] name]];
-    [reportString appendFormat:@"Model : %@\n", [[UIDevice currentDevice] model]];
-    [reportString appendFormat:@"System : %@\n", [[UIDevice currentDevice] systemName]];
-    [reportString appendFormat:@"System-Version : %@\n", [[UIDevice currentDevice] systemVersion]];
-    [reportString appendFormat:@"UUID : %@\n", [[UIDevice currentDevice] identifierForVendor]];
-    
-    // 程序
-    [reportString appendFormat:@"CFBundleDisplayName : %@\n", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleDisplayName"]];
-    [reportString appendFormat:@"CFBundleVersion : %@\n", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]];
-    
-    // 原因
-    [reportString appendFormat:@"ExecptionName : %@\nReason : %@\n\nSymbols : %@\n\nStack : %@\n", name, reason, symbols, stack];
-    
-    // Crash Log写入到文件
-    [AppDelegate() logCrashToFile:reportString];
 }
-
 @end

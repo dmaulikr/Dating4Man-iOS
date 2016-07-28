@@ -24,6 +24,7 @@
 @property (nonatomic, retain) UIImage* customDefaultBackImage;
 @property (nonatomic, retain) NSString* customDefaultBackTitle;
 @property (atomic, assign) BOOL canReceiveTouch;
+@property (nonatomic,strong) UIImage* customDefaultBackHighlightImage;
 
 /**
  *  加入栈之前先添加手势

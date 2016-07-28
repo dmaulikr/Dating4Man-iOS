@@ -15,7 +15,7 @@
 }
 
 + (NSInteger)cellHeight {
-    return 56;
+    return 72;
 }
 
 + (id)getUITableViewCell:(UITableView*)tableView {
@@ -24,11 +24,16 @@
     if (nil == cell){
         NSArray *nib = [[NSBundle mainBundle] loadNibNamedWithFamily:[ContactListTableViewCell cellIdentifier] owner:tableView options:nil];
         cell = [nib objectAtIndex:0];
+        
+        cell.imageViewLoader = nil;
     }
     
     cell.ladyImageView.hidden = NO;
-    cell.ladyImageView.layer.cornerRadius = cell.ladyImageView.sizeWidth * 0.5;
+    cell.ladyImageView.layer.cornerRadius = cell.ladyImageView.frame.size.width * 0.5;
     cell.ladyImageView.layer.masksToBounds = YES;
+    
+    cell.onlineImageView.layer.cornerRadius = cell.onlineImageView.frame.size.width * 0.5;
+    cell.onlineImageView.layer.masksToBounds = YES;
     
     cell.onlineImageView.hidden = YES;
     cell.bookmarkImageView.hidden = YES;
@@ -58,28 +63,37 @@
     
     UIView *lastView = self.titleLabel;
     if( self.bookmarkImageView.hidden ) {
-        [self.bookmarkImageView mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.width.equalTo(@0);
-        }];
+        self.bookmarkImageViewWidth.constant = 0;
+        self.bookmarkImageViewLeading.constant = 0;
+//        [self.bookmarkImageView mas_updateConstraints:^(MASConstraintMaker *make) {
+//            make.width.equalTo(@0);
+//        }];
         
     } else {
-        [self.bookmarkImageView mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.width.equalTo(@15);
-            make.left.equalTo(lastView.mas_right).with.offset(10);
-        }];
         lastView = self.bookmarkImageView;
+        self.bookmarkImageViewWidth.constant = 15;
+        self.bookmarkImageViewLeading.constant = 10;
+//        [self.bookmarkImageView mas_updateConstraints:^(MASConstraintMaker *make) {
+//            make.width.equalTo(@15);
+//            make.left.equalTo(lastView.mas_right).with.offset(10);
+//        }];
+
     }
     
     if( self.inchatImageView.hidden ) {
-        [self.inchatImageView mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.width.equalTo(@0);
-        }];
+        self.inchatImageViewWidth.constant = 0;
+        self.inchatImageViewLeading.constant = 0;
+//        [self.inchatImageView mas_updateConstraints:^(MASConstraintMaker *make) {
+//            make.width.equalTo(@0);
+//        }];
         
     } else {
-        [self.inchatImageView mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.width.equalTo(@15);
-            make.left.equalTo(lastView.mas_right).with.offset(10);
-        }];
+        self.inchatImageViewWidth.constant = 15;
+        self.inchatImageViewLeading.constant = 10;
+//        [self.inchatImageView mas_updateConstraints:^(MASConstraintMaker *make) {
+//            make.width.equalTo(@15);
+//            make.left.equalTo(lastView.mas_right).with.offset(10);
+//        }];
 
     }
 }

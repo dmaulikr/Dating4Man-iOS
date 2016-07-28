@@ -9,12 +9,5 @@
 #import "SessionRequest.h"
 
 @interface GetPersonProfileRequest : SessionRequest
-
-
 @property (nonatomic, strong) getMyProfileFinishHandler _Nullable finishHandler;
-
-- (BOOL)sendRequest;
-
-- (void)callRespond:(NSString* _Nullable)errnum errmsg:(NSString* _Nullable)errmsg;
-
 @end

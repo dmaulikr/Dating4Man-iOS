@@ -7,14 +7,49 @@
 //
 
 #import "KKViewController.h"
+#import "GoogleAnalyticsViewController.h"
+
 @class QueryLadyListItemObject;
+@interface LadyDetailViewController : GoogleAnalyticsViewController
 
-@interface LadyDetailViewController : KKViewController
-
+/**
+ *  附件相册
+ */
 @property (nonatomic, weak) IBOutlet PZPagingScrollView* pagingScrollView;
+/**
+ *  详情分栏
+ */
 @property (nonatomic, weak) IBOutlet UITableView* tableView;
-/** 女士模型数据 */
-@property (nonatomic,strong) QueryLadyListItemObject *itemObject;
+/**
+ *  收藏按钮
+ */
+@property (weak, nonatomic) IBOutlet UIButton *addFavouriesBtn;
+
+/**
+ *  女士列表Item
+ */
+@property (nonatomic, strong) NSString *womanId;
+
+/**
+ *  菊花
+ */
+@property (weak, nonatomic) IBOutlet UIView *loadingView;
+
+/** 女士图片大图 */
+@property (nonatomic,strong) UIImageView *ladyImageView;
+
+/**
+ *  聊天按钮
+ */
+@property (weak, nonatomic) IBOutlet UIButton *chatBtn;
+
+/** 女士列表头像 */
+@property (nonatomic,strong) NSString *ladyListImageUrl;
+
+/**
+ *  聊天按钮是否直接返回
+ */
+@property (nonatomic) BOOL backToChat;
 
 /**
  *  点击举报

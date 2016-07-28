@@ -29,10 +29,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    
-    self.manager = [LoginManager manager];
-    [self.manager addDelegate:self];
-
  
     _orgFrame = CGRectZero;
     _newFrame = CGRectZero;
@@ -40,17 +36,19 @@
     self.emailTextField.text = self.manager.email;
     self.passwordTextField.text = self.manager.password;
 
-//    self.emailTextField.text = @"CM46528572";
-//    self.passwordTextField.text = @"123456";
-    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+
+    self.navigationController.navigationBar.hidden = YES;
     
     // 添加键盘事件
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+    
+    // 隐藏验证码
+    [self hideCheckCode];
     
     // 判断是否登陆中
     switch (self.manager.status) {
@@ -63,7 +61,8 @@
         case LOGINING:{
             // 登陆中
             self.loadingView.hidden = NO;
-            
+            self.emailTextField.text = self.manager.lastInputEmail;
+            self.passwordTextField.text = self.manager.lastInputPassword;
         }break;
         case LOGINED:{
             // 已经登陆
@@ -84,7 +83,6 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-
 }
 
 - (void)didReceiveMemoryWarning {
@@ -114,17 +112,34 @@
     
 }
 
+
+
 #pragma mark - 界面逻辑
+- (void)initCustomParam {
+    [super initCustomParam];
+    self.backTitle = NSLocalizedString(@"Login", nil);
+    
+    self.manager = [LoginManager manager];
+    [self.manager addDelegate:self];
+}
+
+- (void)unInitCustomParam {
+    [self.manager removeDelegate:self];
+}
+
 - (void)setupNavigationBar {
     [super setupNavigationBar];
     
-    NSString *title = @"QDate";
-    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-    titleLabel.backgroundColor = [UIColor clearColor];
-    titleLabel.textColor = [UIColor whiteColor];
-    titleLabel.text = title;
-    [titleLabel sizeToFit];
-    self.navigationItem.titleView = titleLabel;
+    // 标题
+    UIButton* button = nil;
+    UIImage* image = nil;
+    button = [UIButton buttonWithType:UIButtonTypeCustom];
+    image = [UIImage imageNamed:@"Navigation-Qpid"];
+    [button setImage:image forState:UIControlStateDisabled];
+    [button setTitle:NSLocalizedString(@"QDating", nil) forState:UIControlStateNormal];
+    [button sizeToFit];
+    [button setEnabled:NO];
+    self.navigationItem.titleView = button;
     
 }
 
@@ -140,6 +155,10 @@
     // 初始化输入框
     self.inputView.layer.cornerRadius = 5.0f;
     self.inputView.layer.masksToBounds = YES;
+    
+    // 初始化注册按钮
+    self.signUpButton.layer.cornerRadius = 5.0f;
+    self.signUpButton.layer.masksToBounds = YES;
     
 }
 
@@ -159,8 +178,7 @@
     // 默认图片
     [self.checkcodeImageView setImage:nil];
 
-    // 隐藏验证码
-    [self hideCheckCode];
+
 
 }
 
@@ -168,11 +186,37 @@
     // 收起键盘
     [self closeKeyBoard];
     
-    if( [self.manager login:self.emailTextField.text password:self.passwordTextField.text checkcode:self.checkcodeTextField.text] ) {
+    
+    NSString *tipsEmail = NSLocalizedStringFromSelf(@"Tips_RegisterMessage_Email");
+    NSString *tipsPassword = NSLocalizedStringFromSelf(@"Tips_RegisterMessage_Password");
+    NSString *confirm = NSLocalizedStringFromSelf(@"OK");
+    
+    if (self.emailTextField.text.length == 0 ) {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:tipsEmail delegate:self cancelButtonTitle:confirm otherButtonTitles:nil, nil];
+        [alertView show];
+        return;
+        
+    }
+    if (self.passwordTextField.text.length == 0) {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:tipsPassword delegate:self cancelButtonTitle:confirm otherButtonTitles:nil, nil];
+        [alertView show];
+        return;
+    }
+    
+    
+    
+    if( [self.manager login:self.emailTextField.text password:self.passwordTextField.text checkcode:self.checkcodeTextField.text] == LOGINING ) {
         // 开始登陆
         self.loadingView.hidden = NO;
     }
     
+    if( self.manager.status == LOGINED ) {
+        // 已经登陆
+        KKNavigationController *nvc = (KKNavigationController* )self.navigationController;
+        [nvc dismissViewControllerAnimated:YES completion:nil];
+//        [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+        return;
+    }
 }
 
 - (IBAction)signupAccount:(id)sender {
@@ -189,27 +233,38 @@
 }
 
 - (void)closeKeyBoard {
+    [self.emailTextField endEditing:YES];
     [self.emailTextField resignFirstResponder];
+    [self.passwordTextField endEditing:YES];
     [self.passwordTextField resignFirstResponder];
+    [self.checkcodeTextField endEditing:YES];
     [self.checkcodeTextField resignFirstResponder];
 }
 
 - (void)hideCheckCode {
-    for(NSLayoutConstraint* lc in self.checkCodeView.constraints) {
-        if( [lc.identifier isEqualToString:@"secureCodeHight"] ) {
-            lc.constant = 0;
-            break;
-        }
-    }
+    self.checkCodeHight.constant = 0;
+    self.inputViewHeight.constant = 150;
+//    self.separated2.hidden = YES;
+    self.separatedHeight.constant = 0;
+//    for(NSLayoutConstraint* lc in self.checkCodeView.constraints) {
+//        if( [lc.identifier isEqualToString:@"secureCodeHight"] ) {
+//            lc.constant = 0;
+//            break;
+//        }
+//    }
 }
 
 - (void)showCheckCode {
-    for(NSLayoutConstraint* lc in self.checkCodeView.constraints) {
-        if( [lc.identifier isEqualToString:@"secureCodeHight"] ) {
-            lc.constant = 50;
-            break;
-        }
-    }
+    self.checkCodeHight.constant = 50;
+    self.inputViewHeight.constant = 200;
+//    self.separated2.hidden = NO;
+    self.separatedHeight.constant = 1;
+//    for(NSLayoutConstraint* lc in self.checkCodeView.constraints) {
+//        if( [lc.identifier isEqualToString:@"secureCodeHight"] ) {
+//            lc.constant = 50;
+//            break;
+//        }
+//    }
 }
 
 #pragma mark - 数据逻辑
@@ -224,6 +279,10 @@
                     // 有验证码, 不能自动登陆
                     [self.checkcodeImageView setImage:image];
                     [self showCheckCode];
+                } else {
+                    // 无验证码
+                    [self hideCheckCode];
+    
                 }
 
             } else {
@@ -233,6 +292,13 @@
         });
     }];
 }
+
+
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+    [self.view endEditing:YES];
+}
+
+
 
 #pragma mark - 输入回调
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
@@ -252,19 +318,38 @@
     return YES;
 }
 
-#pragma mark - 处理键盘回调
-- (void)moveInputBarWithKeyboardHeight:(CGFloat)height withDuration:(NSTimeInterval)duration {
-    [UIView animateWithDuration:duration animations:^{
-        if(height > 0) {
-            // 弹出键盘
-            _newFrame = CGRectMake(_orgFrame.origin.x, _orgFrame.origin.y - height, _orgFrame.size.width, _orgFrame.size.height);
-            self.inputView.frame = _newFrame;
-            
-        } else {
-            self.inputView.frame = _orgFrame;
-            _newFrame = CGRectZero;
-            
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
+    if (textField == self.checkcodeTextField) {
+        if (range.location >= 4) {
+            return NO;
         }
+    }
+
+    return YES;
+}
+
+
+
+#pragma mark - 处理键盘回调
+- (void)moveInputBarWithKeyboardHeight:(CGFloat)height withDuration:(NSTimeInterval)duration {    
+    // Ensures that all pending layout operations have been completed
+    [self.view layoutIfNeeded];
+    
+    if(height != 0) {
+        // 弹出键盘
+        self.inputViewBottom.constant = -height + self.signUpButton.frame.size.height;
+        
+    } else {
+        // 收起键盘
+        self.inputViewBottom.constant = -10;
+        
+    }
+    
+    [UIView animateWithDuration:duration animations:^{
+        // Make all constraint changes here, Called on parent view
+        [self.view layoutIfNeeded];
+        
     } completion:^(BOOL finished) {
 
     }];
@@ -299,21 +384,39 @@
 
 #pragma mark - 登陆管理器回调 (LoginManagerDelegate)
 - (void)manager:(LoginManager *)manager onLogin:(BOOL)success loginItem:(LoginItemObject *)loginItem errnum:(NSString *)errnum errmsg:(NSString *)errmsg {
-    NSLog(@"LoginViewController::onLogin( success : %d )", success);
-    self.loadingView.hidden = YES;
-    if( success ) {
-        // 登陆成功
-        [self.navigationController dismissViewControllerAnimated:YES completion:nil];
-        
-    } else {
-        // 登陆失败
-        
-    }
+    dispatch_async(dispatch_get_main_queue(), ^{
+        NSLog(@"LoginViewController::onLogin( success : %d )", success);
+        self.loadingView.hidden = YES;
+        if( success ) {
+            // 登陆成功
+            KKNavigationController *nvc = (KKNavigationController* )self.navigationController;
+            [nvc dismissViewControllerAnimated:YES completion:nil];
+            
+        } else {
+            // 登陆失败
+            if( [errnum isEqualToString:CHECKCODE_EMPTY] || [errnum isEqualToString:CHECKCODE_ERROR] ) {
+                // 验证码为空/验证码无效
+                // 重新获取验证码
+                [self getCheckCode];
+            }
+            
+            // 弹出提示
+            if( errmsg.length > 0 ) {
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:errmsg delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles: nil];
+                [alertView show];
+            }
+
+        }
+    });
 }
 
 
-- (void)manager:(LoginManager * _Nonnull)manager onLogout:(BOOL)timeout {
-    NSLog(@"LoginViewController::onLogout( timeout : %d )", timeout);
+
+
+- (void)manager:(LoginManager * _Nonnull)manager onLogout:(BOOL)kick {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        NSLog(@"LoginViewController::onLogout( kick : %d )", kick);
+    });
 }
 
 /*

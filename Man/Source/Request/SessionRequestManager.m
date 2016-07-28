@@ -71,34 +71,37 @@ static SessionRequestManager* gManager = nil;
 #pragma mark - 登陆回调处理
 - (void)manager:(LoginManager * _Nonnull)manager onLogin:(BOOL)success loginItem:(LoginItemObject * _Nullable)loginItem errnum:(NSString * _Nonnull)errnum errmsg:(NSString * _Nonnull)errmsg {
     
-    @synchronized(self.array) {
-        if( success ) {
-            // 重新发送请求
-            for(SessionRequest* request in self.array) {
-                if( request ) {
-                    [request sendRequest];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        @synchronized(self.array) {
+            if( success ) {
+                // 重新发送请求
+                for(SessionRequest* request in self.array) {
+                    if( request ) {
+                        [request sendRequest];
+                    }
                 }
+                
+            } else {
+                // 回调失败
+                for(SessionRequest* request in self.array) {
+                    if( request ) {
+                        [request callRespond:success errnum:errnum errmsg:errmsg];
+                    }
+                }
+                
             }
             
-        } else {
-            // 回调失败
-            for(SessionRequest* request in self.array) {
-                if( request ) {
-                    [request callRespond:success errnum:errnum errmsg:errmsg];
-                }
-            }
-            
-        }
-        
-        // 清空所有请求
-        [self.array removeAllObjects];
+            // 清空所有请求
+            [self.array removeAllObjects];
 
-    }
+        }
+    });
     
 }
 
 - (void)manager:(LoginManager * _Nonnull)manager onLogout:(BOOL)timeout {
-    
+    dispatch_async(dispatch_get_main_queue(), ^{
+    });
 }
 
 @end

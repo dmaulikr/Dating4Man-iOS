@@ -15,6 +15,7 @@
 @property (assign, nonatomic) IBOutlet id<PZPagingScrollViewDelegate>pagingViewDelegate;
 @property (readonly) UIView *visiblePageView;
 @property (assign) BOOL suspendTiling;
+@property (assign, readonly) NSUInteger currentPagingIndex;
 
 - (void)displayPagingViewAtIndex:(NSUInteger)index animated:(BOOL)animated;
 - (void)resetDisplay;

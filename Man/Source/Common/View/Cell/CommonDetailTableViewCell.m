@@ -28,6 +28,20 @@
     return height;
 }
 
++ (NSInteger)cellHeight:(CGFloat)width detailAttributedString:(NSAttributedString *)detailString {
+    NSInteger height = 5;
+    
+    if(detailString.length > 0) {
+        CGRect rect = [detailString boundingRectWithSize:CGSizeMake(width - 20, MAXFLOAT)
+                                                 options:(NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading) context:nil];
+        height += ceil(rect.size.height);
+
+    }
+    height += 5;
+    
+    return height;
+}
+
 + (id)getUITableViewCell:(UITableView*)tableView {
     CommonDetailTableViewCell *cell = (CommonDetailTableViewCell *)[tableView dequeueReusableCellWithIdentifier:[CommonDetailTableViewCell cellIdentifier]];
     

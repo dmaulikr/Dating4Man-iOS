@@ -12,6 +12,8 @@
 
 /** 消息内容 */
 @property (nonatomic,strong) NSString* message;
+/** 用于显示的消息内容 */
+@property (nonatomic,strong) NSString* displayMsg;
 /** 内容是否非法 */
 @property (nonatomic,assign) BOOL illegal;
 

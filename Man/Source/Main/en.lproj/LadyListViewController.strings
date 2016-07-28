@@ -1,0 +1,37 @@
+
+/* Class = "UILabel"; text = "min"; ObjectID = "0O4-6F-4IP"; */
+"0O4-6F-4IP.text" = "min";
+
+/* Class = "UILabel"; text = "-"; ObjectID = "2v7-Ke-p6f"; */
+"2v7-Ke-p6f.text" = "-";
+
+/* Class = "UIButton"; normalTitle = "Search"; ObjectID = "3A4-Kz-MC2"; */
+"3A4-Kz-MC2.normalTitle" = "Search";
+
+/* Class = "UILabel"; text = "max"; ObjectID = "4S0-vt-TYy"; */
+"4S0-vt-TYy.text" = "max";
+
+/* Class = "UILabel"; text = "Online"; ObjectID = "67l-AE-YL8"; */
+"67l-AE-YL8.text" = "Online";
+
+/* Class = "UIButton"; highlightedTitle = "Chat Now"; ObjectID = "L5v-K3-FiE"; */
+"L5v-K3-FiE.highlightedTitle" = "Chat Now";
+
+/* Class = "UIButton"; normalTitle = "Chat Now"; ObjectID = "L5v-K3-FiE"; */
+"L5v-K3-FiE.normalTitle" = "Chat Now";
+
+/* Class = "UILabel"; text = "Gender"; ObjectID = "LUB-Tg-D7E"; */
+"LUB-Tg-D7E.text" = "Gender";
+
+/* Class = "UILabel"; text = "Age between"; ObjectID = "ZgP-aP-1H7"; */
+"ZgP-aP-1H7.text" = "Age between";
+
+/* Class = "UISegmentedControl"; iFP-Fp-Qpg.segmentTitles[0] = "First"; ObjectID = "iFP-Fp-Qpg"; */
+"iFP-Fp-Qpg.segmentTitles[0]" = "First";
+
+/* Class = "UISegmentedControl"; iFP-Fp-Qpg.segmentTitles[1] = "Second"; ObjectID = "iFP-Fp-Qpg"; */
+"iFP-Fp-Qpg.segmentTitles[1]" = "Second";
+
+"Both" = "Both";
+"Female" = "Female";
+"Male" = "Male";

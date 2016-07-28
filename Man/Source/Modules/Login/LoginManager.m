@@ -9,6 +9,8 @@
 #import "LoginManager.h"
 #import "RequestManager.h"
 #import "ConfigManager.h"
+#import "ServerManager.h"
+
 
 static LoginManager* gManager = nil;
 
@@ -31,6 +33,7 @@ static LoginManager* gManager = nil;
 - (id)init {
     if( self = [super init] ) {
         _status = NONE;
+
         self.delegates = [NSMutableArray array];
         self.isAutoLogin = NO;
         
@@ -49,21 +52,26 @@ static LoginManager* gManager = nil;
 
 - (void)addDelegate:(id<LoginManagerDelegate>)delegate {
     @synchronized(self.delegates) {
-        [self.delegates addObject:delegate];
+        [self.delegates addObject:[NSValue valueWithNonretainedObject:delegate]];
     }
 }
 
 - (void)removeDelegate:(id<LoginManagerDelegate>)delegate {
     @synchronized(self.delegates) {
-        [self.delegates removeObject:delegate];
+        for(NSValue* value in self.delegates) {
+            id<LoginManagerDelegate> item = (id<LoginManagerDelegate>)value.nonretainedObjectValue;
+            if( item == delegate ) {
+                [self.delegates removeObject:value];
+                break;
+            }
+        }
     }
 }
 
-- (BOOL)login:(NSString *)user password:(NSString *)password checkcode:(NSString *)checkcode {
-    // 因为同步配置可能异步, 所以声明为block
-    __block BOOL bFlag = YES;
-    
+- (LoginStatus)login:(NSString *)user password:(NSString *)password checkcode:(NSString *)checkcode {
     RequestManager* manager = [RequestManager manager];
+    _lastInputEmail = user;
+    _lastInputPassword = password;
     
     switch (self.status) {
         case NONE:{
@@ -72,70 +80,78 @@ static LoginManager* gManager = nil;
             // 停止所有请求
             [manager stopAllRequest];
             
-            // 重新登陆
+            // 用户名和密码
             if( user && user.length > 0 && password && password.length > 0 ) {
+                // 进入登陆状态
                 @synchronized(self) {
-                    // 进入登陆状态
                     _status = LOGINING;
                 }
                 
-                // 先同步配置
-                bFlag = [[ConfigManager manager] synConfig:^(BOOL success, SynConfigItemObject * _Nonnull item, NSString * _Nonnull errnum, NSString * _Nonnull errmsg) {
-                    // 同步配置成功
-                    if( success ) {
-                        if( HTTPREQUEST_INVALIDREQUESTID != [manager login:user password:password checkcode:checkcode?checkcode:@"" finishHandler:^(BOOL success, LoginItemObject * _Nonnull item, NSString * _Nonnull errnum, NSString * _Nonnull errmsg) {
-                            // 登陆接口回调
+                // 登陆回调
+                LoginFinishHandler loginFinishHandler = ^(BOOL success, LoginItemObject * _Nonnull item, NSString * _Nonnull errnum, NSString * _Nonnull errmsg) {
+                    @synchronized(self) {
+                        if( success ) {
+                            // 登陆成功
+                            _status = LOGINED;
                             
-                            @synchronized(self) {
-                                if( success ) {
-                                    // 登陆成功
-                                    _status = LOGINED;
-                                    
-                                    _email = user;
-                                    _password = password;
-                                    _loginItem = item;
-                                    
-                                    // 标记可以自动重登陆
-                                    self.isAutoLogin = YES;
-                                    
-                                    // 保存用户信息
-                                    [self saveLoginParam];
-                                    
-                                } else {
-                                    // TODO:登陆失败
-                                    _status = NONE;
-                                    
-                                }
-                            }
-
-                            __block BOOL blockSuccess = success;
-                            __block NSString* blockErrnum = errnum;
-                            __block NSString* blockErrmsg = errmsg;
+                            _email = user;
+                            _password = password;
+                            _loginItem = item;
                             
-                            // 主线程回调
-                            dispatch_async(dispatch_get_main_queue(), ^{
-                                @synchronized(self.delegates) {
-                                    for(id<LoginManagerDelegate> delegate in self.delegates) {
-                                        if( [delegate respondsToSelector:@selector(manager:onLogin:loginItem:errnum:errmsg:)] ) {
-                                            [delegate manager:self onLogin:blockSuccess loginItem:self.loginItem errnum:blockErrnum errmsg:blockErrmsg];
-                                        }
-                                    }
-                                }
-                            });
+                            // 标记可以自动重登陆
+                            self.isAutoLogin = YES;
                             
-                        }] ) {
-                            // 开启登陆请求成功
-                            bFlag = YES;
-                            
-                            @synchronized(self) {
-                                // 进入登陆状态
-                                _status = LOGINING;
-                            }
+                            // 保存用户信息
+                            [self saveLoginParam];
                             
                         } else {
-                            // 开启登陆请求失败
-                            bFlag = NO;
+                            // 登陆失败
+                            _status = NONE;
+                            
                         }
+                        
+                    }
+                    
+                    __block BOOL blockSuccess = success;
+                    __block NSString* blockErrnum = errnum;
+                    __block NSString* blockErrmsg = errmsg;
+                    
+                    // 回调
+                    [self callbackLoginStatus:blockSuccess errnum:blockErrnum errmsg:blockErrmsg];
+                    
+                };
+                // 同步配置回调
+                SynConfigFinishHandler synConfigFinishHandler = ^(BOOL success, SynConfigItemObject * _Nonnull item, NSString * _Nonnull errnum, NSString * _Nonnull errmsg) {
+                    if( success ) {
+                        if( HTTPREQUEST_INVALIDREQUESTID != [manager login:user password:password checkcode:checkcode?checkcode:@"" finishHandler:loginFinishHandler] ) {
+                            // TODO:3.开始登陆
+                        } else {
+                            // 开始登陆失败
+                            // 主线程回调
+                            [self callbackLoginStatus:NO errnum:@"Unknow error" errmsg:@"Unknow error"];
+                        }
+                    } else {
+                        // 同步配置失败, 导致登陆失败
+                        __block BOOL blockSuccess = success;
+                        __block NSString* blockErrnum = errnum;
+                        __block NSString* blockErrmsg = errmsg;
+                        
+                        @synchronized(self) {
+                            // 进入未登陆状态
+                            _status = NONE;
+                        }
+                        
+                        // 主线程回调
+                        [self callbackLoginStatus:blockSuccess errnum:blockErrnum errmsg:blockErrmsg];
+
+                    }
+
+                };
+                // 获取服务器回调
+                CheckServerFinishHandler checkServerFinishHandler = ^(BOOL success, CheckServerItemObject * _Nonnull item, NSString * _Nonnull errnum, NSString * _Nonnull errmsg) {
+                    if( success ) {
+                        // TODO:2.开始同步配置
+                        [[ConfigManager manager] synConfig:synConfigFinishHandler];
                         
                     } else {
                         // 同步配置失败, 导致登陆失败
@@ -143,48 +159,49 @@ static LoginManager* gManager = nil;
                         __block NSString* blockErrnum = errnum;
                         __block NSString* blockErrmsg = errmsg;
                         
+                        @synchronized(self) {
+                            // 进入未登陆状态
+                            _status = NONE;
+                        }
+                        
                         // 主线程回调
-                        dispatch_async(dispatch_get_main_queue(), ^{
-                            @synchronized(self.delegates) {
-                                for(id<LoginManagerDelegate> delegate in self.delegates) {
-                                    if( [delegate respondsToSelector:@selector(manager:onLogin:loginItem:errnum:errmsg:)] ) {
-                                        [delegate manager:self onLogin:blockSuccess loginItem:self.loginItem errnum:blockErrnum errmsg:blockErrmsg];
-                                    }
-                                }
-                            }
-                        });
+                        [self callbackLoginStatus:blockSuccess errnum:blockErrnum errmsg:blockErrmsg];
                     }
-                }];
+
+                };
                 
-                // 开启同步配置请求成功
-                if( bFlag ) {
-                    @synchronized(self) {
-                        // 进入登陆状态
-                        _status = LOGINING;
-                    }
+                // TODO:1.开始获取真假服务器
+                if( AppDelegate().debug ) {
+                    // 调试模式, 开始同步配置
+                    [[ConfigManager manager] synConfig:synConfigFinishHandler];
+                    
+                } else {
+                    // 清空同步配置和服务器
+                    [[ConfigManager manager] clean];
+                    [[ServerManager manager] clean];
+                    
+                    // 开始获取真假服务器
+                    [[ServerManager manager] checkServer:user finishHandler:checkServerFinishHandler];
                 }
+                
                 
             } else {
                 // 参数不够
-                bFlag = NO;
             }
-            
         }break;
         case LOGINING:{
             // 登陆中
-            bFlag = YES;
             
         }break;
         case LOGINED:{
             // 已经登陆
-            bFlag = NO;
             
         }break;
         default:
             break;
     }
     
-    return bFlag;
+    return self.status;
 }
 
 - (void)logout:(BOOL)kick {
@@ -193,6 +210,9 @@ static LoginManager* gManager = nil;
         
         // 标记不能自动重
         self.isAutoLogin = NO;
+        [[RequestManager manager] cleanCookies];
+        [[ConfigManager manager] clean];
+        [[ServerManager manager] clean];
         
         // 清除用户帐号密码
         @synchronized(self) {
@@ -203,13 +223,23 @@ static LoginManager* gManager = nil;
             // 保存用户信息
             [self saveLoginParam];
         }
-        
     }
-    
+
     // 标记为已经注销
     @synchronized(self) {
         _status = NONE;
     }
+    
+    @synchronized(self.delegates) {
+        for(NSValue* value in self.delegates) {
+            id<LoginManagerDelegate> delegate = value.nonretainedObjectValue;
+            if( [delegate respondsToSelector:@selector(manager:onLogout:)] ) {
+                [delegate manager:self onLogout:kick];
+            }
+
+        }
+    }
+
 }
 
 - (BOOL)autoLogin {
@@ -254,4 +284,16 @@ static LoginManager* gManager = nil;
     
 }
 
+- (void)callbackLoginStatus:(BOOL)success errnum:(NSString *)errnum errmsg:(NSString *)errmsg {
+    // 主线程回调
+    @synchronized(self.delegates) {
+        for(NSValue* value in self.delegates) {
+            id<LoginManagerDelegate> delegate = value.nonretainedObjectValue;
+            if( [delegate respondsToSelector:@selector(manager:onLogin:loginItem:errnum:errmsg:)] ) {
+                [delegate manager:self onLogin:success loginItem:self.loginItem errnum:errnum errmsg:errmsg];
+            }
+        }
+    }
+
+}
 @end

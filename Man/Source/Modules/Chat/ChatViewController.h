@@ -7,11 +7,12 @@
 //
 
 #import "KKViewController.h"
+#import "GoogleAnalyticsViewController.h"
 
 #import "ChatTitleView.h"
 #import "ChatTextView.h"
 
-@interface ChatViewController : KKViewController
+@interface ChatViewController : GoogleAnalyticsViewController
 
 /**
  *  消息列表
@@ -19,24 +20,29 @@
 @property (nonatomic, weak) IBOutlet UITableView* tableView;
 
 /**
+ *  发送栏
+ */
+@property (nonatomic, weak) IBOutlet UIView* inputMessageView;
+
+/**
  *  输入框
  */
 @property (nonatomic, weak) IBOutlet ChatTextView* textView;
 
 /**
+ *  输入框高度约束
+ */
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint* inputMessageViewHeight;
+
+/**
+ *  输入框底部约束
+ */
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint* inputMessageViewBottom;
+
+/**
  *  头像
  */
 @property (nonatomic, strong) UIImageView *personImageView;
-
-/**
- *  买点控件
- */
-@property (nonatomic, weak) IBOutlet UIView *addCreditsView;
-@property (nonatomic, weak) IBOutlet UIButton *add8CreditButton;
-@property (nonatomic, weak) IBOutlet UIButton *add16CreditButton;
-@property (nonatomic, weak) IBOutlet NSLayoutConstraint *bottom;
-@property (nonatomic, assign) CGFloat creditsAccount;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *addCreditsViewHeight;
 
 /**
  *  女士信息
@@ -53,19 +59,5 @@
  *  @param sender 响应控件
  */
 - (IBAction)sendMsgAction:(id)sender;
-
-/**
- *  点击购买8个信用点
- *
- *  @param sender 响应控件
- */
-- (IBAction)buy8CreditAction:(id)sender;
-
-/**
- *  点击购买16个信用点
- *
- *  @param sender 响应控件
- */
-- (IBAction)buy16CreditAction:(id)sender;
 
 @end

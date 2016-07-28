@@ -21,7 +21,7 @@
     
     cover.alpha = 0.6;
     
-    cover.backgroundColor = [UIColor grayColor];
+    cover.backgroundColor = [UIColor colorWithIntRGB:0 green:0 blue:0 alpha:100];
     
     
     [[UIApplication sharedApplication].keyWindow addSubview:cover];

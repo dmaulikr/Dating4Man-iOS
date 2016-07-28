@@ -11,9 +11,9 @@
 #import "ImageViewLoader.h"
 #import "FileCacheManager.h"
 
-@interface LadyListTableView() {
-    
-}
+@interface LadyListTableView()<ImageViewLoaderDelegate>
+// 回调通知外部当前显示的女士
+- (void)didShowLady;
 @end
 
 @implementation LadyListTableView
@@ -34,11 +34,20 @@
     self.delegate = self;
     self.dataSource = self;
     self.canDeleteItem = NO;
+        
 }
 
 - (void)awakeFromNib {
     [super awakeFromNib];
     [self initialize];
+}
+
+- (void)reloadData
+{
+    [super reloadData];
+    
+    // 通知外部当前显示的女士
+    [self didShowLady];
 }
 
 #pragma mark - 列表界面回调 (UITableViewDataSource / UITableViewDelegate)
@@ -79,11 +88,6 @@
     
     // 数据填充
     QueryLadyListItemObject *item = [self.items objectAtIndex:indexPath.row];
-    if( item.onlineStatus == LADY_ONLINE ) {
-        cell.onlineImageView.hidden = NO;
-    } else {
-        cell.onlineImageView.hidden = YES;
-    }
     
     // 名字年龄
     cell.leftLabel.text = [NSString stringWithFormat:@"%@, %d", item.firstname, item.age];
@@ -93,9 +97,9 @@
     
     // 在线状态
     if( item.onlineStatus == LADY_ONLINE ) {
-        cell.onlineImageView.hidden = NO;
+        cell.onlineImageView.backgroundColor = [UIColor colorWithIntRGB:0 green:255 blue:0 alpha:255];
     } else {
-        cell.onlineImageView.hidden = YES;
+        cell.onlineImageView.backgroundColor = [UIColor colorWithIntRGB:160 green:160 blue:160 alpha:255];
     }
     
     // 菊花
@@ -104,25 +108,25 @@
 //    cell.loadingView.hidden = NO;
     
     // 头像
-    
-    cell.ladyImageView.image = [UIImage imageNamed:@"LadyList-Lady-Default"];
-    NSString* imageViewLoaderString = @"imageViewLoader";
-    ImageViewLoader* imageViewLoader = objc_getAssociatedObject(cell, &imageViewLoaderString);
-    if( !imageViewLoader ) {
-        imageViewLoader = [[ImageViewLoader alloc] init];
-        objc_setAssociatedObject(cell, &imageViewLoaderString, imageViewLoader, OBJC_ASSOCIATION_RETAIN);
+    // 显示默认头像
+    [cell.ladyImageView setImage:nil];
+    // 停止旧的
+    if( cell.imageViewLoader ) {
+        [cell.imageViewLoader stop];
     }
-    [imageViewLoader reset];
-    imageViewLoader.view = cell.ladyImageView;
-    imageViewLoader.url = item.photoURL;
-    imageViewLoader.path = [[FileCacheManager manager] imageCachePathWithUrl:imageViewLoader.url];
-    [imageViewLoader loadImage];
+    // 创建新的
+    cell.imageViewLoader = [ImageViewLoader loader];
     
-    if (indexPath.row < self.items.count) {
-        if([self.tableViewDelegate respondsToSelector:@selector(tableView:didShowLady:)]) {
-            [self.tableViewDelegate tableView:self didShowLady:item];
-        }
+    // 加载
+    cell.imageViewLoader.view = cell.ladyImageView;
+    if ([item.photoURL isEqualToString:AppDelegate().errorUrlConnect]) {
+        cell.ladyImageView.image = [UIImage imageNamed:@"MyProfile-PersonalHead"];
+    }else{
+        cell.imageViewLoader.url = item.photoURL;
+        cell.imageViewLoader.path = [[FileCacheManager manager] imageCachePathWithUrl:cell.imageViewLoader.url];
+        [cell.imageViewLoader loadImage];
     }
+
     
     return result;
 }
@@ -167,9 +171,35 @@
     }
 }
 
+- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
+    // 停止滚动，通知外部当前显示的女士
+    [self didShowLady];
+}
+
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
     if ([self.tableViewDelegate respondsToSelector:@selector(scrollViewDidEndDragging:willDecelerate:)]) {
         [self.tableViewDelegate scrollViewDidEndDragging:scrollView willDecelerate:decelerate];
+    }
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    // 停止滚动，通知外部当前显示的女士
+    [self didShowLady];
+}
+
+#pragma mark - 回调
+// 回调通知外部当前显示的女士
+- (void)didShowLady
+{
+    NSArray<NSIndexPath*>* indexPaths = self.indexPathsForVisibleRows;
+    if ([indexPaths count] > 0
+        && [indexPaths objectAtIndex:0].row < self.items.count)
+    {
+        QueryLadyListItemObject* item = [self.items objectAtIndex:[indexPaths objectAtIndex:0].row];
+        if([self.tableViewDelegate respondsToSelector:@selector(tableView:didShowLady:)]) {
+            [self.tableViewDelegate tableView:self didShowLady:item];
+        }
     }
 }
 

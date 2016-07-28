@@ -58,7 +58,6 @@
             if(self.items.count > 0) {
                 self.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
                 number = self.items.count;
-                self.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
                 
             } else {
                 self.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -87,25 +86,26 @@
     LadyRecentContactObject *item = [self.items objectAtIndex:indexPath.row];
     
     // 头像
-    cell.ladyImageView.image = [UIImage imageNamed:@"LadyList-Lady-Default"];
-    NSString* imageViewLoaderString = @"imageViewLoader";
-    ImageViewLoader* imageViewLoader = objc_getAssociatedObject(cell, &imageViewLoaderString);
-    if( !imageViewLoader ) {
-        imageViewLoader = [[ImageViewLoader alloc] init];
-        objc_setAssociatedObject(cell, &imageViewLoaderString, imageViewLoader, OBJC_ASSOCIATION_RETAIN);
+    // 显示默认头像
+    [cell.ladyImageView setImage:[UIImage imageNamed:@"LadyList-Lady-Default"]];
+    // 停止旧的
+    if( cell.imageViewLoader ) {
+        [cell.imageViewLoader stop];
     }
-    [imageViewLoader reset];
-    imageViewLoader.view = cell.ladyImageView;
-    imageViewLoader.url = item.photoURL;
-    imageViewLoader.path = [[FileCacheManager manager] imageCachePathWithUrl:imageViewLoader.url];
-    [imageViewLoader loadImage];
-//    cell.ladyImageView.image =  [cell.ladyImageView.image circleImage];
+    // 创建新的
+    cell.imageViewLoader = [ImageViewLoader loader];
+    
+    // 加载
+    cell.imageViewLoader.view = cell.ladyImageView;
+    cell.imageViewLoader.url = item.photoURL;
+    cell.imageViewLoader.path = [[FileCacheManager manager] imageCachePathWithUrl:cell.imageViewLoader.url];
+    [cell.imageViewLoader loadImage];
     
     cell.titleLabel.text = item.firstname;
     cell.bookmarkImageView.hidden = !item.isFavorite;
     cell.titleLabel.text = item.firstname;
     cell.onlineImageView.hidden = !item.isOnline;
-    cell.inchatImageView.hidden = !item.isInChat;
+    cell.inchatImageView.hidden = item.isOnline ? !item.isInChat : YES;
     
     if( item.lastInviteMessage != nil && item.lastInviteMessage.length > 0 ) {
         // 最后一条消息
@@ -115,6 +115,8 @@
         // 最后联系时间
         NSDate *lastTime = [NSDate dateWithTimeIntervalSince1970:item.lasttime];
         NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+        NSLocale *usLoacal = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US"];
+        [formatter setLocale:usLoacal];
         formatter.dateFormat = @"dd MMMM";
         cell.detailLabel.text = [NSString stringWithFormat:@"Last contact: %@",[formatter stringFromDate:lastTime]];
     }

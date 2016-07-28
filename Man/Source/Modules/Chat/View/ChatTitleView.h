@@ -13,5 +13,5 @@
 
 
 @property (weak, nonatomic) IBOutlet UILabel *personName;
-@property (weak, nonatomic) IBOutlet UIImageView *personIcon;
+@property (weak, nonatomic) IBOutlet UIImageViewTopFit *personIcon;
 @end

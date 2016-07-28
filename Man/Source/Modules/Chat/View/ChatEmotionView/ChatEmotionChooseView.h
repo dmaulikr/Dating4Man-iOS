@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ChatEmotion.h"
 
 @class ChatEmotionChooseView;
 @protocol ChatEmotionChooseViewDelegate <NSObject>
@@ -34,14 +35,14 @@
 /**
  *  表情数组
  */
-@property (retain) NSArray<UIImage*>* emotions;
+@property (retain) NSArray<ChatEmotion*>* emotions;
 
 /**
  *  生成实例
  *
  *  @return <#return value description#>
  */
-+ (instancetype)emotionChooseView;
++ (instancetype)emotionChooseView:(id)owner;
 
 /**
  *  刷新界面

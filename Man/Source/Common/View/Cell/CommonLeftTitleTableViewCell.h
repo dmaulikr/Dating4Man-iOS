@@ -15,6 +15,7 @@
 /** 个人详情人物地点信息 */
 @property (weak, nonatomic) IBOutlet UIButton *profileLocation;
 
+@property (weak, nonatomic) IBOutlet UIView *bgView;
 //标识符号
 + (NSString *)cellIdentifier;
 //高度

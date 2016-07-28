@@ -82,14 +82,3 @@ strip_invalid_archs() {
   fi
 }
 
-
-if [[ "$CONFIGURATION" == "Debug" ]]; then
-  install_framework "Pods/AFNetworking.framework"
-  install_framework "Pods/Masonry.framework"
-  install_framework "Pods/TTTAttributedLabel.framework"
-fi
-if [[ "$CONFIGURATION" == "Release" ]]; then
-  install_framework "Pods/AFNetworking.framework"
-  install_framework "Pods/Masonry.framework"
-  install_framework "Pods/TTTAttributedLabel.framework"
-fi

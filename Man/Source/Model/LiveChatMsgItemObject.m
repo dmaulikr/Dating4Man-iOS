@@ -28,6 +28,7 @@
         self.createTime = 0;
         self.statusType = LCMessageItem::StatusType_Unprocess;
         self.msgType = LCMessageItem::MT_Unknow;
+        self.procResult = [[LiveChatMsgProcResultObject alloc] init];
         self.textMsg = nil;
         self.warningMsg = nil;
         self.systemMsg = nil;
