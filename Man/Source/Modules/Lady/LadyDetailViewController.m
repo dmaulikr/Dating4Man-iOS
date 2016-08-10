@@ -270,8 +270,10 @@ typedef enum : NSUInteger {
     if( self.item.photoList && self.item.photoList.count > 0 ) {
         // 复制附件图片
         [imageList addObjectsFromArray:self.item.photoList];
-    }else if (self.item.photoList.count == 0 && ![AppDelegate().errorUrlConnect isEqualToString:self.ladyListImageUrl]){
-        [imageList addObject:self.ladyListImageUrl];
+    }else if (self.item.photoList.count == 0 && ![AppDelegate().errorUrlConnect isEqualToString:self.item.photoURL]){
+        if( nil != self.item.photoURL ) {
+            [imageList addObject:self.item.photoURL];
+        }
     }
     self.imageList = imageList;
 

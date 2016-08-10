@@ -666,14 +666,20 @@ typedef enum : NSUInteger {
                 commomCell.contentTextField.hidden = NO;
                 commomCell.detailLabel.text = NSLocalizedStringFromSelf(@"YOUR_BIRTHDAY");
                 commomCell.contentTextField.placeholder = NSLocalizedStringFromSelf(@"SELECT");
+                
                 UIDatePicker *picker = [[UIDatePicker alloc] init];
                 picker.datePickerMode = UIDatePickerModeDate;
-                NSTimeInterval interval =  60 * 60 * 24 * 365 * 18;
-                NSDate *eighteenDate = [NSDate dateWithTimeIntervalSinceNow:-interval];
-                picker.maximumDate = eighteenDate;
-                  interval =  float(60.0f * 60.0f * 24.0f * 365.0f * 99.0f);
-                eighteenDate = [NSDate dateWithTimeIntervalSinceNow:-interval];
-                picker.minimumDate = eighteenDate;
+                NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+                NSDate *currentDate = [NSDate date];
+                NSDateComponents *comps = [[NSDateComponents alloc] init];
+                [comps setYear:-99];
+                NSDate *maxDate = [calendar dateByAddingComponents:comps toDate:currentDate options:0];
+                [comps setYear:-18];
+                NSDate *minDate = [calendar dateByAddingComponents:comps toDate:currentDate options:0];
+                
+                [picker setMaximumDate:minDate];
+                [picker setMinimumDate:maxDate];
+            
                 if (self.registerObj.birthday.length > 0) {
                     NSDateFormatter *formatter = [[NSDateFormatter alloc] init] ;
                     [formatter setDateFormat:@"yyyy-MM-dd"];
