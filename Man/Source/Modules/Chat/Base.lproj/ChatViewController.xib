@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -12,6 +12,7 @@
                 <outlet property="inputMessageView" destination="Kzy-ff-3BV" id="PfZ-k0-Wf9"/>
                 <outlet property="inputMessageViewBottom" destination="AZd-U9-2gN" id="DFF-zg-EWD"/>
                 <outlet property="inputMessageViewHeight" destination="yt2-xV-UJS" id="QFk-mT-VBu"/>
+                <outlet property="photoBtn" destination="cP5-N3-Z1l" id="u3A-00-n58"/>
                 <outlet property="tableView" destination="hYo-hk-oaU" id="TI8-dh-nwb"/>
                 <outlet property="textView" destination="GQc-3i-3VG" id="f5M-kj-EqC"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -50,8 +51,8 @@
                                 <action selector="sendMsgAction:" destination="-1" eventType="touchUpInside" id="sZp-2F-bHy"/>
                             </connections>
                         </button>
-                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="GQc-3i-3VG" customClass="ChatTextView">
-                            <rect key="frame" x="40" y="5" width="364" height="46"/>
+                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="GQc-3i-3VG" customClass="ChatTextView">
+                            <rect key="frame" x="70" y="5" width="334" height="46"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <fontDescription key="fontDescription" type="system" pointSize="18"/>
                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="send"/>
@@ -59,8 +60,8 @@
                                 <outlet property="delegate" destination="-1" id="Sc8-AI-sE5"/>
                             </connections>
                         </textView>
-                        <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ppz-hr-P3W" userLabel="Emotion" customClass="KKCheckButton">
-                            <rect key="frame" x="10" y="16" width="24" height="24"/>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ppz-hr-P3W" userLabel="Emotion" customClass="KKCheckButton">
+                            <rect key="frame" x="40" y="16" width="24" height="24"/>
                             <constraints>
                                 <constraint firstAttribute="width" secondItem="ppz-hr-P3W" secondAttribute="height" multiplier="1:1" id="7yW-3J-taN"/>
                             </constraints>
@@ -72,6 +73,13 @@
                                 </mask>
                             </variation>
                         </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cP5-N3-Z1l" userLabel="photo" customClass="KKCheckButton">
+                            <rect key="frame" x="10" y="16" width="24" height="24"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="cP5-N3-Z1l" secondAttribute="height" multiplier="1:1" id="KWM-As-GAz"/>
+                            </constraints>
+                            <state key="normal" image="Chat-Keyboard-PhotoGray"/>
+                        </button>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
@@ -79,12 +87,15 @@
                         <constraint firstItem="GQc-3i-3VG" firstAttribute="leading" secondItem="ppz-hr-P3W" secondAttribute="trailing" constant="6" id="6WI-fB-iAm"/>
                         <constraint firstItem="GQc-3i-3VG" firstAttribute="top" secondItem="Kzy-ff-3BV" secondAttribute="top" constant="5" id="9dJ-el-tcr"/>
                         <constraint firstItem="OPK-nA-3WH" firstAttribute="trailing" secondItem="Kzy-ff-3BV" secondAttribute="trailing" constant="-10" id="IWO-RH-yvB"/>
-                        <constraint firstAttribute="trailing" secondItem="xPM-HN-flu" secondAttribute="trailing" id="KOk-SV-JX4"/>
+                        <constraint firstItem="xPM-HN-flu" firstAttribute="trailing" secondItem="Kzy-ff-3BV" secondAttribute="trailing" id="KOk-SV-JX4"/>
                         <constraint firstItem="xPM-HN-flu" firstAttribute="leading" secondItem="Kzy-ff-3BV" secondAttribute="leading" id="KPE-4a-RJ8"/>
-                        <constraint firstAttribute="trailing" secondItem="GQc-3i-3VG" secondAttribute="trailing" constant="10" id="OOe-Gn-eR9"/>
+                        <constraint firstItem="GQc-3i-3VG" firstAttribute="trailing" secondItem="Kzy-ff-3BV" secondAttribute="trailing" constant="-10" id="OOe-Gn-eR9"/>
                         <constraint firstItem="GQc-3i-3VG" firstAttribute="bottom" secondItem="Kzy-ff-3BV" secondAttribute="bottom" constant="-5" id="Sl8-4h-FfO"/>
                         <constraint firstItem="ppz-hr-P3W" firstAttribute="bottom" secondItem="Kzy-ff-3BV" secondAttribute="bottom" constant="-8" id="fCo-7b-TV3"/>
                         <constraint firstItem="OPK-nA-3WH" firstAttribute="bottom" secondItem="Kzy-ff-3BV" secondAttribute="bottom" constant="-5" id="ltf-Iy-VKs"/>
+                        <constraint firstItem="ppz-hr-P3W" firstAttribute="leading" secondItem="cP5-N3-Z1l" secondAttribute="trailing" constant="6" id="nPC-tx-nH9"/>
+                        <constraint firstItem="cP5-N3-Z1l" firstAttribute="centerY" secondItem="Kzy-ff-3BV" secondAttribute="centerY" id="oi9-kh-vbV"/>
+                        <constraint firstItem="cP5-N3-Z1l" firstAttribute="leading" secondItem="Kzy-ff-3BV" secondAttribute="leading" constant="10" id="poQ-ce-R5h"/>
                         <constraint firstItem="xPM-HN-flu" firstAttribute="top" secondItem="Kzy-ff-3BV" secondAttribute="top" id="s7y-dK-a2O"/>
                         <constraint firstItem="ppz-hr-P3W" firstAttribute="leading" secondItem="Kzy-ff-3BV" secondAttribute="leading" constant="10" id="w80-pF-xQ0"/>
                         <constraint firstItem="ppz-hr-P3W" firstAttribute="centerY" secondItem="Kzy-ff-3BV" secondAttribute="centerY" id="yU1-qh-c2W"/>
@@ -93,6 +104,7 @@
                     <variation key="default">
                         <mask key="constraints">
                             <exclude reference="fCo-7b-TV3"/>
+                            <exclude reference="w80-pF-xQ0"/>
                             <exclude reference="1Nc-FU-Q8U"/>
                         </mask>
                     </variation>
@@ -118,9 +130,11 @@
             </constraints>
             <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
+            <point key="canvasLocation" x="263" y="440"/>
         </view>
     </objects>
     <resources>
         <image name="Chat-EmotionGray" width="24" height="24"/>
+        <image name="Chat-Keyboard-PhotoGray" width="24" height="24"/>
     </resources>
 </document>

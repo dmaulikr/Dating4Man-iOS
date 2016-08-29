@@ -1,0 +1,18 @@
+
+/* Class = "UIButton"; normalTitle = "Send"; ObjectID = "OPK-nA-3WH"; */
+"OPK-nA-3WH.normalTitle" = "Send";
+
+"Send_Error_Tips_Retry" = "Your message was not send.";
+"Send_Error_Tips_Offline" = "Oops! The lady has gone offline.";
+"Send_Error_Tips_No_Money" = "You are running our of credits, please add credits to continue.";
+"Send_Error_Tips_Other" = "Your message was not send.";
+
+"Local_Error_Tips_200_Input_Limited" = "200 character limited.";
+
+"Warning_Error_Tips_No_Money" = "You have run out of credits.";
+
+"Tips_Add_Credit" = "Add credit to continue.";
+"Tips_Try_Ticket_Credit_YES" = "Send your first message to start free chat now.";
+"Tips_Try_Ticket_Credit_NO" = "Live chat billed at 0.5 credit per 5 mins.";
+"Tips_Your_Free_Chat_Is_Ended" = "Your free chat is ended. Live chat billed at 0.5 credit per 5 mins.";
+"Tips_Input_Message_Here" = "Type message here.";

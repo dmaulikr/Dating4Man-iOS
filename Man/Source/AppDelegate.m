@@ -26,7 +26,8 @@
     // 设置公共属性
     _demo = YES;
     _debug = NO;
-    self.siteType = OTHER_SITE_UNKNOW;
+//    self.siteType = OTHER_SITE_CL;
+    self.siteType = OTHER_SITE_CD;
     
     // 初始化Crash Log捕捉
     [CrashLogManager manager];
@@ -49,7 +50,7 @@
     
     // 设置接口管理类属性
     RequestManager* manager = [RequestManager manager];
-    [manager setLogEnable:YES];
+    [manager setLogEnable:NO];
     [manager setLogDirectory:[[FileCacheManager manager] requestLogPath]];
     
     // 设置接口请求环境
@@ -100,23 +101,42 @@
 }
 
 - (void)setRequestHost:(BOOL)formal {
-//    self.siteType = OTHER_SITE_CL;
-    self.siteType = OTHER_SITE_CD;
-    
     RequestManager* manager = [RequestManager manager];
     
     if( formal ) {
         // 真服务器环境
+        NSString* webSite = @"";
+        NSString* webSiteDemo = @"";
+        NSString* appSite = @"";
+        NSString* appSiteDemo = @"";
+        
+        switch (self.siteType) {
+            case OTHER_SITE_CL:{
+                webSite = @"http://www.chnlove.com";
+                webSiteDemo = @"http://demo.chnlove.com";
+                appSite = @"http://mobile.chnlove.com";
+                appSiteDemo = @"http://demo-mobile.chnlove.com";
+                
+            }break;
+            case OTHER_SITE_CD:{
+                webSite = @"http://www.charmdate.com";
+                webSiteDemo = @"http://demo.charmdate.com";
+                appSite = @"http://mobile.charmdate.com";
+                appSiteDemo = @"http://demo-mobile.charmdate.com";
+                
+            }break;
+            default:
+                break;
+        }
+        
         if( _demo ) {
             // Demo环境
             [manager setAuthorization:@"test" password:@"5179"];
-//            [manager setWebSite:@"http://demo.chnlove.com" appSite:@"http://demo-mobile.chnlove.com"];
-            [manager setWebSite:@"http://demo.charmdate.com" appSite:@"http://demo-mobile.charmdate.com"];
+            [manager setWebSite:webSiteDemo appSite:appSiteDemo];
 
         } else {
             [manager setAuthorization:@"" password:@""];
-//            [manager setWebSite:@"http://www.chnlove.com" appSite:@"http://mobile.chnlove.com"];
-            [manager setWebSite:@"http://www.charmdate.com" appSite:@"http://mobile.charmdate.com"];
+            [manager setWebSite:webSite appSite:appSite];
         }
         
     } else {

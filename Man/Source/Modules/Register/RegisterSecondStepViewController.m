@@ -18,6 +18,7 @@
 #import "LoginManager.h"
 #import "SessionRequestManager.h"
 #import "UploadHeaderPhoto.h"
+#import "MotifyPersonalProfileManager.h"
 
 
 typedef enum : NSUInteger {
@@ -35,7 +36,7 @@ typedef enum : NSUInteger {
 
 
 
-@interface RegisterSecondStepViewController ()<UITextFieldDelegate,UIAlertViewDelegate>{
+@interface RegisterSecondStepViewController ()<UITextFieldDelegate,UIAlertViewDelegate,MotifyPersonalProfileManagerDelegate>{
     CGRect _orgFrame;
     CGRect _newFrame;
 }
@@ -59,8 +60,11 @@ typedef enum : NSUInteger {
 /** tips */
 @property (nonatomic,strong) UIAlertView *alertView;
 
-/** <#detail#> */
+/** 注册内容 */
 @property (nonatomic,strong) NSArray *tableViewArray;
+
+/** 个人详情 */
+@property (nonatomic,strong) MotifyPersonalProfileManager *motifyManager;
 
 @end
 
@@ -96,7 +100,8 @@ typedef enum : NSUInteger {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
     
-    self.loadingView.hidden = YES;
+
+    [self hideLoading];
     [self reloadData:YES];
     
 }
@@ -117,6 +122,8 @@ typedef enum : NSUInteger {
 #pragma mark - 界面逻辑
 - (void)initCustomParam {
     [super initCustomParam];
+    self.motifyManager = [MotifyPersonalProfileManager manager];
+    self.motifyManager.delegate = self;
 }
 
 //设置导航栏
@@ -310,12 +317,12 @@ typedef enum : NSUInteger {
 
 //创建账号
 - (IBAction)createAccount:(id)sender {
-    self.loadingView.hidden = NO;
+    [self showLoading];
     
     if ([self.emailTextField isFirstResponder] || [self.passwordTextField isFirstResponder] || [self.checkPasswordTextField isFirstResponder]) {
         [self closeKeyBoard];
         [self checkPassword];
-        self.loadingView.hidden = YES;
+        [self hideLoading];
         
     }else{
         
@@ -343,11 +350,13 @@ typedef enum : NSUInteger {
             [manager registerUser:self.lastProfileObject.email password:self.lastProfileObject.password sex:self.lastProfileObject.isMale firstname:self.lastProfileObject.name lastname:self.lastProfileObject.name country:self.countryIndex birthday_y:year birthday_m:month birthday_d:day weeklymail:NO  finishHandler:^(BOOL success, RegisterItemObject * _Nonnull item, NSString * _Nonnull errnum, NSString * _Nonnull errmsg) {
                 
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    self.loadingView.hidden = YES;
+                     [self hideLoading];
             
                     if (success) {
-                        if (weakSelf.profileImage) {
-                            [self upLoadHeaderPhoto];
+                          [self upLoadHeaderPhoto];
+                        if (weakSelf.lastProfileObject.decribe.length > 0) {
+                            [self.motifyManager motifyPersonalResume:weakSelf.lastProfileObject.decribe];
+                            
                             
                         } else {
                             NSString *tips = NSLocalizedStringFromSelf(@"TIPS");
@@ -373,7 +382,7 @@ typedef enum : NSUInteger {
             }];
             
         }else{
-            self.loadingView.hidden = YES;
+             [self hideLoading];
             //弹出提示
             NSString *tips = NSLocalizedStringFromSelf(@"TIPS");
             NSString *tipsMessage = NSLocalizedStringFromSelf(@"TIPS_REGISTERMESSAGE_NULL");
@@ -397,8 +406,14 @@ typedef enum : NSUInteger {
         [self.navigationController popToRootViewControllerAnimated:YES];
         [manager login:self.lastProfileObject.email password:self.lastProfileObject.password checkcode:nil];
     }else if (alertView.tag == RegisterTipTypeOther){
-        [self.navigationController popToRootViewControllerAnimated:YES];
-        [manager login:self.lastProfileObject.email password:self.lastProfileObject.password checkcode:nil];
+        NSString *tips = NSLocalizedStringFromSelf(@"TIPS");
+        NSString *tipsMessage = NSLocalizedStringFromSelf(@"TIPS_REGISTERMESSAGE_SUCCESS");
+        NSString *confirm = NSLocalizedStringFromSelf(@"OK");
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:tips message:tipsMessage delegate:self cancelButtonTitle:nil otherButtonTitles:confirm, nil ,nil];
+        alertView.tag = RegisterTipTypeSuccess;
+        [alertView show];
+//        [self.navigationController popToRootViewControllerAnimated:YES];
+//        [manager login:self.lastProfileObject.email password:self.lastProfileObject.password checkcode:nil];
     }else if (alertView.tag == RegisterTipTypeFail){
         self.passwordTextField.text = nil;
         self.checkPasswordTextField.text = nil;
@@ -415,20 +430,23 @@ typedef enum : NSUInteger {
 
 
 - (BOOL)upLoadHeaderPhoto{
-    self.loadingView.hidden = NO;
+    [self showLoading];
     self.sessionManager = [SessionRequestManager manager];
     UploadHeaderPhoto *request = [[UploadHeaderPhoto alloc] init];
     request.fileName = self.profilePhoto;
     request.finishHandler = ^(BOOL success,NSString *error,NSString *errmsg){
         
         dispatch_async(dispatch_get_main_queue(), ^{
-            self.loadingView.hidden = YES;
-            NSString *tips = NSLocalizedStringFromSelf(@"TIPS");
-            NSString *tipsMessage = NSLocalizedStringFromSelf(@"TIPS_REGISTERMESSAGE_SUCCESS");
-            NSString *confirm = NSLocalizedStringFromSelf(@"OK");
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:tips message:tipsMessage delegate:self cancelButtonTitle:nil otherButtonTitles:confirm, nil ,nil];
-            alertView.tag = RegisterTipTypeSuccess;
-            [alertView show];
+            if (success) {
+                [self hideLoading];
+//                NSString *tips = NSLocalizedStringFromSelf(@"TIPS");
+//                NSString *tipsMessage = NSLocalizedStringFromSelf(@"TIPS_REGISTERMESSAGE_SUCCESS");
+//                NSString *confirm = NSLocalizedStringFromSelf(@"OK");
+//                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:tips message:tipsMessage delegate:self cancelButtonTitle:nil otherButtonTitles:confirm, nil ,nil];
+//                alertView.tag = RegisterTipTypeSuccess;
+//                [alertView show];
+            }
+
         });
 
     };
@@ -475,7 +493,7 @@ typedef enum : NSUInteger {
         
     } else if( self.passwordTextField == textField ) {
         // 完成密码
-              self.lastProfileObject.password = self.passwordTextField.text;
+        self.lastProfileObject.password = self.passwordTextField.text;
         [self.checkPasswordTextField becomeFirstResponder];
         
     } else {
@@ -551,7 +569,21 @@ typedef enum : NSUInteger {
     [self moveInputBarWithKeyboardHeight:0.0 withDuration:animationDuration];
 }
 
-
+- (void)motifyPersonalProfileResult:(MotifyPersonalProfileManager *)manager result:(BOOL)success {
+    if (success) {
+        NSString *tips = NSLocalizedStringFromSelf(@"TIPS");
+        NSString *tipsMessage = NSLocalizedStringFromSelf(@"TIPS_REGISTERMESSAGE_SUCCESS");
+        NSString *confirm = NSLocalizedStringFromSelf(@"OK");
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:tips message:tipsMessage delegate:self cancelButtonTitle:nil otherButtonTitles:confirm, nil ,nil];
+        alertView.tag = RegisterTipTypeSuccess;
+        [alertView show];
+    }else {
+        NSString *tipsMessage = NSLocalizedStringFromSelf(@"Tips_UpdateResume_Fail");
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:tipsMessage delegate:self cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil, nil];
+        alertView.tag = RegisterTipTypeOther;
+        [alertView show];
+    }
+}
 
 
 @end

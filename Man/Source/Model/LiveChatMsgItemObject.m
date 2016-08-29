@@ -33,6 +33,8 @@
         self.warningMsg = nil;
         self.systemMsg = nil;
         self.customMsg = nil;
+        self.downloadSuccess = NO;
+        self.loadingImage = NO;
     }
     return self;
 }

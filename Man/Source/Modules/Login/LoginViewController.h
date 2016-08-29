@@ -11,7 +11,6 @@
 
 @interface LoginViewController : GoogleAnalyticsViewController
 
-@property (nonatomic, weak) IBOutlet UIView* loadingView;
 @property (nonatomic, weak) IBOutlet UIView* inputView;
 @property (nonatomic, weak) IBOutlet UITextField* emailTextField;
 @property (nonatomic, weak) IBOutlet UITextField* passwordTextField;

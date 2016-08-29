@@ -100,7 +100,7 @@ typedef enum : NSUInteger {
 
 - (void)setupContainView {
     [super setupContainView];
-    [self setupLoadingView];
+//    [self setupLoadingView];
     [self setupTableView];
 }
 
@@ -113,12 +113,12 @@ typedef enum : NSUInteger {
     [self.tableView setTableFooterView:footerView];
 }
 
-- (void)setupLoadingView {
-    // 初始化菊花
-    self.loadingView.layer.cornerRadius = 5.0f;
-    self.loadingView.layer.masksToBounds = YES;
-    self.loadingView.hidden = YES;
-}
+//- (void)setupLoadingView {
+//    // 初始化菊花
+//    self.loadingView.layer.cornerRadius = 5.0f;
+//    self.loadingView.layer.masksToBounds = YES;
+//    self.loadingView.hidden = YES;
+//}
 
 - (void)initCustomParam {
     // 初始化父类参数
@@ -137,15 +137,15 @@ typedef enum : NSUInteger {
     [self.paymentManager removeDelegate:self];
 }
 
-- (void)showLoading {
-    self.loadingView.hidden = NO;
-    self.view.userInteractionEnabled = NO;
-}
+//- (void)showLoading {
+//    self.loadingView.hidden = NO;
+//    self.view.userInteractionEnabled = NO;
+//}
 
-- (void)hideLoading {
-    self.loadingView.hidden = YES;
-    self.view.userInteractionEnabled = YES;
-}
+//- (void)hideLoading {
+//    self.loadingView.hidden = YES;
+//    self.view.userInteractionEnabled = YES;
+//}
 
 #pragma mark - 数据逻辑
 - (void)reloadData:(BOOL)isReloadView{

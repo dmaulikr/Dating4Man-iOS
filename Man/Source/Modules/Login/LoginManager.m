@@ -171,20 +171,13 @@ static LoginManager* gManager = nil;
                 };
                 
                 // TODO:1.开始获取真假服务器
-                if( AppDelegate().debug ) {
-                    // 调试模式, 开始同步配置
-                    [[ConfigManager manager] synConfig:synConfigFinishHandler];
-                    
-                } else {
-                    // 清空同步配置和服务器
-                    [[ConfigManager manager] clean];
-                    [[ServerManager manager] clean];
-                    
-                    // 开始获取真假服务器
-                    [[ServerManager manager] checkServer:user finishHandler:checkServerFinishHandler];
-                }
+                // 清空同步配置和服务器
+                [[ConfigManager manager] clean];
+                [[ServerManager manager] clean];
                 
-                
+                // 开始获取真假服务器
+                [[ServerManager manager] checkServer:user finishHandler:checkServerFinishHandler];
+
             } else {
                 // 参数不够
             }

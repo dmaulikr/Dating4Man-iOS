@@ -7,21 +7,26 @@
 //
 
 #import "LadyDetailViewController.h"
+#import "ServerViewControllerManager.h"
 #import "ChatViewController.h"
+#import "LadyDetailPhototViewController.h"
+
 #import "CommonPageViewTableViewCell.h"
 #import "LadyDetailNameTableViewCell.h"
 #import "CommonTitleTableViewCell.h"
 #import "CommonDetailTableViewCell.h"
+
 #import "GetLadyDetailRequest.h"
-#import "SessionRequestManager.h"
-#import "LadyDetailItemObject.h"
 #import "AddFavouriteLadyRequest.h"
 #import "RemoveFavouriteLadyRequest.h"
 #import "ReportLadyRequest.h"
+#import "LadyDetailItemObject.h"
+
 #import "KKCheckButton.h"
 #import "ContactManager.h"
 #import "UIImage+Resize.h"
-#import "LadyDetailPhototViewController.h"
+
+#import "SessionRequestManager.h"
 #import "LiveChatManager.h"
 
 typedef enum {
@@ -153,17 +158,10 @@ typedef enum : NSUInteger {
 - (void)setupContainView {
     [super setupContainView];
     [self setupTableView];
-    [self setupLoadingView];
     
     self.chatBtn.enabled = NO;
 }
 
-- (void)setupLoadingView {
-    // 初始化菊花
-    self.loadingView.layer.cornerRadius = 5.0f;
-    self.loadingView.layer.masksToBounds = YES;
-    self.loadingView.hidden = YES;
-}
 
 - (void)setupTableView {
     self.tableView.separatorColor = [UIColor grayColor];
@@ -189,11 +187,9 @@ typedef enum : NSUInteger {
         [self.navigationController popViewControllerAnimated:YES];
     } else {
         // 进入聊天界面
-        ChatViewController* vc = [[ChatViewController alloc] initWithNibName:nil bundle:nil];
-        vc.firstname = self.item.firstname;
-        vc.womanId = self.item.womanid;
-        vc.photoURL = self.item.photoURL;
-        [self.navigationController pushViewController:vc animated:YES];
+        UIViewController* vc = [[ServerViewControllerManager manager] chatViewController:self.item.firstname womanid:self.item.womanid photoURL:self.item.photoURL];
+        KKNavigationController *nvc = (KKNavigationController *)self.navigationController;
+        [nvc pushViewController:vc animated:YES];
     }
 
 }
@@ -313,15 +309,15 @@ typedef enum : NSUInteger {
     return attributeString;
 }
 
-- (void)showLoading {
-    self.loadingView.hidden = NO;
-    self.view.userInteractionEnabled = NO;
-}
-- (void)hideLoading {
-    self.loadingView.hidden = YES;
-    self.view.userInteractionEnabled = YES;
-
-}
+//- (void)showLoading {
+//    self.loadingView.hidden = NO;
+//    self.view.userInteractionEnabled = NO;
+//}
+//- (void)hideLoading {
+//    self.loadingView.hidden = YES;
+//    self.view.userInteractionEnabled = YES;
+//
+//}
 
 #pragma mark - 画廊回调 (PZPagingScrollViewDelegate)
 - (Class)pagingScrollView:(PZPagingScrollView *)pagingScrollView classForIndex:(NSUInteger)index {

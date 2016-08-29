@@ -13,6 +13,7 @@
 #import "LiveChatSystemItemObject.h"
 #import "LiveChatCustomItemObject.h"
 #import "LiveChatMsgProcResultObject.h"
+#import "LiveChatMsgPhotoItem.h"
 
 @interface LiveChatMsgItemObject : NSObject
 
@@ -42,6 +43,12 @@
 @property (nonatomic,strong) LiveChatSystemItemObject* systemMsg;
 /** 自定义消息 **/
 @property (nonatomic,strong) LiveChatCustomItemObject* customMsg;
+/** 私密照 */
+@property (nonatomic,strong) LiveChatMsgPhotoItem* secretPhoto;
+/** 私密照下载成功状态 */
+@property (nonatomic,assign,getter=isDownloadSuccess) BOOL downloadSuccess;
+/** 私密照下载成功状态 */
+@property (nonatomic,assign,getter=isLoadingImage) BOOL loadingImage;
 
 /**
  *  初始化

@@ -453,7 +453,7 @@ void onGetMyProfile(long requestId, bool success, ProfileItem item, string errnu
         profile.fax = [NSString stringWithUTF8String:item.fax.c_str()];
         profile.alternate_email = [NSString stringWithUTF8String:item.alternate_email.c_str()];
         profile.money = [NSString stringWithUTF8String:item.money.c_str()];
-        profile.checkId = item.v_id;
+        profile.v_id = item.v_id;
         profile.photoStatus = item.photo;
         profile.photoUrl = [NSString stringWithUTF8String:item.photoURL.c_str()];
         profile.integral = item.integral;

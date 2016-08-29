@@ -19,12 +19,12 @@
 
 @property (strong, nonatomic) UIWindow *window;
 /**
- *  是否Demo环境
+ *  是否Demo环境(允许注销)
  */
 @property (nonatomic, assign) BOOL demo;
 
 /**
- *  调试模式, 直接访问真实服务器(Demo环境／正式环境)
+ *  调试模式, 正式环境是否允许注销(YES:允许注销/NO:不允许注销)
  */
 @property (nonatomic, assign) BOOL debug;
 

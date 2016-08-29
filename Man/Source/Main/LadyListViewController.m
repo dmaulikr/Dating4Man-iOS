@@ -8,7 +8,7 @@
 
 #import "LadyListViewController.h"
 #import "LadyDetailViewController.h"
-#import "ChatViewController.h"
+#import "ServerViewControllerManager.h"
 
 #import "LadyListTableViewCell.h"
 #import "UIScrollView+PullRefresh.h"
@@ -94,7 +94,6 @@ typedef enum {
         [self.tableView startPullDown:YES];
     }
     
-    [self reloadInviteUsers];
     [self reloadData:YES];
 }
 
@@ -138,53 +137,7 @@ typedef enum {
 }
 
 - (void)setupNavigationBar {
-    [super setupNavigationBar];
-    
-    UIBarButtonItem *barButtonItem = nil;
-    UIImage* image = nil;
-    UIButton* button = nil;
-    
-    // 标题
-    button = [UIButton buttonWithType:UIButtonTypeCustom];
-    image = [UIImage imageNamed:@"Navigation-Qpid"];
-    [button setImage:image forState:UIControlStateDisabled];
-    [button setTitle:NSLocalizedString(@"QDating", nil) forState:UIControlStateNormal];
-    [button setImageEdgeInsets:UIEdgeInsetsMake(0, -10, 0, 0)];
-    [button sizeToFit];
-    [button setEnabled:NO];
-    self.navigationItem.titleView = button;
-    
-    // 左边按钮
-    NSMutableArray *array = [NSMutableArray array];
-    
-    self.navLeftButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    image = [UIImage imageNamed:@"Navigation-Setting"];
-    [self.navLeftButton setImage:image forState:UIControlStateNormal];
-    [self.navLeftButton sizeToFit];
-    [self.navLeftButton addTarget:self.mainVC action:@selector(pageLeftAction:) forControlEvents:UIControlEventTouchUpInside];
-    barButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.navLeftButton];
-    [array addObject:barButtonItem];
-    
-    self.navigationItem.leftBarButtonItems = array;
-    
-    // 右边按钮
-    array = [NSMutableArray array];
-    
-    self.navRightButton = [BadgeButton buttonWithType:UIButtonTypeCustom];
-    image = [UIImage imageNamed:@"Navigation-ChatList"];
-    [self.navRightButton setImage:image forState:UIControlStateNormal];
-//    image = [UIImage imageNamed:@"Navigation-Badge"];
-//    self.navRightButton.imageBadge = image;
-    self.navRightButton.badgeValue = nil;
-    [self.navRightButton sizeToFit];
-    [self.navRightButton addTarget:self.mainVC action:@selector(pageRightAction:) forControlEvents:UIControlEventTouchUpInside];
-    barButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.navRightButton];
-    [array addObject:barButtonItem];
-    
-    self.navigationItem.rightBarButtonItems = array;
-    
-    [self.mainVC setupNavigationBar];
-    
+    [super setupNavigationBar];   
 }
 
 - (void)setupContainView {
@@ -446,15 +399,6 @@ typedef enum {
     }
 }
 
-/**
- *  刷新邀请人数
- */
-- (void)reloadInviteUsers {
-    NSArray<LiveChatUserItemObject*>* array = [self.liveChatManager getInviteUsers];
-    NSInteger badge = MIN(array.count, 99);
-    self.navRightButton.badgeValue = badge > 0?[NSString stringWithFormat:@"%ld", (long)badge]:nil;
-}
-
 #pragma mark - 界面事件
 - (IBAction)backToLastLady:(id)sender {
     LadyListTableViewCell *currentCell = [self.tableView visibleCells].firstObject;
@@ -530,17 +474,13 @@ typedef enum {
 
 - (IBAction)chatNowAction:(id)sender {
     // 点击聊天
-    ChatViewController* vc = [[ChatViewController alloc] initWithNibName:nil bundle:nil];
-    
     LadyListTableViewCell *currentCell = [self.tableView visibleCells].firstObject;
     NSIndexPath *currentLadyIndex = [self.tableView indexPathForCell:currentCell];
     QueryLadyListItemObject *currentItem = [self.tableView.items objectAtIndex:currentLadyIndex.row];
-    vc.firstname = currentItem.firstname;
-    vc.womanId = currentItem.womanid;
-    vc.photoURL = currentItem.photoURL;
-     KKNavigationController *nvc = (KKNavigationController *)self.navigationController;
+    
+    UIViewController* vc = [[ServerViewControllerManager manager] chatViewController:currentItem.firstname womanid:currentItem.womanid photoURL:currentItem.photoURL];
+    KKNavigationController *nvc = (KKNavigationController *)self.navigationController;
     [nvc pushViewController:vc animated:YES];
-//    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (void)dismissSearchTable {
@@ -595,10 +535,7 @@ typedef enum {
 
 #pragma mark - LivechatManager回调
 - (void)onRecvTextMsg:(LiveChatMsgItemObject* _Nonnull)msg {
-    dispatch_async(dispatch_get_main_queue(), ^{
-//        NSLog(@"LadyListViewController::onRecvTextMsg( 接收文本消息回调 fromId : %@ )", msg.fromId);
-        [self reloadInviteUsers];
-    });
+
 }
 
 #pragma mark - 登陆管理器回调 (LoginManagerDelegate)

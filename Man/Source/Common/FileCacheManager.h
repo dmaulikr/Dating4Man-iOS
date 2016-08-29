@@ -47,7 +47,19 @@
  *
  *  @param tempImage 图片
  *  @param uploadImageName 图片文件保存文字
+ *
+ *  @return 图片缓存路径
  */
-- (NSString *)imageUploadCachePath:(UIImage *)tempImage uploadImageName:(NSString *)uploadImageName;
+- (NSString *)imageUploadCachePath:(UIImage *)image fileName:(NSString *)fileName;
+
+/**
+ *  获取相册图片缓存路径
+ *
+ *  @param image 图片
+ *  @param fileName  文件名
+ *
+ *  @return 图片缓存路径
+ */
+- (NSString *)imageCacheFromPhoneAlbumnPath:(UIImage *)image fileName:(NSString *)fileName;
 
 @end

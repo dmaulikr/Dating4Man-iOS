@@ -16,10 +16,16 @@
 #import "LoginManager.h"
 #import "LiveChatManager.h"
 
+typedef enum PageType {
+    PageTypeSetting = 0,
+    PageTypeLadyList,
+    PageTypeContacList
+} PageType;
+
 @interface MainViewController () <LiveChatManagerDelegate, LoginManagerDelegate, UIAlertViewDelegate>
 
 @property (nonatomic, retain) NSArray *items;
-@property (nonatomic, assign) NSInteger curIndex;
+@property (nonatomic, assign) PageType curIndex;
 @property (nonatomic, assign) BOOL bLivechatAutoLoginAlready;
 
 /**
@@ -62,6 +68,7 @@
         [self checkLogin:NO];
     }
 
+    [self reloadInviteUsers];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -69,7 +76,6 @@
         // 第一次进入, 界面已经出现
         [self reloadData:YES animated:NO];
     }
-    
     [super viewDidAppear:animated];
 }
 
@@ -98,25 +104,132 @@
     
     KKViewController* vc = [self.items objectAtIndex:_curIndex];
     self.backTitle = vc.backTitle;
+
+//    self.navigationController.navigationBar.topItem.titleView = vc.navigationItem.titleView;
+//    [self.navigationController.navigationBar.topItem setLeftBarButtonItems:vc.navigationItem.leftBarButtonItems animated:YES];
+//    [self.navigationController.navigationBar.topItem setRightBarButtonItems:vc.navigationItem.rightBarButtonItems animated:YES];
     
-    self.navigationItem.titleView = vc.navigationItem.titleView;
-    [self.navigationItem setLeftBarButtonItems:vc.navigationItem.leftBarButtonItems animated:YES];
-    [self.navigationItem setRightBarButtonItems:vc.navigationItem.rightBarButtonItems animated:YES];
+    UIBarButtonItem *barButtonItem = nil;
+    UIImage *image = nil;
+    UIButton* button = nil;
     
+    switch (_curIndex) {
+        case PageTypeSetting:{
+            // 标题
+            button = [UIButton buttonWithType:UIButtonTypeCustom];
+            image = [UIImage imageNamed:@"Navigation-Setting"];
+            [button setImage:image forState:UIControlStateDisabled];
+            [button setTitle:NSLocalizedString(@"Settings", nil) forState:UIControlStateNormal];
+            button.titleLabel.font = [UIFont boldSystemFontOfSize:16];
+            [button sizeToFit];
+            [button setEnabled:NO];
+            self.navigationItem.titleView = button;
+            
+            self.navLeftButton = nil;
+            [self.navigationItem setLeftBarButtonItems:nil animated:YES];
+            
+            // 右边按钮
+            NSMutableArray *array = [NSMutableArray array];
+            
+            UIButton* navRightButton = [UIButton buttonWithType:UIButtonTypeCustom];
+            self.navRightButton = nil;
+            image = [UIImage imageNamed:@"Navigation-Qpid"];
+            [navRightButton setImage:image forState:UIControlStateNormal];
+            [navRightButton sizeToFit];
+            [navRightButton addTarget:self action:@selector(pageRightAction:) forControlEvents:UIControlEventTouchUpInside];
+            
+            barButtonItem = [[UIBarButtonItem alloc] initWithCustomView:navRightButton];
+            [array addObject:barButtonItem];
+            
+            [self.navigationItem setRightBarButtonItems:array animated:YES];
+            
+        }break;
+        case PageTypeLadyList:{
+            // 标题
+            button = [UIButton buttonWithType:UIButtonTypeCustom];
+            image = [UIImage imageNamed:@"Navigation-Qpid"];
+            [button setImage:image forState:UIControlStateDisabled];
+            [button setTitle:NSLocalizedString(@"QDating", nil) forState:UIControlStateNormal];
+            [button setImageEdgeInsets:UIEdgeInsetsMake(0, -10, 0, 0)];
+            [button sizeToFit];
+            [button setEnabled:NO];
+            self.navigationItem.titleView = button;
+            
+            // 左边按钮
+            NSMutableArray *array = [NSMutableArray array];
+            
+            UIButton* navLeftButton = [UIButton buttonWithType:UIButtonTypeCustom];
+            self.navLeftButton = navLeftButton;
+            image = [UIImage imageNamed:@"Navigation-Setting"];
+            [navLeftButton setImage:image forState:UIControlStateNormal];
+            [navLeftButton sizeToFit];
+            [navLeftButton addTarget:self action:@selector(pageLeftAction:) forControlEvents:UIControlEventTouchUpInside];
+            barButtonItem = [[UIBarButtonItem alloc] initWithCustomView:navLeftButton];
+            [array addObject:barButtonItem];
+            
+            [self.navigationItem setLeftBarButtonItems:array animated:YES];
+            
+            // 右边按钮
+            array = [NSMutableArray array];
+            
+            BadgeButton* navRightButton = [BadgeButton buttonWithType:UIButtonTypeCustom];
+            self.navRightButton = navRightButton;
+            image = [UIImage imageNamed:@"Navigation-ChatList"];
+            [navRightButton setImage:image forState:UIControlStateNormal];
+            [navRightButton sizeToFit];
+            [navRightButton addTarget:self action:@selector(pageRightAction:) forControlEvents:UIControlEventTouchUpInside];
+            barButtonItem = [[UIBarButtonItem alloc] initWithCustomView:navRightButton];
+            [array addObject:barButtonItem];
+            
+            [self.navigationItem setRightBarButtonItems:array animated:YES];
+            
+        }break;
+        case PageTypeContacList:{
+            // 标题
+            button = [UIButton buttonWithType:UIButtonTypeCustom];
+            image = [UIImage imageNamed:@"Navigation-ChatList"];
+            [button setImage:image forState:UIControlStateDisabled];
+            [button setTitle:NSLocalizedString(@"Chat", nil) forState:UIControlStateNormal];
+            [button sizeToFit];
+            [button setEnabled:NO];
+            self.navigationItem.titleView = button;
+            
+            // 左边按钮
+            NSMutableArray *array = [NSMutableArray array];
+            
+            UIButton* navLeftButton = [UIButton buttonWithType:UIButtonTypeCustom];
+            self.navLeftButton = navLeftButton;
+            image = [UIImage imageNamed:@"Navigation-Qpid"];
+            [navLeftButton setImage:image forState:UIControlStateNormal];
+            [navLeftButton sizeToFit];
+            [navLeftButton addTarget:self action:@selector(pageLeftAction:) forControlEvents:UIControlEventTouchUpInside];
+            barButtonItem = [[UIBarButtonItem alloc] initWithCustomView:navLeftButton];
+            
+            [array addObject:barButtonItem];
+            
+            [self.navigationItem setLeftBarButtonItems:array animated:YES];
+            
+            self.navRightButton = nil;
+            [self.navigationItem setRightBarButtonItems:nil animated:YES];
+            
+        }break;
+        default:
+            break;
+    }
 }
 
 #pragma mark - 左右页面切换
 - (void)pageLeftAction:(id)sender {
-    if( _curIndex > 0 ) {
-        _curIndex -= 1;
+    if( _curIndex > PageTypeSetting ) {
+        _curIndex = (PageType)(_curIndex - 1);
         [self reloadData:YES animated:YES];
     }
 
 }
 
 - (void)pageRightAction:(id)sender {
-    if( _curIndex < self.items.count ) {
-        _curIndex += 1;
+    if( _curIndex < PageTypeContacList ) {
+        _curIndex = (PageType)(_curIndex + 1);
         [self reloadData:YES animated:YES];
     }
 }
@@ -125,7 +238,7 @@
 - (void)resetParam {
     self.bLivechatAutoLoginAlready = NO;
     
-    _curIndex = 1;
+    _curIndex = PageTypeLadyList;
 //    _curIndex = 0;
     
     SettingViewController* vc = [[SettingViewController alloc] initWithNibName:nil bundle:nil];
@@ -152,7 +265,7 @@
         }
         
         [self.pagingScrollView displayPagingViewAtIndex:_curIndex animated:animated];
-        
+
         [self setupNavigationBar];
     }
     
@@ -182,6 +295,18 @@
         }break;
         default:
             break;
+    }
+}
+
+/**
+ *  刷新邀请人数
+ */
+- (void)reloadInviteUsers {
+    NSArray<LiveChatUserItemObject*>* array = [self.liveChatManager getInviteUsers];
+    NSInteger badge = MIN(array.count, 99);
+    
+    if( _curIndex == 1 ) {
+        self.navRightButton.badgeValue = badge > 0?[NSString stringWithFormat:@"%ld", (long)badge]:nil;
     }
 }
 
@@ -218,8 +343,9 @@
 - (void)pagingScrollView:(PZPagingScrollView *)pagingScrollView didShowPageViewForDisplay:(NSUInteger)index {
     NSLog(@"MainViewController::didShowPageViewForDisplay( index : %ld )", (unsigned long)index);
     self.navigationController.navigationBar.userInteractionEnabled = YES;
-    _curIndex = index;
+    _curIndex = (PageType)index;
     [self setupNavigationBar];
+    [self reloadInviteUsers];
     
     // 跟踪用户行为
     [self reportDidShowPage:index];
@@ -230,6 +356,13 @@
 }
 
 #pragma mark - LivechatManager回调
+- (void)onRecvTextMsg:(LiveChatMsgItemObject* _Nonnull)msg {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        NSLog(@"MainViewController::onRecvTextMsg( 接收文本消息回调 )");
+        [self reloadInviteUsers];
+    });
+}
+
 - (void)OnLogin:(LCC_ERR_TYPE)errType errMsg:(NSString* _Nonnull)errmsg isAutoLogin:(BOOL)isAutoLogin {
     dispatch_async(dispatch_get_main_queue(), ^{
         NSLog(@"MainViewController::OnLogin( 接收LivechatManager登录通知回调 isAutoLogin : %d )", isAutoLogin);
@@ -271,6 +404,13 @@
 }
 
 #pragma mark - LoginManager回调
+- (void)manager:(LoginManager * _Nonnull)manager onLogin:(BOOL)success loginItem:(LoginItemObject * _Nullable)loginItem errnum:(NSString * _Nonnull)errnum errmsg:(NSString * _Nonnull)errmsg {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        NSLog(@"MainViewController::onLogin( 接收登录回调 success : %d )", success);
+//        [self reloadData:YES animated:NO];
+    });
+}
+
 - (void)manager:(LoginManager * _Nonnull)manager onLogout:(BOOL)kick {
     dispatch_async(dispatch_get_main_queue(), ^{
         NSLog(@"MainViewController::onLogout( 接收注销回调 kick : %d )", kick);
@@ -281,7 +421,7 @@
             // 可能是被踢或者注销, 重新检测, 弹出登录框
             [self checkLogin:YES];
             
-            _curIndex = 1;
+            _curIndex = PageTypeLadyList;
             [self reloadData:YES animated:NO];
 
         }

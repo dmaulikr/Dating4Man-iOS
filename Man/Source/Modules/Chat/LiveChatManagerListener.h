@@ -11,6 +11,7 @@
 #import "LiveChatUserItemObject.h"
 #import "LiveChatMsgItemObject.h"
 #import "LiveChatUserInfoItemObject.h"
+#import "LiveChatMsgPhotoItem.h"
 
 @protocol LiveChatManagerDelegate <NSObject>
 @optional
@@ -205,5 +206,46 @@
  *  @param userList 用户数组
  */
 - (void)onGetUsersHistoryMessage:(BOOL)success errNo:(NSString* _Nonnull)errNo errMsg:(NSString* _Nonnull)errMsg userIds:(NSArray<NSString*>* _Nonnull)userIds;
+
+
+/**
+ *  获取私密照图片回调
+ *
+ *  @param errType 结果类型
+ *  @param errNo   结果编码
+ *  @param errMsg  结果描述
+ *  @param msgList 与该私密照相关的消息列表
+ *  @param sizeType 私密照尺寸
+ */
+
+- (void)onGetPhoto:(LCC_ERR_TYPE)errType errNo:(NSString* _Nonnull)errNo errMsg:(NSString* _Nonnull)errMsg msgList:(NSArray<LiveChatMsgItemObject*>* _Nonnull)msgList sizeType:(GETPHOTO_PHOTOSIZE_TYPE)sizeType;
+
+/**
+ *  获取图片
+ *
+ *  @param msgItem 消息
+ */
+- (void)onRecvPhoto:(LiveChatMsgItemObject* _Nonnull)msgItem;
+
+/**
+ *  获取收费的图片
+ *
+ *  @param success 操作是否成功
+ *  @param errNo   结果类型
+ *  @param errMsg  结果描述
+ *  @param msgItem 消息
+ */
+- (void)onPhotoFee:(bool)success errNo:(NSString* _Nonnull) errNo errMsg:(NSString* _Nonnull) errMsg msgItem: (LiveChatMsgItemObject* _Nonnull) msgItem;
+
+/**
+ *  发送私密照信息回调
+ *
+ *  @param errType 结果类型
+ *  @param errNo   结果编码
+ *  @param errMsg  结果描述
+ *  @param msgItem 消息
+ */
+- (void)onSendPhoto:(LCC_ERR_TYPE) errType errNo:(NSString* _Nonnull) errNo errMsg:(NSString* _Nonnull) errMsg msgItem:(LiveChatMsgItemObject* _Nonnull) msgItem;
+
 
 @end

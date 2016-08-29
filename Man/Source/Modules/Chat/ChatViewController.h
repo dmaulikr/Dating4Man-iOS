@@ -52,6 +52,7 @@
 @property (nonatomic, strong) NSString *photoURL;
 
 @property (weak, nonatomic) IBOutlet KKCheckButton *emotionBtn;
+@property (weak, nonatomic) IBOutlet KKCheckButton *photoBtn;
 
 /**
  *  点击发送

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -15,7 +15,6 @@
                 <outlet property="inputView" destination="N5I-DH-CRa" id="Q0E-fK-pSn"/>
                 <outlet property="inputViewBottom" destination="NE2-hi-bhS" id="fkk-MO-aCM"/>
                 <outlet property="inputViewHeight" destination="Sn6-z7-vbd" id="uJe-x7-edM"/>
-                <outlet property="loadingView" destination="uiX-6h-ekE" id="JJ7-oA-8bW"/>
                 <outlet property="loginButton" destination="0JX-hq-EZM" id="mcd-SX-UL3"/>
                 <outlet property="passwordTextField" destination="PWQ-en-vfc" id="Kwf-Cb-dXi"/>
                 <outlet property="separated2" destination="fca-Rb-yAC" id="lDe-pL-Qz1"/>
@@ -156,29 +155,6 @@
                         <constraint firstItem="PWQ-en-vfc" firstAttribute="width" secondItem="N5I-DH-CRa" secondAttribute="width" id="yFh-Aj-jQ4"/>
                     </constraints>
                 </view>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uiX-6h-ekE" userLabel="LoadingView">
-                    <rect key="frame" x="167" y="328" width="80" height="80"/>
-                    <subviews>
-                        <view alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yD4-MK-obX">
-                            <rect key="frame" x="0.0" y="0.0" width="80" height="80"/>
-                            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                        </view>
-                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="2h0-JI-d4K">
-                            <rect key="frame" x="21" y="22" width="37" height="37"/>
-                        </activityIndicatorView>
-                    </subviews>
-                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                    <constraints>
-                        <constraint firstItem="yD4-MK-obX" firstAttribute="height" secondItem="uiX-6h-ekE" secondAttribute="height" id="4rl-od-0Jq"/>
-                        <constraint firstAttribute="width" constant="80" id="AYH-cp-H59"/>
-                        <constraint firstItem="yD4-MK-obX" firstAttribute="top" secondItem="uiX-6h-ekE" secondAttribute="top" id="T9g-JG-1sH"/>
-                        <constraint firstItem="2h0-JI-d4K" firstAttribute="centerY" secondItem="uiX-6h-ekE" secondAttribute="centerY" id="dLe-xQ-lz2"/>
-                        <constraint firstItem="yD4-MK-obX" firstAttribute="leading" secondItem="uiX-6h-ekE" secondAttribute="leading" id="h4N-YO-KpG"/>
-                        <constraint firstAttribute="height" constant="80" id="hOv-gE-NvE"/>
-                        <constraint firstItem="yD4-MK-obX" firstAttribute="width" secondItem="uiX-6h-ekE" secondAttribute="width" id="ocm-T6-3Tc"/>
-                        <constraint firstItem="2h0-JI-d4K" firstAttribute="centerX" secondItem="uiX-6h-ekE" secondAttribute="centerX" id="x3I-nc-J09"/>
-                    </constraints>
-                </view>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
@@ -191,8 +167,6 @@
                 <constraint firstItem="CQ7-As-YTB" firstAttribute="width" secondItem="i5M-Pr-FkT" secondAttribute="width" id="X62-dh-cr6"/>
                 <constraint firstItem="N5I-DH-CRa" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="36" id="bop-ab-rGE"/>
                 <constraint firstItem="CQ7-As-YTB" firstAttribute="height" secondItem="i5M-Pr-FkT" secondAttribute="height" id="cA0-rp-bA0"/>
-                <constraint firstItem="uiX-6h-ekE" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="cSt-Zs-ruR"/>
-                <constraint firstItem="uiX-6h-ekE" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="kdb-fu-9aj"/>
                 <constraint firstItem="E8d-W8-Asf" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="36" id="wGx-tV-XbZ"/>
             </constraints>
             <nil key="simulatedTopBarMetrics"/>

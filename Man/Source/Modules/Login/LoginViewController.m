@@ -60,7 +60,8 @@
         }break;
         case LOGINING:{
             // 登陆中
-            self.loadingView.hidden = NO;
+            [self showLoading];
+            
             self.emailTextField.text = self.manager.lastInputEmail;
             self.passwordTextField.text = self.manager.lastInputPassword;
         }break;
@@ -118,7 +119,6 @@
 - (void)initCustomParam {
     [super initCustomParam];
     self.backTitle = NSLocalizedString(@"Login", nil);
-    
     self.manager = [LoginManager manager];
     [self.manager addDelegate:self];
 }
@@ -147,7 +147,6 @@
     [super setupContainView];
     
     [self setupInputView];
-    [self setupLoadingView];
     [self setupCheckCodeView];
 }
 
@@ -160,13 +159,6 @@
     self.signUpButton.layer.cornerRadius = 5.0f;
     self.signUpButton.layer.masksToBounds = YES;
     
-}
-
-- (void)setupLoadingView {
-    // 初始化菊花
-    self.loadingView.layer.cornerRadius = 5.0f;
-    self.loadingView.layer.masksToBounds = YES;
-    self.loadingView.hidden = YES;
 }
 
 - (void)setupCheckCodeView {
@@ -202,12 +194,10 @@
         [alertView show];
         return;
     }
-    
-    
-    
+
     if( [self.manager login:self.emailTextField.text password:self.passwordTextField.text checkcode:self.checkcodeTextField.text] == LOGINING ) {
         // 开始登陆
-        self.loadingView.hidden = NO;
+        [self showLoading];
     }
     
     if( self.manager.status == LOGINED ) {
@@ -386,7 +376,8 @@
 - (void)manager:(LoginManager *)manager onLogin:(BOOL)success loginItem:(LoginItemObject *)loginItem errnum:(NSString *)errnum errmsg:(NSString *)errmsg {
     dispatch_async(dispatch_get_main_queue(), ^{
         NSLog(@"LoginViewController::onLogin( success : %d )", success);
-        self.loadingView.hidden = YES;
+        [self hideLoading];
+        
         if( success ) {
             // 登陆成功
             KKNavigationController *nvc = (KKNavigationController* )self.navigationController;

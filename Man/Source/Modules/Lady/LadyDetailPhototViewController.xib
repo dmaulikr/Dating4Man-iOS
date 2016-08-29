@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -9,7 +9,6 @@
             <connections>
                 <outlet property="closeBtn" destination="k5g-lc-5AL" id="lWK-rF-HIo"/>
                 <outlet property="errorMsg" destination="cOV-zF-Vmc" id="rxo-a2-OPo"/>
-                <outlet property="loadingView" destination="cly-y1-pLB" id="jsr-0u-gVc"/>
                 <outlet property="pageControl" destination="5RD-7C-vCc" id="Agn-gB-5H9"/>
                 <outlet property="photoScrollView" destination="eZb-Qf-Isy" id="Jp8-uB-qBh"/>
                 <outlet property="retryBtn" destination="3p1-q0-1yJ" id="PBb-xa-uC1"/>
@@ -21,24 +20,6 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cly-y1-pLB" userLabel="loadingView">
-                    <rect key="frame" x="158" y="304" width="60" height="60"/>
-                    <subviews>
-                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="Zmf-YU-aCs">
-                            <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
-                            <color key="color" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        </activityIndicatorView>
-                    </subviews>
-                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                    <constraints>
-                        <constraint firstItem="Zmf-YU-aCs" firstAttribute="top" secondItem="cly-y1-pLB" secondAttribute="top" id="654-wc-l99"/>
-                        <constraint firstAttribute="trailing" secondItem="Zmf-YU-aCs" secondAttribute="trailing" id="Jdb-LO-lxL"/>
-                        <constraint firstAttribute="width" constant="60" id="V6R-ME-iEy"/>
-                        <constraint firstAttribute="bottom" secondItem="Zmf-YU-aCs" secondAttribute="bottom" id="Y8q-U5-tNu"/>
-                        <constraint firstItem="Zmf-YU-aCs" firstAttribute="leading" secondItem="cly-y1-pLB" secondAttribute="leading" id="fRq-03-2cq"/>
-                        <constraint firstAttribute="height" constant="60" id="hGj-CX-Oa7"/>
-                    </constraints>
-                </view>
                 <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="6" translatesAutoresizingMaskIntoConstraints="NO" id="5RD-7C-vCc">
                     <rect key="frame" x="144" y="550" width="87" height="37"/>
                 </pageControl>
@@ -46,19 +27,19 @@
                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                 </scrollView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Trouble loading full-sized image." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cOV-zF-Vmc" userLabel="错误信息">
-                    <rect key="frame" x="0.0" y="274" width="375" height="20"/>
+                    <rect key="frame" x="0.0" y="304" width="375" height="20"/>
                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3p1-q0-1yJ" userLabel="重新加载图片按钮">
-                    <rect key="frame" x="123" y="374" width="130" height="32"/>
+                    <rect key="frame" x="128" y="336" width="120" height="36"/>
                     <color key="backgroundColor" red="0.074509803920000006" green="0.68235294120000001" blue="0.91372549020000005" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="32" id="CgU-R2-nib"/>
-                        <constraint firstAttribute="width" constant="130" id="Fa1-yE-I5S"/>
+                        <constraint firstAttribute="height" constant="36" id="CgU-R2-nib"/>
+                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="120" id="Fa1-yE-I5S"/>
                     </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                     <state key="normal" title="Tap to retry" image="LookBigPhoto-Refresh"/>
                     <connections>
                         <action selector="retryAction:" destination="-1" eventType="touchUpInside" id="rnZ-sP-NnB"/>
@@ -82,27 +63,18 @@
                 <constraint firstItem="cOV-zF-Vmc" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="2rt-kU-16E"/>
                 <constraint firstItem="k5g-lc-5AL" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="16" id="5K2-Ly-Dko"/>
                 <constraint firstItem="5RD-7C-vCc" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="6Y3-35-MGG"/>
-                <constraint firstItem="cly-y1-pLB" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="FLY-tt-I4X"/>
+                <constraint firstItem="3p1-q0-1yJ" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="6ZF-pU-wNU"/>
                 <constraint firstItem="eZb-Qf-Isy" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="M95-Qb-T2C"/>
                 <constraint firstItem="5RD-7C-vCc" firstAttribute="bottom" secondItem="i5M-Pr-FkT" secondAttribute="bottom" constant="-80" id="POL-UH-eeK"/>
-                <constraint firstItem="eZb-Qf-Isy" firstAttribute="leading" secondItem="cOV-zF-Vmc" secondAttribute="leading" id="TOw-4G-cdl"/>
-                <constraint firstItem="3p1-q0-1yJ" firstAttribute="centerX" secondItem="cly-y1-pLB" secondAttribute="centerX" id="URg-fh-wuu"/>
                 <constraint firstItem="k5g-lc-5AL" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="16" id="VVn-s5-s9X"/>
+                <constraint firstItem="3p1-q0-1yJ" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" constant="20" id="fql-ve-ETr"/>
+                <constraint firstItem="cOV-zF-Vmc" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" constant="-20" id="lZn-Ap-dlY"/>
                 <constraint firstItem="eZb-Qf-Isy" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="n3X-W1-Jdb"/>
-                <constraint firstItem="3p1-q0-1yJ" firstAttribute="top" secondItem="cly-y1-pLB" secondAttribute="bottom" constant="10" id="nHW-3q-T5c"/>
-                <constraint firstItem="cly-y1-pLB" firstAttribute="top" secondItem="cOV-zF-Vmc" secondAttribute="bottom" constant="10" id="oSh-DP-gWx"/>
                 <constraint firstItem="cOV-zF-Vmc" firstAttribute="trailing" secondItem="i5M-Pr-FkT" secondAttribute="trailing" id="qqE-eZ-0HG"/>
-                <constraint firstItem="cly-y1-pLB" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="tk0-z2-zrl"/>
                 <constraint firstItem="eZb-Qf-Isy" firstAttribute="width" secondItem="i5M-Pr-FkT" secondAttribute="width" id="tmb-M6-Zwo"/>
-                <constraint firstItem="cOV-zF-Vmc" firstAttribute="centerX" secondItem="cly-y1-pLB" secondAttribute="centerX" id="xf2-Xs-vKf"/>
-                <constraint firstAttribute="bottom" secondItem="eZb-Qf-Isy" secondAttribute="bottom" id="y2n-Ho-KSm"/>
+                <constraint firstItem="eZb-Qf-Isy" firstAttribute="bottom" secondItem="i5M-Pr-FkT" secondAttribute="bottom" id="y2n-Ho-KSm"/>
             </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
-            <variation key="default">
-                <mask key="constraints">
-                    <exclude reference="TOw-4G-cdl"/>
-                </mask>
-            </variation>
             <point key="canvasLocation" x="240" y="156"/>
         </view>
     </objects>

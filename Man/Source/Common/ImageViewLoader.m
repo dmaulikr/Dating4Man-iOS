@@ -47,7 +47,9 @@
         
     } else if( self.path && self.path.length > 0 ) {
         // 尝试加在缓存图片
-        self.image = [UIImage imageWithContentsOfFile:self.path];
+        NSData *data = [NSData dataWithContentsOfFile:self.path];
+        self.image = [UIImage imageWithData:data];
+        
         if( self.image ) {
             // 直接显示图片
             return [self displayImage:YES];
@@ -97,7 +99,9 @@
                 if( [response isKindOfClass:[NSHTTPURLResponse class]] ) {
                     if( error == nil && ((NSHTTPURLResponse* )response).statusCode == 200 ) {
                         // 显示图片
-                        self.image = [UIImage imageWithContentsOfFile:self.path];
+                        NSData *data = [NSData dataWithContentsOfFile:self.path];
+                        self.image = [UIImage imageWithData:data];
+                        
                         [self displayImage:YES];
 
                         return;

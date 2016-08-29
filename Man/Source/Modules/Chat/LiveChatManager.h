@@ -170,4 +170,32 @@
  */
 - (LiveChatMsgItemObject* _Nullable)getLastMsg:(NSString* _Nonnull)userId;
 
+/**
+ *  发送图片
+ *
+ *  @param userId    用户Id
+ *  @param photoPath 私密照的路径
+ *
+ *  @return 私密照消息
+ */
+- (LiveChatMsgItemObject * _Nullable)SendPhoto:(NSString * _Nonnull)userId PhotoPath:(NSString * _Nonnull)photoPath;
+/**
+ *  购买图片
+ *
+ *  @param userId 用户Id
+ *  @param msgId  私密照Id
+ *
+ *  @return 处理结果
+ */
+- (BOOL)PhotoFee:(NSString * _Nonnull)userId msgId:(int)msgId;
+/**
+ *  根据消息ID获取图片(模糊或清晰)
+ *
+ *  @param userId   用户Id
+ *  @param msgId    私密照Id
+ *  @param sizeType 私密照大小类型
+ *
+ *  @return 处理结果
+ */
+- (BOOL)getPhoto:(NSString * _Nonnull)userId msgId:(int)msgId sizeType:(GETPHOTO_PHOTOSIZE_TYPE)sizeType;
 @end

@@ -15,12 +15,15 @@
 + (LiveChatWarningItemObject* _Nullable)getLiveChatWarningItemObject:(const LCWarningItem*)warningItem;
 + (LiveChatSystemItemObject* _Nullable)getLiveChatSystemItemObject:(const LCSystemItem*)systemItem;
 + (LiveChatCustomItemObject* _Nullable)getLiveChatCustomItemObject:(const LCCustomItem*)customItem;
++ (LiveChatMsgPhotoItem* _Nonnull)getLiveChatPhotoItemObject:(const LCPhotoItem*)photoItem;
 
 #pragma mark - message item
 + (LCTextItem* _Nullable)getLiveChatTextItem:(LiveChatTextItemObject* _Nonnull)text;
 + (LCWarningItem* _Nullable)getLiveChatWarningItem:(LiveChatWarningItemObject* _Nonnull)warning;
 + (LCSystemItem* _Nullable)getLiveChatSystemItem:(LiveChatSystemItemObject* _Nonnull)system;
 + (LCCustomItem* _Nullable)getLiveChatCustomItem:(LiveChatCustomItemObject* _Nonnull)custom;
++ (LCPhotoItem* _Nullable)getLiveChatPhotoItem:(LiveChatMsgPhotoItem* _Nonnull)photo;
+
 @end
 
 @implementation LiveChatItem2OCObj
@@ -174,6 +177,8 @@
         }
         else if (LCMessageItem::MT_Custom == msgItem->m_msgType) {
             obj.customMsg = [self getLiveChatCustomItemObject:msgItem->GetCustomItem()];
+        }else if (LCMessageItem::MT_Photo == msgItem->m_msgType) {
+            obj.secretPhoto = [self getLiveChatPhotoItemObject:msgItem->GetPhotoItem()];
         }
     }
     return obj;
@@ -287,6 +292,33 @@
     }
     return obj;
 }
+
+
+/**
+ *  获取自定义图片信息object
+ *
+ *  @param photoItem 自定义图片信息item
+ *
+ *  @return 自定义图片信息object
+ */
++ (LiveChatMsgPhotoItem* _Nonnull)getLiveChatPhotoItemObject:(const LCPhotoItem*)photoItem{
+        LiveChatMsgPhotoItem* obj = nil;
+    if (NULL != photoItem)
+    {
+        obj = [[LiveChatMsgPhotoItem alloc] init];
+        obj.photoId = [NSString stringWithUTF8String:photoItem->m_photoId.c_str()];
+        obj.photoDesc = [NSString stringWithUTF8String:photoItem->m_photoDesc.c_str()];
+        obj.sendId = [NSString stringWithUTF8String:photoItem->m_sendId.c_str()];
+        obj.showFuzzyFilePath = [NSString stringWithUTF8String:photoItem->m_showFuzzyFilePath.c_str()];
+        obj.thumbFuzzyFilePath = [NSString stringWithUTF8String:photoItem->m_thumbFuzzyFilePath.c_str()];
+        obj.srcFilePath = [NSString stringWithUTF8String:photoItem->m_srcFilePath.c_str()];
+        obj.showSrcFilePath = [NSString stringWithUTF8String:photoItem->m_showSrcFilePath.c_str()];
+        obj.thumbSrcFilePath = [NSString stringWithUTF8String:photoItem->m_thumbSrcFilePath.c_str()];
+        obj.charge = photoItem->m_charge;
+    }
+    return obj;
+}
+
 
 #pragma mark - message item
 /**
@@ -418,6 +450,36 @@
     }
     return customItem;
 }
+
+
+
+/**
+ *  获取图片信息item
+ *
+ *  @param photo 自定义图片信息object
+ *
+ *  @return 自定义图片信息item
+ */
+
++ (LCPhotoItem* _Nullable)getLiveChatPhotoItem:(LiveChatMsgPhotoItem* _Nonnull)photo
+{
+    LCPhotoItem* photoItem = new LCPhotoItem;
+    if (NULL != photoItem)
+    {
+        photoItem->m_photoId = [photo.photoId UTF8String];
+        photoItem->m_photoDesc = [photo.photoDesc UTF8String];
+        photoItem->m_sendId = [photo.sendId UTF8String];
+        photoItem->m_showFuzzyFilePath = [photo.showFuzzyFilePath UTF8String];
+        photoItem->m_thumbFuzzyFilePath = [photo.thumbFuzzyFilePath UTF8String];
+        photoItem->m_srcFilePath = [photo.srcFilePath UTF8String];
+        photoItem->m_showSrcFilePath = [photo.showSrcFilePath UTF8String];
+        photoItem->m_thumbSrcFilePath = [photo.thumbSrcFilePath UTF8String];
+        photoItem->m_charge = photo.isGetCharge;
+        
+    }
+    return photoItem;
+}
+
 
 #pragma mark - userinfo item
 /**

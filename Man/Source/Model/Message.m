@@ -18,6 +18,7 @@
         self.status = MessageStatusUnknow;
         self.text = [NSString string];
         self.attText = [[NSAttributedString alloc] init];
+        self.secretPhotoImage = [[UIImage alloc] init];
     }
     return self;
 }
@@ -30,6 +31,7 @@
         self.sender = (Sender)[[coder decodeObjectForKey:@"sender"] intValue];
         self.type = (Type)[[coder decodeObjectForKey:@"type"] intValue];
         self.status = (Status)[[coder decodeObjectForKey:@"status"] intValue];
+        self.secretPhotoImage = [coder decodeObjectForKey:@"secretPhotoImage"];
 
         
     }
@@ -43,6 +45,7 @@
     [coder encodeObject:[NSNumber numberWithInt:self.sender] forKey:@"sender"];
     [coder encodeObject:[NSNumber numberWithInt:self.type] forKey:@"type"];
     [coder encodeObject:[NSNumber numberWithInt:self.status] forKey:@"status"];
+    [coder encodeObject:self.secretPhotoImage forKey:@"secretPhotoImage"];
 }
 
 - (id)copyWithZone:(NSZone *)zone {
@@ -53,6 +56,7 @@
     messageItem.sender = self.sender;
     messageItem.type = self.type;
     messageItem.status = self.status;
+    messageItem.secretPhotoImage = [self.secretPhotoImage copy];
     return messageItem;
 }
 @end

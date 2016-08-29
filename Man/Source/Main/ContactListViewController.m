@@ -7,8 +7,9 @@
 //
 
 #import "ContactListViewController.h"
-#import "ChatViewController.h"
+#import "ServerViewControllerManager.h"
 #import "ContactListTableViewCell.h"
+#import "ChatTextAttachment.h"
 
 #import "GetRecentContactListRequest.h"
 #import "GetLadyDetailRequest.h"
@@ -70,8 +71,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    
-    [self.navLeftButton addTarget:self.mainVC action:@selector(pageLeftAction:) forControlEvents:UIControlEventTouchUpInside];
+
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -147,34 +147,6 @@
 
 - (void)setupNavigationBar {
     [super setupNavigationBar];
-    UIBarButtonItem *barButtonItem = nil;
-    UIImage *image = nil;
-    UIButton* button = nil;
-    
-    // 标题
-    button = [UIButton buttonWithType:UIButtonTypeCustom];
-    image = [UIImage imageNamed:@"Navigation-ChatList"];
-    [button setImage:image forState:UIControlStateDisabled];
-    [button setTitle:NSLocalizedString(@"Chat", nil) forState:UIControlStateNormal];
-    [button sizeToFit];
-    [button setEnabled:NO];
-    self.navigationItem.titleView = button;
-    
-    // 左边按钮
-    NSMutableArray *array = [NSMutableArray array];
-    
-    image = [UIImage imageNamed:@"Navigation-Qpid"];
-    self.navLeftButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self.navLeftButton setImage:image forState:UIControlStateNormal];
-    [self.navLeftButton sizeToFit];
-    [self.navLeftButton addTarget:self.mainVC action:@selector(pageLeftAction:) forControlEvents:UIControlEventTouchUpInside];
-    barButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.navLeftButton ];
-    
-    [array addObject:barButtonItem];
-    
-    self.navigationItem.leftBarButtonItems = array;
-    
-    [self.mainVC setupNavigationBar];
 }
 
 - (void)setupContainView {
@@ -414,12 +386,9 @@
 
 #pragma mark - ContactListTableView回调
 - (void)tableView:(ContactListTableView *)tableView didSelectContact:(LadyRecentContactObject *)item {
-    ChatViewController *vc = [[ChatViewController alloc] initWithNibName:nil bundle:nil];
-    vc.firstname = item.firstname;
-    vc.womanId = item.womanId;
-    vc.photoURL = item.photoURL;
-
-    [self.navigationController pushViewController:vc animated:YES];
+    UIViewController* vc = [[ServerViewControllerManager manager] chatViewController:item.firstname womanid:item.womanId photoURL:item.photoURL];
+    KKNavigationController *nvc = (KKNavigationController *)self.navigationController;
+    [nvc pushViewController:vc animated:YES];
 }
 
 #pragma mark - ContactManager回调

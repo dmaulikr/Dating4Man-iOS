@@ -65,6 +65,8 @@
 #import "UIImageViewTopFit.h"
 #import "UIImageViewBottomFit.h"
 #import "UIImage+SolidColor.h"
+#import "UIImage+ScaleSize.h"
+#import "UIImage+Orientation.h"
 
 #pragma mark - ToolBar
 

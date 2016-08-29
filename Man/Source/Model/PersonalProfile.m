@@ -12,14 +12,14 @@
 
 - (BOOL)canUpdatePhoto {
     BOOL bFlag = NO;
+    VType vType = (VType)self.v_id;
+    
     PhotoStatus photoStatus = (PhotoStatus)self.photoStatus;
-    switch (photoStatus) {
-        case None:
-        case Yes:{
-            bFlag = YES;
-        }break;
-        default:
-            break;
+    if( vType == VType_Verifing && photoStatus == Yes ) {
+    } else if( vType == VType_Yes && photoStatus == Yes ) {
+    } else if( photoStatus == Verifing ) {
+    } else {
+        bFlag = YES;
     }
     return bFlag;
 }

@@ -472,6 +472,10 @@ static ContactManager* gManager = nil;
 {
     for (LadyRecentContactObject* recent : recents)
     {
+        // 不使用PHP接口获取的头像
+        recent.photoURL = nil;
+        recent.photoBigURL = nil;
+        
         LadyRecentContactObject* theRecent = [self getRecentWithId:recent.womanId];
         if (nil != theRecent) {
             // 已存在，则更新数据
@@ -601,7 +605,30 @@ NSInteger sortRecent(id _Nonnull obj1, id _Nonnull obj2, void* _Nullable context
     recent.lasttime = (NSInteger)timestamp;
 }
 
+- (BOOL)isInChatUser:(NSString* )userId {
+    BOOL bFlag = NO;
+    @synchronized (self.recentItems) {
+        for (LadyRecentContactObject* recent in self.recentItems) {
+            if ([recent.womanId isEqualToString:userId]) {
+                bFlag = recent.isInChat;
+                break;
+            }
+        }
+    }
+    return bFlag;
+}
+
 #pragma mark - 登陆管理器回调 (LoginManagerDelegate)
+- (void)manager:(LoginManager * _Nonnull)manager onLogin:(BOOL)success loginItem:(LoginItemObject * _Nullable)loginItem errnum:(NSString * _Nonnull)errnum errmsg:(NSString * _Nonnull)errmsg {
+    NSLog(@"ContactManager::onLogin( 登陆管理器回调登录 success : %d )", success);
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if( success ) {
+            // 登录成功获取最近联系人
+            [self getRecentContact];
+        }
+    });
+}
+
 - (void)manager:(LoginManager * _Nonnull)manager onLogout:(BOOL)kick {
     NSLog(@"ContactManager::onLogout( 登陆管理器回调注销 kick : %d )", kick);
     

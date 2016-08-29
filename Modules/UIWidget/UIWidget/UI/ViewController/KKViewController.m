@@ -10,7 +10,7 @@
 #import "UIColor+RGB.h"
 
 @interface KKViewController ()
-
+@property (assign) NSInteger loadingCount;
 @end
 
 @implementation KKViewController
@@ -18,6 +18,7 @@
     self = [super init];
     if (self) {
         // Custom initialization
+        self.loadingCount = 0;
         [self initCustomParam];
     }
     
@@ -63,6 +64,7 @@
     if (self) {
         // Custom initialization
         [self initCustomParam];
+       
     }
     
     return self;
@@ -84,6 +86,7 @@
         [UIView setAnimationsEnabled:YES];
         [self setupNavigationBar];
         [self setupContainView];
+        [self setupLoadingActivityView];
     }
 
 }
@@ -142,4 +145,44 @@
 
 - (void)backAction:(id)sender {
 }
+
+- (void)setupLoadingActivityView {
+    UIView *loadActivityView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 80, 80)];
+    [self.view addSubview:loadActivityView];
+    
+    loadActivityView.layer.cornerRadius = 5.0f;
+    loadActivityView.layer.masksToBounds = YES;
+    loadActivityView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.6];
+    
+    UIActivityIndicatorView *loadingActivity = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(0, 0, 80, 80)];
+    [loadActivityView addSubview:loadingActivity];
+
+    CGFloat centerX = [UIScreen mainScreen].bounds.size.width * 0.5f;
+    CGFloat centerY = [UIScreen mainScreen].bounds.size.height * 0.5f;
+    loadActivityView.center = CGPointMake(centerX, centerY);
+
+    self.loadActivityView = loadActivityView;
+    self.loadActivityView.hidden = YES;
+    
+    loadingActivity.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
+    [loadingActivity startAnimating];
+    
+//    [[UIApplication sharedApplication].keyWindow.rootViewController.view addSubview:loadActivityView];
+//    [[UIApplication sharedApplication].keyWindow addSubview:loadActivityView];
+}
+
+- (void)showLoading {
+    self.loadingCount++;
+    self.loadActivityView.hidden = NO;
+    self.view.userInteractionEnabled = NO;
+}
+
+- (void)hideLoading {
+    self.loadingCount--;
+    if( self.loadingCount <= 0 ) {
+        self.loadActivityView.hidden = YES;
+        self.view.userInteractionEnabled = YES;
+    }
+}
+
 @end

@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		500689871D3CF97A00CF5D10 /* UIImageViewFill.m in Sources */ = {isa = PBXBuildFile; fileRef = 500689861D3CF97A00CF5D10 /* UIImageViewFill.m */; };
+		5025CB751D66FAC00055DE48 /* UIImage+ScaleSize.m in Sources */ = {isa = PBXBuildFile; fileRef = 5025CB741D66FAC00055DE48 /* UIImage+ScaleSize.m */; };
+		503D783A1D6BF65800DADD6C /* UIImage+Orientation.m in Sources */ = {isa = PBXBuildFile; fileRef = 503D78391D6BF65800DADD6C /* UIImage+Orientation.m */; };
 		503F02001D29FC6C00F2F17E /* UIImage+SolidColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 503F01FD1D29FC6C00F2F17E /* UIImage+SolidColor.m */; };
 		50720F3E1D20BC75008D6022 /* UIImageViewBottomFit.m in Sources */ = {isa = PBXBuildFile; fileRef = 50720F3D1D20BC75008D6022 /* UIImageViewBottomFit.m */; };
 		50D704BB1C72BC1B008D1A71 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50D704BA1C72BC1B008D1A71 /* QuartzCore.framework */; };
@@ -64,6 +66,10 @@
 /* Begin PBXFileReference section */
 		500689851D3CF97A00CF5D10 /* UIImageViewFill.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIImageViewFill.h; sourceTree = "<group>"; };
 		500689861D3CF97A00CF5D10 /* UIImageViewFill.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIImageViewFill.m; sourceTree = "<group>"; };
+		5025CB731D66FAC00055DE48 /* UIImage+ScaleSize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ScaleSize.h"; sourceTree = "<group>"; };
+		5025CB741D66FAC00055DE48 /* UIImage+ScaleSize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ScaleSize.m"; sourceTree = "<group>"; };
+		503D78381D6BF65800DADD6C /* UIImage+Orientation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Orientation.h"; sourceTree = "<group>"; };
+		503D78391D6BF65800DADD6C /* UIImage+Orientation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Orientation.m"; sourceTree = "<group>"; };
 		503F01FC1D29FC6C00F2F17E /* UIImage+SolidColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+SolidColor.h"; sourceTree = "<group>"; };
 		503F01FD1D29FC6C00F2F17E /* UIImage+SolidColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+SolidColor.m"; sourceTree = "<group>"; };
 		506C3AB81D3FB907003E5B9C /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -220,6 +226,8 @@
 			children = (
 				525081971CBCF17F006CF6D3 /* UIImage+Circle.h */,
 				525081981CBCF17F006CF6D3 /* UIImage+Circle.m */,
+				5025CB731D66FAC00055DE48 /* UIImage+ScaleSize.h */,
+				5025CB741D66FAC00055DE48 /* UIImage+ScaleSize.m */,
 				503F01FC1D29FC6C00F2F17E /* UIImage+SolidColor.h */,
 				503F01FD1D29FC6C00F2F17E /* UIImage+SolidColor.m */,
 				50720F3C1D20BC75008D6022 /* UIImageViewBottomFit.h */,
@@ -228,6 +236,8 @@
 				500689861D3CF97A00CF5D10 /* UIImageViewFill.m */,
 				50F1253F1D1BE4FA00435C12 /* UIImageViewTopFit.h */,
 				50F125401D1BE4FA00435C12 /* UIImageViewTopFit.m */,
+				503D78381D6BF65800DADD6C /* UIImage+Orientation.h */,
+				503D78391D6BF65800DADD6C /* UIImage+Orientation.m */,
 			);
 			path = UIImage;
 			sourceTree = "<group>";
@@ -559,8 +569,10 @@
 				CAF53875171FE62E005DCB49 /* CustomUIView.m in Sources */,
 				CAA9CDA4186045E5008EFE0F /* UIScreen+DPI.m in Sources */,
 				503F02001D29FC6C00F2F17E /* UIImage+SolidColor.m in Sources */,
+				503D783A1D6BF65800DADD6C /* UIImage+Orientation.m in Sources */,
 				50F125411D1BE4FA00435C12 /* UIImageViewTopFit.m in Sources */,
 				CAF5388D171FEF6E005DCB49 /* MYUIStatusBar.m in Sources */,
+				5025CB751D66FAC00055DE48 /* UIImage+ScaleSize.m in Sources */,
 				CA23B868172137AB00458560 /* WebViewController.m in Sources */,
 				CA42BD161797811A0011F458 /* UIWebView+Custom.m in Sources */,
 			);

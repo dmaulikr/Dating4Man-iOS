@@ -11,6 +11,8 @@
 @interface KKViewController : UIViewController
 @property (nonatomic, assign) BOOL viewDidAppearEver;
 @property (nonatomic, strong) NSString* backTitle;
+@property (nonatomic, strong) UIView *loadActivityView;
+
 
 #pragma mark - 横屏切换
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation;
@@ -34,4 +36,14 @@
  *  初始化界面
  */
 - (void)setupContainView;
+
+/**
+ *  显示加载状态
+ */
+- (void)showLoading;
+/**
+ *  隐藏加载状态
+ */
+- (void)hideLoading;
+
 @end

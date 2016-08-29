@@ -8,8 +8,15 @@
 
 #import <Foundation/Foundation.h>
 
+typedef enum VType {
+    VType_None = 0,
+    VType_Verifing,
+    VType_Fail,
+    VType_Yes,
+} VType;
+
 typedef enum PhotoStatus {
-    None,
+    None = 0,
     Yes,
     Verifing,
     InstitutionsFail,
@@ -90,7 +97,7 @@ typedef enum ResumeStatus {
 @property (nonatomic,strong) NSString *money;
 
 /** 身份状态 */
-@property (nonatomic,assign) int checkId;
+@property (nonatomic,assign) int v_id;
 /** 相册标识 */
 @property (nonatomic,assign) int photoStatus;
 

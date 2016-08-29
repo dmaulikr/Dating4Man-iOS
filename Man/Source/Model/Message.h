@@ -14,7 +14,10 @@
 @property (nonatomic, assign) NSInteger msgId;
 @property (nonatomic, strong) NSAttributedString* attText;
 @property (nonatomic, strong) NSString* text;
+/** 私密照数据 */
+@property (nonatomic,strong) UIImage *secretPhotoImage;
 @property (nonatomic, strong) LiveChatMsgItemObject* liveChatMsgItemObject;
+
 
 typedef enum {
     MessageSenderUnknow = 0,

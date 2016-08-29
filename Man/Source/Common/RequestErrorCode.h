@@ -20,4 +20,9 @@
 #define CHECKCODE_EMPTY @"MBCE1012"
 #define CHECKCODE_ERROR @"MBCE1013"
 
+/**
+ *  Livechat消费余额不足
+ */
+#define LIVECHAT_NO_MONEY @"ERROR00003"
+
 #endif /* RequestErrorCode_h */

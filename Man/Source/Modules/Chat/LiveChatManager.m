@@ -60,6 +60,12 @@ static LiveChatManager* gManager = nil;
 - (void)onUseTryTicket:(LCC_ERR_TYPE)errType errMsg:(const char* _Nonnull)errMsg userId:(const char* _Nonnull)userId tickEvent:(TRY_TICKET_EVENT)tickEvent;
 - (void)onRecvTryTalkBegin:(LCUserItem* _Nonnull)userItem time:(int)time;
 - (void)onRecvTryTalkEnd:(LCUserItem* _Nonnull)userItem;
+
+// ---- 私密照 ----
+- (void)onGetPhoto:(LCC_ERR_TYPE)errType errNo:(const string&)errNo errMsg:(const string&)errMsg msgList:(const LCMessageList&)msgList sizeType:(GETPHOTO_PHOTOSIZE_TYPE)sizeType;
+- (void)onPhotoFee:(bool) success errNo:(const string&) errNo errMsg:(const string&) errMsg msgItem: (LCMessageItem*) msgItem;
+- (void)onRecvPhoto:(LCMessageItem*) msgItem;
+- (void)onSendPhoto:(LCC_ERR_TYPE) errType errNo:(const string&) errNo errMsg:(const string&) errMsg msgItem:(LCMessageItem*) msgItem;
 @end
 
 #pragma mark - LiveChatManManagerListener
@@ -232,10 +238,33 @@ public:
     virtual void OnSendVoice(LCC_ERR_TYPE errType, const string& errNo, const string& errMsg, LCMessageItem* msgItem){};
     
 #pragma mark - photo listener
-    virtual void OnGetPhoto(LCC_ERR_TYPE errType, const string& errNo, const string& errMsg, LCMessageItem* msgItem){};
-    virtual void OnPhotoFee(bool success, const string& errNo, const string& errMsg, LCMessageItem* msgItem){};
-    virtual void OnRecvPhoto(LCMessageItem* msgItem){};
-    virtual void OnSendPhoto(LCC_ERR_TYPE errType, const string& errNo, const string& errMsg, LCMessageItem* msgItem){};
+    virtual void OnGetPhoto(GETPHOTO_PHOTOSIZE_TYPE sizeType, LCC_ERR_TYPE errType, const string& errNo, const string& errMsg, const LCMessageList& msgList)
+    {
+        if (nil != gManager) {
+            [gManager onGetPhoto:errType errNo:errNo errMsg:errMsg msgList:msgList sizeType:sizeType];
+        }
+    };
+    
+    virtual void OnPhotoFee(bool success, const string& errNo, const string& errMsg, LCMessageItem* msgItem)
+    {
+        if (nil != gManager) {
+            [gManager onPhotoFee:success errNo:errNo errMsg:errMsg msgItem:msgItem];
+        }
+    };
+    
+    virtual void OnRecvPhoto(LCMessageItem* msgItem)
+    {
+        if (nil != gManager) {
+            [gManager onRecvPhoto:msgItem];
+        }
+    };
+    
+    virtual void OnSendPhoto(LCC_ERR_TYPE errType, const string& errNo, const string& errMsg, LCMessageItem* msgItem)
+    {
+        if (nil != gManager) {
+            [gManager onSendPhoto:errType errNo:errNo errMsg:errMsg msgItem:msgItem];
+        }
+    };
     
 #pragma mark - video listener
     virtual void OnGetVideo(LCC_ERR_TYPE errType,
@@ -1296,5 +1325,165 @@ static LiveChatManManagerListener *gLiveChatManManagerListener;
     return object;
 }
 
+#pragma mark - 私密照消息处理
+
+
+/**
+ *  发送图片
+ *
+ *  @param userId    用户Id
+ *  @param photoPath 私密照的路径
+ *
+ *  @return 私密照消息
+ */
+- (LiveChatMsgItemObject *)SendPhoto:(NSString *)userId PhotoPath:(NSString *)photoPath {
+    LiveChatMsgItemObject* msgObj = nil;
+    if (NULL != mILiveChatManManager)
+    {
+        const char* pUserId = [userId UTF8String];
+        const char* pText = [photoPath UTF8String];
+        LCMessageItem* msgItem = mILiveChatManManager->SendPhoto(pUserId, pText);
+        if (NULL != msgItem) {
+            msgObj = [LiveChatItem2OCObj getLiveChatMsgItemObject:msgItem];
+        }
+    }
+    return msgObj;
+}
+
+/**
+ *  购买图片
+ *
+ *  @param userId 用户Id
+ *  @param msgId  私密照Id
+ *
+ *  @return 处理结果
+ */
+- (BOOL)PhotoFee:(NSString *)userId msgId:(int)msgId {
+    
+       BOOL result = NO;
+    if (NULL != mILiveChatManManager)
+    {
+        const char* pUserId = [userId UTF8String];
+        result = mILiveChatManManager->PhotoFee(pUserId, msgId);
+    }
+    
+    return result;
+}
+
+/**
+ *  根据消息ID获取图片(模糊或清晰)
+ *
+ *  @param userId   女士Id
+ *  @param msgId    私密照Id
+ *  @param sizeType 私密照大小类型
+ *
+ *  @return 处理结果
+ */
+- (BOOL)getPhoto:(NSString *)userId msgId:(int)msgId sizeType:(GETPHOTO_PHOTOSIZE_TYPE)sizeType{
+    BOOL result = NO; 
+    if (NULL != mILiveChatManManager)
+    {
+        const char* pUserId = [userId UTF8String];
+        result = mILiveChatManManager->GetPhoto(pUserId, msgId, sizeType);
+    }
+    
+    return result;
+}
+
+
+
+
+
+/**
+ *  获取用户图片信息
+ *
+ *  @param errType 结果类型
+ *  @param errNo   结果编号
+ *  @param errMsg  结果描述
+ *  @param msgItem 消息
+ */
+- (void)onGetPhoto:(LCC_ERR_TYPE)errType errNo:(const string&)errNo errMsg:(const string&)errMsg msgList:(const LCMessageList&)msgList sizeType:(GETPHOTO_PHOTOSIZE_TYPE)sizeType
+{
+    NSArray<LiveChatMsgItemObject*>* msgListObj = [LiveChatItem2OCObj getLiveChatMsgArray:msgList];
+    NSString* nsErrNo = [NSString stringWithUTF8String:errNo.c_str()];
+    NSString* nsErrMsg = [NSString stringWithUTF8String:errMsg.c_str()];
+    @synchronized(self.delegates)
+    {
+        for (NSValue* value in self.delegates)
+        {
+            id<LiveChatManagerDelegate> delegate = (id<LiveChatManagerDelegate>)value.nonretainedObjectValue;
+            if( [delegate respondsToSelector:@selector(onGetPhoto:errNo:errMsg:msgList:sizeType:)] ) {
+                [delegate onGetPhoto:errType errNo:nsErrNo errMsg:nsErrMsg msgList:msgListObj sizeType:sizeType];
+            }
+        }
+    }
+}
+
+/**
+ *  获取收费的图片
+ *
+ *  @param success 操作是否成功
+ *  @param errNo   结果类型
+ *  @param errMsg  结果描述
+ *  @param msgItem 消息
+ */
+- (void)onPhotoFee:(bool)success errNo:(const string&) errNo errMsg:(const string&) errMsg msgItem: (LCMessageItem*) msgItem {
+    LiveChatMsgItemObject* msgObj = [LiveChatItem2OCObj getLiveChatMsgItemObject:msgItem];
+    NSString* nsErrNo = [NSString stringWithUTF8String:errNo.c_str()];
+    NSString* nsErrMsg = [NSString stringWithUTF8String:errMsg.c_str()];
+    @synchronized(self.delegates)
+    {
+        for (NSValue* value in self.delegates)
+        {
+            id<LiveChatManagerDelegate> delegate = (id<LiveChatManagerDelegate>)value.nonretainedObjectValue;
+            if( [delegate respondsToSelector:@selector(onPhotoFee:errNo:errMsg:msgItem:)] ) {
+                [delegate onPhotoFee:success errNo:nsErrNo errMsg:nsErrMsg msgItem:msgObj];
+            }
+        }
+    }
+}
+
+/**
+ *  获取图片
+ *
+ *  @param msgItem 消息
+ */
+- (void)onRecvPhoto:(LCMessageItem*) msgItem {
+    LiveChatMsgItemObject* msgObj = [LiveChatItem2OCObj getLiveChatMsgItemObject:msgItem];
+    @synchronized (self.delegates)
+    {
+        for (NSValue* value in self.delegates)
+        {
+            id<LiveChatManagerDelegate> delegate = (id<LiveChatManagerDelegate>)value.nonretainedObjectValue;
+            if ([delegate respondsToSelector:@selector(onRecvPhoto:)]) {
+                [delegate onRecvPhoto:msgObj];
+            }
+        }
+    }
+}
+
+/**
+ *  发送图片
+ *
+ *  @param errType 结果类型
+ *  @param errNo   结果编码
+ *  @param errMsg  结果描述
+ *  @param msgItem 消息
+ */
+- (void)onSendPhoto:(LCC_ERR_TYPE) errType errNo:(const string&) errNo errMsg:(const string&) errMsg msgItem:(LCMessageItem*) msgItem {
+    LiveChatMsgItemObject* msgObj = [LiveChatItem2OCObj getLiveChatMsgItemObject:msgItem];
+    NSString* nsErrNo = [NSString stringWithUTF8String:errNo.c_str()];
+    NSString* nsErrMsg = [NSString stringWithUTF8String:errMsg.c_str()];
+    @synchronized(self.delegates)
+    {
+        for (NSValue* value in self.delegates)
+        {
+            id<LiveChatManagerDelegate> delegate = (id<LiveChatManagerDelegate>)value.nonretainedObjectValue;
+            if( [delegate respondsToSelector:@selector(onSendPhoto:errNo:errMsg:msgItem:)] ) {
+                [delegate onSendPhoto:errType errNo:nsErrNo errMsg:nsErrMsg msgItem:msgObj];
+            }
+        }
+    }
+}
 @end
 

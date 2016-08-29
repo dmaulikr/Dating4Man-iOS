@@ -22,6 +22,7 @@
 #define ROW_SIZE    @"ROW_SIZE"
 
 #define NSLocalizedStringFromSelf(key) NSLocalizedStringFromTable(key, [[self class] description], nil)
+#define NSLocalizedStringFromErrorCode(key) NSLocalizedStringFromTable(key, @"LocalizableErrorCode", nil)
 
 // objc_msgSend
 #define msgSend(...) ((void (*)(void *, SEL, UIView *))objc_msgSend)(__VA_ARGS__)

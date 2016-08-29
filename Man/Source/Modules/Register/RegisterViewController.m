@@ -545,12 +545,12 @@ typedef enum : NSUInteger {
     [array addObject:dictionary];
     
 //    //个人描述
-//    dictionary = [NSMutableDictionary dictionary];
-//    viewSize = CGSizeMake(self.tableView.frame.size.width, [CommonTextFieldTableViewCell cellHeight]);
-//    rowSize = [NSValue valueWithCGSize:viewSize];
-//    [dictionary setValue:rowSize forKey:ROW_SIZE];
-//    [dictionary setValue:[NSNumber numberWithInteger:RegisterMsgTypeDecribe] forKey:ROW_TYPE];
-//    [array addObject:dictionary];
+    dictionary = [NSMutableDictionary dictionary];
+    viewSize = CGSizeMake(self.tableView.frame.size.width, [CommonTextFieldTableViewCell cellHeight]);
+    rowSize = [NSValue valueWithCGSize:viewSize];
+    [dictionary setValue:rowSize forKey:ROW_SIZE];
+    [dictionary setValue:[NSNumber numberWithInteger:RegisterMsgTypeDecribe] forKey:ROW_TYPE];
+    [array addObject:dictionary];
     
     self.tableViewArray = array;
     
@@ -855,9 +855,9 @@ typedef enum : NSUInteger {
     }else{
         
         NSString *tipsPhoto = NSLocalizedStringFromSelf(@"TIPS_REGISTERMESSAGE_PHOTO");
-         NSString *tipsName = NSLocalizedStringFromSelf(@"TIPS_REGISTERMESSAGE_NAME");
-         NSString *tipsBirthday = NSLocalizedStringFromSelf(@"TIPS_REGISTERMESSAGE_BIRTHDAY");
-         NSString *tipsNationality = NSLocalizedStringFromSelf(@"TIPS_REGISTERMESSAGE_NATIONALITY");
+        NSString *tipsName = NSLocalizedStringFromSelf(@"TIPS_REGISTERMESSAGE_NAME");
+        NSString *tipsBirthday = NSLocalizedStringFromSelf(@"TIPS_REGISTERMESSAGE_BIRTHDAY");
+//        NSString *tipsNationality = NSLocalizedStringFromSelf(@"TIPS_REGISTERMESSAGE_NATIONALITY");
         NSString *confirm = NSLocalizedStringFromSelf(@"OK");
         
         if (!self.registerObj.headerImage) {
@@ -1035,7 +1035,7 @@ typedef enum : NSUInteger {
         
         FileCacheManager *manager = [FileCacheManager manager];
         
-        self.profilePhotoPath =  [manager imageUploadCachePath:self.registerObj.headerImage uploadImageName:@"headPhoto.png"];
+        self.profilePhotoPath =  [manager imageUploadCachePath:self.registerObj.headerImage fileName:@"headPhoto.jpg"];
         
         [self reloadData:YES];
         [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
@@ -1047,6 +1047,7 @@ typedef enum : NSUInteger {
 
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker{
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     [picker dismissViewControllerAnimated:YES completion:nil];
     
 }

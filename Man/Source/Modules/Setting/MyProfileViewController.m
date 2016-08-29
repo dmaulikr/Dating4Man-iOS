@@ -16,7 +16,7 @@
 #import "GetPersonProfileRequest.h"
 #import "StartEditResumeRequest.h"
 #import "UpdateProfileRequest.h"
-
+#import "MotifyPersonalProfileManager.h"
 
 typedef enum {
     RowTypePhoto,
@@ -268,7 +268,7 @@ typedef enum : NSUInteger {
 } CountryListName;
 
 
-@interface  MyProfileViewController()<CommonContentCellDelegate,MyProfileTopCellDelegate,UINavigationControllerDelegate, UIImagePickerControllerDelegate,UIActionSheetDelegate,UITextViewDelegate,NSXMLParserDelegate,UIAlertViewDelegate>{
+@interface  MyProfileViewController()<CommonContentCellDelegate,MyProfileTopCellDelegate,UINavigationControllerDelegate, UIImagePickerControllerDelegate,UIActionSheetDelegate,UITextViewDelegate,NSXMLParserDelegate,UIAlertViewDelegate,MotifyPersonalProfileManagerDelegate>{
     CGRect _orgFrame;
     CGRect _newFrame;
 }
@@ -303,6 +303,9 @@ typedef enum : NSUInteger {
 /** 上传图片 */
 @property (nonatomic,strong) UIImage *uploadingPhoto;
 
+/** 修改个人描述 */
+@property (nonatomic,strong) MotifyPersonalProfileManager *motifyManager;
+
 
 
 @end
@@ -323,6 +326,10 @@ typedef enum : NSUInteger {
     
     _orgFrame = CGRectZero;
     _newFrame = CGRectZero;
+    
+ self.motifyManager = [MotifyPersonalProfileManager manager];
+    self.motifyManager.delegate = self;
+    
 }
 
 
@@ -350,18 +357,12 @@ typedef enum : NSUInteger {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
     
-    [self setupLoadingView];
     if( !self.viewDidAppearEver ) {
-        self.loadingView.hidden = NO;
-        self.view.userInteractionEnabled = NO;
         [self setupXMLParser];
         [self getPersonalProfile];
     }
     
-    
 }
-
-
 
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
@@ -423,12 +424,6 @@ typedef enum : NSUInteger {
     
 }
 
-
-
-- (void)setupLoadingView{
-    self.loadingView.layer.cornerRadius = 5.0f;
-    self.loadingView.layer.masksToBounds = YES;
-}
 
 
 //设置xml解析
@@ -628,7 +623,9 @@ typedef enum : NSUInteger {
     if ([cell.detailText isFirstResponder]) {
         // 键盘收起
         if (self.personalDescription != nil) {
-            [self startEditResume:self.personalDescription];
+//            [self startEditResume:self.personalDescription];
+            [self showLoading];
+            [self.motifyManager motifyPersonalResume:self.personalDescription];
         }
         [cell.detailText resignFirstResponder];
     } else {
@@ -768,23 +765,18 @@ typedef enum : NSUInteger {
         self.uploadingPhoto = info[UIImagePickerControllerOriginalImage];
         
         FileCacheManager *manager = [FileCacheManager manager];
-        NSString *headPhotoPath = [manager imageUploadCachePath:self.uploadingPhoto uploadImageName:@"headPhoto.png"];
+        NSString *headPhotoPath = [manager imageUploadCachePath:self.uploadingPhoto fileName:@"headPhoto.jpg"];
+        [self showLoading];
         [self upLoadHeaderPhotoWithPath:headPhotoPath];
-        
-        self.view.userInteractionEnabled = NO;
-        self.loadingView.hidden = NO;
         [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
-
     }];
-    
     
 }
 
-
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker{
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     [picker dismissViewControllerAnimated:YES completion:^{
-        self.view.userInteractionEnabled = YES;
-        self.loadingView.hidden = YES;
+        [self hideLoading];
     }];
 }
 
@@ -797,9 +789,7 @@ typedef enum : NSUInteger {
     request.fileName = path;
     request.finishHandler = ^(BOOL success,NSString *error,NSString *errmsg){
         dispatch_async(dispatch_get_main_queue(), ^{
-            self.loadingView.hidden = YES;
-            self.view.userInteractionEnabled = YES;
-            
+            [self hideLoading];
             if (success) {
                 NSLog(@"MyProfileViewController::upLoadHeaderPhotoWithPath( 上传男士头像成功 )");
                 NSFileManager *manager = [NSFileManager defaultManager];
@@ -821,16 +811,13 @@ typedef enum : NSUInteger {
 }
 
 - (BOOL)getPersonalProfile{
-    self.loadingView.hidden = NO;
-    self.view.userInteractionEnabled = NO;
+    [self showLoading];
     
     self.sessionManager = [SessionRequestManager manager];
     GetPersonProfileRequest *request = [[GetPersonProfileRequest alloc] init];
     request.finishHandler = ^(BOOL success,PersonalProfile *item,NSString *error,NSString *errmsg){
         dispatch_async(dispatch_get_main_queue(), ^{
-            self.loadingView.hidden = YES;
-            self.view.userInteractionEnabled = YES;
-            
+            [self hideLoading];
             if (success) {
                 NSLog(@"MyProfileViewController::getPersonalProfile( 获取男士详情成功 )");
                 self.personalItem = item;
@@ -843,80 +830,80 @@ typedef enum : NSUInteger {
     return [self.sessionManager sendRequest:request];
 }
 
+//
+//- (BOOL)startEditResume:(NSString * _Nullable)resume {
+//    self.loadingView.hidden = NO;
+//    self.view.userInteractionEnabled = NO;
+//    
+//    self.sessionManager = [SessionRequestManager manager];
+//    StartEditResumeRequest *request = [[StartEditResumeRequest alloc] init];
+//    request.finishHandler = ^(BOOL success,NSString *error,NSString *errmsg) {
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            self.loadingView.hidden = YES;
+//            self.view.userInteractionEnabled = YES;
+//            
+//            if (success) {
+//                NSLog(@"MyProfileViewController::startEditResume( 开始计时成功 )");
+//                // 开始上传个人详情
+//                [self updateProfile:resume];
+//                
+//            } else {
+//                // 弹出错误
+//                NSString *tipsMessage = NSLocalizedStringFromSelf(@"Tips_Update_Fail");
+//                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:tipsMessage delegate:self cancelButtonTitle:NSLocalizedStringFromSelf(@"OK") otherButtonTitles:nil, nil];
+//                [alertView show];
+//            }
+//        });
+//    };
+//    
+//    return [self.sessionManager sendRequest:request];
+//}
 
-- (BOOL)startEditResume:(NSString * _Nullable)resume {
-    self.loadingView.hidden = NO;
-    self.view.userInteractionEnabled = NO;
-    
-    self.sessionManager = [SessionRequestManager manager];
-    StartEditResumeRequest *request = [[StartEditResumeRequest alloc] init];
-    request.finishHandler = ^(BOOL success,NSString *error,NSString *errmsg) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            self.loadingView.hidden = YES;
-            self.view.userInteractionEnabled = YES;
-            
-            if (success) {
-                NSLog(@"MyProfileViewController::startEditResume( 开始计时成功 )");
-                // 开始上传个人详情
-                [self updateProfile:resume];
-                
-            } else {
-                // 弹出错误
-                NSString *tipsMessage = NSLocalizedStringFromSelf(@"Tips_Update_Fail");
-                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:tipsMessage delegate:self cancelButtonTitle:NSLocalizedStringFromSelf(@"OK") otherButtonTitles:nil, nil];
-                [alertView show];
-            }
-        });
-    };
-    
-    return [self.sessionManager sendRequest:request];
-}
-
-- (BOOL)updateProfile:(NSString * _Nullable)resume{
-    self.loadingView.hidden = NO;
-    self.view.userInteractionEnabled = NO;
-    
-    self.sessionManager = [SessionRequestManager manager];
-    UpdateProfileRequest *request = [[UpdateProfileRequest alloc] init];
-    request.resume = resume;
-    request.height = self.personalItem.height;
-    request.weight = self.personalItem.weight;
-    request.smoke = self.personalItem.smoke;
-    request.drink = self.personalItem.drink;
-    request.religion = self.personalItem.religion;
-    request.education = self.personalItem.education;
-    request.profession = self.personalItem.profession;
-    request.ethnicity = self.personalItem.ethnicity;
-    request.income = self.personalItem.income;
-    request.children = self.personalItem.children;
-    request.interests = (NSMutableArray *)self.personalItem.interests;
-    request.finishHandler  = ^(BOOL success,BOOL motify,NSString *error,NSString *errmsg){
-        dispatch_async(dispatch_get_main_queue(), ^{
-            self.loadingView.hidden = YES;
-            self.view.userInteractionEnabled = YES;
-            
-            if( success ) {
-                NSLog(@"MyProfileViewController::updateProfile( 更新男士详情成功 )");
-                [self getPersonalProfile];
-                
-                if( !motify ) {
-                    NSString *tipsMessage = NSLocalizedStringFromSelf(@"Tips_Update_Fail");
-                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:tipsMessage delegate:self cancelButtonTitle:NSLocalizedStringFromSelf(@"OK") otherButtonTitles:nil, nil];
-                    [alertView show];
-                }
-                
-            } else {
-                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:errmsg delegate:self cancelButtonTitle:NSLocalizedStringFromSelf(@"OK") otherButtonTitles:nil, nil];
-                [alertView show];
-            }
-            
-        });
-
-    };
-    
-    return [self.sessionManager sendRequest:request];
-}
-
+//- (BOOL)updateProfile:(NSString * _Nullable)resume{
+//    self.loadingView.hidden = NO;
+//    self.view.userInteractionEnabled = NO;
+//    
+//    self.sessionManager = [SessionRequestManager manager];
+//    UpdateProfileRequest *request = [[UpdateProfileRequest alloc] init];
+//    request.resume = resume;
+//    request.height = self.personalItem.height;
+//    request.weight = self.personalItem.weight;
+//    request.smoke = self.personalItem.smoke;
+//    request.drink = self.personalItem.drink;
+//    request.religion = self.personalItem.religion;
+//    request.education = self.personalItem.education;
+//    request.profession = self.personalItem.profession;
+//    request.ethnicity = self.personalItem.ethnicity;
+//    request.income = self.personalItem.income;
+//    request.children = self.personalItem.children;
+//    request.interests = (NSMutableArray *)self.personalItem.interests;
+//    request.finishHandler  = ^(BOOL success,BOOL motify,NSString *error,NSString *errmsg){
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            self.loadingView.hidden = YES;
+//            self.view.userInteractionEnabled = YES;
+//            
+//            if( success ) {
+//                NSLog(@"MyProfileViewController::updateProfile( 更新男士详情成功 )");
+//                [self getPersonalProfile];
+//                
+//                if( !motify ) {
+//                    NSString *tipsMessage = NSLocalizedStringFromSelf(@"Tips_Update_Fail");
+//                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:tipsMessage delegate:self cancelButtonTitle:NSLocalizedStringFromSelf(@"OK") otherButtonTitles:nil, nil];
+//                    [alertView show];
+//                }
+//                
+//            } else {
+//                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:errmsg delegate:self cancelButtonTitle:NSLocalizedStringFromSelf(@"OK") otherButtonTitles:nil, nil];
+//                [alertView show];
+//            }
+//            
+//        });
+//
+//    };
+//    
+//    return [self.sessionManager sendRequest:request];
+//}
+//
 
 #pragma mark - 输入回调
 - (void)textViewDidBeginEditing:(UITextView *)textView{
@@ -968,15 +955,16 @@ typedef enum : NSUInteger {
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
     if ([text isEqualToString:@"\n"]){
-        self.loadingView.hidden = NO;
-        [self startEditResume:textView.text];
+//        self.loadingView.hidden = NO;
+        [self showLoading];
+//        [self startEditResume:textView.text];
+        [self.motifyManager motifyPersonalResume:textView.text];
         // 判断输入的字是否是回车，即按下return
         [textView resignFirstResponder];
         return NO;
     }
     return YES;
 }
-
 
 #pragma mark - 弹框提示处理
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
@@ -1042,5 +1030,19 @@ typedef enum : NSUInteger {
 
 - (void)keyboardDidShow:(NSNotification *)notification {
     self.view.userInteractionEnabled = YES;
+}
+
+
+
+- (void)motifyPersonalProfileResult:(MotifyPersonalProfileManager *)manager result:(BOOL)success {
+    if (!success) {
+        [self hideLoading];
+        NSString *tipsMessage = NSLocalizedStringFromSelf(@"Tips_Update_Fail");
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:tipsMessage delegate:self cancelButtonTitle:NSLocalizedStringFromSelf(@"OK") otherButtonTitles:nil, nil];
+        [alertView show];
+    }else {
+        [self hideLoading];
+        [self getPersonalProfile];
+    }
 }
 @end

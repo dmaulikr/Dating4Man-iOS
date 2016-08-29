@@ -10,6 +10,7 @@
 		501B168D1C746D380023865B /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 501B168C1C746D380023865B /* Security.framework */; };
 		501B168F1C746D3F0023865B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 501B168E1C746D3F0023865B /* Foundation.framework */; };
 		501B16911C746D440023865B /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 501B16901C746D440023865B /* MobileCoreServices.framework */; };
+		503D783D1D6C00B300DADD6C /* LocalizableErrorCode.strings in Resources */ = {isa = PBXBuildFile; fileRef = 503D783B1D6C00B300DADD6C /* LocalizableErrorCode.strings */; };
 		503F03421D2A01E200F2F17E /* AnalyticsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 503F020A1D2A01E200F2F17E /* AnalyticsManager.m */; };
 		503F03431D2A01E200F2F17E /* GoogleAnalyticsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 503F020C1D2A01E200F2F17E /* GoogleAnalyticsViewController.m */; };
 		503F03441D2A01E200F2F17E /* ScreenItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 503F020E1D2A01E200F2F17E /* ScreenItem.m */; };
@@ -63,29 +64,6 @@
 		503F03781D2A01E200F2F17E /* LadyListTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 503F02741D2A01E200F2F17E /* LadyListTableView.m */; };
 		503F03791D2A01E200F2F17E /* MyProfileTopTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 503F02761D2A01E200F2F17E /* MyProfileTopTableViewCell.m */; };
 		503F037A1D2A01E200F2F17E /* MyProfileTopTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 503F02771D2A01E200F2F17E /* MyProfileTopTableViewCell.xib */; };
-		503F037B1D2A01E200F2F17E /* CheckServerItemObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 503F027A1D2A01E200F2F17E /* CheckServerItemObject.m */; };
-		503F037C1D2A01E200F2F17E /* Contact.m in Sources */ = {isa = PBXBuildFile; fileRef = 503F027C1D2A01E200F2F17E /* Contact.m */; };
-		503F037D1D2A01E200F2F17E /* LadyDetailItemObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 503F027E1D2A01E200F2F17E /* LadyDetailItemObject.m */; };
-		503F037E1D2A01E200F2F17E /* LadyRecentContactObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 503F02801D2A01E200F2F17E /* LadyRecentContactObject.m */; };
-		503F037F1D2A01E200F2F17E /* LiveChatCustomItemObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 503F02821D2A01E200F2F17E /* LiveChatCustomItemObject.m */; };
-		503F03801D2A01E200F2F17E /* LiveChatMsgItemObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 503F02841D2A01E200F2F17E /* LiveChatMsgItemObject.m */; };
-		503F03811D2A01E200F2F17E /* LiveChatMsgProcResultObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 503F02861D2A01E200F2F17E /* LiveChatMsgProcResultObject.m */; };
-		503F03821D2A01E200F2F17E /* LiveChatSystemItemObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 503F02881D2A01E200F2F17E /* LiveChatSystemItemObject.m */; };
-		503F03831D2A01E200F2F17E /* LiveChatTextItemObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 503F028A1D2A01E200F2F17E /* LiveChatTextItemObject.m */; };
-		503F03841D2A01E200F2F17E /* LiveChatUserInfoItemObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 503F028C1D2A01E200F2F17E /* LiveChatUserInfoItemObject.m */; };
-		503F03851D2A01E200F2F17E /* LiveChatUserItemObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 503F028E1D2A01E200F2F17E /* LiveChatUserItemObject.m */; };
-		503F03861D2A01E200F2F17E /* LiveChatWarningItemObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 503F02901D2A01E200F2F17E /* LiveChatWarningItemObject.m */; };
-		503F03871D2A01E200F2F17E /* LoginItemObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 503F02921D2A01E200F2F17E /* LoginItemObject.m */; };
-		503F03881D2A01E200F2F17E /* Message.m in Sources */ = {isa = PBXBuildFile; fileRef = 503F02941D2A01E200F2F17E /* Message.m */; };
-		503F03891D2A01E200F2F17E /* OtherGetCountItemObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 503F02961D2A01E200F2F17E /* OtherGetCountItemObject.m */; };
-		503F038A1D2A01E200F2F17E /* PersonalProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 503F02981D2A01E200F2F17E /* PersonalProfile.m */; };
-		503F038B1D2A01E200F2F17E /* PublicItemObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 503F029A1D2A01E200F2F17E /* PublicItemObject.m */; };
-		503F038C1D2A01E200F2F17E /* QueryLadyListItemObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 503F029C1D2A01E200F2F17E /* QueryLadyListItemObject.m */; };
-		503F038D1D2A01E200F2F17E /* RegisterItemObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 503F029E1D2A01E200F2F17E /* RegisterItemObject.m */; };
-		503F038E1D2A01E200F2F17E /* RegisterProfileObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 503F02A01D2A01E200F2F17E /* RegisterProfileObject.m */; };
-		503F038F1D2A01E200F2F17E /* SiteItemObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 503F02A21D2A01E200F2F17E /* SiteItemObject.m */; };
-		503F03901D2A01E200F2F17E /* SynConfigItemObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 503F02A41D2A01E200F2F17E /* SynConfigItemObject.m */; };
-		503F03911D2A01E200F2F17E /* VideoItemObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 503F02A61D2A01E200F2F17E /* VideoItemObject.m */; };
 		503F03921D2A01E200F2F17E /* ChatViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 503F02A91D2A01E200F2F17E /* ChatViewController.xib */; };
 		503F03931D2A01E200F2F17E /* ChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 503F02AC1D2A01E200F2F17E /* ChatViewController.m */; };
 		503F03951D2A01E200F2F17E /* LiveChatItem2OCObj.m in Sources */ = {isa = PBXBuildFile; fileRef = 503F02B01D2A01E200F2F17E /* LiveChatItem2OCObj.m */; };
@@ -163,16 +141,58 @@
 		50A611391D11410F00498C7C /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50A611381D11410F00498C7C /* StoreKit.framework */; };
 		50AAC0121D2CADD1003A1D43 /* ContactListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50AAC0141D2CADD1003A1D43 /* ContactListViewController.xib */; };
 		50AAC0161D2CAFB0003A1D43 /* MyProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50AAC0181D2CAFB0003A1D43 /* MyProfileViewController.xib */; };
+		50B7823A1D6D2C1A006ACB77 /* ChatViewFakeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B782391D6D2C1A006ACB77 /* ChatViewFakeController.m */; };
+		50B7823D1D6D2DC5006ACB77 /* ChatViewFakeController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50B7823B1D6D2DC5006ACB77 /* ChatViewFakeController.xib */; };
+		50B782441D6D3284006ACB77 /* ServerViewControllerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B782431D6D3284006ACB77 /* ServerViewControllerManager.m */; };
 		50D704B91C72BC05008D1A71 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50D704B81C72BC05008D1A71 /* QuartzCore.framework */; };
 		50D704C01C72BC7E008D1A71 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50D704BF1C72BC7E008D1A71 /* CoreGraphics.framework */; };
 		50D704C41C72BCE8008D1A71 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50D704C31C72BCE8008D1A71 /* CFNetwork.framework */; };
 		50D704C91C72BD41008D1A71 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50D704C81C72BD41008D1A71 /* SystemConfiguration.framework */; };
 		50D704CD1C72BD80008D1A71 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50D704CC1C72BD80008D1A71 /* CoreText.framework */; };
+		50E34CFE1D6FDFC3009EA170 /* ChatPhoneAlbumPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = 50E34CFD1D6FDFC3009EA170 /* ChatPhoneAlbumPhoto.m */; };
 		50E8E6991D2B6109006D1B94 /* LadyDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50E8E69B1D2B6109006D1B94 /* LadyDetailViewController.xib */; };
 		50E8E6A01D2BA06F006D1B94 /* MainViewController.strings in Resources */ = {isa = PBXBuildFile; fileRef = 50E8E69E1D2BA06F006D1B94 /* MainViewController.strings */; };
 		50E8E6A11D2BA07A006D1B94 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5069B3D61C705F23006ABC92 /* Main.storyboard */; };
 		50EAD2481D1777E1008B8F76 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 50EAD2461D1777E1008B8F76 /* Localizable.strings */; };
 		50EAD29D1D17E481008B8F76 /* UIWidgetBundle.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 50EAD2981D17DF4B008B8F76 /* UIWidgetBundle.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		520DC6D71D5C6A3600E8CC93 /* MotifyPersonalProfileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 520DC6D61D5C6A3600E8CC93 /* MotifyPersonalProfileManager.m */; };
+		524ED1B01D5C055C001F22D0 /* ChatPhotoCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 524ED1A91D5C055C001F22D0 /* ChatPhotoCollectionViewCell.m */; };
+		524ED1B11D5C055C001F22D0 /* ChatPhotoCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 524ED1AA1D5C055C001F22D0 /* ChatPhotoCollectionViewCell.xib */; };
+		524ED1B21D5C055C001F22D0 /* ChatPhotoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 524ED1AC1D5C055C001F22D0 /* ChatPhotoView.m */; };
+		524ED1B31D5C055C001F22D0 /* ChatPhotoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 524ED1AD1D5C055C001F22D0 /* ChatPhotoView.xib */; };
+		524ED1B41D5C055C001F22D0 /* ChatPhotoViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 524ED1AF1D5C055C001F22D0 /* ChatPhotoViewLayout.m */; };
+		524ED1B71D5C068E001F22D0 /* ChatSecretPhotoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 524ED1B61D5C068E001F22D0 /* ChatSecretPhotoViewController.m */; };
+		524ED1BA1D5C06D7001F22D0 /* ChatSecretPhotoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 524ED1B81D5C06D7001F22D0 /* ChatSecretPhotoViewController.xib */; };
+		524ED1EE1D5C08E1001F22D0 /* CheckServerItemObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 524ED1BD1D5C08E1001F22D0 /* CheckServerItemObject.m */; };
+		524ED1EF1D5C08E1001F22D0 /* Contact.m in Sources */ = {isa = PBXBuildFile; fileRef = 524ED1BF1D5C08E1001F22D0 /* Contact.m */; };
+		524ED1F01D5C08E1001F22D0 /* LadyDetailItemObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 524ED1C11D5C08E1001F22D0 /* LadyDetailItemObject.m */; };
+		524ED1F11D5C08E1001F22D0 /* LadyRecentContactObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 524ED1C31D5C08E1001F22D0 /* LadyRecentContactObject.m */; };
+		524ED1F21D5C08E1001F22D0 /* LiveChatCustomItemObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 524ED1C51D5C08E1001F22D0 /* LiveChatCustomItemObject.m */; };
+		524ED1F31D5C08E1001F22D0 /* LiveChatMsgItemObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 524ED1C71D5C08E1001F22D0 /* LiveChatMsgItemObject.m */; };
+		524ED1F41D5C08E1001F22D0 /* LiveChatMsgPhotoItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 524ED1C91D5C08E1001F22D0 /* LiveChatMsgPhotoItem.m */; };
+		524ED1F51D5C08E1001F22D0 /* LiveChatMsgProcResultObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 524ED1CB1D5C08E1001F22D0 /* LiveChatMsgProcResultObject.m */; };
+		524ED1F61D5C08E1001F22D0 /* LIveChatSendPhotoItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 524ED1CD1D5C08E1001F22D0 /* LIveChatSendPhotoItem.m */; };
+		524ED1F71D5C08E1001F22D0 /* LiveChatSystemItemObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 524ED1CF1D5C08E1001F22D0 /* LiveChatSystemItemObject.m */; };
+		524ED1F81D5C08E1001F22D0 /* LiveChatTextItemObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 524ED1D11D5C08E1001F22D0 /* LiveChatTextItemObject.m */; };
+		524ED1F91D5C08E1001F22D0 /* LiveChatUserInfoItemObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 524ED1D31D5C08E1001F22D0 /* LiveChatUserInfoItemObject.m */; };
+		524ED1FA1D5C08E1001F22D0 /* LiveChatUserItemObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 524ED1D51D5C08E1001F22D0 /* LiveChatUserItemObject.m */; };
+		524ED1FB1D5C08E1001F22D0 /* LiveChatWarningItemObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 524ED1D71D5C08E1001F22D0 /* LiveChatWarningItemObject.m */; };
+		524ED1FC1D5C08E1001F22D0 /* LoginItemObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 524ED1D91D5C08E1001F22D0 /* LoginItemObject.m */; };
+		524ED1FD1D5C08E1001F22D0 /* Message.m in Sources */ = {isa = PBXBuildFile; fileRef = 524ED1DB1D5C08E1001F22D0 /* Message.m */; };
+		524ED1FE1D5C08E1001F22D0 /* OtherGetCountItemObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 524ED1DD1D5C08E1001F22D0 /* OtherGetCountItemObject.m */; };
+		524ED1FF1D5C08E1001F22D0 /* PersonalProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 524ED1DF1D5C08E1001F22D0 /* PersonalProfile.m */; };
+		524ED2001D5C08E1001F22D0 /* PublicItemObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 524ED1E11D5C08E1001F22D0 /* PublicItemObject.m */; };
+		524ED2011D5C08E1001F22D0 /* QueryLadyListItemObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 524ED1E31D5C08E1001F22D0 /* QueryLadyListItemObject.m */; };
+		524ED2021D5C08E1001F22D0 /* RegisterItemObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 524ED1E51D5C08E1001F22D0 /* RegisterItemObject.m */; };
+		524ED2031D5C08E1001F22D0 /* RegisterProfileObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 524ED1E71D5C08E1001F22D0 /* RegisterProfileObject.m */; };
+		524ED2041D5C08E1001F22D0 /* SiteItemObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 524ED1E91D5C08E1001F22D0 /* SiteItemObject.m */; };
+		524ED2051D5C08E1001F22D0 /* SynConfigItemObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 524ED1EB1D5C08E1001F22D0 /* SynConfigItemObject.m */; };
+		524ED2061D5C08E1001F22D0 /* VideoItemObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 524ED1ED1D5C08E1001F22D0 /* VideoItemObject.m */; };
+		524ED2101D5C0E54001F22D0 /* ChatPhotoLadyTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 524ED20B1D5C0E54001F22D0 /* ChatPhotoLadyTableViewCell.m */; };
+		524ED2111D5C0E54001F22D0 /* ChatPhotoLadyTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 524ED20C1D5C0E54001F22D0 /* ChatPhotoLadyTableViewCell.xib */; };
+		524ED2121D5C0E54001F22D0 /* ChatPhotoSelfTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 524ED20E1D5C0E54001F22D0 /* ChatPhotoSelfTableViewCell.m */; };
+		524ED2131D5C0E54001F22D0 /* ChatPhotoSelfTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 524ED20F1D5C0E54001F22D0 /* ChatPhotoSelfTableViewCell.xib */; };
+		524ED2151D5C146B001F22D0 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 524ED2141D5C146B001F22D0 /* AVFoundation.framework */; };
 		80C6C0AFCC682233881C7AAA /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EC79040740288AC65F6AF51F /* libPods.a */; };
 		D105C7141D23AA420060BE6C /* AnalyticsScreenName.strings in Resources */ = {isa = PBXBuildFile; fileRef = D105C7131D23AA420060BE6C /* AnalyticsScreenName.strings */; };
 		D108DF0E1D2B5894006BDB9F /* ReportLadyRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = D108DF0D1D2B5894006BDB9F /* ReportLadyRequest.m */; };
@@ -255,6 +275,7 @@
 		501B168E1C746D3F0023865B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		501B16901C746D440023865B /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		502C16521D3C5F3A00AC8A88 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		503D783C1D6C00B300DADD6C /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/LocalizableErrorCode.strings; sourceTree = "<group>"; };
 		503F02091D2A01E200F2F17E /* AnalyticsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnalyticsManager.h; sourceTree = "<group>"; };
 		503F020A1D2A01E200F2F17E /* AnalyticsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnalyticsManager.m; sourceTree = "<group>"; };
 		503F020B1D2A01E200F2F17E /* GoogleAnalyticsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoogleAnalyticsViewController.h; sourceTree = "<group>"; };
@@ -348,52 +369,6 @@
 		503F02751D2A01E200F2F17E /* MyProfileTopTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyProfileTopTableViewCell.h; sourceTree = "<group>"; };
 		503F02761D2A01E200F2F17E /* MyProfileTopTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyProfileTopTableViewCell.m; sourceTree = "<group>"; };
 		503F02771D2A01E200F2F17E /* MyProfileTopTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyProfileTopTableViewCell.xib; sourceTree = "<group>"; };
-		503F02791D2A01E200F2F17E /* CheckServerItemObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckServerItemObject.h; sourceTree = "<group>"; };
-		503F027A1D2A01E200F2F17E /* CheckServerItemObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckServerItemObject.m; sourceTree = "<group>"; };
-		503F027B1D2A01E200F2F17E /* Contact.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Contact.h; sourceTree = "<group>"; };
-		503F027C1D2A01E200F2F17E /* Contact.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Contact.m; sourceTree = "<group>"; };
-		503F027D1D2A01E200F2F17E /* LadyDetailItemObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LadyDetailItemObject.h; sourceTree = "<group>"; };
-		503F027E1D2A01E200F2F17E /* LadyDetailItemObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LadyDetailItemObject.m; sourceTree = "<group>"; };
-		503F027F1D2A01E200F2F17E /* LadyRecentContactObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LadyRecentContactObject.h; sourceTree = "<group>"; };
-		503F02801D2A01E200F2F17E /* LadyRecentContactObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LadyRecentContactObject.m; sourceTree = "<group>"; };
-		503F02811D2A01E200F2F17E /* LiveChatCustomItemObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LiveChatCustomItemObject.h; sourceTree = "<group>"; };
-		503F02821D2A01E200F2F17E /* LiveChatCustomItemObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LiveChatCustomItemObject.m; sourceTree = "<group>"; };
-		503F02831D2A01E200F2F17E /* LiveChatMsgItemObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LiveChatMsgItemObject.h; sourceTree = "<group>"; };
-		503F02841D2A01E200F2F17E /* LiveChatMsgItemObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LiveChatMsgItemObject.m; sourceTree = "<group>"; };
-		503F02851D2A01E200F2F17E /* LiveChatMsgProcResultObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LiveChatMsgProcResultObject.h; sourceTree = "<group>"; };
-		503F02861D2A01E200F2F17E /* LiveChatMsgProcResultObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LiveChatMsgProcResultObject.m; sourceTree = "<group>"; };
-		503F02871D2A01E200F2F17E /* LiveChatSystemItemObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LiveChatSystemItemObject.h; sourceTree = "<group>"; };
-		503F02881D2A01E200F2F17E /* LiveChatSystemItemObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LiveChatSystemItemObject.m; sourceTree = "<group>"; };
-		503F02891D2A01E200F2F17E /* LiveChatTextItemObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LiveChatTextItemObject.h; sourceTree = "<group>"; };
-		503F028A1D2A01E200F2F17E /* LiveChatTextItemObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LiveChatTextItemObject.m; sourceTree = "<group>"; };
-		503F028B1D2A01E200F2F17E /* LiveChatUserInfoItemObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LiveChatUserInfoItemObject.h; sourceTree = "<group>"; };
-		503F028C1D2A01E200F2F17E /* LiveChatUserInfoItemObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LiveChatUserInfoItemObject.m; sourceTree = "<group>"; };
-		503F028D1D2A01E200F2F17E /* LiveChatUserItemObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LiveChatUserItemObject.h; sourceTree = "<group>"; };
-		503F028E1D2A01E200F2F17E /* LiveChatUserItemObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LiveChatUserItemObject.m; sourceTree = "<group>"; };
-		503F028F1D2A01E200F2F17E /* LiveChatWarningItemObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LiveChatWarningItemObject.h; sourceTree = "<group>"; };
-		503F02901D2A01E200F2F17E /* LiveChatWarningItemObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LiveChatWarningItemObject.m; sourceTree = "<group>"; };
-		503F02911D2A01E200F2F17E /* LoginItemObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginItemObject.h; sourceTree = "<group>"; };
-		503F02921D2A01E200F2F17E /* LoginItemObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginItemObject.m; sourceTree = "<group>"; };
-		503F02931D2A01E200F2F17E /* Message.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Message.h; sourceTree = "<group>"; };
-		503F02941D2A01E200F2F17E /* Message.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Message.m; sourceTree = "<group>"; };
-		503F02951D2A01E200F2F17E /* OtherGetCountItemObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OtherGetCountItemObject.h; sourceTree = "<group>"; };
-		503F02961D2A01E200F2F17E /* OtherGetCountItemObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OtherGetCountItemObject.m; sourceTree = "<group>"; };
-		503F02971D2A01E200F2F17E /* PersonalProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonalProfile.h; sourceTree = "<group>"; };
-		503F02981D2A01E200F2F17E /* PersonalProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonalProfile.m; sourceTree = "<group>"; };
-		503F02991D2A01E200F2F17E /* PublicItemObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublicItemObject.h; sourceTree = "<group>"; };
-		503F029A1D2A01E200F2F17E /* PublicItemObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublicItemObject.m; sourceTree = "<group>"; };
-		503F029B1D2A01E200F2F17E /* QueryLadyListItemObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QueryLadyListItemObject.h; sourceTree = "<group>"; };
-		503F029C1D2A01E200F2F17E /* QueryLadyListItemObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QueryLadyListItemObject.m; sourceTree = "<group>"; };
-		503F029D1D2A01E200F2F17E /* RegisterItemObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterItemObject.h; sourceTree = "<group>"; };
-		503F029E1D2A01E200F2F17E /* RegisterItemObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterItemObject.m; sourceTree = "<group>"; };
-		503F029F1D2A01E200F2F17E /* RegisterProfileObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterProfileObject.h; sourceTree = "<group>"; };
-		503F02A01D2A01E200F2F17E /* RegisterProfileObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterProfileObject.m; sourceTree = "<group>"; };
-		503F02A11D2A01E200F2F17E /* SiteItemObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SiteItemObject.h; sourceTree = "<group>"; };
-		503F02A21D2A01E200F2F17E /* SiteItemObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SiteItemObject.m; sourceTree = "<group>"; };
-		503F02A31D2A01E200F2F17E /* SynConfigItemObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SynConfigItemObject.h; sourceTree = "<group>"; };
-		503F02A41D2A01E200F2F17E /* SynConfigItemObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SynConfigItemObject.m; sourceTree = "<group>"; };
-		503F02A51D2A01E200F2F17E /* VideoItemObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoItemObject.h; sourceTree = "<group>"; };
-		503F02A61D2A01E200F2F17E /* VideoItemObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoItemObject.m; sourceTree = "<group>"; };
 		503F02AA1D2A01E200F2F17E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/ChatViewController.xib; sourceTree = "<group>"; };
 		503F02AB1D2A01E200F2F17E /* ChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatViewController.h; sourceTree = "<group>"; };
 		503F02AC1D2A01E200F2F17E /* ChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatViewController.m; sourceTree = "<group>"; };
@@ -532,15 +507,94 @@
 		50AAC0151D2CADD4003A1D43 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/ContactListViewController.strings; sourceTree = "<group>"; };
 		50AAC0171D2CAFB0003A1D43 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MyProfileViewController.xib; sourceTree = "<group>"; };
 		50AAC0191D2CAFB2003A1D43 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/MyProfileViewController.strings; sourceTree = "<group>"; };
+		50B782381D6D2C1A006ACB77 /* ChatViewFakeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatViewFakeController.h; sourceTree = "<group>"; };
+		50B782391D6D2C1A006ACB77 /* ChatViewFakeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatViewFakeController.m; sourceTree = "<group>"; };
+		50B7823C1D6D2DC5006ACB77 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/ChatViewFakeController.xib; sourceTree = "<group>"; };
+		50B7823E1D6D2DCA006ACB77 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/ChatViewFakeController.strings; sourceTree = "<group>"; };
+		50B782421D6D3284006ACB77 /* ServerViewControllerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServerViewControllerManager.h; sourceTree = "<group>"; };
+		50B782431D6D3284006ACB77 /* ServerViewControllerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServerViewControllerManager.m; sourceTree = "<group>"; };
+		50B8AA511D6ADC7300C10631 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/ChatSecretPhotoViewController.strings; sourceTree = "<group>"; };
 		50D704B81C72BC05008D1A71 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		50D704BF1C72BC7E008D1A71 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		50D704C31C72BCE8008D1A71 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		50D704C81C72BD41008D1A71 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		50D704CC1C72BD80008D1A71 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
+		50E34CFC1D6FDFC3009EA170 /* ChatPhoneAlbumPhoto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatPhoneAlbumPhoto.h; sourceTree = "<group>"; };
+		50E34CFD1D6FDFC3009EA170 /* ChatPhoneAlbumPhoto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatPhoneAlbumPhoto.m; sourceTree = "<group>"; };
 		50E8E69A1D2B6109006D1B94 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LadyDetailViewController.xib; sourceTree = "<group>"; };
 		50E8E69D1D2B610C006D1B94 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/LadyDetailViewController.strings; sourceTree = "<group>"; };
 		50E8E69F1D2BA06F006D1B94 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/MainViewController.strings; sourceTree = "<group>"; };
 		50EAD2471D1777E1008B8F76 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
+		520DC6D51D5C6A3600E8CC93 /* MotifyPersonalProfileManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MotifyPersonalProfileManager.h; sourceTree = "<group>"; };
+		520DC6D61D5C6A3600E8CC93 /* MotifyPersonalProfileManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MotifyPersonalProfileManager.m; sourceTree = "<group>"; };
+		524ED1A81D5C055C001F22D0 /* ChatPhotoCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatPhotoCollectionViewCell.h; sourceTree = "<group>"; };
+		524ED1A91D5C055C001F22D0 /* ChatPhotoCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatPhotoCollectionViewCell.m; sourceTree = "<group>"; };
+		524ED1AA1D5C055C001F22D0 /* ChatPhotoCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChatPhotoCollectionViewCell.xib; sourceTree = "<group>"; };
+		524ED1AB1D5C055C001F22D0 /* ChatPhotoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatPhotoView.h; sourceTree = "<group>"; };
+		524ED1AC1D5C055C001F22D0 /* ChatPhotoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatPhotoView.m; sourceTree = "<group>"; };
+		524ED1AD1D5C055C001F22D0 /* ChatPhotoView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChatPhotoView.xib; sourceTree = "<group>"; };
+		524ED1AE1D5C055C001F22D0 /* ChatPhotoViewLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatPhotoViewLayout.h; sourceTree = "<group>"; };
+		524ED1AF1D5C055C001F22D0 /* ChatPhotoViewLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatPhotoViewLayout.m; sourceTree = "<group>"; };
+		524ED1B51D5C068E001F22D0 /* ChatSecretPhotoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatSecretPhotoViewController.h; sourceTree = "<group>"; };
+		524ED1B61D5C068E001F22D0 /* ChatSecretPhotoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatSecretPhotoViewController.m; sourceTree = "<group>"; };
+		524ED1B91D5C06D7001F22D0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/ChatSecretPhotoViewController.xib; sourceTree = "<group>"; };
+		524ED1BC1D5C08E1001F22D0 /* CheckServerItemObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckServerItemObject.h; sourceTree = "<group>"; };
+		524ED1BD1D5C08E1001F22D0 /* CheckServerItemObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckServerItemObject.m; sourceTree = "<group>"; };
+		524ED1BE1D5C08E1001F22D0 /* Contact.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Contact.h; sourceTree = "<group>"; };
+		524ED1BF1D5C08E1001F22D0 /* Contact.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Contact.m; sourceTree = "<group>"; };
+		524ED1C01D5C08E1001F22D0 /* LadyDetailItemObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LadyDetailItemObject.h; sourceTree = "<group>"; };
+		524ED1C11D5C08E1001F22D0 /* LadyDetailItemObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LadyDetailItemObject.m; sourceTree = "<group>"; };
+		524ED1C21D5C08E1001F22D0 /* LadyRecentContactObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LadyRecentContactObject.h; sourceTree = "<group>"; };
+		524ED1C31D5C08E1001F22D0 /* LadyRecentContactObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LadyRecentContactObject.m; sourceTree = "<group>"; };
+		524ED1C41D5C08E1001F22D0 /* LiveChatCustomItemObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LiveChatCustomItemObject.h; sourceTree = "<group>"; };
+		524ED1C51D5C08E1001F22D0 /* LiveChatCustomItemObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LiveChatCustomItemObject.m; sourceTree = "<group>"; };
+		524ED1C61D5C08E1001F22D0 /* LiveChatMsgItemObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LiveChatMsgItemObject.h; sourceTree = "<group>"; };
+		524ED1C71D5C08E1001F22D0 /* LiveChatMsgItemObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LiveChatMsgItemObject.m; sourceTree = "<group>"; };
+		524ED1C81D5C08E1001F22D0 /* LiveChatMsgPhotoItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LiveChatMsgPhotoItem.h; sourceTree = "<group>"; };
+		524ED1C91D5C08E1001F22D0 /* LiveChatMsgPhotoItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LiveChatMsgPhotoItem.m; sourceTree = "<group>"; };
+		524ED1CA1D5C08E1001F22D0 /* LiveChatMsgProcResultObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LiveChatMsgProcResultObject.h; sourceTree = "<group>"; };
+		524ED1CB1D5C08E1001F22D0 /* LiveChatMsgProcResultObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LiveChatMsgProcResultObject.m; sourceTree = "<group>"; };
+		524ED1CC1D5C08E1001F22D0 /* LIveChatSendPhotoItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LIveChatSendPhotoItem.h; sourceTree = "<group>"; };
+		524ED1CD1D5C08E1001F22D0 /* LIveChatSendPhotoItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LIveChatSendPhotoItem.m; sourceTree = "<group>"; };
+		524ED1CE1D5C08E1001F22D0 /* LiveChatSystemItemObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LiveChatSystemItemObject.h; sourceTree = "<group>"; };
+		524ED1CF1D5C08E1001F22D0 /* LiveChatSystemItemObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LiveChatSystemItemObject.m; sourceTree = "<group>"; };
+		524ED1D01D5C08E1001F22D0 /* LiveChatTextItemObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LiveChatTextItemObject.h; sourceTree = "<group>"; };
+		524ED1D11D5C08E1001F22D0 /* LiveChatTextItemObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LiveChatTextItemObject.m; sourceTree = "<group>"; };
+		524ED1D21D5C08E1001F22D0 /* LiveChatUserInfoItemObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LiveChatUserInfoItemObject.h; sourceTree = "<group>"; };
+		524ED1D31D5C08E1001F22D0 /* LiveChatUserInfoItemObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LiveChatUserInfoItemObject.m; sourceTree = "<group>"; };
+		524ED1D41D5C08E1001F22D0 /* LiveChatUserItemObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LiveChatUserItemObject.h; sourceTree = "<group>"; };
+		524ED1D51D5C08E1001F22D0 /* LiveChatUserItemObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LiveChatUserItemObject.m; sourceTree = "<group>"; };
+		524ED1D61D5C08E1001F22D0 /* LiveChatWarningItemObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LiveChatWarningItemObject.h; sourceTree = "<group>"; };
+		524ED1D71D5C08E1001F22D0 /* LiveChatWarningItemObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LiveChatWarningItemObject.m; sourceTree = "<group>"; };
+		524ED1D81D5C08E1001F22D0 /* LoginItemObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginItemObject.h; sourceTree = "<group>"; };
+		524ED1D91D5C08E1001F22D0 /* LoginItemObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginItemObject.m; sourceTree = "<group>"; };
+		524ED1DA1D5C08E1001F22D0 /* Message.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Message.h; sourceTree = "<group>"; };
+		524ED1DB1D5C08E1001F22D0 /* Message.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Message.m; sourceTree = "<group>"; };
+		524ED1DC1D5C08E1001F22D0 /* OtherGetCountItemObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OtherGetCountItemObject.h; sourceTree = "<group>"; };
+		524ED1DD1D5C08E1001F22D0 /* OtherGetCountItemObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OtherGetCountItemObject.m; sourceTree = "<group>"; };
+		524ED1DE1D5C08E1001F22D0 /* PersonalProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonalProfile.h; sourceTree = "<group>"; };
+		524ED1DF1D5C08E1001F22D0 /* PersonalProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonalProfile.m; sourceTree = "<group>"; };
+		524ED1E01D5C08E1001F22D0 /* PublicItemObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublicItemObject.h; sourceTree = "<group>"; };
+		524ED1E11D5C08E1001F22D0 /* PublicItemObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublicItemObject.m; sourceTree = "<group>"; };
+		524ED1E21D5C08E1001F22D0 /* QueryLadyListItemObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QueryLadyListItemObject.h; sourceTree = "<group>"; };
+		524ED1E31D5C08E1001F22D0 /* QueryLadyListItemObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QueryLadyListItemObject.m; sourceTree = "<group>"; };
+		524ED1E41D5C08E1001F22D0 /* RegisterItemObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterItemObject.h; sourceTree = "<group>"; };
+		524ED1E51D5C08E1001F22D0 /* RegisterItemObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterItemObject.m; sourceTree = "<group>"; };
+		524ED1E61D5C08E1001F22D0 /* RegisterProfileObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterProfileObject.h; sourceTree = "<group>"; };
+		524ED1E71D5C08E1001F22D0 /* RegisterProfileObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterProfileObject.m; sourceTree = "<group>"; };
+		524ED1E81D5C08E1001F22D0 /* SiteItemObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SiteItemObject.h; sourceTree = "<group>"; };
+		524ED1E91D5C08E1001F22D0 /* SiteItemObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SiteItemObject.m; sourceTree = "<group>"; };
+		524ED1EA1D5C08E1001F22D0 /* SynConfigItemObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SynConfigItemObject.h; sourceTree = "<group>"; };
+		524ED1EB1D5C08E1001F22D0 /* SynConfigItemObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SynConfigItemObject.m; sourceTree = "<group>"; };
+		524ED1EC1D5C08E1001F22D0 /* VideoItemObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoItemObject.h; sourceTree = "<group>"; };
+		524ED1ED1D5C08E1001F22D0 /* VideoItemObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoItemObject.m; sourceTree = "<group>"; };
+		524ED20A1D5C0E54001F22D0 /* ChatPhotoLadyTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatPhotoLadyTableViewCell.h; sourceTree = "<group>"; };
+		524ED20B1D5C0E54001F22D0 /* ChatPhotoLadyTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatPhotoLadyTableViewCell.m; sourceTree = "<group>"; };
+		524ED20C1D5C0E54001F22D0 /* ChatPhotoLadyTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChatPhotoLadyTableViewCell.xib; sourceTree = "<group>"; };
+		524ED20D1D5C0E54001F22D0 /* ChatPhotoSelfTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatPhotoSelfTableViewCell.h; sourceTree = "<group>"; };
+		524ED20E1D5C0E54001F22D0 /* ChatPhotoSelfTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatPhotoSelfTableViewCell.m; sourceTree = "<group>"; };
+		524ED20F1D5C0E54001F22D0 /* ChatPhotoSelfTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChatPhotoSelfTableViewCell.xib; sourceTree = "<group>"; };
+		524ED2141D5C146B001F22D0 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		B0B03A7CF4C967DFCBFBCEDD /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		D105C7131D23AA420060BE6C /* AnalyticsScreenName.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = AnalyticsScreenName.strings; sourceTree = "<group>"; };
 		D108DF0C1D2B5894006BDB9F /* ReportLadyRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReportLadyRequest.h; sourceTree = "<group>"; };
@@ -554,6 +608,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				524ED2151D5C146B001F22D0 /* AVFoundation.framework in Frameworks */,
 				50A611391D11410F00498C7C /* StoreKit.framework in Frameworks */,
 				504CDB861C7FEACF00DBB429 /* libCommon-C-Library.a in Frameworks */,
 				501B16911C746D440023865B /* MobileCoreServices.framework in Frameworks */,
@@ -579,6 +634,7 @@
 		3C18718515A645E61DFB3BC3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				524ED2141D5C146B001F22D0 /* AVFoundation.framework */,
 				50A611381D11410F00498C7C /* StoreKit.framework */,
 				50D704CC1C72BD80008D1A71 /* CoreText.framework */,
 				50D704C81C72BD41008D1A71 /* SystemConfiguration.framework */,
@@ -605,7 +661,7 @@
 				503F02131D2A01E200F2F17E /* Common */,
 				503F02511D2A01E200F2F17E /* Header */,
 				503F02541D2A01E200F2F17E /* Main */,
-				503F02781D2A01E200F2F17E /* Model */,
+				524ED1BB1D5C08E1001F22D0 /* Model */,
 				503F02A71D2A01E200F2F17E /* Modules */,
 				503F03211D2A01E200F2F17E /* Request */,
 			);
@@ -639,6 +695,8 @@
 				503F02191D2A01E200F2F17E /* FileCacheManager.m */,
 				503F021A1D2A01E200F2F17E /* ImageViewLoader.h */,
 				503F021B1D2A01E200F2F17E /* ImageViewLoader.m */,
+				520DC6D51D5C6A3600E8CC93 /* MotifyPersonalProfileManager.h */,
+				520DC6D61D5C6A3600E8CC93 /* MotifyPersonalProfileManager.m */,
 				503F021C1D2A01E200F2F17E /* Reachability.h */,
 				503F021D1D2A01E200F2F17E /* Reachability.m */,
 				503F021E1D2A01E200F2F17E /* RequestErrorCode.h */,
@@ -646,6 +704,8 @@
 				503F02201D2A01E200F2F17E /* RequestManager.m */,
 				503F02211D2A01E200F2F17E /* ServerManager.h */,
 				503F02221D2A01E200F2F17E /* ServerManager.m */,
+				50B782421D6D3284006ACB77 /* ServerViewControllerManager.h */,
+				50B782431D6D3284006ACB77 /* ServerViewControllerManager.m */,
 				503F02231D2A01E200F2F17E /* UpdateAppManager.h */,
 				503F02241D2A01E200F2F17E /* UpdateAppManager.m */,
 				503F02251D2A01E200F2F17E /* View */,
@@ -774,59 +834,6 @@
 			path = Cell;
 			sourceTree = "<group>";
 		};
-		503F02781D2A01E200F2F17E /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				503F02791D2A01E200F2F17E /* CheckServerItemObject.h */,
-				503F027A1D2A01E200F2F17E /* CheckServerItemObject.m */,
-				503F027B1D2A01E200F2F17E /* Contact.h */,
-				503F027C1D2A01E200F2F17E /* Contact.m */,
-				503F027D1D2A01E200F2F17E /* LadyDetailItemObject.h */,
-				503F027E1D2A01E200F2F17E /* LadyDetailItemObject.m */,
-				503F027F1D2A01E200F2F17E /* LadyRecentContactObject.h */,
-				503F02801D2A01E200F2F17E /* LadyRecentContactObject.m */,
-				503F02811D2A01E200F2F17E /* LiveChatCustomItemObject.h */,
-				503F02821D2A01E200F2F17E /* LiveChatCustomItemObject.m */,
-				503F02831D2A01E200F2F17E /* LiveChatMsgItemObject.h */,
-				503F02841D2A01E200F2F17E /* LiveChatMsgItemObject.m */,
-				503F02851D2A01E200F2F17E /* LiveChatMsgProcResultObject.h */,
-				503F02861D2A01E200F2F17E /* LiveChatMsgProcResultObject.m */,
-				503F02871D2A01E200F2F17E /* LiveChatSystemItemObject.h */,
-				503F02881D2A01E200F2F17E /* LiveChatSystemItemObject.m */,
-				503F02891D2A01E200F2F17E /* LiveChatTextItemObject.h */,
-				503F028A1D2A01E200F2F17E /* LiveChatTextItemObject.m */,
-				503F028B1D2A01E200F2F17E /* LiveChatUserInfoItemObject.h */,
-				503F028C1D2A01E200F2F17E /* LiveChatUserInfoItemObject.m */,
-				503F028D1D2A01E200F2F17E /* LiveChatUserItemObject.h */,
-				503F028E1D2A01E200F2F17E /* LiveChatUserItemObject.m */,
-				503F028F1D2A01E200F2F17E /* LiveChatWarningItemObject.h */,
-				503F02901D2A01E200F2F17E /* LiveChatWarningItemObject.m */,
-				503F02911D2A01E200F2F17E /* LoginItemObject.h */,
-				503F02921D2A01E200F2F17E /* LoginItemObject.m */,
-				503F02931D2A01E200F2F17E /* Message.h */,
-				503F02941D2A01E200F2F17E /* Message.m */,
-				503F02951D2A01E200F2F17E /* OtherGetCountItemObject.h */,
-				503F02961D2A01E200F2F17E /* OtherGetCountItemObject.m */,
-				503F02971D2A01E200F2F17E /* PersonalProfile.h */,
-				503F02981D2A01E200F2F17E /* PersonalProfile.m */,
-				503F02991D2A01E200F2F17E /* PublicItemObject.h */,
-				503F029A1D2A01E200F2F17E /* PublicItemObject.m */,
-				503F029B1D2A01E200F2F17E /* QueryLadyListItemObject.h */,
-				503F029C1D2A01E200F2F17E /* QueryLadyListItemObject.m */,
-				503F029D1D2A01E200F2F17E /* RegisterItemObject.h */,
-				503F029E1D2A01E200F2F17E /* RegisterItemObject.m */,
-				503F029F1D2A01E200F2F17E /* RegisterProfileObject.h */,
-				503F02A01D2A01E200F2F17E /* RegisterProfileObject.m */,
-				503F02A11D2A01E200F2F17E /* SiteItemObject.h */,
-				503F02A21D2A01E200F2F17E /* SiteItemObject.m */,
-				503F02A31D2A01E200F2F17E /* SynConfigItemObject.h */,
-				503F02A41D2A01E200F2F17E /* SynConfigItemObject.m */,
-				503F02A51D2A01E200F2F17E /* VideoItemObject.h */,
-				503F02A61D2A01E200F2F17E /* VideoItemObject.m */,
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
 		503F02A71D2A01E200F2F17E /* Modules */ = {
 			isa = PBXGroup;
 			children = (
@@ -844,9 +851,15 @@
 		503F02A81D2A01E200F2F17E /* Chat */ = {
 			isa = PBXGroup;
 			children = (
+				524ED1B51D5C068E001F22D0 /* ChatSecretPhotoViewController.h */,
+				524ED1B61D5C068E001F22D0 /* ChatSecretPhotoViewController.m */,
+				524ED1B81D5C06D7001F22D0 /* ChatSecretPhotoViewController.xib */,
 				503F02AB1D2A01E200F2F17E /* ChatViewController.h */,
 				503F02AC1D2A01E200F2F17E /* ChatViewController.m */,
 				503F02A91D2A01E200F2F17E /* ChatViewController.xib */,
+				50B782381D6D2C1A006ACB77 /* ChatViewFakeController.h */,
+				50B782391D6D2C1A006ACB77 /* ChatViewFakeController.m */,
+				50B7823B1D6D2DC5006ACB77 /* ChatViewFakeController.xib */,
 				503F02AF1D2A01E200F2F17E /* LiveChatItem2OCObj.h */,
 				503F02B01D2A01E200F2F17E /* LiveChatItem2OCObj.m */,
 				503F02B11D2A01E200F2F17E /* LiveChatManager.h */,
@@ -863,6 +876,8 @@
 			children = (
 				503F02B51D2A01E200F2F17E /* ChatEmotion.h */,
 				503F02B61D2A01E200F2F17E /* ChatEmotion.m */,
+				50E34CFC1D6FDFC3009EA170 /* ChatPhoneAlbumPhoto.h */,
+				50E34CFD1D6FDFC3009EA170 /* ChatPhoneAlbumPhoto.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -870,6 +885,7 @@
 		503F02B71D2A01E200F2F17E /* View */ = {
 			isa = PBXGroup;
 			children = (
+				524ED1A71D5C055C001F22D0 /* ChatPhotoView */,
 				503F02B81D2A01E200F2F17E /* Cell */,
 				503F02C81D2A01E200F2F17E /* ChatEmotionView */,
 				503F02D11D2A01E200F2F17E /* ChatTextView */,
@@ -886,6 +902,12 @@
 				503F02B91D2A01E200F2F17E /* ChatCouponTableViewCell.h */,
 				503F02BA1D2A01E200F2F17E /* ChatCouponTableViewCell.m */,
 				503F02BB1D2A01E200F2F17E /* ChatCouponTableViewCell.xib */,
+				524ED20A1D5C0E54001F22D0 /* ChatPhotoLadyTableViewCell.h */,
+				524ED20B1D5C0E54001F22D0 /* ChatPhotoLadyTableViewCell.m */,
+				524ED20C1D5C0E54001F22D0 /* ChatPhotoLadyTableViewCell.xib */,
+				524ED20D1D5C0E54001F22D0 /* ChatPhotoSelfTableViewCell.h */,
+				524ED20E1D5C0E54001F22D0 /* ChatPhotoSelfTableViewCell.m */,
+				524ED20F1D5C0E54001F22D0 /* ChatPhotoSelfTableViewCell.xib */,
 				503F02BC1D2A01E200F2F17E /* ChatSystemTipsTableViewCell.h */,
 				503F02BD1D2A01E200F2F17E /* ChatSystemTipsTableViewCell.m */,
 				503F02BE1D2A01E200F2F17E /* ChatSystemTipsTableViewCell.xib */,
@@ -998,12 +1020,12 @@
 		503F02F91D2A01E200F2F17E /* Register */ = {
 			isa = PBXGroup;
 			children = (
-				503F02FA1D2A01E200F2F17E /* RegisterSecondStepViewController.xib */,
-				503F02FC1D2A01E200F2F17E /* RegisterViewController.xib */,
 				503F03021D2A01E200F2F17E /* RegisterSecondStepViewController.h */,
 				503F03031D2A01E200F2F17E /* RegisterSecondStepViewController.m */,
+				503F02FA1D2A01E200F2F17E /* RegisterSecondStepViewController.xib */,
 				503F03041D2A01E200F2F17E /* RegisterViewController.h */,
 				503F03051D2A01E200F2F17E /* RegisterViewController.m */,
+				503F02FC1D2A01E200F2F17E /* RegisterViewController.xib */,
 				503F03061D2A01E200F2F17E /* View */,
 			);
 			path = Register;
@@ -1130,6 +1152,7 @@
 				5069B3DE1C705F23006ABC92 /* Info.plist */,
 				5069B4161C706FB4006ABC92 /* InfoPlist.strings */,
 				50EAD2461D1777E1008B8F76 /* Localizable.strings */,
+				503D783B1D6C00B300DADD6C /* LocalizableErrorCode.strings */,
 				5069B3D61C705F23006ABC92 /* Main.storyboard */,
 				50408ECA1CFD6C300076951B /* Settings */,
 				503F02071D2A01E200F2F17E /* Source */,
@@ -1161,6 +1184,78 @@
 				50EAD2981D17DF4B008B8F76 /* UIWidgetBundle.bundle */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		524ED1A71D5C055C001F22D0 /* ChatPhotoView */ = {
+			isa = PBXGroup;
+			children = (
+				524ED1A81D5C055C001F22D0 /* ChatPhotoCollectionViewCell.h */,
+				524ED1A91D5C055C001F22D0 /* ChatPhotoCollectionViewCell.m */,
+				524ED1AA1D5C055C001F22D0 /* ChatPhotoCollectionViewCell.xib */,
+				524ED1AB1D5C055C001F22D0 /* ChatPhotoView.h */,
+				524ED1AC1D5C055C001F22D0 /* ChatPhotoView.m */,
+				524ED1AD1D5C055C001F22D0 /* ChatPhotoView.xib */,
+				524ED1AE1D5C055C001F22D0 /* ChatPhotoViewLayout.h */,
+				524ED1AF1D5C055C001F22D0 /* ChatPhotoViewLayout.m */,
+			);
+			path = ChatPhotoView;
+			sourceTree = "<group>";
+		};
+		524ED1BB1D5C08E1001F22D0 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				524ED1BC1D5C08E1001F22D0 /* CheckServerItemObject.h */,
+				524ED1BD1D5C08E1001F22D0 /* CheckServerItemObject.m */,
+				524ED1BE1D5C08E1001F22D0 /* Contact.h */,
+				524ED1BF1D5C08E1001F22D0 /* Contact.m */,
+				524ED1C01D5C08E1001F22D0 /* LadyDetailItemObject.h */,
+				524ED1C11D5C08E1001F22D0 /* LadyDetailItemObject.m */,
+				524ED1C21D5C08E1001F22D0 /* LadyRecentContactObject.h */,
+				524ED1C31D5C08E1001F22D0 /* LadyRecentContactObject.m */,
+				524ED1C41D5C08E1001F22D0 /* LiveChatCustomItemObject.h */,
+				524ED1C51D5C08E1001F22D0 /* LiveChatCustomItemObject.m */,
+				524ED1C61D5C08E1001F22D0 /* LiveChatMsgItemObject.h */,
+				524ED1C71D5C08E1001F22D0 /* LiveChatMsgItemObject.m */,
+				524ED1C81D5C08E1001F22D0 /* LiveChatMsgPhotoItem.h */,
+				524ED1C91D5C08E1001F22D0 /* LiveChatMsgPhotoItem.m */,
+				524ED1CA1D5C08E1001F22D0 /* LiveChatMsgProcResultObject.h */,
+				524ED1CB1D5C08E1001F22D0 /* LiveChatMsgProcResultObject.m */,
+				524ED1CC1D5C08E1001F22D0 /* LIveChatSendPhotoItem.h */,
+				524ED1CD1D5C08E1001F22D0 /* LIveChatSendPhotoItem.m */,
+				524ED1CE1D5C08E1001F22D0 /* LiveChatSystemItemObject.h */,
+				524ED1CF1D5C08E1001F22D0 /* LiveChatSystemItemObject.m */,
+				524ED1D01D5C08E1001F22D0 /* LiveChatTextItemObject.h */,
+				524ED1D11D5C08E1001F22D0 /* LiveChatTextItemObject.m */,
+				524ED1D21D5C08E1001F22D0 /* LiveChatUserInfoItemObject.h */,
+				524ED1D31D5C08E1001F22D0 /* LiveChatUserInfoItemObject.m */,
+				524ED1D41D5C08E1001F22D0 /* LiveChatUserItemObject.h */,
+				524ED1D51D5C08E1001F22D0 /* LiveChatUserItemObject.m */,
+				524ED1D61D5C08E1001F22D0 /* LiveChatWarningItemObject.h */,
+				524ED1D71D5C08E1001F22D0 /* LiveChatWarningItemObject.m */,
+				524ED1D81D5C08E1001F22D0 /* LoginItemObject.h */,
+				524ED1D91D5C08E1001F22D0 /* LoginItemObject.m */,
+				524ED1DA1D5C08E1001F22D0 /* Message.h */,
+				524ED1DB1D5C08E1001F22D0 /* Message.m */,
+				524ED1DC1D5C08E1001F22D0 /* OtherGetCountItemObject.h */,
+				524ED1DD1D5C08E1001F22D0 /* OtherGetCountItemObject.m */,
+				524ED1DE1D5C08E1001F22D0 /* PersonalProfile.h */,
+				524ED1DF1D5C08E1001F22D0 /* PersonalProfile.m */,
+				524ED1E01D5C08E1001F22D0 /* PublicItemObject.h */,
+				524ED1E11D5C08E1001F22D0 /* PublicItemObject.m */,
+				524ED1E21D5C08E1001F22D0 /* QueryLadyListItemObject.h */,
+				524ED1E31D5C08E1001F22D0 /* QueryLadyListItemObject.m */,
+				524ED1E41D5C08E1001F22D0 /* RegisterItemObject.h */,
+				524ED1E51D5C08E1001F22D0 /* RegisterItemObject.m */,
+				524ED1E61D5C08E1001F22D0 /* RegisterProfileObject.h */,
+				524ED1E71D5C08E1001F22D0 /* RegisterProfileObject.m */,
+				524ED1E81D5C08E1001F22D0 /* SiteItemObject.h */,
+				524ED1E91D5C08E1001F22D0 /* SiteItemObject.m */,
+				524ED1EA1D5C08E1001F22D0 /* SynConfigItemObject.h */,
+				524ED1EB1D5C08E1001F22D0 /* SynConfigItemObject.m */,
+				524ED1EC1D5C08E1001F22D0 /* VideoItemObject.h */,
+				524ED1ED1D5C08E1001F22D0 /* VideoItemObject.m */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		D105C7101D237F7C0060BE6C /* AnalyticsSetting */ = {
@@ -1291,15 +1386,20 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				524ED1B11D5C055C001F22D0 /* ChatPhotoCollectionViewCell.xib in Resources */,
+				524ED1B31D5C055C001F22D0 /* ChatPhotoView.xib in Resources */,
 				50E8E6A11D2BA07A006D1B94 /* Main.storyboard in Resources */,
 				503F03691D2A01E200F2F17E /* LadyListViewController.xib in Resources */,
 				50E8E6991D2B6109006D1B94 /* LadyDetailViewController.xib in Resources */,
 				503F03621D2A01E200F2F17E /* CommonTitleDetailTableViewCell.xib in Resources */,
+				524ED2111D5C0E54001F22D0 /* ChatPhotoLadyTableViewCell.xib in Resources */,
 				503F03641D2A01E200F2F17E /* CommonTitleTableViewCell.xib in Resources */,
+				503D783D1D6C00B300DADD6C /* LocalizableErrorCode.strings in Resources */,
 				503F03561D2A01E200F2F17E /* CommonDetailTableViewCell.xib in Resources */,
 				5069B4181C706FB4006ABC92 /* InfoPlist.strings in Resources */,
 				503F03B91D2A01E200F2F17E /* RegisterSecondStepViewController.xib in Resources */,
 				503F03541D2A01E200F2F17E /* CommonDetailAndAccessoryTableViewCell.xib in Resources */,
+				524ED1BA1D5C06D7001F22D0 /* ChatSecretPhotoViewController.xib in Resources */,
 				50408ECC1CFD6C300076951B /* country_without_code.xml in Resources */,
 				5069B3DA1C705F23006ABC92 /* Assets.xcassets in Resources */,
 				503F03C61D2A01E200F2F17E /* AddCreditsViewController.xib in Resources */,
@@ -1321,6 +1421,8 @@
 				503F03B21D2A01E200F2F17E /* LoginViewController.xib in Resources */,
 				503F03601D2A01E200F2F17E /* CommonTextFieldTableViewCell.xib in Resources */,
 				503F03581D2A01E200F2F17E /* CommonLeftTitleTableViewCell.xib in Resources */,
+				524ED2131D5C0E54001F22D0 /* ChatPhotoSelfTableViewCell.xib in Resources */,
+				50B7823D1D6D2DC5006ACB77 /* ChatViewFakeController.xib in Resources */,
 				5068FC071D013A1000551A36 /* EmotionList.plist in Resources */,
 				503F03A11D2A01E200F2F17E /* ChatWarningTipsTableViewCell.xib in Resources */,
 				50EAD2481D1777E1008B8F76 /* Localizable.strings in Resources */,
@@ -1394,100 +1496,109 @@
 			buildActionMask = 2147483647;
 			files = (
 				503F03D71D2A01E200F2F17E /* SessionRequest.m in Sources */,
+				524ED1F41D5C08E1001F22D0 /* LiveChatMsgPhotoItem.m in Sources */,
+				524ED2121D5C0E54001F22D0 /* ChatPhotoSelfTableViewCell.m in Sources */,
 				503F03781D2A01E200F2F17E /* LadyListTableView.m in Sources */,
 				503F03591D2A01E200F2F17E /* CommonPageViewTableViewCell.m in Sources */,
 				503F03421D2A01E200F2F17E /* AnalyticsManager.m in Sources */,
+				524ED1F61D5C08E1001F22D0 /* LIveChatSendPhotoItem.m in Sources */,
+				520DC6D71D5C6A3600E8CC93 /* MotifyPersonalProfileManager.m in Sources */,
 				503F03651D2A01E200F2F17E /* AppSettingGroup.m in Sources */,
 				503F03701D2A01E200F2F17E /* LadyListViewController.m in Sources */,
 				503F03971D2A01E200F2F17E /* ChatEmotion.m in Sources */,
+				524ED2061D5C08E1001F22D0 /* VideoItemObject.m in Sources */,
+				524ED1B41D5C055C001F22D0 /* ChatPhotoViewLayout.m in Sources */,
+				524ED2021D5C08E1001F22D0 /* RegisterItemObject.m in Sources */,
 				503F03D01D2A01E200F2F17E /* GetLadyDetailRequest.m in Sources */,
 				503F039E1D2A01E200F2F17E /* ChatTextselfTableViewCell.m in Sources */,
-				503F03811D2A01E200F2F17E /* LiveChatMsgProcResultObject.m in Sources */,
-				503F03851D2A01E200F2F17E /* LiveChatUserItemObject.m in Sources */,
 				503F03B01D2A01E200F2F17E /* LadyDetailNameTableViewCell.m in Sources */,
-				503F037F1D2A01E200F2F17E /* LiveChatCustomItemObject.m in Sources */,
+				524ED1F11D5C08E1001F22D0 /* LadyRecentContactObject.m in Sources */,
+				524ED2101D5C0E54001F22D0 /* ChatPhotoLadyTableViewCell.m in Sources */,
 				503F03A01D2A01E200F2F17E /* ChatWarningTipsTableViewCell.m in Sources */,
 				503F03451D2A01E200F2F17E /* ScreenManager.m in Sources */,
+				50E34CFE1D6FDFC3009EA170 /* ChatPhoneAlbumPhoto.m in Sources */,
 				503F03481D2A01E200F2F17E /* CrashLogManager.m in Sources */,
+				524ED1FE1D5C08E1001F22D0 /* OtherGetCountItemObject.m in Sources */,
 				503F03A51D2A01E200F2F17E /* ChatEmotionChooseView.m in Sources */,
 				503F03CB1D2A01E200F2F17E /* MyProfileViewController.m in Sources */,
+				524ED1FC1D5C08E1001F22D0 /* LoginItemObject.m in Sources */,
 				503F03981D2A01E200F2F17E /* ChatCouponTableViewCell.m in Sources */,
 				503F03571D2A01E200F2F17E /* CommonLeftTitleTableViewCell.m in Sources */,
-				503F03821D2A01E200F2F17E /* LiveChatSystemItemObject.m in Sources */,
+				524ED1EF1D5C08E1001F22D0 /* Contact.m in Sources */,
+				524ED1B01D5C055C001F22D0 /* ChatPhotoCollectionViewCell.m in Sources */,
 				503F03CE1D2A01E200F2F17E /* CheckPaymentRequest.m in Sources */,
 				503F03D51D2A01E200F2F17E /* RemoveContactListRequset.m in Sources */,
+				524ED2051D5C08E1001F22D0 /* SynConfigItemObject.m in Sources */,
 				503F03661D2A01E200F2F17E /* AppSettingRow.m in Sources */,
+				524ED1B21D5C055C001F22D0 /* ChatPhotoView.m in Sources */,
 				503F03791D2A01E200F2F17E /* MyProfileTopTableViewCell.m in Sources */,
-				503F038C1D2A01E200F2F17E /* QueryLadyListItemObject.m in Sources */,
-				503F03801D2A01E200F2F17E /* LiveChatMsgItemObject.m in Sources */,
 				503F03951D2A01E200F2F17E /* LiveChatItem2OCObj.m in Sources */,
 				503F03BD1D2A01E200F2F17E /* RegisterSecondStepViewController.m in Sources */,
-				503F038A1D2A01E200F2F17E /* PersonalProfile.m in Sources */,
 				503F03AB1D2A01E200F2F17E /* ContactManager.m in Sources */,
 				503F034C1D2A01E200F2F17E /* RequestManager.m in Sources */,
+				524ED1FB1D5C08E1001F22D0 /* LiveChatWarningItemObject.m in Sources */,
 				503F03CF1D2A01E200F2F17E /* GetCountRequest.m in Sources */,
-				503F03861D2A01E200F2F17E /* LiveChatWarningItemObject.m in Sources */,
 				503F03BF1D2A01E200F2F17E /* RegisterHeaderViewCell.m in Sources */,
 				503F03D81D2A01E200F2F17E /* SessionRequestManager.m in Sources */,
 				503F03B81D2A01E200F2F17E /* PaymentManager.m in Sources */,
-				503F03891D2A01E200F2F17E /* OtherGetCountItemObject.m in Sources */,
 				503F03631D2A01E200F2F17E /* CommonTitleTableViewCell.m in Sources */,
-				503F037B1D2A01E200F2F17E /* CheckServerItemObject.m in Sources */,
-				503F038B1D2A01E200F2F17E /* PublicItemObject.m in Sources */,
+				50B782441D6D3284006ACB77 /* ServerViewControllerManager.m in Sources */,
+				524ED2031D5C08E1001F22D0 /* RegisterProfileObject.m in Sources */,
 				503F034B1D2A01E200F2F17E /* Reachability.m in Sources */,
-				503F03871D2A01E200F2F17E /* LoginItemObject.m in Sources */,
 				503F03DA1D2A01E200F2F17E /* UpdateProfileRequest.m in Sources */,
 				503F03AC1D2A01E200F2F17E /* LadyDetailPhototViewController.m in Sources */,
 				503F03471D2A01E200F2F17E /* ConfigManager.m in Sources */,
 				503F03611D2A01E200F2F17E /* CommonTitleDetailTableViewCell.m in Sources */,
 				503F03C11D2A01E200F2F17E /* AddCreditsViewController.m in Sources */,
+				524ED1F51D5C08E1001F22D0 /* LiveChatMsgProcResultObject.m in Sources */,
 				503F03461D2A01E200F2F17E /* AppDelegate.m in Sources */,
+				524ED1F31D5C08E1001F22D0 /* LiveChatMsgItemObject.m in Sources */,
+				524ED1F81D5C08E1001F22D0 /* LiveChatTextItemObject.m in Sources */,
 				503F03551D2A01E200F2F17E /* CommonDetailTableViewCell.m in Sources */,
 				503F03D61D2A01E200F2F17E /* RemoveFavouriteLadyRequest.m in Sources */,
 				503F03BE1D2A01E200F2F17E /* RegisterViewController.m in Sources */,
+				524ED1FD1D5C08E1001F22D0 /* Message.m in Sources */,
 				503F03671D2A01E200F2F17E /* CommonData.m in Sources */,
 				503F03A41D2A01E200F2F17E /* ChatEmotionChooseCollectionViewLayout.m in Sources */,
-				503F037D1D2A01E200F2F17E /* LadyDetailItemObject.m in Sources */,
 				503F03DC1D2A01E200F2F17E /* UploadHeaderPhoto.m in Sources */,
 				503F03771D2A01E200F2F17E /* ContactListTableView.m in Sources */,
 				503F034A1D2A01E200F2F17E /* ImageViewLoader.m in Sources */,
+				524ED1FF1D5C08E1001F22D0 /* PersonalProfile.m in Sources */,
 				503F03D11D2A01E200F2F17E /* GetPaymentOrderRequest.m in Sources */,
 				503F03B71D2A01E200F2F17E /* PaymentHandler.m in Sources */,
 				503F039C1D2A01E200F2F17E /* ChatTextLadyTableViewCell.m in Sources */,
 				503F03D31D2A01E200F2F17E /* GetQueryLadyListRequest.m in Sources */,
 				503F03B61D2A01E200F2F17E /* AppStorePayHandler.m in Sources */,
 				5069B3CF1C705F23006ABC92 /* main.m in Sources */,
+				50B7823A1D6D2C1A006ACB77 /* ChatViewFakeController.m in Sources */,
 				503F03CD1D2A01E200F2F17E /* AddFavouriteLadyRequest.m in Sources */,
 				503F039A1D2A01E200F2F17E /* ChatSystemTipsTableViewCell.m in Sources */,
+				524ED2041D5C08E1001F22D0 /* SiteItemObject.m in Sources */,
 				503F03DB1D2A01E200F2F17E /* UploadCrashLogRequest.m in Sources */,
 				503F03A71D2A01E200F2F17E /* ChatTextAttachment.m in Sources */,
+				524ED2001D5C08E1001F22D0 /* PublicItemObject.m in Sources */,
 				503F035F1D2A01E200F2F17E /* CommonTextFieldTableViewCell.m in Sources */,
+				524ED1F71D5C08E1001F22D0 /* LiveChatSystemItemObject.m in Sources */,
 				503F03711D2A01E200F2F17E /* MainViewController.m in Sources */,
-				503F03831D2A01E200F2F17E /* LiveChatTextItemObject.m in Sources */,
 				503F03D41D2A01E200F2F17E /* GetRecentContactListRequest.m in Sources */,
 				503F03721D2A01E200F2F17E /* SettingViewController.m in Sources */,
-				503F037E1D2A01E200F2F17E /* LadyRecentContactObject.m in Sources */,
 				503F03A81D2A01E200F2F17E /* ChatTextView.m in Sources */,
 				503F03751D2A01E200F2F17E /* LadyListTableViewCell.m in Sources */,
 				503F03681D2A01E200F2F17E /* CoverView.m in Sources */,
-				503F038E1D2A01E200F2F17E /* RegisterProfileObject.m in Sources */,
-				503F03901D2A01E200F2F17E /* SynConfigItemObject.m in Sources */,
 				503F03B41D2A01E200F2F17E /* LoginManager.m in Sources */,
-				503F03881D2A01E200F2F17E /* Message.m in Sources */,
 				503F03931D2A01E200F2F17E /* ChatViewController.m in Sources */,
 				503F03C21D2A01E200F2F17E /* AppSettingContentViewController.m in Sources */,
+				524ED1FA1D5C08E1001F22D0 /* LiveChatUserItemObject.m in Sources */,
 				503F03B51D2A01E200F2F17E /* LoginViewController.m in Sources */,
 				503F034F1D2A01E200F2F17E /* CommonContentTableViewCell.m in Sources */,
-				503F038D1D2A01E200F2F17E /* RegisterItemObject.m in Sources */,
+				524ED2011D5C08E1001F22D0 /* QueryLadyListItemObject.m in Sources */,
 				503F03441D2A01E200F2F17E /* ScreenItem.m in Sources */,
 				503F03A21D2A01E200F2F17E /* ChatEmotionChooseCollectionViewCell.m in Sources */,
-				503F03911D2A01E200F2F17E /* VideoItemObject.m in Sources */,
 				503F03431D2A01E200F2F17E /* GoogleAnalyticsViewController.m in Sources */,
 				503F03D91D2A01E200F2F17E /* StartEditResumeRequest.m in Sources */,
 				503F035D1D2A01E200F2F17E /* CommonSpecialTitleTableViewCell.m in Sources */,
+				524ED1F01D5C08E1001F22D0 /* LadyDetailItemObject.m in Sources */,
 				503F03491D2A01E200F2F17E /* FileCacheManager.m in Sources */,
-				503F037C1D2A01E200F2F17E /* Contact.m in Sources */,
-				503F03841D2A01E200F2F17E /* LiveChatUserInfoItemObject.m in Sources */,
 				503F03961D2A01E200F2F17E /* LiveChatManager.m in Sources */,
 				503F03511D2A01E200F2F17E /* CommonCreditTableViewCell.m in Sources */,
 				503F03D21D2A01E200F2F17E /* GetPersonProfileRequest.m in Sources */,
@@ -1495,11 +1606,14 @@
 				503F036D1D2A01E200F2F17E /* ContactListViewController.m in Sources */,
 				503F035B1D2A01E200F2F17E /* CommonSettingTableViewCell.m in Sources */,
 				503F03731D2A01E200F2F17E /* ContactListTableViewCell.m in Sources */,
+				524ED1F21D5C08E1001F22D0 /* LiveChatCustomItemObject.m in Sources */,
+				524ED1B71D5C068E001F22D0 /* ChatSecretPhotoViewController.m in Sources */,
 				503F03A91D2A01E200F2F17E /* ChatTitleView.m in Sources */,
 				D108DF0E1D2B5894006BDB9F /* ReportLadyRequest.m in Sources */,
-				503F038F1D2A01E200F2F17E /* SiteItemObject.m in Sources */,
 				503F034E1D2A01E200F2F17E /* UpdateAppManager.m in Sources */,
+				524ED1EE1D5C08E1001F22D0 /* CheckServerItemObject.m in Sources */,
 				503F034D1D2A01E200F2F17E /* ServerManager.m in Sources */,
+				524ED1F91D5C08E1001F22D0 /* LiveChatUserInfoItemObject.m in Sources */,
 				503F03531D2A01E200F2F17E /* CommonDetailAndAccessoryTableViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1530,6 +1644,14 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		503D783B1D6C00B300DADD6C /* LocalizableErrorCode.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				503D783C1D6C00B300DADD6C /* Base */,
+			);
+			name = LocalizableErrorCode.strings;
+			sourceTree = "<group>";
+		};
 		503F02551D2A01E200F2F17E /* LadyListViewController.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -1637,6 +1759,15 @@
 			name = MyProfileViewController.xib;
 			sourceTree = "<group>";
 		};
+		50B7823B1D6D2DC5006ACB77 /* ChatViewFakeController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				50B7823C1D6D2DC5006ACB77 /* Base */,
+				50B7823E1D6D2DCA006ACB77 /* en */,
+			);
+			name = ChatViewFakeController.xib;
+			sourceTree = "<group>";
+		};
 		50E8E69B1D2B6109006D1B94 /* LadyDetailViewController.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -1660,6 +1791,15 @@
 				50EAD2471D1777E1008B8F76 /* Base */,
 			);
 			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		524ED1B81D5C06D7001F22D0 /* ChatSecretPhotoViewController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				524ED1B91D5C06D7001F22D0 /* Base */,
+				50B8AA511D6ADC7300C10631 /* en */,
+			);
+			name = ChatSecretPhotoViewController.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

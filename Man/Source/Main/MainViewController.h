@@ -13,6 +13,15 @@
 
 @property (nonatomic, weak) IBOutlet PZPagingScrollView* pagingScrollView;
 
+/**
+ *  导航栏左边按钮
+ */
+@property (nonatomic, weak) IBOutlet UIButton* navLeftButton;
+/**
+ *  导航栏右边按钮
+ */
+@property (nonatomic, weak) IBOutlet BadgeButton* navRightButton;
+
 #pragma mark - 左右页面切换
 /**
  *  切换到左页

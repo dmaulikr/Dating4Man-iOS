@@ -183,7 +183,9 @@ typedef enum : NSUInteger {
 
 - (void)clearCache{
     // for test
-//    [[LoginManager manager] logout:YES];
+    if( AppDelegate().demo || AppDelegate().debug ) {
+        [[LoginManager manager] logout:YES];
+    }
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         

@@ -11,6 +11,7 @@
 #import "LiveChatUserItemObject.h"
 #import "LiveChatMsgItemObject.h"
 #import "LiveChatUserInfoItemObject.h"
+#import "LiveChatMsgPhotoItem.h"
 
 @interface LiveChatItem2OCObj : NSObject
 

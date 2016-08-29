@@ -87,6 +87,13 @@
  */
 - (void)updateRecents;
 
+/**
+ *  判断是否再聊用户
+ *
+ *  @return 是/否
+ */
+- (BOOL)isInChatUser:(NSString* _Nonnull)userId;
+
 ///**
 // *
 // *

@@ -19,8 +19,7 @@
  *  导航栏
  */
 @property (nonatomic, weak) MainViewController* mainVC;
-@property (nonatomic, weak) IBOutlet UIButton* navLeftButton;
-@property (nonatomic, weak) IBOutlet BadgeButton* navRightButton;
+
 /**
  *  女士列表
  */

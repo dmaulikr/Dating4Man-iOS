@@ -16,7 +16,6 @@
 @property (nonatomic, weak) IBOutlet KKButtonBar* kkButtonBar;
 @property (nonatomic, weak) IBOutlet ContactListTableView* tableView;
 @property (nonatomic, weak) MainViewController* mainVC;
-@property (nonatomic, weak) IBOutlet UIButton* navLeftButton;
 @property (weak, nonatomic) IBOutlet UILabel *tipsNote;
 
 /**

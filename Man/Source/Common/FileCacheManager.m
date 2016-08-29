@@ -103,17 +103,23 @@ static FileCacheManager* gManager = nil;
 }
 
 #pragma mark - 图片上传目录
-- (NSString *)imageUploadCachePath:(UIImage *)tempImage uploadImageName:(NSString *)uploadImageName{
-    NSData *imageData = nil;
-    if ([uploadImageName isEqualToString:@"png"]) {
-        imageData = UIImagePNGRepresentation(tempImage);
-    }else{
-        imageData = UIImageJPEGRepresentation(tempImage, 0);
+- (NSString *)imageUploadCachePath:(UIImage *)image fileName:(NSString *)fileName{
+    NSData *data = nil;
+    
+    static NSInteger MaxImageSize = 5 * 1024 * 1024;
+    CGFloat compress = 1.0;
+    for(int i = 10; i >= 0; i--) {
+        compress = 1.0 * i / 10;
+        data = UIImageJPEGRepresentation(image, compress);
+        if( data.length < MaxImageSize ) {
+            break;
+        }
     }
+
     NSString* path = [[self cacheDirectory] stringByAppendingPathComponent:@"uploadImage/"];
-    if( [self createDirectory:path] ) {
-        NSString *uploadPath = [path stringByAppendingPathComponent:uploadImageName];
-        [imageData writeToFile:uploadPath atomically:YES];
+    if( data && [self createDirectory:path] ) {
+        NSString *uploadPath = [path stringByAppendingPathComponent:fileName];
+        [data writeToFile:uploadPath atomically:YES];
         return uploadPath;
     } else {
         return nil;
@@ -121,6 +127,16 @@ static FileCacheManager* gManager = nil;
     
 }
 
+#pragma mark - 相册缓存目录
+- (NSString *)imageCacheFromPhoneAlbumnPath:(UIImage *)image fileName:(NSString *)fileName {
+    NSString* path = nil;
+    if( image != nil ) {
+        NSData* data = UIImagePNGRepresentation(image);
+        path = [self.tmpPath stringByAppendingPathComponent:fileName];
+        [data writeToFile:path atomically:YES];
+    }
+    return path;
+}
 
 #pragma mark - 私有方法
 - (NSString *)documentsDirectory {

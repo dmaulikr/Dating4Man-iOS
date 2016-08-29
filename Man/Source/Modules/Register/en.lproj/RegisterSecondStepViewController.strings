@@ -15,3 +15,4 @@
 "YOUR_PASSWORD" = "Your password";
 "ENTER" = "Enter";
 "CONFIRM_PASSWORD" = "Confirm password";
+"Tips_UpdateResume_Fail" = "Failed to commit your personal description";

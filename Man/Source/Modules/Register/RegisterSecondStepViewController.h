@@ -30,7 +30,5 @@
 @property (nonatomic,strong) NSString *profilePhoto;
 /** 底部约束 */
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomNum;
-/** 加载 */
-@property (weak, nonatomic) IBOutlet UIView *loadingView;
 
 @end

@@ -97,35 +97,6 @@ typedef enum {
 
 - (void)setupNavigationBar {
     [super setupNavigationBar];
-    UIBarButtonItem *barButtonItem = nil;
-    UIImage *image = nil;
-    UIButton* button = nil;
-    
-    // 标题
-    button = [UIButton buttonWithType:UIButtonTypeCustom];
-    image = [UIImage imageNamed:@"Navigation-Setting"];
-    [button setImage:image forState:UIControlStateDisabled];
-    [button setTitle:NSLocalizedString(@"Settings", nil) forState:UIControlStateNormal];
-    button.titleLabel.font = [UIFont boldSystemFontOfSize:16];
-    [button sizeToFit];
-    [button setEnabled:NO];
-    self.navigationItem.titleView = button;
-    
-    // 右边按钮
-    NSMutableArray *array = [NSMutableArray array];
-    
-    image = [UIImage imageNamed:@"Navigation-Qpid"];
-    self.navRightButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self.navRightButton setImage:image forState:UIControlStateNormal];
-    [self.navRightButton sizeToFit];
-    [self.navRightButton addTarget:self.mainVC action:@selector(pageRightAction:) forControlEvents:UIControlEventTouchUpInside];
-    
-    barButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.navRightButton];
-    [array addObject:barButtonItem];
-    
-    self.navigationItem.rightBarButtonItems = array;
-    
-    [self.mainVC setupNavigationBar];
 }
 
 - (void)setupContainView {

@@ -29,7 +29,7 @@
 @property (nonatomic, assign) NSInteger lasttime;
 /** 在线状态 */
 @property (nonatomic,assign) BOOL isOnline;
-/** 在线状态 */
+/** 在聊状态 */
 @property (nonatomic,assign) BOOL isInChat;
 /** 最后邀请文字 */
 @property (nonatomic, strong) NSAttributedString* lastInviteMessage;

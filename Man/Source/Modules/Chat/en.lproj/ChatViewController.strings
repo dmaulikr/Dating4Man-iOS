@@ -14,5 +14,17 @@
 "Tips_Add_Credit" = "Add credit to continue.";
 "Tips_Try_Ticket_Credit_YES" = "Send your first message to start free chat now.";
 "Tips_Try_Ticket_Credit_NO" = "Live chat billed at 0.5 credit per 5 mins.";
+
 "Tips_Your_Free_Chat_Is_Ended" = "Your free chat is ended. Live chat billed at 0.5 credit per 5 mins.";
+"Tips_Text_Not_Support" = "The recipient's device does not support text messages.";
+"Tips_Emotion_Not_Support" = "The recipient's device does not support animating stickers.";
+"Tips_Voice_Not_Support" = "The recipient's device does not support voice messages.";
+"Tips_Photo_Not_Support" = "The recipient's device does not support photo exchanges.";
+"Tips_MagicIcon_Not_Support" = "The recipient's device does not support premium stickers.";
+
 "Tips_Input_Message_Here" = "Type message here.";
+
+"Tips_InChat" = "Please start the chat before sending photo.";
+"Tips_Camera_Allow" = "Cannot access your camera, please check permission settings.";
+"Tips_Camera_Disable" = "Camera is not available, please make sure your camera is enabled.";
+"Tips_PhotoLibrary_Allow" =  "Cannot access your photo library, please check your permission settings.";

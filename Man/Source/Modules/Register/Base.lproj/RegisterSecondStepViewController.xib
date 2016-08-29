@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -9,7 +9,6 @@
             <connections>
                 <outlet property="bottomNum" destination="Q7L-NL-Yzu" id="uxK-0f-1xU"/>
                 <outlet property="finishBtn" destination="Cim-KU-DCf" id="DqB-qh-l6X"/>
-                <outlet property="loadingView" destination="ctF-Uv-q29" id="P1p-T6-h5t"/>
                 <outlet property="tableView" destination="D7A-7A-xaR" id="emc-Pg-8Vr"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -27,29 +26,6 @@
                         <outlet property="delegate" destination="-1" id="iMc-qx-Ch4"/>
                     </connections>
                 </tableView>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ctF-Uv-q29" userLabel="LoadingView">
-                    <rect key="frame" x="167" y="296" width="80" height="80"/>
-                    <subviews>
-                        <view alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="46r-uN-cgN">
-                            <rect key="frame" x="0.0" y="0.0" width="80" height="80"/>
-                            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                        </view>
-                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="XbC-V9-rnt">
-                            <rect key="frame" x="22" y="22" width="37" height="37"/>
-                        </activityIndicatorView>
-                    </subviews>
-                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="80" id="Agc-rI-I8P"/>
-                        <constraint firstItem="46r-uN-cgN" firstAttribute="width" secondItem="ctF-Uv-q29" secondAttribute="width" id="C3r-56-Roq"/>
-                        <constraint firstAttribute="width" constant="80" id="OPk-vD-EJ8"/>
-                        <constraint firstItem="XbC-V9-rnt" firstAttribute="centerX" secondItem="ctF-Uv-q29" secondAttribute="centerX" id="cKX-ZN-kEc"/>
-                        <constraint firstItem="XbC-V9-rnt" firstAttribute="centerY" secondItem="ctF-Uv-q29" secondAttribute="centerY" id="iSV-RL-mO6"/>
-                        <constraint firstItem="46r-uN-cgN" firstAttribute="top" secondItem="ctF-Uv-q29" secondAttribute="top" id="pv3-Re-7wQ"/>
-                        <constraint firstItem="46r-uN-cgN" firstAttribute="height" secondItem="ctF-Uv-q29" secondAttribute="height" id="xot-DT-xe1"/>
-                        <constraint firstItem="46r-uN-cgN" firstAttribute="leading" secondItem="ctF-Uv-q29" secondAttribute="leading" id="yjJ-Vz-UR7"/>
-                    </constraints>
-                </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cim-KU-DCf" userLabel="创建账号">
                     <rect key="frame" x="0.0" y="622" width="414" height="50"/>
                     <color key="backgroundColor" red="0.066666666666666666" green="0.50980392156862742" blue="0.96078431372549022" alpha="1" colorSpace="calibratedRGB"/>
@@ -69,11 +45,9 @@
             <constraints>
                 <constraint firstItem="D7A-7A-xaR" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="0hS-iS-b0e"/>
                 <constraint firstItem="D7A-7A-xaR" firstAttribute="trailing" secondItem="i5M-Pr-FkT" secondAttribute="trailing" id="34b-zU-Lk1"/>
-                <constraint firstItem="ctF-Uv-q29" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="B3S-RF-SFo"/>
                 <constraint firstItem="Cim-KU-DCf" firstAttribute="trailing" secondItem="i5M-Pr-FkT" secondAttribute="trailing" id="B4u-7T-cbc"/>
                 <constraint firstItem="Cim-KU-DCf" firstAttribute="bottom" secondItem="i5M-Pr-FkT" secondAttribute="bottom" id="Q7L-NL-Yzu"/>
                 <constraint firstItem="D7A-7A-xaR" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="ZvE-Rm-1Uy"/>
-                <constraint firstItem="ctF-Uv-q29" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="ebr-NH-xhi"/>
                 <constraint firstItem="Cim-KU-DCf" firstAttribute="top" secondItem="D7A-7A-xaR" secondAttribute="bottom" id="pD9-XJ-Hth"/>
                 <constraint firstItem="Cim-KU-DCf" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="rIN-TG-LT4"/>
             </constraints>
