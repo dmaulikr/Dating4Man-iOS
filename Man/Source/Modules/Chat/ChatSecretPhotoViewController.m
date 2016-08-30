@@ -51,6 +51,7 @@ typedef enum : NSUInteger {
     if( !self.viewDidAppearEver ) {
         CGRect frame = CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height);
         UIImageView *secretImageView = [[UIImageView alloc] initWithFrame:frame];
+        secretImageView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         secretImageView.contentMode = UIViewContentModeScaleAspectFit;
         self.secretImageView = secretImageView;
         [self.view insertSubview:self.secretImageView atIndex:0];
@@ -81,6 +82,8 @@ typedef enum : NSUInteger {
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
+    CGRect frame = self.view.frame;
+    int a = 0;
 }
 
 #pragma mark - 界面初始化
@@ -306,8 +309,12 @@ typedef enum : NSUInteger {
                 } else {
                     // 直接提示错误信息
                     NSString* tips = NSLocalizedStringFromErrorCode(errNo);
-                    if( tips == nil ) {
+                    if( tips.length == 0) {
                         tips = errMsg;
+                    }
+                    
+                    if( tips.length == 0 ) {
+                        tips = NSLocalizedStringFromSelf(@"Send_Error_Tips_Other");
                     }
                     
                     // 弹出重试

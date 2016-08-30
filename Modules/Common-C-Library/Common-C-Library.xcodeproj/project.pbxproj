@@ -185,6 +185,13 @@
 		50ECE5FD1D06A9F500FAAC1F /* RequestMonthlyFeeController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ECE5FA1D06A9F500FAAC1F /* RequestMonthlyFeeController.cpp */; };
 		50ECE6011D06AA2600FAAC1F /* RequestFakeController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ECE5FE1D06AA2600FAAC1F /* RequestFakeController.cpp */; };
 		D14A7F3F1CF99A4A00135FA3 /* LCCustomItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D14A7F3D1CF99A4A00135FA3 /* LCCustomItem.cpp */; };
+		D1526B2C1D75612900DA063A /* GetAutoInviteStatusTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1526B1E1D75612900DA063A /* GetAutoInviteStatusTask.cpp */; };
+		D1526B2D1D75612900DA063A /* RecvLadyAutoInviteStatusTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1526B201D75612900DA063A /* RecvLadyAutoInviteStatusTask.cpp */; };
+		D1526B2E1D75612900DA063A /* RecvLadyAutoInviteTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1526B221D75612900DA063A /* RecvLadyAutoInviteTask.cpp */; };
+		D1526B2F1D75612900DA063A /* RecvManApplyThemeTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1526B241D75612900DA063A /* RecvManApplyThemeTask.cpp */; };
+		D1526B301D75612900DA063A /* RecvManFeeThemeTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1526B261D75612900DA063A /* RecvManFeeThemeTask.cpp */; };
+		D1526B311D75612900DA063A /* SendAutoInviteTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1526B281D75612900DA063A /* SendAutoInviteTask.cpp */; };
+		D1526B321D75612900DA063A /* SendThemeRecommendTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1526B2A1D75612900DA063A /* SendThemeRecommendTask.cpp */; };
 		D16939491CE59724001D40E7 /* GetAllPaidThemeTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D16939391CE59724001D40E7 /* GetAllPaidThemeTask.cpp */; };
 		D169394A1CE59724001D40E7 /* GetPaidThemeTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D169393B1CE59724001D40E7 /* GetPaidThemeTask.cpp */; };
 		D169394B1CE59724001D40E7 /* ManApplyThemeTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D169393D1CE59724001D40E7 /* ManApplyThemeTask.cpp */; };
@@ -626,6 +633,20 @@
 		50ECE6021D06AA8F00FAAC1F /* CheckServerItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckServerItem.h; sourceTree = "<group>"; };
 		D14A7F3D1CF99A4A00135FA3 /* LCCustomItem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LCCustomItem.cpp; sourceTree = "<group>"; };
 		D14A7F3E1CF99A4A00135FA3 /* LCCustomItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCCustomItem.h; sourceTree = "<group>"; };
+		D1526B1E1D75612900DA063A /* GetAutoInviteStatusTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GetAutoInviteStatusTask.cpp; sourceTree = "<group>"; };
+		D1526B1F1D75612900DA063A /* GetAutoInviteStatusTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GetAutoInviteStatusTask.h; sourceTree = "<group>"; };
+		D1526B201D75612900DA063A /* RecvLadyAutoInviteStatusTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RecvLadyAutoInviteStatusTask.cpp; sourceTree = "<group>"; };
+		D1526B211D75612900DA063A /* RecvLadyAutoInviteStatusTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecvLadyAutoInviteStatusTask.h; sourceTree = "<group>"; };
+		D1526B221D75612900DA063A /* RecvLadyAutoInviteTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RecvLadyAutoInviteTask.cpp; sourceTree = "<group>"; };
+		D1526B231D75612900DA063A /* RecvLadyAutoInviteTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecvLadyAutoInviteTask.h; sourceTree = "<group>"; };
+		D1526B241D75612900DA063A /* RecvManApplyThemeTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RecvManApplyThemeTask.cpp; sourceTree = "<group>"; };
+		D1526B251D75612900DA063A /* RecvManApplyThemeTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecvManApplyThemeTask.h; sourceTree = "<group>"; };
+		D1526B261D75612900DA063A /* RecvManFeeThemeTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RecvManFeeThemeTask.cpp; sourceTree = "<group>"; };
+		D1526B271D75612900DA063A /* RecvManFeeThemeTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecvManFeeThemeTask.h; sourceTree = "<group>"; };
+		D1526B281D75612900DA063A /* SendAutoInviteTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SendAutoInviteTask.cpp; sourceTree = "<group>"; };
+		D1526B291D75612900DA063A /* SendAutoInviteTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SendAutoInviteTask.h; sourceTree = "<group>"; };
+		D1526B2A1D75612900DA063A /* SendThemeRecommendTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SendThemeRecommendTask.cpp; sourceTree = "<group>"; };
+		D1526B2B1D75612900DA063A /* SendThemeRecommendTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SendThemeRecommendTask.h; sourceTree = "<group>"; };
 		D16939391CE59724001D40E7 /* GetAllPaidThemeTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GetAllPaidThemeTask.cpp; sourceTree = "<group>"; };
 		D169393A1CE59724001D40E7 /* GetAllPaidThemeTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GetAllPaidThemeTask.h; sourceTree = "<group>"; };
 		D169393B1CE59724001D40E7 /* GetPaidThemeTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GetPaidThemeTask.cpp; sourceTree = "<group>"; };
@@ -1060,22 +1081,20 @@
 		50E966D11CC4CC4B00E5BF26 /* livechat */ = {
 			isa = PBXGroup;
 			children = (
-				D16939391CE59724001D40E7 /* GetAllPaidThemeTask.cpp */,
-				D169393A1CE59724001D40E7 /* GetAllPaidThemeTask.h */,
-				D169393B1CE59724001D40E7 /* GetPaidThemeTask.cpp */,
-				D169393C1CE59724001D40E7 /* GetPaidThemeTask.h */,
-				D169393D1CE59724001D40E7 /* ManApplyThemeTask.cpp */,
-				D169393E1CE59724001D40E7 /* ManApplyThemeTask.h */,
-				D169393F1CE59724001D40E7 /* ManFeeThemeTask.cpp */,
-				D16939401CE59724001D40E7 /* ManFeeThemeTask.h */,
-				D16939411CE59724001D40E7 /* PlayThemeMotionTask.cpp */,
-				D16939421CE59724001D40E7 /* PlayThemeMotionTask.h */,
-				D16939431CE59724001D40E7 /* RecvThemeMotionTask.cpp */,
-				D16939441CE59724001D40E7 /* RecvThemeMotionTask.h */,
-				D16939451CE59724001D40E7 /* RecvThemeRecommendTask.cpp */,
-				D16939461CE59724001D40E7 /* RecvThemeRecommendTask.h */,
-				D16939471CE59724001D40E7 /* UploadThemeListVerTask.cpp */,
-				D16939481CE59724001D40E7 /* UploadThemeListVerTask.h */,
+				D1526B1E1D75612900DA063A /* GetAutoInviteStatusTask.cpp */,
+				D1526B1F1D75612900DA063A /* GetAutoInviteStatusTask.h */,
+				D1526B201D75612900DA063A /* RecvLadyAutoInviteStatusTask.cpp */,
+				D1526B211D75612900DA063A /* RecvLadyAutoInviteStatusTask.h */,
+				D1526B221D75612900DA063A /* RecvLadyAutoInviteTask.cpp */,
+				D1526B231D75612900DA063A /* RecvLadyAutoInviteTask.h */,
+				D1526B241D75612900DA063A /* RecvManApplyThemeTask.cpp */,
+				D1526B251D75612900DA063A /* RecvManApplyThemeTask.h */,
+				D1526B261D75612900DA063A /* RecvManFeeThemeTask.cpp */,
+				D1526B271D75612900DA063A /* RecvManFeeThemeTask.h */,
+				D1526B281D75612900DA063A /* SendAutoInviteTask.cpp */,
+				D1526B291D75612900DA063A /* SendAutoInviteTask.h */,
+				D1526B2A1D75612900DA063A /* SendThemeRecommendTask.cpp */,
+				D1526B2B1D75612900DA063A /* SendThemeRecommendTask.h */,
 				50E966D21CC4CC4B00E5BF26 /* AmfPublicParse.h */,
 				50E966D31CC4CC4B00E5BF26 /* Android.mk */,
 				50E966D41CC4CC4B00E5BF26 /* CheckVerTask.cpp */,
@@ -1086,6 +1105,8 @@
 				50E966D91CC4CC4B00E5BF26 /* Counter.h */,
 				50E966DA1CC4CC4B00E5BF26 /* EndTalkTask.cpp */,
 				50E966DB1CC4CC4B00E5BF26 /* EndTalkTask.h */,
+				D16939391CE59724001D40E7 /* GetAllPaidThemeTask.cpp */,
+				D169393A1CE59724001D40E7 /* GetAllPaidThemeTask.h */,
 				50E966DC1CC4CC4B00E5BF26 /* GetBlockUsersTask.cpp */,
 				50E966DD1CC4CC4B00E5BF26 /* GetBlockUsersTask.h */,
 				50E966DE1CC4CC4B00E5BF26 /* GetContactListTask.cpp */,
@@ -1100,6 +1121,8 @@
 				50E966E71CC4CC4B00E5BF26 /* GetLadyCustomTemplateTask.h */,
 				50E966E81CC4CC4B00E5BF26 /* GetLadyVoiceCodeTask.cpp */,
 				50E966E91CC4CC4B00E5BF26 /* GetLadyVoiceCodeTask.h */,
+				D169393B1CE59724001D40E7 /* GetPaidThemeTask.cpp */,
+				D169393C1CE59724001D40E7 /* GetPaidThemeTask.h */,
 				50E966EA1CC4CC4B00E5BF26 /* GetRecentContactListTask.cpp */,
 				50E966EB1CC4CC4B00E5BF26 /* GetRecentContactListTask.h */,
 				50E966EC1CC4CC4B00E5BF26 /* GetTalkInfoTask.cpp */,
@@ -1137,6 +1160,12 @@
 				50E9670C1CC4CC4B00E5BF26 /* LiveChatJniCallbackItemDef.h */,
 				50E9670D1CC4CC4B00E5BF26 /* LoginTask.cpp */,
 				50E9670E1CC4CC4B00E5BF26 /* LoginTask.h */,
+				D169393D1CE59724001D40E7 /* ManApplyThemeTask.cpp */,
+				D169393E1CE59724001D40E7 /* ManApplyThemeTask.h */,
+				D169393F1CE59724001D40E7 /* ManFeeThemeTask.cpp */,
+				D16939401CE59724001D40E7 /* ManFeeThemeTask.h */,
+				D16939411CE59724001D40E7 /* PlayThemeMotionTask.cpp */,
+				D16939421CE59724001D40E7 /* PlayThemeMotionTask.h */,
 				50E9670F1CC4CC4B00E5BF26 /* PlayVideoTask.cpp */,
 				50E967101CC4CC4B00E5BF26 /* PlayVideoTask.h */,
 				50E967111CC4CC4B00E5BF26 /* project */,
@@ -1168,6 +1197,10 @@
 				50E9672D1CC4CC4B00E5BF26 /* RecvShowVideoTask.h */,
 				50E9672E1CC4CC4B00E5BF26 /* RecvTalkEventTask.cpp */,
 				50E9672F1CC4CC4B00E5BF26 /* RecvTalkEventTask.h */,
+				D16939431CE59724001D40E7 /* RecvThemeMotionTask.cpp */,
+				D16939441CE59724001D40E7 /* RecvThemeMotionTask.h */,
+				D16939451CE59724001D40E7 /* RecvThemeRecommendTask.cpp */,
+				D16939461CE59724001D40E7 /* RecvThemeRecommendTask.h */,
 				50E967301CC4CC4B00E5BF26 /* RecvTryTalkBeginTask.cpp */,
 				50E967311CC4CC4B00E5BF26 /* RecvTryTalkBeginTask.h */,
 				50E967321CC4CC4B00E5BF26 /* RecvTryTalkEndTask.cpp */,
@@ -1229,6 +1262,8 @@
 				50E9676A1CC4CC4B00E5BF26 /* UploadDeviceTypeTask.h */,
 				50E9676B1CC4CC4B00E5BF26 /* UploadPopLadyAutoInviteTask.cpp */,
 				50E9676C1CC4CC4B00E5BF26 /* UploadPopLadyAutoInviteTask.h */,
+				D16939471CE59724001D40E7 /* UploadThemeListVerTask.cpp */,
+				D16939481CE59724001D40E7 /* UploadThemeListVerTask.h */,
 				50E9676D1CC4CC4B00E5BF26 /* UploadTicketTask.cpp */,
 				50E9676E1CC4CC4B00E5BF26 /* UploadTicketTask.h */,
 				50E9676F1CC4CC4B00E5BF26 /* UploadVerTask.cpp */,
@@ -1400,6 +1435,7 @@
 				504CDB621C7FE31500DBB429 /* ILiveChatManManager.cpp in Sources */,
 				50E9678B1CC4CC4B00E5BF26 /* ITransportPacketHandler.cpp in Sources */,
 				50E967A41CC4CC4B00E5BF26 /* RefreshInviteTemplateTask.cpp in Sources */,
+				D1526B2C1D75612900DA063A /* GetAutoInviteStatusTask.cpp in Sources */,
 				504CDBD61C7FEB1500DBB429 /* RequestEMFController.cpp in Sources */,
 				50E967781CC4CC4B00E5BF26 /* GetContactListTask.cpp in Sources */,
 				504CDA1E1C7FD6EE00DBB429 /* json_value.cpp in Sources */,
@@ -1441,14 +1477,18 @@
 				50E967871CC4CC4B00E5BF26 /* ISocketHandler.cpp in Sources */,
 				50E967811CC4CC4B00E5BF26 /* GetUserInfoTask.cpp in Sources */,
 				504CDBDC1C7FEB1500DBB429 /* RequestProfileController.cpp in Sources */,
+				D1526B311D75612900DA063A /* SendAutoInviteTask.cpp in Sources */,
 				504CDA001C7FD6AF00DBB429 /* pngpread.c in Sources */,
 				501BF3B81C7EFF460052C59F /* KZip.cpp in Sources */,
 				50E967B41CC4CC4B00E5BF26 /* TransportDataHandler.cpp in Sources */,
 				504CDA091C7FD6AF00DBB429 /* pngwtran.c in Sources */,
 				501BF3B61C7EFF460052C59F /* KThread.cpp in Sources */,
 				502D6FA61CA8D883000547F8 /* LadyDetail.cpp in Sources */,
+				D1526B2E1D75612900DA063A /* RecvLadyAutoInviteTask.cpp in Sources */,
 				50E967BA1CC4CC4B00E5BF26 /* UploadDeviceTypeTask.cpp in Sources */,
 				50ECE5FD1D06A9F500FAAC1F /* RequestMonthlyFeeController.cpp in Sources */,
+				D1526B321D75612900DA063A /* SendThemeRecommendTask.cpp in Sources */,
+				D1526B2D1D75612900DA063A /* RecvLadyAutoInviteStatusTask.cpp in Sources */,
 				50E967841CC4CC4B00E5BF26 /* GetVoiceCodeTask.cpp in Sources */,
 				504CDB6E1C7FE31500DBB429 /* LCSystemItem.cpp in Sources */,
 				50E967A01CC4CC4B00E5BF26 /* RecvVideoTask.cpp in Sources */,
@@ -1461,6 +1501,7 @@
 				50E967961CC4CC4B00E5BF26 /* RecvKickOfflineTask.cpp in Sources */,
 				504CDB751C7FE31500DBB429 /* LCVideoManager.cpp in Sources */,
 				504CDBD31C7FEB1500DBB429 /* RequestAdvertController.cpp in Sources */,
+				D1526B2F1D75612900DA063A /* RecvManApplyThemeTask.cpp in Sources */,
 				50E967AB1CC4CC4B00E5BF26 /* SendMagicIconTask.cpp in Sources */,
 				50E967A21CC4CC4B00E5BF26 /* RecvWarningTask.cpp in Sources */,
 				50E967931CC4CC4B00E5BF26 /* RecvEMFNoticeTask.cpp in Sources */,
@@ -1481,6 +1522,7 @@
 				504CDA011C7FD6AF00DBB429 /* pngread.c in Sources */,
 				501BF3C71C7F00400052C59F /* ioapi.c in Sources */,
 				504CDBE01C7FEB1500DBB429 /* RequestVideoShowController.cpp in Sources */,
+				D1526B301D75612900DA063A /* RecvManFeeThemeTask.cpp in Sources */,
 				50E967BB1CC4CC4B00E5BF26 /* UploadPopLadyAutoInviteTask.cpp in Sources */,
 				504CDA2A1C7FDA2D00DBB429 /* tinyxml.cpp in Sources */,
 				504CDB691C7FE31500DBB429 /* LCMessageFilter.cpp in Sources */,

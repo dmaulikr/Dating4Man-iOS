@@ -43,6 +43,10 @@
 
 #pragma mark - 在线状态
 /**
+ *  立即重登录
+ */
+- (void)relogin;
+/**
  *  获取登录状态
  *
  *  @return 是否正在登录（YES：正在登录，否则为未登录状态）
@@ -57,6 +61,22 @@
  *  @return 操作是否成功
  */
 - (BOOL)getUserStatus:(NSArray<NSString*>* _Nonnull)userIds;
+
+/**
+ *  停止会话
+ *
+ *  @param userId 用户Id
+ *
+ *  @return 操作是否成功
+ */
+- (BOOL)endTalk:(NSString* _Nonnull)userId;
+
+/**
+ *  停止所有会话
+ *
+ *  @return 操作是否成功
+ */
+- (void)endTalkAll;
 
 #pragma mark - 获取用户信息
 /**

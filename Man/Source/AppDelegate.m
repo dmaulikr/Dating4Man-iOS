@@ -50,7 +50,7 @@
     
     // 设置接口管理类属性
     RequestManager* manager = [RequestManager manager];
-    [manager setLogEnable:NO];
+    [manager setLogEnable:YES];
     [manager setLogDirectory:[[FileCacheManager manager] requestLogPath]];
     
     // 设置接口请求环境
@@ -86,10 +86,12 @@
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+//    [[LiveChatManager manager] endTalkAll];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+    [[LiveChatManager manager] relogin];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {

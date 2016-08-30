@@ -593,6 +593,16 @@ static LiveChatManManagerListener *gLiveChatManManagerListener;
 
 #pragma mark - 在线状态
 /**
+ *  立即重登录
+ */
+- (void)relogin
+{
+    if (NULL != mILiveChatManManager) {
+        mILiveChatManManager->Relogin();
+    }
+}
+
+/**
  *  获取登录状态
  *
  *  @return 是否正在登录（YES：正在登录，否则为未登录状态）
@@ -622,6 +632,35 @@ static LiveChatManManagerListener *gLiveChatManManagerListener;
         result = mILiveChatManManager->GetUserStatus(userIdsList) ? YES : NO;
     }
     return result;
+}
+
+/**
+ *  停止会话
+ *
+ *  @param userId 用户Id
+ */
+- (BOOL)endTalk:(NSString* )userId {
+    BOOL result = NO;
+    if (NULL != mILiveChatManManager)
+    {
+        result = mILiveChatManManager->EndTalk([userId UTF8String]) ? YES : NO;
+    }
+    return result;
+}
+
+/**
+ *  停止所有会话
+ *
+ */
+- (void)endTalkAll {
+    if (NULL != mILiveChatManManager)
+    {
+        LCUserList userList = mILiveChatManManager->GetChatingUsers();
+        for(LCUserList::const_iterator itr = userList.begin(); itr != userList.end(); itr++ ) {
+            LCUserItem* user = *itr;
+            mILiveChatManManager->EndTalk( user->m_userId );
+        }
+    }
 }
 
 /**

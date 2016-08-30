@@ -535,7 +535,7 @@ typedef enum AlertType {
                     } else {
                         // 点击重发
                         if( buttonIndex != alertView.cancelButtonIndex ) {
-                            [self reSendMsg:msg];
+                            [self reSendMsg:index];
                         }
                     }
                 }break;
@@ -548,7 +548,7 @@ typedef enum AlertType {
                     if( user && user.statusType == USTATUS_ONLINE ) {
                         // 用户重新在线, 重发
                         if( buttonIndex != alertView.cancelButtonIndex ) {
-                            [self reSendMsg:msg];
+                            [self reSendMsg:index];
                         }
                     }
                     
@@ -561,7 +561,7 @@ typedef enum AlertType {
                 default:{
                     // 其他未处理错误, 重发
                     if( buttonIndex != alertView.cancelButtonIndex ) {
-                        [self reSendMsg:msg];
+                        [self reSendMsg:index];
                     }
                     
                 }break;
@@ -914,21 +914,34 @@ typedef enum AlertType {
  *
  *  @param msg 消息体
  */
-- (void)reSendMsg:(Message* )msg {
-    // 删除旧信息
-    [self.liveChatManager removeHistoryMessage:self.womanId msgId:msg.msgId];
-    
-    // 重新发送
-    switch (msg.type) {
-        case MessageTypeText:{
-            [self sendMsg:msg.text];
-        }break;
-        case MessageTypePhoto:{
-            [self sendPhoto:msg.liveChatMsgItemObject.secretPhoto.srcFilePath];
-        }break;
-        default:
-            break;
+- (void)reSendMsg:(NSInteger)index {
+    if( index < self.msgArray.count ) {
+        Message* msg = [self.msgArray objectAtIndex:index];
+        
+        // 删除旧信息
+        [self.liveChatManager removeHistoryMessage:self.womanId msgId:msg.msgId];
+        [self reloadData:NO];
+        
+        // 刷新列表
+        [self.tableView beginUpdates];
+        NSIndexPath* indexPath = [NSIndexPath indexPathForRow:index inSection:0];
+        [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        [self.tableView endUpdates];
+        
+        // 重新发送
+        switch (msg.type) {
+            case MessageTypeText:{
+                [self sendMsg:msg.text];
+            }break;
+            case MessageTypePhoto:{
+                [self sendPhoto:msg.liveChatMsgItemObject.secretPhoto.srcFilePath];
+            }break;
+            default:
+                break;
+        }
+        
     }
+
 }
 
 /**
@@ -1298,12 +1311,16 @@ typedef enum AlertType {
                 } else {
                     // 直接提示错误信息
                     NSString* tips = NSLocalizedStringFromErrorCode(procResult.errNum);
-                    if( tips == nil ) {
+                    if( tips.length == 0 ) {
                         tips = procResult.errMsg;
                     }
                     
+                    if( tips.length == 0 ) {
+                        tips = NSLocalizedStringFromSelf(@"Send_Error_Tips_Other");
+                    }
+                    
                     // 弹出重试
-                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:tips delegate:self cancelButtonTitle:nil otherButtonTitles:NSLocalizedString(@"Retry", nil), NSLocalizedString(@"Close", nil), nil];
+                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:tips delegate:self cancelButtonTitle:NSLocalizedString(@"Close", nil) otherButtonTitles:NSLocalizedString(@"Retry", nil), nil];
                     
                     alertView.tag = index;
                     [alertView show];
@@ -1319,7 +1336,7 @@ typedef enum AlertType {
                 if( user && user.statusType == USTATUS_ONLINE ) {
                     // 弹出重试
                     NSString* tips = NSLocalizedStringFromSelf(@"Send_Error_Tips_Retry");
-                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:tips delegate:self cancelButtonTitle:nil otherButtonTitles:NSLocalizedString(@"Retry", nil), NSLocalizedString(@"Close", nil), nil];
+                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:tips delegate:self cancelButtonTitle:NSLocalizedString(@"Close", nil) otherButtonTitles:NSLocalizedString(@"Retry", nil), nil];
                     
                     alertView.tag = index;
                     [alertView show];
@@ -1327,7 +1344,7 @@ typedef enum AlertType {
                 } else {
                     // 弹出不在线
                     NSString* tips = NSLocalizedStringFromSelf(@"Send_Error_Tips_Offline");
-                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:tips delegate:self cancelButtonTitle:nil otherButtonTitles:NSLocalizedString(@"Close", nil), nil];
+                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:tips delegate:self cancelButtonTitle:NSLocalizedString(@"Close", nil) otherButtonTitles:nil];
                     alertView.tag = index;
                     [alertView show];
                 }
@@ -1344,7 +1361,7 @@ typedef enum AlertType {
             default:{
                 // 其他未处理错误
                 NSString* tips = NSLocalizedStringFromSelf(@"Send_Error_Tips_Other");
-                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:tips delegate:self cancelButtonTitle:nil otherButtonTitles:NSLocalizedString(@"Retry", nil), NSLocalizedString(@"Close", nil), nil];
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:tips delegate:self cancelButtonTitle:NSLocalizedString(@"Close", nil) otherButtonTitles:NSLocalizedString(@"Retry", nil), nil];
                 
                 alertView.tag = index;
                 [alertView show];

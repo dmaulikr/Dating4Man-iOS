@@ -307,9 +307,9 @@ typedef enum {
     
     // 调用接口
     request.finishHandler = ^(BOOL success, NSMutableArray<QueryLadyListItemObject *> * _Nonnull itemArray,int totalCount, NSString * _Nonnull errnum, NSString * _Nonnull errmsg) {
-        if( success ) {
-            NSLog(@"LadyListViewController::getQueryLadyList( 获取女士列表成功, loadMore : %d, count : %ld )", loadMore, (long)itemArray.count);
-            dispatch_async(dispatch_get_main_queue(), ^{
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if( success ) {
+                NSLog(@"LadyListViewController::getQueryLadyList( 获取女士列表成功, loadMore : %d, count : %ld )", loadMore, (long)itemArray.count);
                 if( !loadMore ) {
                     // 清空列表
                     [self.womanArray removeAllObjects];
@@ -320,7 +320,7 @@ typedef enum {
                 } else {
                     // 停止底部
                     [self.tableView finishPullUp:YES];
-
+                    
                 }
                 
                 for(QueryLadyListItemObject* item in itemArray) {
@@ -339,11 +339,9 @@ typedef enum {
                     }
                 }
                 
-                self.view.userInteractionEnabled = YES;
-            });
-        } else {
-            NSLog(@"LadyListViewController::getQueryLadyList( 获取女士列表失败 )");
-            dispatch_async(dispatch_get_main_queue(), ^{
+            } else {
+                NSLog(@"LadyListViewController::getQueryLadyList( 获取女士列表失败 )");
+                
                 if( !loadMore ) {
                     // 停止头部
                     [self.tableView finishPullDown:YES];
@@ -355,8 +353,12 @@ typedef enum {
                 }
                 
                 [self reloadData:YES];
-            });
-        }
+                
+            }
+
+            self.view.userInteractionEnabled = YES;
+        });
+
     };
     return [self.sessionManager sendRequest:request];
 }
