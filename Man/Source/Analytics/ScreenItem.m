@@ -121,6 +121,17 @@
 }
 
 /**
+ *  获取Home屏幕名称
+ *
+ *  @return 屏幕名称
+ */
++ (NSString* _Nonnull)getHomeScreenName {
+    // 获取屏幕名称
+    NSString* screenName = NSLocalizedStringFromTable(@"MainViewController_1", @"AnalyticsScreenName", nil);
+    return screenName;
+}
+
+/**
  *  获取屏幕页名称
  *
  *  @param viewController controller

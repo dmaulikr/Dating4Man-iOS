@@ -78,29 +78,7 @@
     [super viewWillAppear:animated];
     
     [self reloadInviteCount];
-    
-    if ([self.navigationController.navigationBar respondsToSelector:@selector(setBackgroundImage:forBarMetrics:)]){
-       //取出导航控制器的子控件
-        NSArray *NavigationList = self.navigationController.navigationBar.subviews;
-        //遍历
-        for (id NavigationListObj in NavigationList) {
-            //取出图片
-            if ([NavigationListObj isKindOfClass:[UIImageView class]]) {
-                //获取图片
-                UIImageView *imageView = (UIImageView *)NavigationListObj;
-                //取出图片的子控件
-                NSArray *imageViewLineList = imageView.subviews;
-                //遍历
-                for (id imageViewLineListObj in imageViewLineList) {
-                    //获取边线图
-                    if ([imageViewLineListObj isKindOfClass:[UIImageView class]]) {
-                        UIImageView *bottomLine = (UIImageView *)imageViewLineListObj;
-                        bottomLine.hidden = YES;
-                    }
-                }
-            }
-        }
-    }
+    [self hideNavgationBarBottomLine];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -140,7 +118,7 @@
 
 }
 
-- (void)unInitCustomParam {
+- (void)dealloc {
     [self.liveChatManager removeDelegate:self];
     [self.contactManager removeDelegate:self];
 }
@@ -158,8 +136,6 @@
 
 - (void)setupButtonBar {
     self.buttonBarSection.backgroundColor = self.navigationController.navigationBar.barTintColor;
-    self.kkButtonBar.layer.cornerRadius = 5.0f;
-    self.kkButtonBar.layer.masksToBounds = YES;
     
     NSMutableArray* array = [NSMutableArray array];
     
@@ -190,8 +166,10 @@
     
     [array addObject:buttonInvitation];
     
+    self.kkButtonBar.layer.cornerRadius = 5.0f;
+    self.kkButtonBar.layer.masksToBounds = YES;
     self.kkButtonBar.isVertical = NO;
-    self.kkButtonBar.blanking = 0;
+    self.kkButtonBar.blanking = 3;
     self.kkButtonBar.items = array;
     [self.kkButtonBar reloadData:NO];
     
@@ -232,6 +210,7 @@
     }
     if( isReloadView ){
         [self.tableView reloadData];
+        [self reloadInviteCount];
     }
 }
 
@@ -252,9 +231,9 @@
         }
         
         // 获取最后一条消息
-        LiveChatMsgItemObject* msg = [self.liveChatManager getLastMsg:item.womanId];
+        LiveChatMsgItemObject* msg = [self.liveChatManager GetTheOtherLastMessage:item.womanId];
         if( msg != nil && msg.msgType == LCMessageItem::MessageType::MT_Text && msg.textMsg ) {
-            item.lastInviteMessage = [self parseMessageTextEmotion:msg.textMsg.message font:[UIFont systemFontOfSize:15]];
+            item.lastInviteMessage = [self parseMessageTextEmotion:msg.textMsg.displayMsg font:[UIFont systemFontOfSize:15]];
         }
         
         [items addObject:item];
@@ -402,7 +381,7 @@
             // 获取最后一条消息
             LiveChatMsgItemObject* msg = [self.liveChatManager getLastMsg:item.womanId];
             if( msg != nil && msg.msgType == LCMessageItem::MessageType::MT_Text && msg.textMsg ) {
-                user.lastInviteMessage = [self parseMessageTextEmotion:msg.textMsg.message font:[UIFont systemFontOfSize:15]];
+                user.lastInviteMessage = [self parseMessageTextEmotion:msg.textMsg.displayMsg font:[UIFont systemFontOfSize:15]];
             }
             
             [itemsCopy addObject:user];
@@ -452,6 +431,23 @@
         }
 
     });
+}
+
+- (void)onSendTextMsg:(LCC_ERR_TYPE)errType errMsg:(NSString* _Nonnull)errMsg msgItem:(LiveChatMsgItemObject* _Nullable)msg {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        //        NSLog(@"ChatViewController::onSendTextMsg( 发送文本消息回调 )");
+        if( msg != nil ) {
+            if( msg.statusType == LCMessageItem::StatusType_Finish ) {
+                NSLog(@"ChatViewController::onSendTextMsg( 发送文本消息回调, 发送成功 : %@, toId : %@ )", msg.textMsg.message, msg.toId);
+            } else {
+                NSLog(@"ChatViewController::onSendTextMsg( 发送文本消息回调, 发送失败 : %@, toId : %@, errMsg : %@ )", msg.textMsg.message, msg.toId, errMsg);
+            }
+            
+            [self reloadInviteCount];
+        }
+        
+    });
+    
 }
 
 @end

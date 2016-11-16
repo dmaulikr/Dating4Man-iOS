@@ -30,7 +30,7 @@
     cell.bgView.layer.masksToBounds = YES;
     cell.titleLabel.text = @"";
     cell.detailLabel.text = @"";
-    
+    [cell.detailButton setHidden:YES];
     return cell;
 }
 

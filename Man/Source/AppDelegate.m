@@ -7,6 +7,9 @@
 //
 
 #import "AppDelegate.h"
+
+#import <UserNotifications/UserNotifications.h>
+
 #import "AFNetworkReachabilityManager.h"
 #import "RequestManager.h"
 #import "LoginManager.h"
@@ -15,19 +18,22 @@
 #import "PaymentManager.h"
 #import "CrashLogManager.h"
 #import "AnalyticsManager.h"
+#import "URLHandler.h"
+
 #define errorLocal @"/Public/images/photo_unavailable.gif"
 
-
 @implementation AppDelegate
+@synthesize demo = _demo;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
 
     // 设置公共属性
-    _demo = YES;
     _debug = NO;
-//    self.siteType = OTHER_SITE_CL;
-    self.siteType = OTHER_SITE_CD;
+    
+    // 设置站点
+//    _siteType = OTHER_SITE_CL;
+    _siteType = OTHER_SITE_CD;
     
     // 初始化Crash Log捕捉
     [CrashLogManager manager];
@@ -50,7 +56,7 @@
     
     // 设置接口管理类属性
     RequestManager* manager = [RequestManager manager];
-    [manager setLogEnable:YES];
+    [manager setLogEnable:NO];
     [manager setLogDirectory:[[FileCacheManager manager] requestLogPath]];
     
     // 设置接口请求环境
@@ -69,8 +75,17 @@
     // 初始化支付管理器
     [PaymentManager manager];
     
+    // 初始化URL跳转
+    [URLHandler shareInstance];
+    
     // 自动登陆
     [[LoginManager manager] autoLogin];
+    
+    // 清除webview的缓存
+    [[NSURLCache sharedURLCache] removeAllCachedResponses];
+    
+    // 注册推送
+    [self registerRemoteNotifications:application];
     
     // 延长启动画面时间
     usleep(1000 * 1000);
@@ -102,6 +117,35 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+    NSLog(@"application::didRegisterForRemoteNotificationsWithDeviceToken( deviceToken : %@ )", deviceToken);
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
+    NSLog(@"application::didReceiveRemoteNotification( userInfo : %@ )", userInfo);
+    
+    NSString* urlString = [userInfo objectForKey:@"url"];
+    if( urlString.length > 0 ) {
+        NSURL* url = [NSURL URLWithString:urlString];
+        [[URLHandler shareInstance] handleOpenURL:url];
+    }
+}
+
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
+    NSLog(@"application::handleOpenURL( url : %@ )", url);
+    return [[URLHandler shareInstance] handleOpenURL:url];
+}
+
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+    NSLog(@"application::openURL( sourceApplication : %@ )", sourceApplication);
+    return [[URLHandler shareInstance] handleOpenURL:url];
+}
+
+- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<NSString*, id> *)options {
+    NSLog(@"application::openURL( options : %@ )", options);
+    return [[URLHandler shareInstance] handleOpenURL:url];
+}
+
 - (void)setRequestHost:(BOOL)formal {
     RequestManager* manager = [RequestManager manager];
     
@@ -111,6 +155,8 @@
         NSString* webSiteDemo = @"";
         NSString* appSite = @"";
         NSString* appSiteDemo = @"";
+        NSString* wapSite = @"";
+        NSString* wapSiteDemo = @"";
         
         switch (self.siteType) {
             case OTHER_SITE_CL:{
@@ -118,6 +164,8 @@
                 webSiteDemo = @"http://demo.chnlove.com";
                 appSite = @"http://mobile.chnlove.com";
                 appSiteDemo = @"http://demo-mobile.chnlove.com";
+                wapSite = @"http://m.chnlove.com";
+                wapSiteDemo = @"http://demo-m.chnlove.com";
                 
             }break;
             case OTHER_SITE_CD:{
@@ -125,6 +173,8 @@
                 webSiteDemo = @"http://demo.charmdate.com";
                 appSite = @"http://mobile.charmdate.com";
                 appSiteDemo = @"http://demo-mobile.charmdate.com";
+                wapSite = @"http://m.charmdate.com";
+                wapSiteDemo = @"http://demo-m.charmdate.com";
                 
             }break;
             default:
@@ -133,10 +183,12 @@
         
         if( _demo ) {
             // Demo环境
+            _wapSite = wapSiteDemo;
             [manager setAuthorization:@"test" password:@"5179"];
             [manager setWebSite:webSiteDemo appSite:appSiteDemo];
-
+            
         } else {
+            _wapSite = wapSite;
             [manager setAuthorization:@"" password:@""];
             [manager setWebSite:webSite appSite:appSite];
         }
@@ -154,7 +206,42 @@
 
     }
     
-    self.errorUrlConnect = [[manager getAppSite] stringByAppendingString:errorLocal];
-
+    _errorUrlConnect = [[[manager getAppSite] stringByAppendingString:errorLocal] copy];
 }
+
+- (BOOL)demo {
+    //如果版本号最后一位是字母,则是demo
+    NSString *versionCode = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+    char lastCode = [versionCode characterAtIndex:versionCode.length - 1];
+    if ((lastCode >= 'a' && lastCode <= 'z') || (lastCode >= 'A' && lastCode <= 'Z')) {
+        _demo = YES;
+    } else {
+        _demo = NO;
+    }
+    return _demo;
+}
+
+- (void)registerRemoteNotifications:(UIApplication *)application {
+    if ([application respondsToSelector:@selector(registerUserNotificationSettings:)]) {
+        // Register for Push Notitications, if running iOS 8
+        UIUserNotificationType userNotificationTypes = (UIUserNotificationTypeAlert |
+                                                        UIUserNotificationTypeBadge |
+                                                        UIUserNotificationTypeSound);
+        UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:userNotificationTypes categories:nil];
+        [application registerUserNotificationSettings:settings];
+        [application registerForRemoteNotifications];
+        
+    } else {
+        // Register for Push Notifications before iOS 8
+        [application registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge |
+                                                         UIRemoteNotificationTypeAlert |
+                                                         UIRemoteNotificationTypeSound)];
+    }
+    
+    // 清除图标数字, 清空通知栏
+    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
+    [[UIApplication sharedApplication] cancelAllLocalNotifications];
+    
+}
+
 @end

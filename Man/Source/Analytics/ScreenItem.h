@@ -29,4 +29,12 @@
  *  @return 屏幕名称
  */
 - (NSString* _Nonnull)getScreenName;
+
+/**
+ *  获取Home屏幕名称
+ *
+ *  @return 屏幕名称
+ */
++ (NSString* _Nonnull)getHomeScreenName;
+
 @end

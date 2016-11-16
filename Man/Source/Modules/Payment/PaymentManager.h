@@ -12,6 +12,7 @@
 @protocol PaymentManagerDelegate;
 
 @interface PaymentManager : NSObject<SKPaymentTransactionObserver>
+
 /**
  *  获取单件
  *

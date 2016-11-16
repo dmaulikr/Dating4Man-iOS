@@ -77,6 +77,7 @@ typedef enum : NSUInteger {
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+//    self.navigationController.navigationBarHidden = NO;
     [self reloadData:YES];
     [self getCount];
 }
@@ -129,11 +130,12 @@ typedef enum : NSUInteger {
     self.money = @"0.0";
     
     self.sessionManager = [SessionRequestManager manager];
+    
     self.paymentManager = [PaymentManager manager];
     [self.paymentManager addDelegate:self];
 }
 
-- (void)unInitCustomParam {
+- (void)dealloc {
     [self.paymentManager removeDelegate:self];
 }
 
@@ -419,7 +421,7 @@ typedef enum : NSUInteger {
         if( success ) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 NSLog(@"AddCreditsViewController::getCount( 获取男士余额成功 )");
-                self.money = [NSString stringWithFormat:@"%.1f", item.money];
+                self.money = [NSString stringWithFormat:@"%.2f", item.money];
                 [self reloadData:YES];
             });
             
@@ -444,6 +446,7 @@ typedef enum : NSUInteger {
             [self hideLoading];
             
             NSString* tips = [self messageTipsFromErrorCode:code defaultCode:PAY_ERROR_NORMAL];
+            tips = [NSString stringWithFormat:@"%@ (%@)",tips,code];
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:tips delegate:self cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil, nil];
             alertView.tag = AlertTypeDefault;
             [alertView show];
@@ -505,6 +508,7 @@ typedef enum : NSUInteger {
                 } else {
                     // 弹出提示窗口
                     NSString* tips = [self messageTipsFromErrorCode:code defaultCode:PAY_ERROR_NORMAL];
+                          tips = [NSString stringWithFormat:@"%@ (%@)",tips,code];
                     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:tips delegate:self cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil, nil];
                     alertView.tag = AlertTypeDefault;
                     [alertView show];

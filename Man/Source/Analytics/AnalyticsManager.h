@@ -57,4 +57,12 @@
  *  @param index            页面号
  */
 - (void)reportDidShowPage:(UIViewController* _Nonnull)viewController pageIndex:(NSUInteger)pageIndex;
+
+/**
+ *  跟踪App被打开
+ *
+ *  @param url 被打开的URL
+ */
+- (void)openURL:(NSURL * _Nonnull)url;
+
 @end

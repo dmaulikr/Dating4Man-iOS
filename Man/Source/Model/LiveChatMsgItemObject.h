@@ -14,6 +14,8 @@
 #import "LiveChatCustomItemObject.h"
 #import "LiveChatMsgProcResultObject.h"
 #import "LiveChatMsgPhotoItem.h"
+#import "LiveChatEmotionItemObject.h"
+#import "LiveChatMagicIconItemObject.h"
 
 @interface LiveChatMsgItemObject : NSObject
 
@@ -49,7 +51,10 @@
 @property (nonatomic,assign,getter=isDownloadSuccess) BOOL downloadSuccess;
 /** 私密照下载成功状态 */
 @property (nonatomic,assign,getter=isLoadingImage) BOOL loadingImage;
-
+// ** 高级表情消息  alex添加 */
+@property (nonatomic,strong) LiveChatEmotionItemObject* emotionMsg;
+// ** 小高级表情消息 alex添加 */
+@property (nonatomic,strong) LiveChatMagicIconItemObject* magicIconMsg;
 /**
  *  初始化
  *

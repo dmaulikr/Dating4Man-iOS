@@ -87,7 +87,7 @@
     
     // 头像
     // 显示默认头像
-    [cell.ladyImageView setImage:[UIImage imageNamed:@"LadyList-Lady-Default"]];
+    [cell.ladyImageView setImage:[UIImage imageNamed:@"ContactList-LadyImage-Default"]];
     // 停止旧的
     if( cell.imageViewLoader ) {
         [cell.imageViewLoader stop];

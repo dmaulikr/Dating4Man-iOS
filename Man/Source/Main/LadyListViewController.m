@@ -131,7 +131,7 @@ typedef enum {
 
 }
 
-- (void)unInitCustomParam {
+- (void)dealloc {
     [self.liveChatManager removeDelegate:self];
     [self.loginManager removeDelegate:self];
 }

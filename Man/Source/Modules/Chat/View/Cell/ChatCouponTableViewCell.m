@@ -25,7 +25,7 @@
         NSArray *nib = [[NSBundle mainBundle] loadNibNamedWithFamily:[ChatCouponTableViewCell cellIdentifier] owner:tableView options:nil];
         cell = [nib objectAtIndex:0];
         
-        cell.backgroundImageView.layer.cornerRadius = cell.backgroundImageView.frame.size.height / 8;
+        cell.backgroundImageView.layer.cornerRadius = ([self cellHeight] - 10) / 8.0;
         cell.backgroundImageView.layer.masksToBounds = YES;
     }
     

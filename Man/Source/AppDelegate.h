@@ -21,21 +21,25 @@
 /**
  *  是否Demo环境(允许注销)
  */
-@property (nonatomic, assign) BOOL demo;
+@property (nonatomic, assign, readonly) BOOL demo;
 
 /**
  *  调试模式, 正式环境是否允许注销(YES:允许注销/NO:不允许注销)
  */
-@property (nonatomic, assign) BOOL debug;
-
-/** 没图的url */
-@property (nonatomic,strong) NSString *errorUrlConnect;
+@property (nonatomic, assign, readonly) BOOL debug;
 
 /**
  *  站点类型
- *
  */
-@property (nonatomic, assign) OTHER_SITE_TYPE siteType;
+@property (nonatomic, assign, readonly) OTHER_SITE_TYPE siteType;
+
+/**
+ *  wap站点链接
+ */
+@property (nonatomic, assign, readonly) NSString* wapSite;
+
+/** 没图的url */
+@property (nonatomic, readonly) NSString *errorUrlConnect;
 
 /**
  *  设置接口请求环境

@@ -22,6 +22,7 @@
         self.sid = nil;
         self.receipt = nil;
         self.orderNo = nil;
+        self.code = 0;
         
         self.finishHandler = nil;
     }
@@ -33,7 +34,7 @@
 {
     if( self.manager ) {
         __weak typeof(self) weakSelf = self;
-        return HTTPREQUEST_INVALIDREQUESTID != [self.manager checkPayment:self.manId sid:self.sid receipt:self.receipt orderNo:self.orderNo finishHandler:^(BOOL success, NSString * _Nonnull code)
+        return HTTPREQUEST_INVALIDREQUESTID != [self.manager checkPayment:self.manId sid:self.sid receipt:self.receipt orderNo:self.orderNo code:self.code  finishHandler:^(BOOL success, NSString * _Nonnull code)
         {
             BOOL bFlag = NO;
             

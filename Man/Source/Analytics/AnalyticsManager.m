@@ -11,6 +11,7 @@
 #import "LoginManager.h"
 #import "ScreenManager.h"
 #import "AppDelegate.h"
+#import "ScreenItem.h"
 
 @interface AnalyticsManager() <LoginManagerDelegate>
 // 屏幕管理器
@@ -119,6 +120,11 @@
         }
     }
     
+    // init tracker
+    if (nil != self.defaultGATracker) {
+        self.defaultGATracker.allowIDFACollection = YES;
+    }
+    
     // Optional: configure GAI options.
     gai.dispatchInterval = 30;
     gai.trackUncaughtExceptions = YES;  // report uncaught exceptions
@@ -183,6 +189,37 @@
     [self.screenMgr updateScreenWithPage:viewController pageIndex:pageIndex];
     // 显示屏幕
     [self reportShowCurScreen];
+}
+
+/**
+ *  跟踪App被打开
+ *
+ *  @param url 被打开的URL
+ */
+- (void)openURL:(NSURL * _Nonnull)url
+{
+    NSString *urlString = [url absoluteString];
+    
+    id<GAITracker> tracker = self.defaultGATracker;
+    
+    // setCampaignParametersFromUrl: parses Google Analytics campaign ("UTM")
+    // parameters from a string url into a Map that can be set on a Tracker.
+    GAIDictionaryBuilder *hitParams = [[GAIDictionaryBuilder alloc] init];
+    
+    // Set campaign data on the map, not the tracker directly because it only
+    // needs to be sent once.
+    [hitParams setCampaignParametersFromUrl:urlString];
+    
+    // 当GA解析成功才提交
+    if([hitParams get:kGAICampaignSource]) {
+        NSDictionary *hitParamsDict = [hitParams build];
+        
+        // A screen name is required for a screen view.
+        [tracker set:kGAIScreenName value:[ScreenItem getHomeScreenName]];
+        
+        // SDK Version 3.08 and up.
+        [tracker send:[[[GAIDictionaryBuilder createScreenView] setAll:hitParamsDict] build]];
+    }
 }
 
 #pragma mark - 内部跟踪方法

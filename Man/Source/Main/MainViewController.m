@@ -12,9 +12,13 @@
 #import "SettingViewController.h"
 #import "ContactListViewController.h"
 #import "LoginViewController.h"
+#import "EMFViewController.h"
 
 #import "LoginManager.h"
 #import "LiveChatManager.h"
+#import "URLHandler.h"
+
+#import "GetEMFCountRequest.h"
 
 typedef enum PageType {
     PageTypeSetting = 0,
@@ -22,11 +26,15 @@ typedef enum PageType {
     PageTypeContacList
 } PageType;
 
-@interface MainViewController () <LiveChatManagerDelegate, LoginManagerDelegate, UIAlertViewDelegate>
+@interface MainViewController () <LiveChatManagerDelegate, LoginManagerDelegate, URLHandlerDelegate, UIAlertViewDelegate>
 
 @property (nonatomic, retain) NSArray *items;
 @property (nonatomic, assign) PageType curIndex;
+
 @property (nonatomic, assign) BOOL bLivechatAutoLoginAlready;
+
+@property (assign) BOOL bCanShowEMFNotice;
+@property (assign) NSInteger totalEMF;
 
 /**
  *  LiveChat管理器
@@ -36,7 +44,17 @@ typedef enum PageType {
 /**
  *  Login管理器
  */
-@property (nonatomic,strong) LoginManager *loginManager;
+@property (nonatomic, strong) LoginManager *loginManager;
+
+/**
+ *  接口管理器
+ */
+@property (nonatomic, strong) SessionRequestManager* sessionManager;
+
+/**
+ URL跳转管理
+ */
+@property (nonatomic, strong) URLHandler* handler;
 
 @end
 
@@ -53,6 +71,9 @@ typedef enum PageType {
     self.liveChatManager = [LiveChatManager manager];
     [self.liveChatManager addDelegate:self];
     
+//    self.monthFeeManager = [MonthFeeManager manager];
+//    [self.monthFeeManager addDelegate:self];
+//    
     [self resetParam];
     
     // 跟踪用户行为
@@ -93,11 +114,20 @@ typedef enum PageType {
     // 初始化父类参数
     [super initCustomParam];
     self.backTitle = NSLocalizedString(@"Home", nil);
+    
+    self.sessionManager = [SessionRequestManager manager];
+    
+    self.handler = [URLHandler shareInstance];
+    self.handler.delegate = self;
+    
+    self.bCanShowEMFNotice = YES;
+    self.totalEMF = 0;
 }
 
-- (void)unInitCustomParam {
+- (void)dealloc {
     [self.liveChatManager removeDelegate:self];
     [self.loginManager removeDelegate:self];
+//    [self.monthFeeManager removeDelegate:self];
 }
 - (void)setupNavigationBar {
     [super setupNavigationBar];
@@ -158,7 +188,7 @@ typedef enum PageType {
             // 左边按钮
             NSMutableArray *array = [NSMutableArray array];
             
-            UIButton* navLeftButton = [UIButton buttonWithType:UIButtonTypeCustom];
+            BadgeButton* navLeftButton = [BadgeButton buttonWithType:UIButtonTypeCustom];
             self.navLeftButton = navLeftButton;
             image = [UIImage imageNamed:@"Navigation-Setting"];
             [navLeftButton setImage:image forState:UIControlStateNormal];
@@ -197,7 +227,7 @@ typedef enum PageType {
             // 左边按钮
             NSMutableArray *array = [NSMutableArray array];
             
-            UIButton* navLeftButton = [UIButton buttonWithType:UIButtonTypeCustom];
+            BadgeButton* navLeftButton = [BadgeButton buttonWithType:UIButtonTypeCustom];
             self.navLeftButton = navLeftButton;
             image = [UIImage imageNamed:@"Navigation-Qpid"];
             [navLeftButton setImage:image forState:UIControlStateNormal];
@@ -298,6 +328,14 @@ typedef enum PageType {
     }
 }
 
+- (void)reloadEMFNotice:(BOOL)show {
+    BOOL bShow = show && self.bCanShowEMFNotice;
+    if( !bShow ) {
+        self.bCanShowEMFNotice = NO;
+    }
+    self.navLeftButton.badgeValue = bShow?@"":nil;
+}
+
 /**
  *  刷新邀请人数
  */
@@ -308,6 +346,27 @@ typedef enum PageType {
     if( _curIndex == 1 ) {
         self.navRightButton.badgeValue = badge > 0?[NSString stringWithFormat:@"%ld", (long)badge]:nil;
     }
+}
+
+/**
+ 获取EMF没读邮件数
+
+ @return <#return value description#>
+ */
+- (BOOL)getEMFCount {
+    GetEMFCountRequest* request = [[GetEMFCountRequest alloc] init];
+    request.finishHandler = ^(BOOL success, int total, NSString * _Nonnull errnum, NSString * _Nonnull errmsg) {
+        if( success ) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                NSLog(@"MainViewController::getCount( 获取EMF没读邮件数成功 )");
+                self.totalEMF = total;
+                if( self.totalEMF > 0 ) {
+                    [self reloadEMFNotice:YES];
+                }
+            });
+        }
+    };
+    return [self.sessionManager sendRequest:request];
 }
 
 #pragma mark - 画廊回调 (PZPagingScrollViewDelegate)
@@ -345,7 +404,23 @@ typedef enum PageType {
     self.navigationController.navigationBar.userInteractionEnabled = YES;
     _curIndex = (PageType)index;
     [self setupNavigationBar];
-    [self reloadInviteUsers];
+
+    switch (_curIndex) {
+        case PageTypeSetting:{
+            
+        }break;
+        case PageTypeLadyList:{
+            if( self.totalEMF > 0 ) {
+                [self reloadEMFNotice:YES];
+            }
+            [self reloadInviteUsers];
+        }break;
+        case PageTypeContacList:{
+            
+        }break;
+        default:
+            break;
+    }
     
     // 跟踪用户行为
     [self reportDidShowPage:index];
@@ -364,7 +439,7 @@ typedef enum PageType {
 }
 
 - (void)OnLogin:(LCC_ERR_TYPE)errType errMsg:(NSString* _Nonnull)errmsg isAutoLogin:(BOOL)isAutoLogin {
-    dispatch_async(dispatch_get_main_queue(), ^{
+      dispatch_async(dispatch_get_main_queue(), ^{
         NSLog(@"MainViewController::OnLogin( 接收LivechatManager登录通知回调 isAutoLogin : %d )", isAutoLogin);
         if( !isAutoLogin || errType == LCC_ERR_NOSESSION || errType == LCC_ERR_INVAILDPWD ) {
             if( !self.bLivechatAutoLoginAlready ) {
@@ -384,6 +459,7 @@ typedef enum PageType {
                 [alertView show];
             }
         }
+
     });
 }
 
@@ -403,11 +479,24 @@ typedef enum PageType {
     });
 }
 
+- (void)onRecvEMFNotice:(NSString* _Nonnull)userId noticeType:(TALK_EMF_NOTICE_TYPE)noticeType {
+    NSLog(@"MainViewController::onRecvEMFNotice( 接收LivechatManager收到未读emf通知回调 noticeType : %d )", noticeType);
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if( TENT_EMF == noticeType ) {
+            self.bCanShowEMFNotice = YES;
+            [self getEMFCount];
+        }
+    });
+}
+
 #pragma mark - LoginManager回调
 - (void)manager:(LoginManager * _Nonnull)manager onLogin:(BOOL)success loginItem:(LoginItemObject * _Nullable)loginItem errnum:(NSString * _Nonnull)errnum errmsg:(NSString * _Nonnull)errmsg {
     dispatch_async(dispatch_get_main_queue(), ^{
         NSLog(@"MainViewController::onLogin( 接收登录回调 success : %d )", success);
-//        [self reloadData:YES animated:NO];
+        if( success ) {
+            // 刷新未读emf
+            [self getEMFCount];
+        }
     });
 }
 
@@ -424,6 +513,27 @@ typedef enum PageType {
             _curIndex = PageTypeLadyList;
             [self reloadData:YES animated:NO];
 
+        }
+    });
+}
+
+#pragma mark - URLHandler回调
+- (void)handler:(URLHandler * _Nonnull)handler openWithModule:(URLType)type {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        switch (type) {
+            case URLTypeEmf:{
+                // 跳转emf
+                [self.navigationController popToRootViewControllerAnimated:NO];
+                
+                _curIndex = PageTypeLadyList;
+                [self reloadData:YES animated:NO];
+
+                EMFViewController *vc = [[EMFViewController alloc] initWithNibName:nil bundle:nil];
+                [self.navigationController pushViewController:vc animated:YES];
+                
+            }break;
+            default:
+                break;
         }
     });
 }

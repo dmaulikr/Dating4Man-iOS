@@ -101,7 +101,7 @@ typedef enum : NSUInteger {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
     
 
-    [self hideLoading];
+//    [self hideLoading];
     [self reloadData:YES];
     
 }
@@ -317,15 +317,14 @@ typedef enum : NSUInteger {
 
 //创建账号
 - (IBAction)createAccount:(id)sender {
-    [self showLoading];
+//
+    
     
     if ([self.emailTextField isFirstResponder] || [self.passwordTextField isFirstResponder] || [self.checkPasswordTextField isFirstResponder]) {
         [self closeKeyBoard];
         [self checkPassword];
-        [self hideLoading];
-        
     }else{
-        
+         [self showLoading];
         RequestManager *manager = [RequestManager manager];
         
         NSString *year;
@@ -354,7 +353,8 @@ typedef enum : NSUInteger {
             
                     if (success) {
                           [self upLoadHeaderPhoto];
-                        if (weakSelf.lastProfileObject.decribe.length > 0) {
+                        if (weakSelf.lastProfileObject.decribe.length > 0) {  
+                            [weakSelf showLoading];
                             [self.motifyManager motifyPersonalResume:weakSelf.lastProfileObject.decribe];
                             
                             
@@ -368,7 +368,7 @@ typedef enum : NSUInteger {
                         }
 
                     } else {
-
+                        
                         NSString *tips = NSLocalizedStringFromSelf(@"TIPS");
                         NSString *tipsMessage = NSLocalizedStringFromSelf(@"TIPS_REGISTERMESSAGE_FAIL");
                         NSString *confirm = NSLocalizedStringFromSelf(@"OK");
@@ -438,6 +438,7 @@ typedef enum : NSUInteger {
         
         dispatch_async(dispatch_get_main_queue(), ^{
             if (success) {
+                NSLog(@"RegisterSecondStepViewController::uploadPhoto (上传成功 success , %d)",success);
                 [self hideLoading];
 //                NSString *tips = NSLocalizedStringFromSelf(@"TIPS");
 //                NSString *tipsMessage = NSLocalizedStringFromSelf(@"TIPS_REGISTERMESSAGE_SUCCESS");
@@ -445,6 +446,8 @@ typedef enum : NSUInteger {
 //                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:tips message:tipsMessage delegate:self cancelButtonTitle:nil otherButtonTitles:confirm, nil ,nil];
 //                alertView.tag = RegisterTipTypeSuccess;
 //                [alertView show];
+            }else {
+                NSLog(@"RegisterSecondStepViewController::uploadPhoto (上传失败 success , %@)",errmsg);
             }
 
         });
@@ -570,6 +573,7 @@ typedef enum : NSUInteger {
 }
 
 - (void)motifyPersonalProfileResult:(MotifyPersonalProfileManager *)manager result:(BOOL)success {
+    [self hideLoading];
     if (success) {
         NSString *tips = NSLocalizedStringFromSelf(@"TIPS");
         NSString *tipsMessage = NSLocalizedStringFromSelf(@"TIPS_REGISTERMESSAGE_SUCCESS");

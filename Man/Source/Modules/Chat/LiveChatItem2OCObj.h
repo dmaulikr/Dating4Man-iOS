@@ -12,6 +12,10 @@
 #import "LiveChatMsgItemObject.h"
 #import "LiveChatUserInfoItemObject.h"
 #import "LiveChatMsgPhotoItem.h"
+#import "LiveChatEmotionItemObject.h"
+#import "LiveChatEmotionConfigItemObject.h"
+#import "LiveChatMagicIconItemObject.h"
+#import "LiveChatMagicIconConfigItemObject.h"
 
 @interface LiveChatItem2OCObj : NSObject
 
@@ -110,5 +114,42 @@
  */
 + (NSArray<LiveChatUserItemObject*>* _Nonnull)getLiveChatUserInfoArray:(const UserInfoList&)userInfoList;
 
+#pragma mark - Emotion item
+/**
+ * 获取高级表情信息object
+ *
+ * @param EmotionItem 高级表情item
+ *
+ * @return 高级表情信息object
+ */
++ (LiveChatEmotionItemObject* _Nullable)getLiveChatEmotionItemObject:(const LCEmotionItem* _Nullable)EmotionItem;
+
+/**
+ * 获取高级表情配置object
+ *
+ * @param otherEmotionItem 高级表情配置item
+ *
+ * @return 高级表情配置信息object
+ */
++ (LiveChatEmotionConfigItemObject* _Nullable)getLiveChatEmotionConfigItemObject:(const OtherEmotionConfigItem&)otherEmotionItem;
+
+#pragma mark - MagicIcon item
+/**
+ * 获取小高级表情信息object
+ *
+ * @param EmotionItem 小高级表情item
+ *
+ * @return 小高级表情信息object
+ */
++ (LiveChatMagicIconItemObject* _Nullable)getLiveChatMagicIconItemObject:(const LCMagicIconItem* _Nullable)magicIconItem;
+
+/**
+ * 获取小高级表情配置object
+ *
+ * @param magicConfig 小高级表情配置item
+ *
+ * @return 小高级表情配置信息object
+ */
++ (LiveChatMagicIconConfigItemObject* _Nullable)getLiveChatMagicIconConfigItemObject:(const MagicIconConfig&)magicConfig;
 
 @end

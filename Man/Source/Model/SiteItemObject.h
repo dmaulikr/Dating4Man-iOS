@@ -16,6 +16,11 @@
 @property (nonatomic, strong) NSString*	host;
 
 /**
+ *  LiveChat服务器domain
+ */
+@property (nonatomic, strong) NSString*	domain;
+
+/**
  *  LiveChat proxy host
  */
 @property (nonatomic, strong) NSArray*	proxyHostList;

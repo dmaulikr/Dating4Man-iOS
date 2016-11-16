@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LadyDetailPhototViewController">
@@ -20,21 +21,15 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="6" translatesAutoresizingMaskIntoConstraints="NO" id="5RD-7C-vCc">
-                    <rect key="frame" x="144" y="550" width="87" height="37"/>
-                </pageControl>
-                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eZb-Qf-Isy">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                </scrollView>
+                <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="6" translatesAutoresizingMaskIntoConstraints="NO" id="5RD-7C-vCc"/>
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eZb-Qf-Isy"/>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Trouble loading full-sized image." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cOV-zF-Vmc" userLabel="错误信息">
-                    <rect key="frame" x="0.0" y="304" width="375" height="20"/>
                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3p1-q0-1yJ" userLabel="重新加载图片按钮">
-                    <rect key="frame" x="128" y="336" width="120" height="36"/>
-                    <color key="backgroundColor" red="0.074509803920000006" green="0.68235294120000001" blue="0.91372549020000005" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="backgroundColor" red="0.074509803920000006" green="0.68235294120000001" blue="0.91372549020000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="36" id="CgU-R2-nib"/>
                         <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="120" id="Fa1-yE-I5S"/>
@@ -46,8 +41,7 @@
                     </connections>
                 </button>
                 <button hidden="YES" opaque="NO" alpha="0.59999999999999998" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k5g-lc-5AL">
-                    <rect key="frame" x="16" y="16" width="32" height="32"/>
-                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="32" id="9rb-hm-D9r"/>
                         <constraint firstAttribute="width" constant="32" id="ZHA-2m-7By"/>
@@ -58,7 +52,7 @@
                     </connections>
                 </button>
             </subviews>
-            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="cOV-zF-Vmc" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="2rt-kU-16E"/>
                 <constraint firstItem="k5g-lc-5AL" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="16" id="5K2-Ly-Dko"/>
@@ -74,7 +68,6 @@
                 <constraint firstItem="eZb-Qf-Isy" firstAttribute="width" secondItem="i5M-Pr-FkT" secondAttribute="width" id="tmb-M6-Zwo"/>
                 <constraint firstItem="eZb-Qf-Isy" firstAttribute="bottom" secondItem="i5M-Pr-FkT" secondAttribute="bottom" id="y2n-Ho-KSm"/>
             </constraints>
-            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
             <point key="canvasLocation" x="240" y="156"/>
         </view>
     </objects>

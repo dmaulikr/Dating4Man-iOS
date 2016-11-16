@@ -14,13 +14,10 @@
 + (instancetype)emotionChooseView:(id)owner {
     NSArray *nibs = [[NSBundle mainBundle] loadNibNamedWithFamily:@"ChatEmotionChooseView" owner:owner options:nil];
     ChatEmotionChooseView* view = [nibs objectAtIndex:0];
-    
-    view.sendButton.layer.cornerRadius = view.sendButton.frame.size.height / 4;
-    view.sendButton.layer.masksToBounds = YES;
-    
+        
     UINib *nib = [UINib nibWithNibName:@"ChatEmotionChooseCollectionViewCell" bundle:nil];
     [view.emotionCollectionView registerNib:nib forCellWithReuseIdentifier:[ChatEmotionChooseCollectionViewCell cellIdentifier]];
-    
+
     return view;
 }
 
@@ -57,10 +54,6 @@
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-//    NSLog(@"layoutSubviews( self.emotionCollectionView.frame.size.width : %f )", self.emotionCollectionView.frame.size.width);
-//    self.emotionCollectionView.contentSize = CGSizeMake(self.frame.size.width, self.emotionCollectionView.contentSize.height);
-//    [self.emotionCollectionView layoutIfNeeded];
-//    [self.emotionCollectionView reloadData];
 }
 
 @end

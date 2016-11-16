@@ -115,7 +115,7 @@ typedef enum : NSUInteger {
     self.backToChat = NO;
 }
 
-- (void)unInitCustomParam {
+- (void)dealloc {
 
 }
 

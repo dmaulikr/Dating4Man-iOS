@@ -1,96 +1,43 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="ChatEmotionChooseView">
-            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <rect key="frame" x="0.0" y="0.0" width="619" height="222"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uLc-NH-3ki" userLabel="Tab Button Bar" customClass="KKButtonBar">
-                    <rect key="frame" x="0.0" y="556" width="600" height="44"/>
-                    <subviews>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="t9d-Q7-IoX" userLabel="TempLine">
-                            <rect key="frame" x="0.0" y="0.0" width="600" height="3"/>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="3" id="9tc-1c-kJG"/>
-                            </constraints>
-                        </view>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iMx-QP-ZLm" userLabel="TempSelectLine">
-                            <rect key="frame" x="0.0" y="0.0" width="44" height="3"/>
-                            <color key="backgroundColor" red="0.066666666669999999" green="0.51372549020000002" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                            <color key="tintColor" red="0.066666666669999999" green="0.51372549020000002" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="3" id="ux6-X3-m4J"/>
-                            </constraints>
-                        </view>
-                        <button opaque="NO" contentMode="scaleToFill" enabled="NO" highlighted="YES" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kcG-p5-MkH" userLabel="EmotionButton">
-                            <rect key="frame" x="0.0" y="0.0" width="44" height="44"/>
-                            <constraints>
-                                <constraint firstAttribute="width" constant="44" id="Hhz-oV-Kd7"/>
-                            </constraints>
-                            <state key="normal" image="Chat-EmotionBlue"/>
-                        </button>
-                    </subviews>
+                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="Zyn-yM-WTb" userLabel="Emotion Collection View">
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                    <constraints>
-                        <constraint firstItem="iMx-QP-ZLm" firstAttribute="trailing" secondItem="kcG-p5-MkH" secondAttribute="trailing" id="5hS-d2-9Rm"/>
-                        <constraint firstItem="kcG-p5-MkH" firstAttribute="top" secondItem="uLc-NH-3ki" secondAttribute="top" id="6ua-k7-MfP"/>
-                        <constraint firstItem="kcG-p5-MkH" firstAttribute="leading" secondItem="uLc-NH-3ki" secondAttribute="leading" id="8sZ-1b-UvW"/>
-                        <constraint firstItem="t9d-Q7-IoX" firstAttribute="width" secondItem="uLc-NH-3ki" secondAttribute="width" id="AQz-8z-QXF"/>
-                        <constraint firstAttribute="height" constant="44" id="HcO-yj-Znd"/>
-                        <constraint firstItem="iMx-QP-ZLm" firstAttribute="leading" secondItem="t9d-Q7-IoX" secondAttribute="leading" id="Iu3-5U-jci"/>
-                        <constraint firstItem="iMx-QP-ZLm" firstAttribute="top" secondItem="uLc-NH-3ki" secondAttribute="top" id="RcQ-Gq-7x6"/>
-                        <constraint firstItem="t9d-Q7-IoX" firstAttribute="leading" secondItem="uLc-NH-3ki" secondAttribute="leading" id="YH2-fJ-Bdf"/>
-                        <constraint firstItem="t9d-Q7-IoX" firstAttribute="top" secondItem="uLc-NH-3ki" secondAttribute="top" id="uMD-gZ-DZW"/>
-                        <constraint firstItem="kcG-p5-MkH" firstAttribute="centerY" secondItem="uLc-NH-3ki" secondAttribute="centerY" id="zzw-2r-iy9"/>
-                    </constraints>
-                </view>
-                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ECg-qt-EPS" userLabel="SendButton">
-                    <rect key="frame" x="535" y="565" width="60" height="30"/>
-                    <color key="backgroundColor" red="0.066666666666666666" green="0.51372549019607838" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="60" id="urh-Lq-5hr"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                    <color key="tintColor" red="0.094117647060000004" green="0.53333333329999999" blue="0.90196078430000004" alpha="1" colorSpace="calibratedRGB"/>
-                    <inset key="titleEdgeInsets" minX="10" minY="0.0" maxX="10" maxY="0.0"/>
-                    <state key="normal" title="Send"/>
-                </button>
-                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="JKX-xk-OLu" userLabel="Emotion Collection View">
-                    <rect key="frame" x="0.0" y="0.0" width="600" height="556"/>
-                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                    <collectionViewLayout key="collectionViewLayout" id="2Kx-q4-Onc" customClass="ChatEmotionChooseCollectionViewLayout"/>
+                    <collectionViewLayout key="collectionViewLayout" id="WyP-2o-YCg" customClass="ChatEmotionChooseCollectionViewLayout"/>
                     <connections>
-                        <outlet property="dataSource" destination="iN0-l3-epB" id="t8P-wp-OZD"/>
-                        <outlet property="delegate" destination="iN0-l3-epB" id="P5A-V0-XeG"/>
+                        <outlet property="dataSource" destination="iN0-l3-epB" id="64d-vo-Jyj"/>
+                        <outlet property="delegate" destination="iN0-l3-epB" id="8el-tE-MIL"/>
                     </connections>
                 </collectionView>
+                <pageControl hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="QJT-CI-pjO"/>
             </subviews>
-            <color key="backgroundColor" red="0.93701923079743588" green="0.93701923079743588" blue="0.93701923079743588" alpha="1" colorSpace="calibratedRGB"/>
+            <color key="backgroundColor" red="0.96470588235294119" green="0.96470588235294119" blue="0.96470588235294119" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="JKX-xk-OLu" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="52U-7S-wA7"/>
-                <constraint firstItem="JKX-xk-OLu" firstAttribute="trailing" secondItem="iN0-l3-epB" secondAttribute="trailing" id="7BG-Yb-nDh"/>
-                <constraint firstItem="uLc-NH-3ki" firstAttribute="bottom" secondItem="iN0-l3-epB" secondAttribute="bottom" id="A86-Je-9dr"/>
-                <constraint firstItem="uLc-NH-3ki" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" id="DNv-FG-PgY"/>
-                <constraint firstItem="ECg-qt-EPS" firstAttribute="trailing" secondItem="iN0-l3-epB" secondAttribute="trailing" constant="-5" id="KA6-cg-itu"/>
-                <constraint firstItem="uLc-NH-3ki" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="VKC-7a-Kuj"/>
-                <constraint firstItem="JKX-xk-OLu" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="WAn-nF-Pmj"/>
-                <constraint firstItem="JKX-xk-OLu" firstAttribute="bottom" secondItem="uLc-NH-3ki" secondAttribute="top" id="fdb-qP-zBl"/>
-                <constraint firstItem="ECg-qt-EPS" firstAttribute="bottom" secondItem="iN0-l3-epB" secondAttribute="bottom" constant="-5" id="th7-xp-4M8"/>
+                <constraint firstItem="QJT-CI-pjO" firstAttribute="bottom" secondItem="iN0-l3-epB" secondAttribute="bottom" id="4yu-46-xwg"/>
+                <constraint firstItem="Zyn-yM-WTb" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="G7q-D3-bdG"/>
+                <constraint firstItem="Zyn-yM-WTb" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" id="IUB-ZP-OwK"/>
+                <constraint firstItem="Zyn-yM-WTb" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="VgE-tX-ucW"/>
+                <constraint firstItem="QJT-CI-pjO" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="Yut-cH-8zk"/>
+                <constraint firstItem="Zyn-yM-WTb" firstAttribute="height" secondItem="iN0-l3-epB" secondAttribute="height" id="mcr-bd-6dr"/>
             </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
-                <outlet property="emotionCollectionView" destination="JKX-xk-OLu" id="uKI-Y9-25m"/>
-                <outlet property="sendButton" destination="ECg-qt-EPS" id="3u3-G1-qa6"/>
+                <outlet property="emotionCollectionView" destination="Zyn-yM-WTb" id="xaV-bw-2hV"/>
+                <outlet property="pageView" destination="QJT-CI-pjO" id="vhn-4w-KHK"/>
             </connections>
+            <point key="canvasLocation" x="448.5" y="342"/>
         </view>
     </objects>
-    <resources>
-        <image name="Chat-EmotionBlue" width="24" height="24"/>
-    </resources>
 </document>

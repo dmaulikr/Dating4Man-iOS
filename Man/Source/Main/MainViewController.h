@@ -16,7 +16,7 @@
 /**
  *  导航栏左边按钮
  */
-@property (nonatomic, weak) IBOutlet UIButton* navLeftButton;
+@property (nonatomic, weak) IBOutlet BadgeButton* navLeftButton;
 /**
  *  导航栏右边按钮
  */
@@ -36,6 +36,13 @@
  *  @param sender 响应控件
  */
 - (IBAction)pageRightAction:(id)sender;
+
+/**
+ 刷新未读EMF提示
+
+ @param show 是否提示
+ */
+- (void)reloadEMFNotice:(BOOL)show;
 
 @end
 

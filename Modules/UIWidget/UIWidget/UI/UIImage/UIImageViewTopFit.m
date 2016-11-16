@@ -83,10 +83,6 @@
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    
-    if( self.image ) {
-        [self setImage:self.image];
-    }
 }
 
 /*

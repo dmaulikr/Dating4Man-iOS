@@ -1,31 +1,27 @@
 //
-//  CoverView.h
+//  CoverView.m
+//  dating
 //
-//
-//  Created by lance37 on 16/3/8.
-//  蒙版
+//  Created by test on 16/9/19.
+//  Copyright © 2016年 qpidnetwork. All rights reserved.
 //
 
 #import "CoverView.h"
 
-@interface CoverView()
-
-
-@end
-
 @implementation CoverView
+
 
 //创建蒙版的图
 + (void)coverShow{
     CoverView *cover = [[CoverView alloc] initWithFrame:[UIScreen mainScreen].bounds];
     
-    cover.alpha = 0.6;
+    cover.alpha = 0.0f;
     
-    cover.backgroundColor = [UIColor colorWithIntRGB:0 green:0 blue:0 alpha:100];
+    cover.backgroundColor = [UIColor grayColor];
     
     
     [[UIApplication sharedApplication].keyWindow addSubview:cover];
-   
+    
 }
 
 + (void)coverShowAlpha:(CGFloat)alpha color:(UIColor *)color{

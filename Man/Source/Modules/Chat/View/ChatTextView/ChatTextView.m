@@ -89,6 +89,7 @@
 }
 
 - (void)awakeFromNib {
+    [super awakeFromNib];
     // 注册通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textChange:) name:UITextViewTextDidChangeNotification object:nil];
     

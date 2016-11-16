@@ -20,6 +20,7 @@
 }
 
 - (void)awakeFromNib {
+    [super awakeFromNib];
     [self addTarget:self action:@selector(buttonAction:) forControlEvents:UIControlEventTouchUpInside];
 }
 

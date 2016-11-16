@@ -27,6 +27,7 @@
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *loadingActivity;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageW;
 
++ (NSString *)cellIdentifier;
 + (NSInteger)cellHeight;
 + (id)getUITableViewCell:(UITableView*)tableView;
 

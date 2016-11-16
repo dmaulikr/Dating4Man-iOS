@@ -26,7 +26,7 @@
 }
 
 - (void)dealloc {
-    [self unInitCustomParam];
+
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
@@ -131,10 +131,6 @@
     self.backTitle = NSLocalizedString(@"Back", nil);
 }
 
-- (void)unInitCustomParam {
-    
-}
-
 - (void)setupNavigationBar {
     
 }
@@ -183,6 +179,26 @@
         self.loadActivityView.hidden = YES;
         self.view.userInteractionEnabled = YES;
     }
+}
+
+- (void)hideNavgationBarBottomLine {
+    UIImageView* blackLineImageView = [self findHairlineImageViewUnder:self.navigationController.navigationBar];
+    blackLineImageView.hidden = YES;
+}
+
+- (UIImageView *)findHairlineImageViewUnder:(UIView *)view
+{
+    if ([view isKindOfClass:UIImageView.class] && view.bounds.size.height <= 1.0)
+    {
+        return (UIImageView *)view;
+    }
+    for (UIView *subview in view.subviews) {
+        UIImageView *imageView = [self findHairlineImageViewUnder:subview];
+        if (imageView) {
+            return imageView;
+        }
+    }
+    return nil;
 }
 
 @end

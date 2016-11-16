@@ -11,6 +11,7 @@
 #import "RequestManager.h"
 #import "RegisterViewController.h"
 #import "LiveChatManager.h"
+#import "MonthFeeManager.h"
 
 
 
@@ -20,6 +21,7 @@
 }
 
 @property (nonatomic, strong) LoginManager* manager;
+
 
 
 @end
@@ -121,10 +123,13 @@
     self.backTitle = NSLocalizedString(@"Login", nil);
     self.manager = [LoginManager manager];
     [self.manager addDelegate:self];
+    
+
 }
 
-- (void)unInitCustomParam {
+- (void)dealloc {
     [self.manager removeDelegate:self];
+
 }
 
 - (void)setupNavigationBar {
@@ -382,6 +387,7 @@
             // 登陆成功
             KKNavigationController *nvc = (KKNavigationController* )self.navigationController;
             [nvc dismissViewControllerAnimated:YES completion:nil];
+
             
         } else {
             // 登陆失败
@@ -409,6 +415,8 @@
         NSLog(@"LoginViewController::onLogout( kick : %d )", kick);
     });
 }
+
+
 
 /*
 #pragma mark - Navigation

@@ -15,6 +15,8 @@
 #include <manrequesthandler/RequestOtherController.h>
 #include <manrequesthandler/RequestProfileController.h>
 #include <manrequesthandler/RequestPaidController.h>
+#include <manrequesthandler/RequestMonthlyFeeController.h>
+#include <manrequesthandler/RequestEMFController.h>
 #include "common/KZip.h"
 
 static RequestManager* gManager = nil;
@@ -27,6 +29,8 @@ static RequestManager* gManager = nil;
     RequestOtherController* mpRequestOtherController;
     RequestProfileController *mpRequestProfileController;
     RequestPaidController* mpRequestPaidController;
+    RequestMonthlyFeeController *mpRequestMonthlyFeeController;
+	RequestEMFController* mpRequestEMFController;
 }
 
 @property (nonatomic, strong) NSMutableDictionary* delegateDictionary;
@@ -119,6 +123,54 @@ RequestPaidControllerCallback gRequestPaidControllerCallback {
     onCheckPayment
 };
 
+#pragma mark - 月费回调
+void onQueryMemberType(long requestId, bool success, string errnum, string errmsg, int memberType);
+void onGetMonthlyFeeTips(long requestId, bool success, string errnum, string errmsg, list<MonthlyFeeTip> tipsList);
+RequestMonthlyFeeControllerCallback gRequestMonthlyFeeControllerCallback{
+     onQueryMemberType,
+     onGetMonthlyFeeTips
+};
+
+#pragma mark - EMF回调
+void onRequestEMFInboxList(long requestId, bool success, const string& errnum, const string& errmsg, int pageIndex, int pageSize, int dataCount, const EMFInboxList& inboxList);
+void onRequestEMFInboxMsg(long requestId, bool success, const string& errnum, const string& errmsg, int memberType, const EMFInboxMsgItem& item);
+void onRequestEMFOutboxList(long requestId, bool success, const string& errnum, const string& errmsg, int pageIndex, int pageSize, int dataCount, const EMFOutboxList& outboxList);
+void onRequestEMFOutboxMsg(long requestId, bool success, const string& errnum, const string& errmsg, const EMFOutboxMsgItem& item);
+void onRequestEMFMsgTotal(long requestId, bool success, const string& errnum, const string& errmsg, const EMFMsgTotalItem& item);
+void onRequestEMFSendMsg(long requestId, bool success, const string& errnum, const string& errmsg, const EMFSendMsgItem& item, const EMFSendMsgErrorItem& errItem);
+void onRequestEMFUploadImage(long requestId, bool success, const string& errnum, const string& errmsg);
+void onRequestEMFUploadAttach(long requestId, bool success, const string& errnum, const string& errmsg, const string& attachId);
+void onRequestEMFDeleteMsg(long requestId, bool success, const string& errnum, const string& errmsg);
+void onRequestEMFAdmirerList(long requestId, bool success, const string& errnum, const string& errmsg, int pageIndex, int pageSize, int dataCount, const EMFAdmirerList& admirerList);
+void onRequestEMFAdmirerViewer(long requestId, bool success, const string& errnum, const string& errmsg, const EMFAdmirerViewerItem& item);
+void onRequestEMFBlockList(long requestId, bool success, const string& errnum, const string& errmsg, int pageIndex, int pageSize, int dataCount, const EMFBlockList& blockList);
+void onRequestEMFBlock(long requestId, bool success, const string& errnum, const string& errmsg);
+void onRequestEMFUnblock(long requestId, bool success, const string& errnum, const string& errmsg);
+void onRequestEMFInboxPhotoFee(long requestId, bool success, const string& errnum, const string& errmsg);
+void onRequestEMFPrivatePhotoView(long requestId, bool success, const string& errnum, const string& errmsg, const string& filePath);
+void onRequestGetVideoThumbPhoto(long requestId, bool success, const string& errnum, const string& errmsg, const string& filePath);
+void onRequestGetVideoUrl(long requestId, bool success, const string& errnum, const string& errmsg, const string& url);
+RequestEMFControllerCallback gRequestEMFControllerCallback {
+    onRequestEMFInboxList,
+    onRequestEMFInboxMsg,
+    onRequestEMFOutboxList,
+    onRequestEMFOutboxMsg,
+    onRequestEMFMsgTotal,
+    onRequestEMFSendMsg,
+    onRequestEMFUploadImage,
+    onRequestEMFUploadAttach,
+    onRequestEMFDeleteMsg,
+    onRequestEMFAdmirerList,
+    onRequestEMFAdmirerViewer,
+    onRequestEMFBlockList,
+    onRequestEMFBlock,
+    onRequestEMFUnblock,
+    onRequestEMFInboxPhotoFee,
+    onRequestEMFPrivatePhotoView,
+    onRequestGetVideoThumbPhoto,
+    onRequestGetVideoUrl
+};
+
 #pragma mark - 获取实例
 + (instancetype)manager {
     if( gManager == nil ) {
@@ -142,7 +194,8 @@ RequestPaidControllerCallback gRequestPaidControllerCallback {
         mpRequestOtherController = new RequestOtherController(&mHttpRequestManager, &gRequestOtherControllerCallback);
         mpRequestProfileController = new RequestProfileController(&mHttpRequestManager,gRequestProfileControllerCallback);
         mpRequestPaidController = new RequestPaidController(&mHttpRequestManager, gRequestPaidControllerCallback);
-        
+        mpRequestMonthlyFeeController = new RequestMonthlyFeeController(&mHttpRequestManager, gRequestMonthlyFeeControllerCallback);
+        mpRequestEMFController  = new RequestEMFController(&mHttpRequestManager, gRequestEMFControllerCallback);
     }
     return self;
 }
@@ -200,6 +253,29 @@ RequestPaidControllerCallback gRequestPaidControllerCallback {
 
 - (void)getCookies:(NSString *)site {
     HttpClient::GetCookies([site UTF8String]);
+}
+
+- (NSArray<CookiesItemObject*>* _Nonnull)getCookiesItem {
+    list<CookiesItem> CookiesItems = HttpClient::GetCookiesItem();
+    NSMutableArray* cookiesArray = [NSMutableArray array];
+    for (list<CookiesItem>::const_iterator iter = CookiesItems.begin();
+         iter != CookiesItems.end();
+         iter++)
+    {
+        CookiesItemObject* object = [[CookiesItemObject alloc] init];
+        object.domain             = [NSString stringWithUTF8String:(*iter).m_domain.c_str()];
+        object.accessOtherWeb     = [NSString stringWithUTF8String:(*iter).m_accessOtherWeb.c_str()];
+        object.symbol             = [NSString stringWithUTF8String:(*iter).m_symbol.c_str()];
+        object.isSend             = [NSString stringWithUTF8String:(*iter).m_isSend.c_str()];
+        object.expiresTime        = [NSString stringWithUTF8String:(*iter).m_expiresTime.c_str()];
+        object.cName              = [NSString stringWithUTF8String:(*iter).m_cName.c_str()];
+        object.value              = [NSString stringWithUTF8String:(*iter).m_value.c_str()];
+        if (nil != object) {
+            [cookiesArray addObject:object];
+        }
+    }
+    return cookiesArray;
+    
 }
 
 - (void)stopRequest:(NSInteger)requestId {
@@ -967,6 +1043,7 @@ void RequestOtherControllerCallback::OnSynConfig(long requestId, bool success, c
         // CL站点
         SiteItemObject* cl = [[SiteItemObject alloc] init];
         cl.host = [NSString stringWithUTF8String:item.cl.host.c_str()];
+        cl.domain = [NSString stringWithUTF8String:item.cl.domain.c_str()];
         proxyHostList = [NSMutableArray array];
         for(OtherSynConfigItem::ProxyHostList::const_iterator itr = item.cl.proxyHostList.begin(); itr != item.cl.proxyHostList.end(); itr++) {
             [proxyHostList addObject:[NSString stringWithUTF8String:itr->c_str()]];
@@ -985,6 +1062,7 @@ void RequestOtherControllerCallback::OnSynConfig(long requestId, bool success, c
         // IDA站点
         SiteItemObject* ida = [[SiteItemObject alloc] init];
         ida.host = [NSString stringWithUTF8String:item.ida.host.c_str()];
+        ida.domain = [NSString stringWithUTF8String:item.ida.domain.c_str()];
         proxyHostList = [NSMutableArray array];
         for(OtherSynConfigItem::ProxyHostList::const_iterator itr = item.ida.proxyHostList.begin(); itr != item.ida.proxyHostList.end(); itr++) {
             [proxyHostList addObject:[NSString stringWithUTF8String:itr->c_str()]];
@@ -1003,6 +1081,7 @@ void RequestOtherControllerCallback::OnSynConfig(long requestId, bool success, c
         // CH站点
         SiteItemObject* ch = [[SiteItemObject alloc] init];
         ch.host = [NSString stringWithUTF8String:item.ch.host.c_str()];
+        ch.domain = [NSString stringWithUTF8String:item.ch.domain.c_str()];
         proxyHostList = [NSMutableArray array];
         for(OtherSynConfigItem::ProxyHostList::const_iterator itr = item.ch.proxyHostList.begin(); itr != item.ch.proxyHostList.end(); itr++) {
             [proxyHostList addObject:[NSString stringWithUTF8String:itr->c_str()]];
@@ -1021,6 +1100,7 @@ void RequestOtherControllerCallback::OnSynConfig(long requestId, bool success, c
         // LA站点
         SiteItemObject* la = [[SiteItemObject alloc] init];
         la.host = [NSString stringWithUTF8String:item.la.host.c_str()];
+        la.domain = [NSString stringWithUTF8String:item.la.domain.c_str()];
         proxyHostList = [NSMutableArray array];
         for(OtherSynConfigItem::ProxyHostList::const_iterator itr = item.la.proxyHostList.begin(); itr != item.la.proxyHostList.end(); itr++) {
             [proxyHostList addObject:[NSString stringWithUTF8String:itr->c_str()]];
@@ -1197,13 +1277,14 @@ void onCheckPayment(long requestId, bool success, const string& code)
     }
 }
 
-- (NSInteger)checkPayment:(NSString* _Nonnull)manId sid:(NSString* _Nonnull)sid receipt:(NSString* _Nonnull)receipt orderNo:(NSString* _Nonnull)orderNo finishHandler:(CheckPaymentFinishHandler _Nullable)finishHandler
+- (NSInteger)checkPayment:(NSString* _Nonnull)manId sid:(NSString* _Nonnull)sid receipt:(NSString* _Nonnull)receipt orderNo:(NSString* _Nonnull)orderNo code:(NSInteger)code finishHandler:(CheckPaymentFinishHandler _Nullable)finishHandler
 {
     const char* pManId = [manId UTF8String];
     const char* pSid = [sid UTF8String];
     const char* pReceipt = [receipt UTF8String];
     const char* pOrderNo = [orderNo UTF8String];
-    NSInteger requestId = mpRequestPaidController->CheckPayment(pManId, pSid, pReceipt, pOrderNo);
+    int iCode = (int)code;
+    NSInteger requestId = mpRequestPaidController->CheckPayment(pManId, pSid, pReceipt, pOrderNo, iCode);
     if ( requestId != HTTPREQUEST_INVALIDREQUESTID ) {
         @synchronized(self.delegateDictionary) {
             [self.delegateDictionary setObject:finishHandler forKey:@(requestId)];
@@ -1213,4 +1294,135 @@ void onCheckPayment(long requestId, bool success, const string& code)
     return requestId;
 }
 
+#pragma mark - 月费
+void onQueryMemberType(long requestId, bool success, string errnum, string errmsg, int memberType){
+    GetQueryMemberTypeFinishHandler handler = nil;
+    RequestManager *manager = [RequestManager manager];
+    @synchronized(manager.delegateDictionary) {
+        handler = [manager.delegateDictionary objectForKey:@(requestId)];
+        [manager.delegateDictionary removeObjectForKey:@(requestId)];
+    }
+    
+    if( nil != handler ) {
+        handler(success,[NSString stringWithUTF8String:errnum.c_str()], [NSString stringWithUTF8String:errmsg.c_str()],memberType);
+    }
+}
+
+- (NSInteger)getQueryMemberType:(GetQueryMemberTypeFinishHandler _Nullable)finishHandler {
+    NSInteger requestId = HTTPREQUEST_INVALIDREQUESTID;
+    requestId = mpRequestMonthlyFeeController->QueryMemberType();
+    if (requestId != HTTPREQUEST_INVALIDREQUESTID) {
+        @synchronized (self.delegateDictionary) {
+            [self.delegateDictionary setObject:finishHandler forKey:@(requestId)];
+        }
+    }
+    
+    return requestId;
+}
+void onGetMonthlyFeeTips(long requestId, bool success, string errnum, string errmsg, list<MonthlyFeeTip> tipsList){
+    NSMutableArray* strArray = [NSMutableArray array];
+     NSMutableArray *itemArray = [NSMutableArray array];
+    for (list<MonthlyFeeTip>::const_iterator iter = tipsList.begin();
+         iter != tipsList.end();
+         iter++){
+        MonthlyFeeTipItemObject *obj = [[MonthlyFeeTipItemObject alloc] init];
+        obj.menberType = iter->memberType;
+        obj.priceTitle = [NSString stringWithUTF8String:iter->priceTilte.c_str()];
+        
+        for (list<string>::const_iterator iterStr = iter->tipList.begin();
+             iterStr != iter->tipList.end();
+             iter++){
+             NSString* str = [NSString stringWithUTF8String:(*iterStr).c_str()];
+            [strArray addObject:str];
+        }
+        obj.tipArray = strArray;
+        [itemArray addObject:obj];
+    }
+    
+    GetMonthlyFeeTipsFinishHandler handler = nil;
+    RequestManager *manager = [RequestManager manager];
+    @synchronized(manager.delegateDictionary) {
+        handler = [manager.delegateDictionary objectForKey:@(requestId)];
+        [manager.delegateDictionary removeObjectForKey:@(requestId)];
+    }
+    
+    if( nil != handler ) {
+        handler(success,[NSString stringWithUTF8String:errnum.c_str()],[NSString stringWithUTF8String:errmsg.c_str()],itemArray);
+    }
+}
+
+- (NSInteger)getMonthlyFee:(GetMonthlyFeeTipsFinishHandler)finishHandler {
+    NSInteger requestId = HTTPREQUEST_INVALIDREQUESTID;
+    requestId = mpRequestMonthlyFeeController->GetMonthlyFeeTips();
+    if (requestId != HTTPREQUEST_INVALIDREQUESTID) {
+        @synchronized (self.delegateDictionary) {
+            [self.delegateDictionary setObject:finishHandler forKey:@(requestId)];
+        }
+    }
+    
+    return requestId;}
+	
+	#pragma mark - EMF回调
+void onRequestEMFInboxList(long requestId, bool success, const string& errnum, const string& errmsg, int pageIndex, int pageSize, int dataCount, const EMFInboxList& inboxList){
+}
+void onRequestEMFInboxMsg(long requestId, bool success, const string& errnum, const string& errmsg, int memberType, const EMFInboxMsgItem& item){
+}
+void onRequestEMFOutboxList(long requestId, bool success, const string& errnum, const string& errmsg, int pageIndex, int pageSize, int dataCount, const EMFOutboxList& outboxList){
+}
+void onRequestEMFOutboxMsg(long requestId, bool success, const string& errnum, const string& errmsg, const EMFOutboxMsgItem& item){
+}
+void onRequestEMFMsgTotal(long requestId, bool success, const string& errnum, const string& errmsg, const EMFMsgTotalItem& item){
+    GetEMFCountFinishHandler handler = nil;
+    RequestManager *manager = [RequestManager manager];
+    @synchronized(manager.delegateDictionary) {
+        handler = [manager.delegateDictionary objectForKey:@(requestId)];
+        [manager.delegateDictionary removeObjectForKey:@(requestId)];
+    }
+    
+    if( nil != handler ) {
+        handler(success
+                , item.msgTotal
+                , [NSString stringWithUTF8String:errnum.c_str()]
+                , [NSString stringWithUTF8String:errmsg.c_str()]);
+    }
+}
+void onRequestEMFSendMsg(long requestId, bool success, const string& errnum, const string& errmsg, const EMFSendMsgItem& item, const EMFSendMsgErrorItem& errItem){
+}
+void onRequestEMFUploadImage(long requestId, bool success, const string& errnum, const string& errmsg){
+}
+void onRequestEMFUploadAttach(long requestId, bool success, const string& errnum, const string& errmsg, const string& attachId){
+}
+void onRequestEMFDeleteMsg(long requestId, bool success, const string& errnum, const string& errmsg){
+}
+void onRequestEMFAdmirerList(long requestId, bool success, const string& errnum, const string& errmsg, int pageIndex, int pageSize, int dataCount, const EMFAdmirerList& admirerList){
+}
+void onRequestEMFAdmirerViewer(long requestId, bool success, const string& errnum, const string& errmsg, const EMFAdmirerViewerItem& item){
+}
+void onRequestEMFBlockList(long requestId, bool success, const string& errnum, const string& errmsg, int pageIndex, int pageSize, int dataCount, const EMFBlockList& blockList){
+}
+void onRequestEMFBlock(long requestId, bool success, const string& errnum, const string& errmsg){
+}
+void onRequestEMFUnblock(long requestId, bool success, const string& errnum, const string& errmsg){
+}
+void onRequestEMFInboxPhotoFee(long requestId, bool success, const string& errnum, const string& errmsg){
+}
+void onRequestEMFPrivatePhotoView(long requestId, bool success, const string& errnum, const string& errmsg, const string& filePath){
+}
+void onRequestGetVideoThumbPhoto(long requestId, bool success, const string& errnum, const string& errmsg, const string& filePath){
+}
+void onRequestGetVideoUrl(long requestId, bool success, const string& errnum, const string& errmsg, const string& url){
+}
+
+- (NSInteger)getEMFCount:(GetEMFCountFinishHandler _Nullable)finishHandler{
+    NSInteger requestId = HTTPREQUEST_INVALIDREQUESTID;
+    
+    requestId = mpRequestEMFController->MsgTotal(3);
+    if( requestId != HTTPREQUEST_INVALIDREQUESTID ) {
+        @synchronized(self.delegateDictionary) {
+            [self.delegateDictionary setObject:finishHandler forKey:@(requestId)];
+        }
+    }
+    
+    return requestId;
+}
 @end

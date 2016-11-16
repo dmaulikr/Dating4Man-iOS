@@ -10,6 +10,7 @@
 
 @interface ContactListTableViewCell : UITableViewCell
 
+@property (nonatomic, weak) IBOutlet UIImageViewTopFit *test;
 @property (nonatomic, weak) IBOutlet UIImageViewTopFit *ladyImageView;
 @property (nonatomic, weak) IBOutlet UIImageView *onlineImageView;
 @property (nonatomic, weak) IBOutlet UILabel *titleLabel;

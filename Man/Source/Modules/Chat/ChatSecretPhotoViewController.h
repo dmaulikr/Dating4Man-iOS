@@ -60,4 +60,7 @@
  */
 - (IBAction)saveSecretPhotoAction:(id)sender;
 
+
+- (void)reloadMsgItem:(LiveChatMsgItemObject *)msgItem;
+
 @end

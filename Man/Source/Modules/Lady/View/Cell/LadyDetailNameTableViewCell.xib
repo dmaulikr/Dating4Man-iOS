@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -12,25 +13,22 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="56"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="3" id="zji-PO-4zO">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="55"/>
+                <frame key="frameInset" width="320" height="55"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Janny, 26" lineBreakMode="characterWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fk5-ne-pw3">
-                        <rect key="frame" x="16" y="16" width="94" height="24"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                         <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
-                        <color key="textColor" red="1" green="0.58301059325020632" blue="0.23125908884023605" alpha="1" colorSpace="calibratedRGB"/>
-                        <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="textColor" red="1" green="0.58301059325020632" blue="0.23125908884023605" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </label>
                     <label hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Online" lineBreakMode="characterWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4">
-                        <rect key="frame" x="122" y="23" width="42" height="17"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                        <color key="textColor" red="0.43529411759999997" green="0.4431372549" blue="0.47450980390000003" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="textColor" red="0.43529411759999997" green="0.4431372549" blue="0.47450980390000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LadyDetail-Location" translatesAutoresizingMaskIntoConstraints="NO" id="H6D-aX-8yP">
-                        <rect key="frame" x="124" y="17" width="22" height="22"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="24" id="Iu5-nt-Y5c"/>
                             <constraint firstAttribute="height" constant="22" id="N6A-LO-SjX"/>
@@ -44,15 +42,13 @@
                             </mask>
                         </variation>
                     </imageView>
-                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="标题" lineBreakMode="characterWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a3X-ud-2Rh">
-                        <rect key="frame" x="148" y="17" width="36" height="22"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="标题" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a3X-ud-2Rh">
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                        <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="textColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OH3-t5-bNW">
-                        <rect key="frame" x="280" y="16" width="24" height="22"/>
                         <state key="normal" image="LadyDetail-MoreButton"/>
                         <connections>
                             <action selector="reportAction:" destination="3" eventType="touchUpInside" id="k9H-fO-Ih4"/>
@@ -68,6 +64,7 @@
                     <constraint firstItem="fk5-ne-pw3" firstAttribute="top" secondItem="zji-PO-4zO" secondAttribute="top" constant="10" id="LB4-Nw-NtL"/>
                     <constraint firstItem="4" firstAttribute="top" secondItem="fk5-ne-pw3" secondAttribute="baseline" id="NKM-fj-G5o"/>
                     <constraint firstItem="a3X-ud-2Rh" firstAttribute="leading" secondItem="H6D-aX-8yP" secondAttribute="trailing" constant="6" id="PrP-XE-edI"/>
+                    <constraint firstItem="a3X-ud-2Rh" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="OH3-t5-bNW" secondAttribute="leading" id="Qbw-9B-JxR"/>
                     <constraint firstItem="H6D-aX-8yP" firstAttribute="leading" secondItem="fk5-ne-pw3" secondAttribute="trailing" constant="14" id="Sg1-Ay-SCV"/>
                     <constraint firstItem="4" firstAttribute="leading" secondItem="fk5-ne-pw3" secondAttribute="trailing" constant="12" id="dFm-sb-QAe"/>
                     <constraint firstItem="4" firstAttribute="leading" secondItem="fk5-ne-pw3" secondAttribute="trailing" id="fSF-Ao-S74"/>
@@ -89,7 +86,7 @@
                     </mask>
                 </variation>
             </tableViewCellContentView>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <inset key="separatorInset" minX="64" minY="0.0" maxX="0.0" maxY="0.0"/>
             <connections>
                 <outlet property="countryLabel" destination="a3X-ud-2Rh" id="od4-M5-1M1"/>

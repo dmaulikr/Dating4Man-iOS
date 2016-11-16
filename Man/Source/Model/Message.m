@@ -16,9 +16,13 @@
         self.sender = MessageSenderUnknow;
         self.type = MessageTypeUnknow;
         self.status = MessageStatusUnknow;
-        self.text = [NSString string];
-        self.attText = [[NSAttributedString alloc] init];
-        self.secretPhotoImage = [[UIImage alloc] init];
+        self.text = nil;
+        self.attText = nil;
+        self.secretPhotoImage = nil;
+        self.emotionDefault = nil;
+        self.emotionAnimationArray = nil;
+//        self.attText = [[NSAttributedString alloc] init];
+//        self.secretPhotoImage = [[UIImage alloc] init];
     }
     return self;
 }
@@ -32,8 +36,8 @@
         self.type = (Type)[[coder decodeObjectForKey:@"type"] intValue];
         self.status = (Status)[[coder decodeObjectForKey:@"status"] intValue];
         self.secretPhotoImage = [coder decodeObjectForKey:@"secretPhotoImage"];
-
-        
+        self.emotionDefault = [coder decodeObjectForKey:@"emotionDefault"];
+        self.emotionAnimationArray = [coder decodeObjectForKey:@"emotionAnimationArray"];
     }
     return self;
 }
@@ -46,6 +50,8 @@
     [coder encodeObject:[NSNumber numberWithInt:self.type] forKey:@"type"];
     [coder encodeObject:[NSNumber numberWithInt:self.status] forKey:@"status"];
     [coder encodeObject:self.secretPhotoImage forKey:@"secretPhotoImage"];
+    [coder encodeObject:self.emotionDefault forKey:@"emotionDefault"];
+    [coder encodeObject:self.emotionAnimationArray forKey:@"emotionAnimationArray"];
 }
 
 - (id)copyWithZone:(NSZone *)zone {
@@ -57,6 +63,8 @@
     messageItem.type = self.type;
     messageItem.status = self.status;
     messageItem.secretPhotoImage = [self.secretPhotoImage copy];
+    messageItem.emotionDefault = [self.emotionDefault copy];
+    messageItem.emotionAnimationArray = [[NSArray alloc] initWithArray:self.emotionAnimationArray copyItems:YES];
     return messageItem;
 }
 @end

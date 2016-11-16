@@ -27,6 +27,9 @@
     if( self = [super init] ) {
         self.manager = [[AFHTTPSessionManager manager] initWithBaseURL:nil];
         self.downloadTask = nil;
+        self.delegate = nil;
+        self.view = nil;
+        self.image = nil;
     }
     return self;
 }

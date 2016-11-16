@@ -29,6 +29,7 @@
 /** 代理 */
 @property (nonatomic,weak) id<ChatPhotoLadyTableViewCellDelegate> delegate;
 
++ (NSString *)cellIdentifier;
 + (NSInteger)cellHeight;
 + (id)getUITableViewCell:(UITableView*)tableView;
 @end

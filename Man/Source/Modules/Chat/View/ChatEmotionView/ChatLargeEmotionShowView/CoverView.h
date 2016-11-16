@@ -1,15 +1,14 @@
 //
-//  coverView.h
+//  CoverView.h
+//  dating
 //
-//
-//  Created by lance37 on 16/3/8.
-//  蒙版
+//  Created by test on 16/9/19.
+//  Copyright © 2016年 qpidnetwork. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 
 @interface CoverView : UIView
-
 
 /** 透明度 */
 @property (nonatomic,assign) CGFloat alpha;

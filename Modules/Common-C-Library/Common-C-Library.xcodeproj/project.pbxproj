@@ -201,6 +201,9 @@
 		D169394F1CE59724001D40E7 /* RecvThemeRecommendTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D16939451CE59724001D40E7 /* RecvThemeRecommendTask.cpp */; };
 		D16939501CE59724001D40E7 /* UploadThemeListVerTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D16939471CE59724001D40E7 /* UploadThemeListVerTask.cpp */; };
 		D17487C61D18E1EA008AE3C2 /* RequestPaidController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D17487C31D18E1EA008AE3C2 /* RequestPaidController.cpp */; };
+		FA0E3EB41D8E221000A8732E /* LCMagicIconDownloader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA0E3EAE1D8E221000A8732E /* LCMagicIconDownloader.cpp */; };
+		FA0E3EB51D8E221000A8732E /* LCMagicIconItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA0E3EB01D8E221000A8732E /* LCMagicIconItem.cpp */; };
+		FA0E3EB61D8E221000A8732E /* LCMagicIconManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA0E3EB21D8E221000A8732E /* LCMagicIconManager.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -667,6 +670,13 @@
 		D17487C41D18E1EA008AE3C2 /* RequestPaidController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequestPaidController.h; sourceTree = "<group>"; };
 		D17487C51D18E1EA008AE3C2 /* RequestPaidDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequestPaidDefine.h; sourceTree = "<group>"; };
 		D180B77A1D3CD25D00DCFBA5 /* DeviceTypeDef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceTypeDef.h; sourceTree = "<group>"; };
+		FA0E3EAD1D8E21E700A8732E /* MagicIconConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MagicIconConfig.h; sourceTree = "<group>"; };
+		FA0E3EAE1D8E221000A8732E /* LCMagicIconDownloader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LCMagicIconDownloader.cpp; sourceTree = "<group>"; };
+		FA0E3EAF1D8E221000A8732E /* LCMagicIconDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCMagicIconDownloader.h; sourceTree = "<group>"; };
+		FA0E3EB01D8E221000A8732E /* LCMagicIconItem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LCMagicIconItem.cpp; sourceTree = "<group>"; };
+		FA0E3EB11D8E221000A8732E /* LCMagicIconItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCMagicIconItem.h; sourceTree = "<group>"; };
+		FA0E3EB21D8E221000A8732E /* LCMagicIconManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LCMagicIconManager.cpp; sourceTree = "<group>"; };
+		FA0E3EB31D8E221000A8732E /* LCMagicIconManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCMagicIconManager.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -903,6 +913,12 @@
 				504CDB391C7FE31500DBB429 /* LCEmotionManager.h */,
 				504CDB3A1C7FE31500DBB429 /* LCInviteManager.cpp */,
 				504CDB3B1C7FE31500DBB429 /* LCInviteManager.h */,
+				FA0E3EAE1D8E221000A8732E /* LCMagicIconDownloader.cpp */,
+				FA0E3EAF1D8E221000A8732E /* LCMagicIconDownloader.h */,
+				FA0E3EB01D8E221000A8732E /* LCMagicIconItem.cpp */,
+				FA0E3EB11D8E221000A8732E /* LCMagicIconItem.h */,
+				FA0E3EB21D8E221000A8732E /* LCMagicIconManager.cpp */,
+				FA0E3EB31D8E221000A8732E /* LCMagicIconManager.h */,
 				504CDB3C1C7FE31500DBB429 /* LCMessageFilter.cpp */,
 				504CDB3D1C7FE31500DBB429 /* LCMessageFilter.h */,
 				504CDB3E1C7FE31500DBB429 /* LCMessageItem.cpp */,
@@ -1013,6 +1029,7 @@
 		504CDB8D1C7FEB1500DBB429 /* item */ = {
 			isa = PBXGroup;
 			children = (
+				FA0E3EAD1D8E21E700A8732E /* MagicIconConfig.h */,
 				504CDB8E1C7FEB1500DBB429 /* Advert.h */,
 				50ECE6021D06AA8F00FAAC1F /* CheckServerItem.h */,
 				504CDB8F1C7FEB1500DBB429 /* Coupon.h */,
@@ -1326,7 +1343,7 @@
 		505D86841C7EF748006FDAC7 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0720;
+				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = qpidnetwork;
 				TargetAttributes = {
 					505D868B1C7EF748006FDAC7 = {
@@ -1535,13 +1552,16 @@
 				50E967A31CC4CC4B00E5BF26 /* RefreshIdentifyCodeTask.cpp in Sources */,
 				50E967BE1CC4CC4B00E5BF26 /* UseTryTicketTask.cpp in Sources */,
 				504CDA531C7FDD7F00DBB429 /* PngHandler.cpp in Sources */,
+				FA0E3EB41D8E221000A8732E /* LCMagicIconDownloader.cpp in Sources */,
 				50E967B11CC4CC4B00E5BF26 /* ShowPhotoTask.cpp in Sources */,
 				50E9677D1CC4CC4B00E5BF26 /* GetLadyVoiceCodeTask.cpp in Sources */,
 				50E967AF1CC4CC4B00E5BF26 /* SendVoiceTask.cpp in Sources */,
 				504CDA551C7FDD7F00DBB429 /* PngWriter.cpp in Sources */,
 				504CDA471C7FDB0500DBB429 /* HttpEntiy.cpp in Sources */,
 				50E967A11CC4CC4B00E5BF26 /* RecvVoiceTask.cpp in Sources */,
+				FA0E3EB51D8E221000A8732E /* LCMagicIconItem.cpp in Sources */,
 				504CDB7B1C7FE31500DBB429 /* LiveChatManManager.cpp in Sources */,
+				FA0E3EB61D8E221000A8732E /* LCMagicIconManager.cpp in Sources */,
 				D169394E1CE59724001D40E7 /* RecvThemeMotionTask.cpp in Sources */,
 				504CDA1D1C7FD6EE00DBB429 /* json_reader.cpp in Sources */,
 				50E9679B1CC4CC4B00E5BF26 /* RecvShowPhotoTask.cpp in Sources */,
@@ -1572,6 +1592,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -1581,8 +1602,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -1615,6 +1638,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -1624,8 +1648,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";

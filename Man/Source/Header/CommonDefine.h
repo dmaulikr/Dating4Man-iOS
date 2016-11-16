@@ -28,7 +28,7 @@
 #define msgSend(...) ((void (*)(void *, SEL, UIView *))objc_msgSend)(__VA_ARGS__)
 #define msgTarget(target) (__bridge void *)(target)
 
-#define Color(r, g, b) [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:1.0]
+#define Color(r, g, b, a) [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:(a)]
 
 //#define errorUrl @"http://mobile.chnlove.com/Public/images/photo_unavailable.gif"
 //#define errorDemoUrl @"http://demo-ios.qpidnetwork.com/Public/images/photo_unavailable.gif"

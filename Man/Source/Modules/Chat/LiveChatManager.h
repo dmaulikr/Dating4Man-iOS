@@ -60,6 +60,7 @@
  *
  *  @return 操作是否成功
  */
+
 - (BOOL)getUserStatus:(NSArray<NSString*>* _Nonnull)userIds;
 
 /**
@@ -190,6 +191,16 @@
  */
 - (LiveChatMsgItemObject* _Nullable)getLastMsg:(NSString* _Nonnull)userId;
 
+
+/**
+ *  获取对方最后一条聊天消息
+ *
+ *  @param userId 用户id
+ *
+ *  @return 对方最后一条聊天消息
+ */
+- (LiveChatMsgItemObject* _Nullable)GetTheOtherLastMessage:(NSString* _Nonnull)userId;
+
 /**
  *  发送图片
  *
@@ -218,4 +229,89 @@
  *  @return 处理结果
  */
 - (BOOL)getPhoto:(NSString * _Nonnull)userId msgId:(int)msgId sizeType:(GETPHOTO_PHOTOSIZE_TYPE)sizeType;
+
+#pragma mark - 高级表情消息处理（大高表）
+/**
+ * 发送高级表情
+ *
+ * @param userId   用户Id
+ * @param emtionId   大高级表情Id
+ *
+ * @return 高级表情消息
+ */
+-(LiveChatMsgItemObject* _Nullable)SendEmotion:(NSString * _Nonnull)userId emotionId:(NSString * _Nonnull)emotionId;
+/**
+ * 获取高级表情配置item
+ *
+ * @return 高级表情配置item
+ */
+-(LiveChatEmotionConfigItemObject* _Nullable)GetEmotionConfigItem;
+/**
+ * 获取高级表情item
+ *
+ * @param emotionId 高级表情ID
+ * 
+ * @return 高级表情item
+ */
+-(LiveChatEmotionItemObject* _Nullable)GetEmotionInfo:(NSString * _Nonnull)emotionId;
+/**
+ * 手动下载/更新高级表情图片文件(一张图)
+ *
+ * @param emotionId 高级表情ID
+ *
+ * @return 处理结果
+ */
+-(BOOL)GetEmotionImage:(NSString * _Nonnull)emotionId;
+/**
+ * 手动下载/更新高级表情图片文件（一大张图，并且要载剪成多张图）
+ *
+ * @param emotionId 高级表情ID
+ *
+ * @return 处理结果
+ */
+-(BOOL)GetEmotionPlayImage:(NSString * _Nonnull)emotionId;
+
+
+#pragma mark - 小高级表情消息处理
+/**
+ * 发送小高级表情
+ *
+ * @param userId   用户Id
+ * @param iconId   小高表Id
+ *
+ * @return 小高表情配置消息
+ */
+-(LiveChatMsgItemObject* _Nullable)SendMagicIcon:(NSString * _Nonnull)userId iconId:(NSString * _Nonnull)iconId;
+/**
+ * 获取小高级表情配置item
+ *
+ * @return 小高表情消息
+ */
+-(LiveChatMagicIconConfigItemObject* _Nullable) GetMagicIconConfigItem;
+/**
+ * 获取小高级表情item
+ *
+ * @param magicIconId   小高级表情Id
+ *
+ * @return 小高表情消息
+ */
+-(LiveChatMagicIconItemObject* _Nullable) GetMagicIconInfo:(NSString * _Nonnull)magicIconId;
+/**
+ * 手动下载／更新小高级表情原图source
+ *
+ * @param magicIconId   小高级表情Id
+ *
+ * @return
+ */
+-(BOOL) GetMagicIconSrcImage:(NSString * _Nonnull)magicIconId;
+/**
+ * 手动下载／更新小高级表情拇子图thumb
+ *
+ * @param magicIconId   小高级表情Id
+ *
+ * @return
+ */
+-(BOOL) GetMagicIconThumbImage:(NSString * _Nonnull)magicIconId;
+
+
 @end

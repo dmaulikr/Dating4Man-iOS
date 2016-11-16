@@ -35,6 +35,8 @@
         self.customMsg = nil;
         self.downloadSuccess = NO;
         self.loadingImage = NO;
+        self.emotionMsg = nil;
+        self.magicIconMsg = nil;
     }
     return self;
 }

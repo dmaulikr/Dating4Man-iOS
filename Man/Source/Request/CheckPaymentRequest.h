@@ -14,6 +14,7 @@
 @property (nonatomic, strong) NSString* _Nullable sid;
 @property (nonatomic, strong) NSString* _Nullable receipt;
 @property (nonatomic, strong) NSString* _Nullable orderNo;
+@property (nonatomic, assign) NSInteger code;
 
 @property (nonatomic, strong) CheckPaymentFinishHandler _Nullable finishHandler;
 @end

@@ -24,6 +24,8 @@
 @property (nonatomic, strong) NSString* sid;
 // AppStore支付凭证
 @property (nonatomic, strong) NSString* receipt;
+// AppStore支付状态
+@property (nonatomic, assign) SKPaymentTransactionState transState;
 // 支付状态
 @property (nonatomic, assign) PaymentHandleState state;
 // 是否正在处理中
@@ -62,6 +64,8 @@
         self.productId = productId;
         self.manId = manId;
         self.sid = sid;
+        self.receipt = @"";
+        self.transState = SKPaymentTransactionStateFailed;
         self.state = PaymentHandleStatePayWithStore;
         self.isHandling = NO;
         self.sessionRequestMgr = [SessionRequestManager manager];
@@ -127,6 +131,7 @@
     request.sid = self.sid;
     request.orderNo = self.orderNo;
     request.receipt = self.receipt;
+    request.code = self.transState;
     request.finishHandler = ^(BOOL success, NSString* _Nonnull code) {
         if (nil != self.delegate) {
             if (success) {
@@ -168,35 +173,33 @@
 - (void)updatedTransactions:(SKPaymentTransaction* _Nonnull)transaction
 {
     // 判断是否成功及是否需要回调
-    BOOL success = NO;
     BOOL isCallback = YES;
     switch (transaction.transactionState) {
-        case SKPaymentTransactionStatePurchased:
-            success = YES;
+        case SKPaymentTransactionStatePurchased:    // 购买成功
+        case SKPaymentTransactionStateFailed:       // 购买失败
+        case SKPaymentTransactionStateRestored:     // 恢复交易(仅Non-Consumable可重复使用商品(非消费)，及Auto-Renewable自动续费商品才有)
+        case SKPaymentTransactionStateDeferred:     // 未确定(用户没绑信用卡，无法立即支付)
             break;
-        case SKPaymentTransactionStateFailed:
-        case SKPaymentTransactionStateRestored:
-        case SKPaymentTransactionStateDeferred:
-            success = NO;
-            break;
-        case SKPaymentTransactionStatePurchasing:
-            success = YES;
+        case SKPaymentTransactionStatePurchasing:   // 正在购买
             isCallback = NO;
             break;
     }
+    self.transState = transaction.transactionState;
     
     // 回调
     if (isCallback && nil != self.delegate) {
-        [self.delegate updatePaymentState:self state:PaymentHandleStatePayWithStore success:success code:@"" isNetErr:NO];
+        [self.delegate updatePaymentState:self state:PaymentHandleStatePayWithStore success:YES code:@"" isNetErr:NO];
     }
     
-    if (!success) {
-        // 支付失败，设置不继续处理
-        self.isHandling = NO;
-    }
-    else if (transaction.transactionState == SKPaymentTransactionStatePurchased) {
+    if (transaction.transactionState == SKPaymentTransactionStatePurchased
+         || transaction.transactionState == SKPaymentTransactionStateFailed
+         || transaction.transactionState == SKPaymentTransactionStateRestored
+         || transaction.transactionState == SKPaymentTransactionStateDeferred)
+    {
         // 支付成功，获取凭证
-        self.receipt = [AppStorePayHandler getReceipt];
+        if (transaction.transactionState == SKPaymentTransactionStatePurchased) {
+            self.receipt = [AppStorePayHandler getReceipt];
+        }
         
         // 状态设为验证支付信息，继续处理
         self.state = PaymentHandleStateCheckPayment;

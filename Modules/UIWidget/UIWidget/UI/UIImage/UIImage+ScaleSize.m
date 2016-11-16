@@ -2,7 +2,7 @@
 //  UIImage+ScaleSize.m
 //  UIWidget
 //
-//  Created by test on 16/8/19.
+//  Created by test on 16/8/31.
 //  Copyright © 2016年 drcom. All rights reserved.
 //
 

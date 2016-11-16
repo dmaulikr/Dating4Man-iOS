@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="JRh-Y9-GMT">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="JRh-Y9-GMT">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--程序入口KKNavigationController-->
@@ -12,7 +13,7 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="uOE-vy-qFA">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.094117647060000004" green="0.53333333329999999" blue="0.90196078430000004" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="barTintColor" red="0.094117647060000004" green="0.53333333329999999" blue="0.90196078430000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </navigationBar>
                     <connections>
                         <segue destination="ENf-G1-Wdz" kind="relationship" relationship="rootViewController" id="Yyd-Ml-bZj"/>
@@ -35,13 +36,12 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vUR-0c-Jfi" customClass="PZPagingScrollView">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                                 <connections>
                                     <outlet property="pagingViewDelegate" destination="ENf-G1-Wdz" id="gr1-zR-Izb"/>
                                 </connections>
                             </scrollView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.12941176469999999" green="0.28235294119999998" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="vUR-0c-Jfi" firstAttribute="width" secondItem="vHQ-ZA-4r9" secondAttribute="width" id="A9D-Oh-Cqk"/>
                             <constraint firstItem="vUR-0c-Jfi" firstAttribute="height" secondItem="vHQ-ZA-4r9" secondAttribute="height" id="Hoj-nD-83X"/>
@@ -50,7 +50,6 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="TZd-yo-0jc"/>
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="pagingScrollView" destination="vUR-0c-Jfi" id="nDA-mf-X2R"/>
                     </connections>

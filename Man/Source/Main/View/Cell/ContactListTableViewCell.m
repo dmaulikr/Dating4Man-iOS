@@ -29,10 +29,8 @@
     }
     
     cell.ladyImageView.hidden = NO;
-    cell.ladyImageView.layer.cornerRadius = cell.ladyImageView.frame.size.width * 0.5;
     cell.ladyImageView.layer.masksToBounds = YES;
     
-    cell.onlineImageView.layer.cornerRadius = cell.onlineImageView.frame.size.width * 0.5;
     cell.onlineImageView.layer.masksToBounds = YES;
     
     cell.onlineImageView.hidden = YES;
@@ -58,6 +56,12 @@
 
 - (void)layoutSubviews {
     [super layoutSubviews];
+    
+    [self.ladyImageView layoutIfNeeded];
+    [self.onlineImageView layoutIfNeeded];
+    
+    self.ladyImageView.layer.cornerRadius = self.ladyImageView.frame.size.width * 0.5;
+    self.onlineImageView.layer.cornerRadius = self.onlineImageView.frame.size.width * 0.5;
     
     [self.titleLabel sizeToFit];
     

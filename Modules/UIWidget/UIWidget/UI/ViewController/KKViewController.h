@@ -27,7 +27,7 @@
 /**
  *  反初始化
  */
-- (void)unInitCustomParam;
+- (void)dealloc;
 /**
  *  初始化导航栏
  */
@@ -45,5 +45,7 @@
  *  隐藏加载状态
  */
 - (void)hideLoading;
+
+- (void)hideNavgationBarBottomLine;
 
 @end

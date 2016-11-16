@@ -15,6 +15,7 @@
 #import "ChatSystemTipsTableViewCell.h"
 #import "ChatCouponTableViewCell.h"
 #import "ChatWarningTipsTableViewCell.h"
+#import "ChatMoonFeeTableViewCell.h"
 
 #import "ChatEmotionChooseView.h"
 
@@ -26,6 +27,10 @@
 
 #import "LadyRecentContactObject.h"
 #import "ContactManager.h"
+
+#import "MonthFeeManager.h"
+#import "PaymentManager.h"
+#import "PaymentErrorCode.h"
 
 #define ADD_CREDIT_URL @"ADD_CREDIT_URL"
 #define INPUTMESSAGEVIEW_MAX_HEIGHT 44.0 * 2
@@ -40,7 +45,15 @@ typedef enum AlertType {
     AlertType200Limited = 100000,
 } AlertType;
 
-@interface ChatViewFakeController () <UIAlertViewDelegate, ChatTextSelfDelegate, LiveChatManagerDelegate, KKCheckButtonDelegate, ChatEmotionChooseViewDelegate, TTTAttributedLabelDelegate, ChatTextViewDelegate, ImageViewLoaderDelegate> {
+typedef enum AlertPayType {
+    AlertTypePayDefault = 200000,
+    AlertTypePayAppStorePay,
+    AlertTypePayCheckOrder,
+    AlertTypePayMonthFee
+} AlertPayType;
+
+
+@interface ChatViewFakeController () <UIAlertViewDelegate, ChatTextSelfDelegate, LiveChatManagerDelegate, KKCheckButtonDelegate, ChatEmotionChooseViewDelegate, TTTAttributedLabelDelegate, ChatTextViewDelegate, ImageViewLoaderDelegate,PaymentManagerDelegate,ChatMoonFeeTableViewCellDelegate,MonthFeeManagerDelegate> {
     CGRect _orgFrame;
 }
 
@@ -83,9 +96,40 @@ typedef enum AlertType {
  */
 @property (nonatomic, strong) ImageViewLoader *imageViewLoader;
 
+/** 月费类型 */
+@property (nonatomic,assign) int memberType;
+/** 月费消息id */
+@property (nonatomic,strong) NSMutableArray *msgIdArray;
+
+/**
+ *  月费管理器
+ */
+@property (nonatomic, strong) MonthFeeManager *monthFeeManager;
+
+/**
+ *  支付管理器
+ */
+@property (nonatomic, strong) PaymentManager* paymentManager;
+/**
+ *  当前支付订单号
+ */
+@property (nonatomic, strong) NSString* orderNo;
+/** 键盘弹出时间 */
+@property (nonatomic,assign) NSTimeInterval duration;
+
 @end
 
 @implementation ChatViewFakeController
+
+
+- (NSMutableArray *)msgIdArray {
+    if (!_msgIdArray) {
+        _msgIdArray = [NSMutableArray array];
+        
+    }
+    return _msgIdArray;
+}
+
 
 #pragma mark -
 - (void)viewDidLoad {
@@ -100,8 +144,13 @@ typedef enum AlertType {
     // 添加键盘事件
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
-
+    
+    
+    // 刷新消息列表
     if( !self.viewDidAppearEver ) {
+        
+        [self closeAllInputView];
+//        self.textView.userInteractionEnabled = YES;
         // 刷新消息列表
         [self reloadData:YES];
         // 拉到最底
@@ -125,9 +174,18 @@ typedef enum AlertType {
 
 }
 
+
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
+
 }
+
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [self closeAllInputView];
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -146,6 +204,14 @@ typedef enum AlertType {
 
     self.liveChatManager = [LiveChatManager manager];
     [self.liveChatManager addDelegate:self];
+    
+    
+    self.monthFeeManager = [MonthFeeManager manager];
+    [self.monthFeeManager addDelegate:self];
+    [self.monthFeeManager getQueryMemberType];
+    
+    self.paymentManager = [PaymentManager manager];
+    [self.paymentManager addDelegate:self];
     
     // 读取表情配置文件
     NSString *emotionPlistPath = [[NSBundle mainBundle] pathForResource:@"EmotionList" ofType:@"plist"];
@@ -179,9 +245,10 @@ typedef enum AlertType {
     self.msgCustomDict = [NSMutableDictionary dictionary];
 }
 
-- (void)unInitCustomParam {
+- (void)dealloc {
     [self.liveChatManager removeDelegate:self];
-    
+    [self.monthFeeManager removeDelegate:self];
+    [self.paymentManager removeDelegate:self];
     // 清空自定义消息
     [self clearCustomMessage];
 }
@@ -221,7 +288,7 @@ typedef enum AlertType {
     
     [self setupTableView];
     [self setupInputView];
-    [self setupMotionInputView];
+    [self setupEmotionInputView];
     
 }
 
@@ -246,7 +313,7 @@ typedef enum AlertType {
     [self.emotionBtn setImage:[UIImage imageNamed:@"Chat-EmotionBlue" ] forState:UIControlStateSelected];
 }
 
-- (void)setupMotionInputView {
+- (void)setupEmotionInputView {
     if( self.emotionInputView == nil ) {
         self.emotionInputView = [ChatEmotionChooseView emotionChooseView:self];
         self.emotionInputView.delegate = self;
@@ -255,16 +322,13 @@ typedef enum AlertType {
         [self.emotionInputView mas_updateConstraints:^(MASConstraintMaker *make) {
             make.width.equalTo(self.inputMessageView.mas_width);
             make.height.equalTo(@150);
+            make.left.equalTo(self.inputMessageView.mas_left);
             make.top.equalTo(self.inputMessageView.mas_bottom).offset(0);
         }];
         
         // 初始化表情图片
         self.emotionInputView.emotions = self.emotionArray;
-        
-        // 增加点击事件
-        [self.emotionInputView.sendButton addTarget:self action:@selector(sendMsgAction:) forControlEvents:UIControlEventTouchUpInside];
     }
-
 }
 
 - (void)showLadyDetail {
@@ -275,6 +339,9 @@ typedef enum AlertType {
     KKNavigationController* nvc = (KKNavigationController* )self.navigationController;
     [nvc pushViewController:vc animated:YES];
 }
+
+
+
 
 #pragma mark - 头像处理
 - (void)loadImageFinish:(ImageViewLoader *)imageViewLoader success:(BOOL)success {
@@ -408,10 +475,13 @@ typedef enum AlertType {
             }break;
             case LCC_ERR_NOMONEY:{
                 // 帐号余额不足, 弹出买点
-                NSString* tips = NSLocalizedStringFromSelf(@"Send_Error_Tips_No_Money");
-                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:tips delegate:self cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil];
-                alertView.tag = index;
-                [alertView show];
+//                NSString* tips = NSLocalizedStringFromSelf(@"Send_Error_Tips_No_Money");
+//                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:tips delegate:self cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil];
+//                alertView.tag = index;
+//                [alertView show];
+                
+                [self outCreditEvent:index];
+                
                 
             }break;
             default:{
@@ -423,6 +493,49 @@ typedef enum AlertType {
                 
             }break;
         }
+    }
+}
+
+#pragma mark - 点击购买月费提示
+- (void)chatMoonFeeDidClickPremiumBtn:(ChatMoonFeeTableViewCell *)cell {
+    [self addMothFeeViewShow];
+}
+
+
+/**
+ *  没点提示
+ *
+ *  @param index 索引
+ */
+- (void)outCreditEvent:(NSInteger)index {
+    switch (self.memberType) {
+        case MonthFeeTypeNoramlMember:
+        case MonthFeeTypeFeeMember:{
+
+            // 帐号余额不足, 弹出买点
+            NSString* tips = NSLocalizedStringFromSelf(@"Send_Error_Tips_No_Money");
+            if ( [[UIDevice currentDevice].systemVersion floatValue] >= 8.0) {
+                UIAlertController *alertVc = [UIAlertController alertControllerWithTitle:nil message:tips preferredStyle:UIAlertControllerStyleAlert];
+                UIAlertAction *ok = [UIAlertAction actionWithTitle:@"ok" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                    [self addCreditsViewShow];
+                }];
+                [alertVc addAction:ok];
+                [self presentViewController:alertVc animated:NO completion:nil];
+                
+            }else {
+                
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:tips delegate:self cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil];
+                alertView.tag = index;
+                [alertView show];
+            }
+        }break;
+        case MonthFeeTypeNoFirstFeeMember:
+        case MonthFeeTypeFirstFeeMember:{
+            // 账号余额不足,是月费用户,弹出购买月费
+            [self addMothFeeViewShow];
+        }break;
+        default:
+            break;
     }
 }
 
@@ -456,6 +569,7 @@ typedef enum AlertType {
                 case LCC_ERR_NOMONEY:{
                     // 帐号余额不足, 弹出买点
                     [self addCreditsViewShow];
+//                     [self performSelector:@selector(addCreditsViewShow) withObject:nil afterDelay:self.duration];
                     
                 }break;
                 default:{
@@ -474,8 +588,64 @@ typedef enum AlertType {
             case AlertType200Limited:{
                // 200个字符限制
             }break;
+            case AlertTypePayDefault: {
+                // 点击普通提示
+            }break;
+            case AlertTypePayAppStorePay: {
+                // Apple支付中
+                switch (buttonIndex) {
+                    case 0:{
+                        // 点击取消
+                        [self cancelPay];
+                    }break;
+                    case 1:{
+                        // 点击重试
+                        [self showLoading];
+                        [self.paymentManager retry:self.orderNo];
+                        
+                    }break;
+                    default:
+                        break;
+                }
+            }break;
+            case AlertTypePayCheckOrder: {
+                // 账单验证中
+                switch (buttonIndex) {
+                    case 0:{
+                        // 点击取消, 自动验证
+                        [self.paymentManager autoRetry:self.orderNo];
+                        [self cancelPay];
+                    }break;
+                    case 1:{
+                        // 点击重试, 手动验证
+                        [self showLoading];
+                        [self.paymentManager retry:self.orderNo];
+                    }break;
+                    default:
+                        break;
+                }
+            }
+            case AlertTypePayMonthFee:{
+                switch (buttonIndex) {
+                    case 0:{
+                    }break;
+                    case 1:{
+                        [self showLoading];
+                        [self.paymentManager pay:@"SP2010"];
+                        //                        for (NSNumber *index in self.msgIdArray) {
+                        //                            [self.liveChatManager removeHistoryMessage:self.womanId msgId:[index integerValue]];
+                        //                        }
+                        //                        // 重新请求接口,获取最新状态
+                        //                        self.monthFeeManager.memberType = MonthFeeTypeFeeMember;
+                        //                        self.photoBtn.userInteractionEnabled = YES;
+                        //                        self.textView.userInteractionEnabled = YES;
+                        //                        self.emotionBtn.userInteractionEnabled = YES;
+                        //                        [self reloadData:YES];
+                    }break;
             default:
                 break;
+                }
+            }
         }
     }
     
@@ -514,9 +684,11 @@ typedef enum AlertType {
 
 #pragma mark - 表情选择回调
 - (void)chatEmotionChooseView:(ChatEmotionChooseView *)chatEmotionChooseView didSelectItem:(NSInteger)item {
-    // 插入表情到输入框
-    ChatEmotion* emotion = [self.emotionArray objectAtIndex:item];
-    [self.textView insertEmotion:emotion];
+    if( self.textView.text.length < 200 ) {
+        // 插入表情到输入框
+        ChatEmotion* emotion = [self.emotionArray objectAtIndex:item];
+        [self.textView insertEmotion:emotion];
+    }
 }
 
 #pragma mark - 数据逻辑
@@ -526,13 +698,13 @@ typedef enum AlertType {
  *  @param text 发送文本
  */
 - (void)sendMsg:(NSString* )text {
-    if( text.length > 200 ) {
-        NSString* tips = NSLocalizedStringFromSelf(@"Local_Error_Tips_200_Input_Limited");
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:tips delegate:self cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil, nil];
-        alertView.tag = AlertType200Limited;
-        [alertView show];
-        return;
-    }
+//    if( text.length > 200 ) {
+//        NSString* tips = NSLocalizedStringFromSelf(@"Local_Error_Tips_200_Input_Limited");
+//        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:tips delegate:self cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil, nil];
+//        alertView.tag = AlertType200Limited;
+//        [alertView show];
+//        return;
+//    }
     
     // 发送消息
     LiveChatMsgItemObject* msg = [self.liveChatManager sendTextMsg:self.womanId text:text];
@@ -623,10 +795,25 @@ typedef enum AlertType {
                     item.type = MessageTypeWarningTips;
                     switch (msg.warningMsg.codeType) {
                         case LCWarningItem::CodeType::NOMONEY:{
-                            item.text = msg.warningMsg.message;
-                            NSString* tips = NSLocalizedStringFromSelf(@"Warning_Error_Tips_No_Money");
-                            NSString* linkMessage = NSLocalizedStringFromSelf(@"Tips_Add_Credit");
-                            item.attText = [self parseNoMomenyWarningMessage:tips linkMessage:linkMessage font:[UIFont systemFontOfSize:WarningMessageFontSize] color:MessageGrayColor];
+                            switch (self.memberType) {
+                                case MonthFeeTypeNoramlMember:
+                                case MonthFeeTypeFeeMember:{
+                                    item.text = msg.warningMsg.message;
+                                    NSString* tips = NSLocalizedStringFromSelf(@"Warning_Error_Tips_No_Money");
+                                    NSString* linkMessage = NSLocalizedStringFromSelf(@"Tips_Add_Credit");
+                                    item.attText = [self parseNoMomenyWarningMessage:tips linkMessage:linkMessage font:[UIFont systemFontOfSize:WarningMessageFontSize] color:MessageGrayColor];
+                                }break;
+                                case MonthFeeTypeNoFirstFeeMember:
+                                case MonthFeeTypeFirstFeeMember:{
+                                    [self.msgIdArray addObject:[NSNumber numberWithInteger:msg.msgId]];
+                                }break;
+                                default:
+                                    break;
+                            }
+//                            item.text = msg.warningMsg.message;
+//                            NSString* tips = NSLocalizedStringFromSelf(@"Warning_Error_Tips_No_Money");
+//                            NSString* linkMessage = NSLocalizedStringFromSelf(@"Tips_Add_Credit");
+//                            item.attText = [self parseNoMomenyWarningMessage:tips linkMessage:linkMessage font:[UIFont systemFontOfSize:WarningMessageFontSize] color:MessageGrayColor];
                             
                         }break;
                         default:{
@@ -707,6 +894,18 @@ typedef enum AlertType {
 - (void)addCreditsViewShow {
     AddCreditsViewController* vc = [[AddCreditsViewController alloc] init];
     [self.navigationController pushViewController:vc animated:YES];
+}
+
+/**
+ *  显示购买月费view
+ */
+- (void)addMothFeeViewShow {
+    self.textView.userInteractionEnabled = NO;
+    NSString *tips = NSLocalizedStringFromSelf(@"Tis_Buy_MonthFee");
+    UIAlertView *monthFeeAlertView = [[UIAlertView alloc] initWithTitle:nil message:tips delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
+    monthFeeAlertView.tag = AlertTypePayMonthFee;
+    [monthFeeAlertView show];
+    
 }
 
 /**
@@ -903,8 +1102,26 @@ typedef enum AlertType {
         }break;
         case MessageTypeWarningTips:{
             // 警告消息
-            CGSize viewSize = CGSizeMake(self.tableView.frame.size.width, [ChatSystemTipsTableViewCell cellHeight:self.tableView.frame.size.width detailString:item.attText]);
-            height = viewSize.height;
+            switch (self.memberType) {
+                case MonthFeeTypeNoramlMember:
+                case MonthFeeTypeFeeMember:{
+                    // 系统消息
+                    CGSize viewSize = CGSizeMake(self.tableView.frame.size.width, [ChatSystemTipsTableViewCell cellHeight:self.tableView.frame.size.width detailString:item.attText]);
+                    height = viewSize.height;
+                }
+                    break;
+                case MonthFeeTypeNoFirstFeeMember:
+                case MonthFeeTypeFirstFeeMember:{
+                    // 月费消息
+                    CGSize viewSize = CGSizeMake(self.tableView.frame.size.width, [ChatMoonFeeTableViewCell cellHeight]);
+                    height = viewSize.height;
+                    
+                }
+                    
+                    break;
+                default:
+                    break;
+            }
 
         }break;
         case MessageTypeText:{
@@ -969,18 +1186,50 @@ typedef enum AlertType {
              
         }break;
         case MessageTypeWarningTips:{
-            // 警告消息
-            ChatSystemTipsTableViewCell* cell = [ChatSystemTipsTableViewCell getUITableViewCell:tableView];
-            result = cell;
             
-            cell.detailLabel.attributedText = item.attText;
-            cell.detailLabel.delegate = self;
-            [item.attText enumerateAttributesInRange:NSMakeRange(0, item.attText.length) options:0 usingBlock:^(NSDictionary *attrs, NSRange range, BOOL *stop) {
-                ChatTextAttachment *attachment = attrs[NSAttachmentAttributeName];
-                if( attachment && attachment.url != nil ) {
-                    [cell.detailLabel addLinkToURL:attachment.url withRange:range];
+            switch (self.memberType) {
+                case MonthFeeTypeNoramlMember:
+                case MonthFeeTypeFeeMember:{
+                    // 警告消息
+                    ChatSystemTipsTableViewCell* cell = [ChatSystemTipsTableViewCell getUITableViewCell:tableView];
+                    result = cell;
+                    
+                    cell.detailLabel.attributedText = item.attText;
+                    cell.detailLabel.delegate = self;
+                    [item.attText enumerateAttributesInRange:NSMakeRange(0, item.attText.length) options:0 usingBlock:^(NSDictionary *attrs, NSRange range, BOOL *stop) {
+                        ChatTextAttachment *attachment = attrs[NSAttachmentAttributeName];
+                        if( attachment && attachment.url != nil ) {
+                            [cell.detailLabel addLinkToURL:attachment.url withRange:range];
+                        }
+                    }];
                 }
-            }];
+                    break;
+                case MonthFeeTypeNoFirstFeeMember:
+                case MonthFeeTypeFirstFeeMember:{
+                    // 月费提示
+                    ChatMoonFeeTableViewCell *cell = [ChatMoonFeeTableViewCell getUITableViewCell:tableView];
+                    result = cell;
+                    cell.delegate = self;
+                    self.emotionBtn.userInteractionEnabled = NO;
+                    self.textView.userInteractionEnabled = NO;
+                    cell.tag = indexPath.row;
+                    
+                } break;
+                default:
+                    break;
+            }
+//            // 警告消息
+//            ChatSystemTipsTableViewCell* cell = [ChatSystemTipsTableViewCell getUITableViewCell:tableView];
+//            result = cell;
+//            
+//            cell.detailLabel.attributedText = item.attText;
+//            cell.detailLabel.delegate = self;
+//            [item.attText enumerateAttributesInRange:NSMakeRange(0, item.attText.length) options:0 usingBlock:^(NSDictionary *attrs, NSRange range, BOOL *stop) {
+//                ChatTextAttachment *attachment = attrs[NSAttachmentAttributeName];
+//                if( attachment && attachment.url != nil ) {
+//                    [cell.detailLabel addLinkToURL:attachment.url withRange:range];
+//                }
+//            }];
             
         }break;
         case MessageTypeText:{
@@ -1130,6 +1379,8 @@ typedef enum AlertType {
     NSTimeInterval animationDuration;
     [animationDurationValue getValue:&animationDuration];
     
+     self.duration = animationDuration;
+    
     // Animate the resize of the text view's frame in sync with the keyboard's appearance.
     [self moveInputBarWithKeyboardHeight:keyboardRect.size.height withDuration:animationDuration];
 
@@ -1175,11 +1426,18 @@ typedef enum AlertType {
         // 触发发送
         [self sendMsgAction:nil];
         return NO;
+    } else {
+        // 超过字符限制
+        if( textView.text.length > 200 ) {
+            return NO;
+        }
     }
     
     // 允许输入
     return YES;
 }
+
+
 
 #pragma mark - 输入栏高度改变回调
 - (void)textViewChangeHeight:(ChatTextView * _Nonnull)textView height:(CGFloat)height {
@@ -1365,4 +1623,181 @@ typedef enum AlertType {
     });
 }
 
+
+#pragma mark - 支付模块
+- (void)cancelPay {
+    self.orderNo = nil;
+}
+
+- (NSString* )messageTipsFromErrorCode:(NSString *)errorCode defaultCode:(NSString *)defaultCode {
+    // 默认错误
+    NSString* messageTips = NSLocalizedStringFromSelf(defaultCode);
+    
+    if(
+       [errorCode isEqualToString:PAY_ERROR_OVER_CREDIT_20038] ||
+       [errorCode isEqualToString:PAY_ERROR_CAN_NOT_ADD_CREDIT_20043] ||
+       [errorCode isEqualToString:PAY_ERROR_INVALID_MONTHLY_CREDIT_40005] ||
+       [errorCode isEqualToString:PAY_ERROR_REQUEST_SAMETIME_50000]
+       ) {
+        // 具体错误
+        messageTips = NSLocalizedStringFromSelf(errorCode);
+        
+    } else if(
+              [errorCode isEqualToString:PAY_ERROR_NORMAL] ||
+              [errorCode isEqualToString:PAY_ERROR_10003] ||
+              [errorCode isEqualToString:PAY_ERROR_10005] ||
+              [errorCode isEqualToString:PAY_ERROR_10006] ||
+              [errorCode isEqualToString:PAY_ERROR_10007] ||
+              [errorCode isEqualToString:PAY_ERROR_20014] ||
+              [errorCode isEqualToString:PAY_ERROR_20015] ||
+              [errorCode isEqualToString:PAY_ERROR_20030] ||
+              [errorCode isEqualToString:PAY_ERROR_20031] ||
+              [errorCode isEqualToString:PAY_ERROR_20032] ||
+              [errorCode isEqualToString:PAY_ERROR_20033] ||
+              [errorCode isEqualToString:PAY_ERROR_20035] ||
+              [errorCode isEqualToString:PAY_ERROR_20037] ||
+              [errorCode isEqualToString:PAY_ERROR_20039] ||
+              [errorCode isEqualToString:PAY_ERROR_20040] ||
+              [errorCode isEqualToString:PAY_ERROR_20041] ||
+              [errorCode isEqualToString:PAY_ERROR_20042] ||
+              [errorCode isEqualToString:PAY_ERROR_20043] ||
+              [errorCode isEqualToString:PAY_ERROR_20044] ||
+              [errorCode isEqualToString:PAY_ERROR_20045]
+              ) {
+        // 普通错误
+        messageTips = NSLocalizedStringFromSelf(PAY_ERROR_NORMAL);
+        
+    }
+    
+    return messageTips;
+}
+
+#pragma mark - Apple支付回调
+- (void)onGetOrderNo:(PaymentManager* _Nonnull)mgr result:(BOOL)result code:(NSString* _Nonnull)code orderNo:(NSString* _Nonnull)orderNo {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if( result ) {
+            NSLog(@"ChatViewController::onGetOrderNo( 获取订单成功, orderNo : %@ )", orderNo);
+            self.orderNo = orderNo;
+            
+        } else {
+            NSLog(@"ChatViewController::onGetOrderNo( 获取订单失败, code : %@ )", code);
+            
+            // 隐藏菊花
+            [self hideLoading];
+            
+            NSString* tips = [self messageTipsFromErrorCode:code defaultCode:PAY_ERROR_NORMAL];
+             tips = [NSString stringWithFormat:@"%@ (%@)",tips,code];
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:tips delegate:self cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil, nil];
+            alertView.tag = AlertTypePayDefault;
+            [alertView show];
+        }
+    });
+}
+
+- (void)onAppStorePay:(PaymentManager* _Nonnull)mgr result:(BOOL)result orderNo:(NSString* _Nonnull)orderNo canRetry:(BOOL)canRetry {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if( [self.orderNo isEqualToString:orderNo] ) {
+            if( result ) {
+                NSLog(@"ChatViewController::onAppStorePay( AppStore支付成功, orderNo : %@ )", orderNo);
+                
+            } else {
+                NSLog(@"ChatViewController::onAppStorePay( AppStore支付失败, orderNo : %@, canRetry :%d )", orderNo, canRetry);
+                
+                // 隐藏菊花
+                [self hideLoading];
+                
+                if( canRetry ) {
+                    // 弹出重试窗口
+                    NSString* tips = [self messageTipsFromErrorCode:PAY_ERROR_OTHER defaultCode:PAY_ERROR_OTHER];
+                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:tips delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel", nil) otherButtonTitles:NSLocalizedString(@"Retry", nil), nil];
+                    alertView.tag = AlertTypePayAppStorePay;
+                    [alertView show];
+                    
+                } else {
+                    // 弹出提示窗口
+                    NSString* tips = [self messageTipsFromErrorCode:PAY_ERROR_NORMAL defaultCode:PAY_ERROR_NORMAL];
+                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:tips delegate:self cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil, nil];
+                    alertView.tag = AlertTypePayDefault;
+                    [alertView show];
+                }
+            }
+        }
+        
+    });
+}
+
+- (void)onCheckOrder:(PaymentManager* _Nonnull)mgr result:(BOOL)result code:(NSString* _Nonnull)code orderNo:(NSString* _Nonnull)orderNo canRetry:(BOOL)canRetry {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if( [self.orderNo isEqualToString:orderNo] ) {
+            if( result ) {
+                NSLog(@"ChatViewController::onCheckOrder( 验证订单成功, orderNo : %@ )", orderNo);
+                
+            } else {
+                NSLog(@"ChatViewController::onCheckOrder( 验证订单失败, orderNo : %@, canRetry :%d, code : %@ )", orderNo, canRetry, code);
+                
+                // 隐藏菊花
+                [self hideLoading];
+                
+                if( canRetry ) {
+                    // 弹出重试窗口
+                    NSString* tips = [self messageTipsFromErrorCode:PAY_ERROR_OTHER defaultCode:PAY_ERROR_OTHER];
+                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:tips delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel", nil) otherButtonTitles:NSLocalizedString(@"Retry", nil), nil];
+                    alertView.tag = AlertTypePayCheckOrder;
+                    [alertView show];
+                    
+                } else {
+                    // 弹出提示窗口
+                    NSString* tips = [self messageTipsFromErrorCode:code defaultCode:PAY_ERROR_NORMAL];
+                     tips = [NSString stringWithFormat:@"%@ (%@)",tips,code];
+                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:tips delegate:self cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil, nil];
+                    alertView.tag = AlertTypePayDefault;
+                    [alertView show];
+                }
+            }
+        }
+    });
+}
+
+- (void)onPaymentFinish:(PaymentManager* _Nonnull)mgr orderNo:(NSString* _Nonnull)orderNo {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        NSLog(@"ChatViewController::onPaymentFinish( 支付完成 orderNo : %@ )", orderNo);
+        
+        // 隐藏菊花
+        [self hideLoading];
+        
+        // 弹出提示窗口
+        NSString* tips = NSLocalizedStringFromSelf(@"PAY_SUCCESS");
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:tips delegate:self cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil, nil];
+        alertView.tag = AlertTypePayDefault;
+        [alertView show];
+        
+        // 清空订单号
+        [self cancelPay];
+        
+        for (NSNumber *index in self.msgIdArray) {
+            [self.liveChatManager removeHistoryMessage:self.womanId msgId:[index integerValue]];
+        }
+        
+        // 重新请求接口,获取最新状态
+        self.monthFeeManager.bRequest = NO;
+        [self.monthFeeManager getQueryMemberType];
+        self.emotionBtn.userInteractionEnabled = YES;
+        self.textView.userInteractionEnabled = YES;
+
+    });
+}
+
+#pragma mark - 月费管理器回调
+- (void)manager:(MonthFeeManager *)manager onGetMemberType:(BOOL)success errnum:(NSString *)errnum errmsg:(NSString *)errmsg memberType:(int)memberType {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        NSLog(@"ChatViewController::onGetMemberType( 获取月费类型, memberType : %d )", memberType);
+        if (success) {
+            self.memberType = memberType;
+        }else {
+            self.memberType = MonthFeeTypeNoFirstFeeMember;
+        }
+        
+         [self reloadData:YES];
+    });
+}
 @end

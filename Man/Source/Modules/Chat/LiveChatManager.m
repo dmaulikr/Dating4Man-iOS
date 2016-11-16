@@ -66,6 +66,21 @@ static LiveChatManager* gManager = nil;
 - (void)onPhotoFee:(bool) success errNo:(const string&) errNo errMsg:(const string&) errMsg msgItem: (LCMessageItem*) msgItem;
 - (void)onRecvPhoto:(LCMessageItem*) msgItem;
 - (void)onSendPhoto:(LCC_ERR_TYPE) errType errNo:(const string&) errNo errMsg:(const string&) errMsg msgItem:(LCMessageItem*) msgItem;
+
+// ---- 高级表情 ----
+- (void)onGetEmotionConfig:(bool)success errNo:(const string&)errNo  errMsg:(const string&) errMsg otherEmtConItem:(const OtherEmotionConfigItem&) config;
+- (void)onGetEmotionImage:(bool)success emtItem:(const LCEmotionItem*)item;
+- (void)onGetEmotionPlayImage:(bool)success emtItem:(const LCEmotionItem*)item;
+- (void)onSendEmotion:(LCC_ERR_TYPE)errType errMsg:(const string&)errMsg msgItem:(LCMessageItem* _Nullable)msgItem;
+- (void)onRecvEmotion:(LCMessageItem* _Nonnull)msgItem;
+
+// ---- 小高级表情 ----
+- (void)onGetMagicIconConfig:(bool)success errNo:(const string&)errNo  errMsg:(const string&) errMsg magicIconConItem:(MagicIconConfig) config;
+- (void)onGetMagicIconSrcImage:(bool)success magicIconItem:(const LCMagicIconItem*)item;
+- (void)onGetMagicIconThumbImage:(bool)success magicIconItem:(const LCMagicIconItem*)item;
+- (void)onSendMagicIcon:(LCC_ERR_TYPE)errType errMsg:(const string&)errMsg msgItem:(LCMessageItem* _Nullable)msgItem;
+- (void)onRecvMagicIcon:(LCMessageItem* _Nonnull)msgItem;
+
 @end
 
 #pragma mark - LiveChatManManagerListener
@@ -226,11 +241,37 @@ public:
     };
     
 #pragma mark - emotion listener
-    virtual void OnGetEmotionConfig(bool success, const string& errNo, const string& errMsg, const OtherEmotionConfigItem& config){};
-    virtual void OnGetEmotionImage(bool success, const LCEmotionItem* item){};
-    virtual void OnGetEmotionPlayImage(bool success, const LCEmotionItem* item){};
-    virtual void OnRecvEmotion(LCMessageItem* msgItem){};
-    virtual void OnSendEmotion(LCC_ERR_TYPE errType, const string& errMsg, LCMessageItem* msgItem){};
+    //获取高级表情配置item（登陆成功后manmanager调用，后回调的）
+    virtual void OnGetEmotionConfig(bool success, const string& errNo, const string& errMsg, const OtherEmotionConfigItem& config)
+    {
+        if(nil != gManager){
+            [gManager onGetEmotionConfig:success errNo:errNo errMsg:errMsg otherEmtConItem:config];
+        }
+    };
+    virtual void OnGetEmotionImage(bool success, const LCEmotionItem* item)
+    {
+        if(nil != gManager){
+            [gManager onGetEmotionImage:success emtItem:item];
+        }
+    };
+    virtual void OnGetEmotionPlayImage(bool success, const LCEmotionItem* item)
+    {
+        if(nil != gManager){
+            [gManager onGetEmotionPlayImage:success emtItem:item];
+        }
+    };
+    virtual void OnRecvEmotion(LCMessageItem* msgItem)
+    {
+        if(nil != gManager){
+            [gManager onRecvEmotion:msgItem];
+        }
+    };
+    virtual void OnSendEmotion(LCC_ERR_TYPE errType, const string& errMsg, LCMessageItem* msgItem)
+    {
+        if(nil != gManager){
+            [gManager onSendEmotion:errType errMsg:errMsg msgItem:msgItem];
+        }
+    };
     
 #pragma mark - voice listener
     virtual void OnGetVoice(LCC_ERR_TYPE errType, const string& errNo, const string& errMsg, LCMessageItem* msgItem){};
@@ -285,6 +326,42 @@ public:
                                  const LCMessageList& msgList){};
     virtual void OnRecvVideo(LCMessageItem* msgItem){};
     virtual void OnVideoFee(bool success, const string& errNo, const string& errMsg, LCMessageItem* msgItem){};
+    
+#pragma mark - magicIcon listener
+    //获取小高级表情配置item（登陆成功后manmanager调用，后回调的）
+    virtual void OnGetMagicIconConfig(bool success, const string& errNo, const string& errMsg, const MagicIconConfig& config)
+    {
+        if(nil != gManager){
+            //object = [LiveChatItem2OCObj getLiveChatEmotionConfigItemObject:config];
+            //if (nil != object) {
+            [gManager onGetMagicIconConfig:success errNo:errNo errMsg:errMsg magicIconConItem:config];
+            //}
+        }
+    };
+    virtual void OnGetMagicIconSrcImage(bool success, const LCMagicIconItem* item)
+    {
+        if(nil != gManager){
+            [gManager onGetMagicIconSrcImage:success magicIconItem:item];
+        }
+    };
+    virtual void OnGetMagicIconThumbImage(bool success, const LCMagicIconItem* item)
+    {
+        if(nil != gManager){
+            [gManager onGetMagicIconThumbImage:success magicIconItem:item];
+        }
+    };
+    virtual void OnRecvMagicIcon(LCMessageItem* msgItem)
+    {
+        if(nil != gManager){
+            [gManager onRecvMagicIcon:msgItem];
+        }
+    };
+    virtual void OnSendMagicIcon(LCC_ERR_TYPE errType, const string& errMsg, LCMessageItem* msgItem)
+    {
+        if(nil != gManager){
+            [gManager onSendMagicIcon:errType errMsg:errMsg msgItem:msgItem];
+        }
+    };
 };
 static LiveChatManManagerListener *gLiveChatManManagerListener;
 
@@ -456,24 +533,24 @@ static LiveChatManManagerListener *gLiveChatManManagerListener;
                 switch (siteType) {
                     case OTHER_SITE_CL:{
                         list<string> ipItemList;
-                        ipItemList.push_back([item.cl.host UTF8String]);
+                        ipItemList.push_back([item.cl.domain UTF8String]);
                         result = mILiveChatManManager->Init(ipItemList, (int)item.cl.port, OTHER_SITE_CL, [self.requestManager.getWebSite UTF8String], [self.requestManager.getAppSite UTF8String], [item.pub.chatVoiceHostUrl UTF8String], [httpUser UTF8String], [httpPassword UTF8String], [versionCode UTF8String], [cachesDirectory UTF8String], item.cl.minChat, listener);
                     }break;
                     case OTHER_SITE_IDA:{
                         list<string> ipItemList;
-                        ipItemList.push_back([item.ida.host UTF8String]);
+                        ipItemList.push_back([item.ida.domain UTF8String]);
                         result = mILiveChatManManager->Init(ipItemList, (int)item.ida.port, OTHER_SITE_IDA,[self.requestManager.getWebSite UTF8String], [self.requestManager.getAppSite UTF8String], [item.pub.chatVoiceHostUrl UTF8String], [httpUser UTF8String], [httpPassword UTF8String], [versionCode UTF8String], [path UTF8String], item.ida.minChat, listener);
                         
                     }break;
                     case OTHER_SITE_CD:{
                         list<string> ipItemList;
-                        ipItemList.push_back([item.ch.host UTF8String]);
+                        ipItemList.push_back([item.ch.domain UTF8String]);
                         result = mILiveChatManManager->Init(ipItemList, (int)item.ch.port, OTHER_SITE_CD, [self.requestManager.getWebSite UTF8String], [self.requestManager.getAppSite UTF8String], [item.pub.chatVoiceHostUrl UTF8String], [httpUser UTF8String], [httpPassword UTF8String], [versionCode UTF8String], [path UTF8String], item.ch.minChat, listener);
                         
                     }break;
                     case OTHER_SITE_LA:{
                         list<string> ipItemList;
-                        ipItemList.push_back([item.la.host UTF8String]);
+                        ipItemList.push_back([item.la.domain UTF8String]);
                         result = mILiveChatManManager->Init(ipItemList, (int)item.la.port, OTHER_SITE_LA, [self.requestManager.getWebSite UTF8String], [self.requestManager.getAppSite UTF8String], [item.pub.chatVoiceHostUrl UTF8String], [httpUser UTF8String], [httpPassword UTF8String], [versionCode UTF8String], [path UTF8String], item.la.minChat, listener);
                         
                     }break;
@@ -1017,6 +1094,7 @@ static LiveChatManManagerListener *gLiveChatManManagerListener;
         LCUserItem* userItem = mILiveChatManManager->GetUserWithId(pUserId);
         if (NULL != userItem)
         {
+            userItem->LockMsgList();
             for (list<LCMessageItem*>::iterator iter = userItem->m_msgList.begin();
                  iter != userItem->m_msgList.end();
                  iter++)
@@ -1027,6 +1105,7 @@ static LiveChatManManagerListener *gLiveChatManManagerListener;
                     [msgs addObject:obj];
                 }
             }
+            userItem->UnlockMsgList();
         }
     }
     return msgs;
@@ -1364,6 +1443,25 @@ static LiveChatManManagerListener *gLiveChatManManagerListener;
     return object;
 }
 
+/**
+ *  获取用户最后一条聊天消息
+ *
+ *  @param userId 用户ID
+ *
+ *  @return 最后一条聊天消息
+ */
+- (LiveChatMsgItemObject* _Nullable)GetTheOtherLastMessage:(NSString* _Nonnull)userId
+{
+    LiveChatMsgItemObject* object = nil;
+    if (NULL != mILiveChatManManager)
+    {
+        const char* pUserId = [userId UTF8String];
+        LCMessageItem* msgItem = mILiveChatManManager->GetTheOtherLastMessage(pUserId);
+        object = [LiveChatItem2OCObj getLiveChatMsgItemObject:msgItem];
+    }
+    return object;
+}
+
 #pragma mark - 私密照消息处理
 
 
@@ -1520,6 +1618,402 @@ static LiveChatManManagerListener *gLiveChatManManagerListener;
             id<LiveChatManagerDelegate> delegate = (id<LiveChatManagerDelegate>)value.nonretainedObjectValue;
             if( [delegate respondsToSelector:@selector(onSendPhoto:errNo:errMsg:msgItem:)] ) {
                 [delegate onSendPhoto:errType errNo:nsErrNo errMsg:nsErrMsg msgItem:msgObj];
+            }
+        }
+    }
+}
+
+#pragma mark - 高级表情消息处理
+/**
+ * 发送高级表情
+ *
+ * @param userId   用户Id
+ * @param emtionId   高级表情Id
+ *
+ * @return 高级表情消息
+ */
+-(LiveChatMsgItemObject*)SendEmotion:(NSString *)userId emotionId:(NSString *)emotionId{
+    LiveChatMsgItemObject* msgObj = nil;
+    if (NULL != mILiveChatManManager){
+        const char* pUserId    = [userId UTF8String];
+        const char* pEmotionId = [emotionId UTF8String];
+        LCMessageItem* msgItem = mILiveChatManManager->SendEmotion(pUserId, pEmotionId);
+        if(NULL != msgItem){
+            msgObj = [LiveChatItem2OCObj getLiveChatMsgItemObject:msgItem];
+        }
+    }
+    return msgObj;
+}
+
+/**
+ * 获取高级表情配置item
+ *
+ * @return 高级表情配置item
+ */
+-(LiveChatEmotionConfigItemObject*)GetEmotionConfigItem{
+    LiveChatEmotionConfigItemObject* emotionItem = nil;
+    if (NULL != mILiveChatManManager){
+        OtherEmotionConfigItem OtherEmotionItem = mILiveChatManManager->GetEmotionConfigItem();
+        emotionItem = [LiveChatItem2OCObj getLiveChatEmotionConfigItemObject:OtherEmotionItem];
+    }
+    return emotionItem;
+}
+
+/**
+ * 获取高级表情item
+ *ƒ
+ * @param emotionId 高级表情ID
+ *
+ * @return 高级表情item
+ */
+-(LiveChatEmotionItemObject*)GetEmotionInfo:(NSString *)emotionId{
+    LiveChatEmotionItemObject* emotionItemObject = nil;
+    if(NULL != mILiveChatManManager){
+        const char* pEmotionId = [emotionId UTF8String];
+        LCEmotionItem* emotionItem = mILiveChatManManager->GetEmotionInfo(pEmotionId);
+        if(NULL != emotionItem){
+            emotionItemObject = [LiveChatItem2OCObj getLiveChatEmotionItemObject:emotionItem];
+        }
+    }
+    return emotionItemObject;
+}
+
+/**
+ * 手动下载/更新高级表情图片文件
+ *
+ * @param emotionId 高级表情ID
+ *
+ * @return 处理结果
+ */
+-(BOOL)GetEmotionImage:(NSString *)emotionId{
+    BOOL result = NO;
+    if(NULL != mILiveChatManManager){
+        const char* pEmotionId = [emotionId UTF8String];
+        result = mILiveChatManManager->GetEmotionImage(pEmotionId);
+    }
+    return result;
+}
+
+/**
+ * 手动下载/更新高级表情图片文件
+ *
+ * @param emotionId 高级表情ID
+ *
+ * @return 处理结果
+ */
+-(BOOL)GetEmotionPlayImage:(NSString *)emotionId{
+    BOOL result = NO;
+    if(NULL != mILiveChatManManager){
+        const char* pEmotionId = [emotionId UTF8String];
+        result = mILiveChatManManager->GetEmotionPlayImage(pEmotionId);
+    }
+    return result;
+}
+
+/**
+ *  获取高级表情设置item
+ *
+ *  @param success 操作是否成功
+ *  @param errNo   结果类型
+ *  @param errMsg  结果描述
+ *  @param config  高级表情设置消息
+ */
+- (void)onGetEmotionConfig:(bool)success errNo:(const string&)errNo  errMsg:(const string&) errMsg otherEmtConItem:(const OtherEmotionConfigItem&) config
+{
+    LiveChatEmotionConfigItemObject* object = [LiveChatItem2OCObj getLiveChatEmotionConfigItemObject:config];
+    NSString* nErrNo  = [NSString stringWithUTF8String:errNo.c_str()];
+    NSString* nErrMsg = [NSString stringWithUTF8String:errMsg.c_str()];
+    @synchronized (self.delegates)
+    {
+        for (NSValue* value in self.delegates)
+        {
+            id<LiveChatManagerDelegate> delegate = (id<LiveChatManagerDelegate>)value.nonretainedObjectValue;
+            if ([delegate respondsToSelector:@selector(onGetEmotionConfig:errNo:errMsg:otherEmtConItem:)]) {
+                [delegate onGetEmotionConfig:success errNo:nErrNo errMsg:nErrMsg otherEmtConItem:object];
+            }
+        }
+    }
+}
+
+/**
+ *  手动下载/更新高级表情图片文件
+ *
+ *  @param success 操作是否成功
+ *  @param item    高级表情item
+ */
+- (void)onGetEmotionImage:(bool)success emtItem:(const LCEmotionItem*)item
+{
+    LiveChatEmotionItemObject* object = [LiveChatItem2OCObj getLiveChatEmotionItemObject:item];
+    //[self GetEmotionPlayImage:@"M01"];
+    @synchronized (self.delegates)
+    {
+        for (NSValue* value in self.delegates)
+        {
+            id<LiveChatManagerDelegate> delegate = (id<LiveChatManagerDelegate>)value.nonretainedObjectValue;
+            if ([delegate respondsToSelector:@selector(onGetEmotionImage:emtItem:)]) {
+                [delegate onGetEmotionImage:success emtItem:object];
+            }
+        }
+    }
+}
+
+/**
+ *  手动下载/更新高级表情图片文件
+ *
+ *  @param succes  操作是否成功
+ *  @param item    高级表情item
+ */
+- (void)onGetEmotionPlayImage:(bool)success emtItem:(const LCEmotionItem*)item
+{
+    LiveChatEmotionItemObject* object = [LiveChatItem2OCObj getLiveChatEmotionItemObject:item];
+    //[self GetEmotionInfo:@"M01"];
+    @synchronized (self.delegates)
+    {
+        for (NSValue* value in self.delegates)
+        {
+            id<LiveChatManagerDelegate> delegate = (id<LiveChatManagerDelegate>)value.nonretainedObjectValue;
+            if ([delegate respondsToSelector:@selector(onGetEmotionPlayImage:emtItem:)]) {
+                [delegate onGetEmotionPlayImage:success emtItem:object];
+            }
+        }
+    }
+}
+
+/**
+ *  发送高级表情回调
+ *
+ *  @param errNo    结果类型
+ *  @param errMsg   结果描述
+ *  @param msgItem  消息item
+ */
+- (void)onSendEmotion:(LCC_ERR_TYPE)errType errMsg:(const string&)errMsg msgItem:(LCMessageItem* _Nullable)msgItem
+{
+    LiveChatMsgItemObject* object = [LiveChatItem2OCObj getLiveChatMsgItemObject:msgItem];
+    NSString* nErrMsg = [NSString stringWithUTF8String:errMsg.c_str()];
+    @synchronized (self.delegates)
+    {
+        for (NSValue* value in self.delegates)
+        {
+            id<LiveChatManagerDelegate> delegate = (id<LiveChatManagerDelegate>)value.nonretainedObjectValue;
+            if ([delegate respondsToSelector:@selector(onSendEmotion:errMsg:msgItem:)]) {
+                [delegate onSendEmotion:errType errMsg:nErrMsg msgItem:object];
+            }
+        }
+    }
+}
+
+/**
+ *  接受高级表情
+ *
+ *  @param 消息item
+ *
+ */
+- (void)onRecvEmotion:(LCMessageItem* _Nonnull)msgItem
+{
+     LiveChatMsgItemObject* object = [LiveChatItem2OCObj getLiveChatMsgItemObject:msgItem];
+    @synchronized (self.delegates)
+    {
+        for (NSValue* value in self.delegates)
+        {
+            id<LiveChatManagerDelegate> delegate = (id<LiveChatManagerDelegate>)value.nonretainedObjectValue;
+            if ([delegate respondsToSelector:@selector(onRecvEmotion:)]) {
+                [delegate onRecvEmotion:object];
+            }
+        }
+    }
+}
+
+#pragma mark - 小高级表情消息处理
+/**
+ * 发送小高级表情
+ *
+ * @param userId   用户Id
+ * @param iconId   小高表Id
+ *
+ * @return 小高表情消息
+ */
+-(LiveChatMsgItemObject* )SendMagicIcon:(NSString *)userId iconId:(NSString *)iconId
+{
+    LiveChatMsgItemObject* msgObj = nil;
+    if (NULL != mILiveChatManManager){
+        const char* pUserId = [userId UTF8String];
+        const char* pIconId = [iconId UTF8String];
+        LCMessageItem* msgItem = mILiveChatManManager->SendMagicIcon(pUserId, pIconId);
+        if (NULL != msgItem){
+            msgObj = [LiveChatItem2OCObj getLiveChatMsgItemObject:msgItem];
+        }
+    }
+    return msgObj;
+}
+
+/**
+ * 获取小高级表情配置item
+ *
+ * @return 小高表情消息
+ */
+-(LiveChatMagicIconConfigItemObject*) GetMagicIconConfigItem
+{
+    LiveChatMagicIconConfigItemObject* config = nil;
+    if (NULL != mILiveChatManManager) {
+        MagicIconConfig configItem = mILiveChatManManager->GetMagicIconConfigItem();
+        config = [LiveChatItem2OCObj getLiveChatMagicIconConfigItemObject:configItem];
+    }
+    return config;
+}
+/**
+ * 获取小高级表情item
+ *
+ * @param magicIconId   小高级表情Id
+ *
+ * @return 小高表情消息
+ */
+-(LiveChatMagicIconItemObject*) GetMagicIconInfo:(NSString *)magicIconId
+{
+    LiveChatMagicIconItemObject* item = nil;
+    if(NULL != mILiveChatManManager){
+        const char* pMagicIconId = [magicIconId UTF8String];
+        LCMagicIconItem* magicIconItem = mILiveChatManManager->GetMagicIconInfo(pMagicIconId);
+        if (NULL != magicIconItem) {
+            item = [LiveChatItem2OCObj getLiveChatMagicIconItemObject:magicIconItem];
+        }
+    }
+    return item;
+}
+/**
+ * 手动下载／更新小高级表情原图source
+ *
+ * @param magicIconId   小高级表情Id
+ *
+ * @return
+ */
+-(BOOL) GetMagicIconSrcImage:(NSString * _Nonnull)magicIconId
+{
+    BOOL result = false;
+    if (NULL != mILiveChatManManager) {
+        const char* pMagicIconId = [magicIconId UTF8String];
+        result = mILiveChatManManager->GetMagicIconSrcImage(pMagicIconId);
+    }
+    return result;
+}
+/**
+ * 手动下载／更新小高级表情拇子图thumb
+ *
+ * @param magicIconId   小高级表情Id
+ *
+ * @return
+ */
+-(BOOL) GetMagicIconThumbImage:(NSString * _Nonnull)magicIconId
+{
+    BOOL result = false;
+    if(NULL != mILiveChatManManager){
+        const char* pMagicIconId = [magicIconId UTF8String];
+        result = mILiveChatManManager->GetMagicIconThumbImage(pMagicIconId);
+    }
+    return result;
+}
+/**
+ *  获取小高级表情设置item
+ *
+ *  @param success 操作是否成功
+ *  @param errNo   结果类型
+ *  @param errMsg  结果描述
+ *  @param config  小高级表情设置消息
+ */
+- (void)onGetMagicIconConfig:(bool)success errNo:(const string&)errNo  errMsg:(const string&) errMsg magicIconConItem:(MagicIconConfig) config
+{
+    LiveChatMagicIconConfigItemObject* object = [LiveChatItem2OCObj getLiveChatMagicIconConfigItemObject:config];
+    //[self GetMagicIconSrcImage:@"MI2"];
+    NSString* nsErrNo = [NSString stringWithUTF8String:errNo.c_str()];
+    NSString* nsErrMsg = [NSString stringWithUTF8String:errMsg.c_str()];
+    @synchronized (self.delegates)
+    {
+        for (NSValue* value in self.delegates)
+        {
+            id<LiveChatManagerDelegate> delegate = (id<LiveChatManagerDelegate>)value.nonretainedObjectValue;
+            if ([delegate respondsToSelector:@selector(onGetMagicIconConfig:errNo:errMsg:magicIconConItem:)]) {
+                [delegate onGetMagicIconConfig:success errNo:nsErrNo errMsg:nsErrMsg magicIconConItem:object];
+            }
+        }
+    }
+}
+
+/**
+ *  手动下载/更新小高级表情图片文件
+ *
+ *  @param success 操作是否成功
+ *  @param item    小高级表情item
+ */
+- (void)onGetMagicIconSrcImage:(bool)success magicIconItem:(const LCMagicIconItem*)item
+{
+    LiveChatMagicIconItemObject* object = [LiveChatItem2OCObj getLiveChatMagicIconItemObject:item];
+    //[self GetMagicIconThumbImage:@"MI2"];
+    @synchronized (self.delegates) {
+        for (NSValue* value in self.delegates)
+        {
+            id<LiveChatManagerDelegate> delegate = (id<LiveChatManagerDelegate>)value.nonretainedObjectValue;
+            if ([delegate respondsToSelector:@selector(onGetMagicIconSrcImage:magicIconItem:)]) {
+                [delegate onGetMagicIconSrcImage:success magicIconItem:object];
+            }
+        }
+    }
+}
+
+/**
+ *  手动下载/更新小高级表情图片文件
+ *
+ *  @param succes  操作是否成功
+ *  @param item    小高级表情item
+ */
+- (void)onGetMagicIconThumbImage:(bool)success magicIconItem:(const LCMagicIconItem*)item
+{
+    LiveChatMagicIconItemObject* object = [LiveChatItem2OCObj getLiveChatMagicIconItemObject:item];
+    @synchronized (self.delegates) {
+        for (NSValue* value in self.delegates)
+        {
+            id<LiveChatManagerDelegate> delegate = (id<LiveChatManagerDelegate>)value.nonretainedObjectValue;
+            if ([delegate respondsToSelector:@selector(onGetMagicIconThumbImage:magicIconItem:)]) {
+                [delegate onGetMagicIconThumbImage:success magicIconItem:object];
+            }
+        }
+    }
+}
+
+/**
+ *  发送小高级表情回调
+ *
+ *  @param errNo    结果类型
+ *  @param errMsg   结果描述
+ *  @param msgItem  消息item
+ */
+- (void)onSendMagicIcon:(LCC_ERR_TYPE)errType errMsg:(const string&)errMsg msgItem:(LCMessageItem* _Nullable)msgItem{
+    LiveChatMsgItemObject* object = [LiveChatItem2OCObj getLiveChatMsgItemObject:msgItem];
+    NSString* nsErrMsg = [NSString stringWithUTF8String:errMsg.c_str()];
+    @synchronized (self.delegates) {
+        for (NSValue* value in self.delegates)
+        {
+            id<LiveChatManagerDelegate> delegate = (id<LiveChatManagerDelegate>)value.nonretainedObjectValue;
+            if ([delegate respondsToSelector:@selector(onSendMagicIcon:errMsg:msgItem:)]) {
+                [delegate onSendMagicIcon:errType errMsg:nsErrMsg msgItem:object];
+            }
+        }
+    }
+}
+
+/**
+ *  接受小高级表情
+ *
+ *  @param 消息item
+ *
+ */
+- (void)onRecvMagicIcon:(LCMessageItem* _Nonnull)msgItem{
+     LiveChatMsgItemObject* object = [LiveChatItem2OCObj getLiveChatMsgItemObject:msgItem];
+    //[self SendMagicIcon:object.fromId iconId:@"MI3"];
+    @synchronized (self.delegates) {
+        for (NSValue* value in self.delegates)
+        {
+            id<LiveChatManagerDelegate> delegate = (id<LiveChatManagerDelegate>)value.nonretainedObjectValue;
+            if ([delegate respondsToSelector:@selector(onRecvMagicIcon:)]) {
+                [delegate onRecvMagicIcon:object];
             }
         }
     }

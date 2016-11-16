@@ -17,8 +17,39 @@
 @property (nonatomic, weak) IBOutlet UITableView* tableView;
 @property (nonatomic, weak) MainViewController* mainVC;
 @property (nonatomic, weak) IBOutlet UIButton* navRightButton;
-//@property (weak, nonatomic) IBOutlet UILabel *CreditsBalanceCount;
-@property (weak, nonatomic) IBOutlet UIView *CreditBar;
-@property (weak, nonatomic) IBOutlet UIButton *CreditsBalanceCount;
+/**
+ *  显示余额的view
+ */
+@property (weak, nonatomic) IBOutlet UIView *creditBar;
+/**
+ *  余额显示
+ */
+@property (weak, nonatomic) IBOutlet UIButton *creditsBalanceCount;
+/**
+ *  余额view的高度约束
+ */
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *creditBalanceHeight;
+/**
+ *  月费的view
+ */
+@property (weak, nonatomic) IBOutlet UIView *premiumView;
+/**
+ *  月费的高度约束
+ */
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *premiumViewHeight;
+/**
+ *  头部月费标识
+ */
+@property (weak, nonatomic) IBOutlet UIButton *premiumMark;
+/**
+ *  余额点击效果
+ */
+@property (weak, nonatomic) IBOutlet UIButton *buyCreditsBtn;
+/**
+ *  头部标识的底部
+ */
+@property (weak, nonatomic) IBOutlet UIView *premiumMarkView;
+
+
 
 @end

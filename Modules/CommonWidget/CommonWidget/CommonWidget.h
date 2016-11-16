@@ -22,7 +22,9 @@
 #import "NSMutableString+MITAdditions.h"
 
 #import "URLShortener.h"
+
 #import "NSURL+FileAttribute.h"
+#import "NSURL+QueryParam.h"
 
 #import "ZipArchive.h"
 

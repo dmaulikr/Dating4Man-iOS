@@ -23,6 +23,8 @@
 #import "SynConfigItemObject.h"
 #import "OtherGetCountItemObject.h"
 #import "CheckServerItemObject.h"
+#import "MonthlyFeeTipItemObject.h"
+#import "CookiesItemObject.h"
 
 @interface RequestManager : NSObject
 @property (nonatomic, strong) NSString* _Nonnull versionCode;
@@ -106,6 +108,12 @@
  *  @param site 域名
  */
 - (void)getCookies:(NSString * _Nonnull)site;
+
+/**
+ *  获取所有CookiesItem
+ *
+ */
+- (NSArray<CookiesItemObject*>* _Nonnull)getCookiesItem;
 
 /**
  *  停止请求接口
@@ -493,6 +501,49 @@ typedef void (^GetPaymentOrderFinishHandler)(BOOL success, NSString* _Nonnull co
  */
 typedef void (^CheckPaymentFinishHandler)(BOOL success, NSString* _Nonnull code);
 
-- (NSInteger)checkPayment:(NSString* _Nonnull)manId sid:(NSString* _Nonnull)sid receipt:(NSString* _Nonnull)receipt orderNo:(NSString* _Nonnull)orderNo finishHandler:(CheckPaymentFinishHandler _Nullable)finishHandler;
+- (NSInteger)checkPayment:(NSString* _Nonnull)manId sid:(NSString* _Nonnull)sid receipt:(NSString* _Nonnull)receipt orderNo:(NSString* _Nonnull)orderNo code:(NSInteger)code finishHandler:(CheckPaymentFinishHandler _Nullable)finishHandler;
 
+#pragma mark - 月费
+/**
+ *  获取月费状态
+ *
+ *  @param success    成功失败
+ *  @param errnum     编码信息
+ *  @param errmsg     信息
+ *  @param memberType 月费状态
+ */
+typedef void (^GetQueryMemberTypeFinishHandler)(BOOL success, NSString* _Nonnull  errnum, NSString* _Nonnull  errmsg, int memberType);
+
+- (NSInteger)getQueryMemberType:(GetQueryMemberTypeFinishHandler _Nullable)finishHandler;
+/**
+ *  获取月费的提示
+ *
+ *  @param success   成功失败
+ *  @param errnum    编码信息
+ *  @param errmsg    信息
+ *  @param tipsArray 提示内容
+ */
+typedef void (^GetMonthlyFeeTipsFinishHandler)(BOOL success, NSString* _Nonnull errnum, NSString* _Nonnull errmsg, NSArray * _Nonnull tipsArray);
+
+- (NSInteger)getMonthlyFee:(GetMonthlyFeeTipsFinishHandler _Nullable)finishHandler;
+
+#pragma mark - EMF模块
+/**
+ *  获取EMF邮件数
+ *
+ *  @param success  成功失败
+ *  @param code     错误码
+ *  @param orderNo
+ */
+/**
+ *  统计男士数据接口回调
+ *
+ *  @param success 成功失败
+ *  @param total   邮件数
+ *  @param errnum  错误码
+ *  @param errmsg  错误提示
+ */
+typedef void (^GetEMFCountFinishHandler)(BOOL success, int total, NSString * _Nonnull errnum, NSString * _Nonnull errmsg);
+
+- (NSInteger)getEMFCount:(GetEMFCountFinishHandler _Nullable)finishHandler;
 @end

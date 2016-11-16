@@ -16,6 +16,11 @@
 + (LiveChatSystemItemObject* _Nullable)getLiveChatSystemItemObject:(const LCSystemItem*)systemItem;
 + (LiveChatCustomItemObject* _Nullable)getLiveChatCustomItemObject:(const LCCustomItem*)customItem;
 + (LiveChatMsgPhotoItem* _Nonnull)getLiveChatPhotoItemObject:(const LCPhotoItem*)photoItem;
++ (NSArray<EmotionTypeItemObject*>* _Nullable)getEmotionTypeItemObject:(const OtherEmotionConfigItem::TypeList&)typeList;
++ (NSArray<EmotionTagItemObject*>* _Nullable)getEmotionTagItemObject:(const OtherEmotionConfigItem::TagList&)tagList;
++ (NSArray<EmotionItemObject*>* _Nullable)getEmotionItemObject:(const OtherEmotionConfigItem::EmotionList&)EmotionList;
++ (NSArray<MagicIconTypeItemObject*>* _Nullable)getMagicIconTypeItemObject:(const MagicIconConfig::MagicTypeList&)typeList;
++ (NSArray<MagicIconItemObject*>* _Nullable)getMagicIconItemObject:(const MagicIconConfig::MagicIconList&)magicIconList;
 
 #pragma mark - message item
 + (LCTextItem* _Nullable)getLiveChatTextItem:(LiveChatTextItemObject* _Nonnull)text;
@@ -23,6 +28,8 @@
 + (LCSystemItem* _Nullable)getLiveChatSystemItem:(LiveChatSystemItemObject* _Nonnull)system;
 + (LCCustomItem* _Nullable)getLiveChatCustomItem:(LiveChatCustomItemObject* _Nonnull)custom;
 + (LCPhotoItem* _Nullable)getLiveChatPhotoItem:(LiveChatMsgPhotoItem* _Nonnull)photo;
++ (LCEmotionItem* _Nullable)getLiveChatEmotionItem:(LiveChatEmotionItemObject* _Nonnull)emotion;
++ (LCMagicIconItem* _Nullable)getLiveChatMagicIconItem:(LiveChatMagicIconItemObject* _Nonnull)magicIcon;
 
 @end
 
@@ -180,6 +187,12 @@
         }else if (LCMessageItem::MT_Photo == msgItem->m_msgType) {
             obj.secretPhoto = [self getLiveChatPhotoItemObject:msgItem->GetPhotoItem()];
         }
+        else if (LCMessageItem::MT_Emotion == msgItem->m_msgType) {
+            obj.emotionMsg = [self getLiveChatEmotionItemObject:msgItem->GetEmotionItem()];
+        }
+        else if (LCMessageItem::MT_MagicIcon == msgItem->m_msgType){
+            obj.magicIconMsg = [self getLiveChatMagicIconItemObject:msgItem->GetMagicIconItem()];
+        }
     }
     return obj;
 }
@@ -319,6 +332,114 @@
     return obj;
 }
 
+/**
+ *  获取高级表情配置的type节点object
+ *
+ *  @param typeList 高级表情配置的type节点item
+ *
+ *  @return 高级表情配置的type节点object
+ */
++ (NSArray<EmotionTypeItemObject*>* _Nullable)getEmotionTypeItemObject:(const OtherEmotionConfigItem::TypeList &)typeList
+{
+    NSMutableArray *object = [NSMutableArray array];
+    for(OtherEmotionConfigItem::TypeList::const_iterator iter = typeList.begin(); iter != typeList.end(); iter++){
+        EmotionTypeItemObject* typeItem = [[EmotionTypeItemObject alloc] init];
+        typeItem.toflag   = (*iter).toflag;
+        typeItem.typeId   = [NSString stringWithUTF8String:(*iter).typeId.c_str()];
+        typeItem.typeName = [NSString stringWithUTF8String:(*iter).typeName.c_str()];
+        [object addObject:typeItem];
+    }
+    return object;
+}
+
+/**
+ *  获取高级表情配置的tag节点object
+ *
+ *  @param tagList 高级表情配置的tag节点item
+ *
+ *  @return 高级表情配置的tag节点object
+ */
++ (NSArray<EmotionTagItemObject*>* _Nullable)getEmotionTagItemObject:(const OtherEmotionConfigItem::TagList &)tagList
+{
+    NSMutableArray *object = [NSMutableArray array];
+    for(OtherEmotionConfigItem::TagList::const_iterator iter = tagList.begin(); iter != tagList.end(); iter++){
+        EmotionTagItemObject* tagItem = [[EmotionTagItemObject alloc] init];
+        tagItem.toflag   = (*iter).toflag;
+        tagItem.typeId   = [NSString stringWithUTF8String:(*iter).typeId.c_str()];
+        tagItem.tagId    = [NSString stringWithUTF8String:(*iter).tagId.c_str()];
+        tagItem.tagName = [NSString stringWithUTF8String:(*iter).tagName.c_str()];
+        [object addObject:tagItem];
+    }
+    return object;
+}
+
+/**
+ *  获取高级表情配置的男士／女士Eotion列表object
+ *
+ *  @param EmotionList 高级表情配置的男士／女士emotion列表
+ *
+ *  @return 高级表情配置的男士／女士Eotion列表object
+ */
++ (NSArray<EmotionItemObject*>* _Nullable)getEmotionItemObject:(const OtherEmotionConfigItem::EmotionList &)EmotionList
+{
+    NSMutableArray *object = [NSMutableArray array];
+    for(OtherEmotionConfigItem::EmotionList::const_iterator iter = EmotionList.begin(); iter != EmotionList.end(); iter++){
+        EmotionItemObject* EmotionItem = [[EmotionItemObject alloc] init];
+        EmotionItem.emotionId  = [NSString stringWithUTF8String:(*iter).fileName.c_str()];
+        EmotionItem.price     = (*iter).price;
+        EmotionItem.isNew     = (*iter).isNew;
+        EmotionItem.isSale    = (*iter).isSale;
+        EmotionItem.sortId    = (*iter).sortId;
+        EmotionItem.typeId    = [NSString stringWithUTF8String:(*iter).typeId.c_str()];
+        EmotionItem.tagId     = [NSString stringWithUTF8String:(*iter).tagId.c_str()];
+        EmotionItem.title     = [NSString stringWithUTF8String:(*iter).title.c_str()];
+        [object addObject:EmotionItem];
+    }
+    return object;
+}
+
+/**
+ *  获取小高级表情配置的type节点object
+ *
+ *  @param typeList 小高级表情配置的type节点item
+ *
+ *  @return 小高级表情配置的type节点object
+ */
++ (NSArray<MagicIconTypeItemObject*>* _Nullable)getMagicIconTypeItemObject:(const MagicIconConfig::MagicTypeList&)typeList
+{
+    NSMutableArray *object = [NSMutableArray array];
+    for (MagicIconConfig::MagicTypeList::const_iterator iter = typeList.begin(); iter != typeList.end(); iter++) {
+        MagicIconTypeItemObject* typeItem = [[MagicIconTypeItemObject alloc] init];
+        typeItem.typeId                   = [NSString stringWithUTF8String:(*iter).typeId.c_str()];
+        typeItem.typeTitle                = [NSString stringWithUTF8String:(*iter).typeTitle.c_str()];
+        [object addObject:typeItem];
+    }
+    return object;
+}
+
+/**
+ *  获取小高级表情配置的列表object
+ *
+ *  @param magicIconList 高级表情配置的列表
+ *
+ *  @return 小高级表情配置的列表object
+ */
++ (NSArray<MagicIconItemObject*>* _Nullable)getMagicIconItemObject:(const MagicIconConfig::MagicIconList&)magicIconList
+{
+    NSMutableArray *object = [NSMutableArray array];
+    for (MagicIconConfig::MagicIconList::const_iterator iter = magicIconList.begin(); iter != magicIconList.end() ; iter++) {
+        MagicIconItemObject * typeItem = [[MagicIconItemObject alloc] init];
+        typeItem.iconId                = [NSString stringWithUTF8String:(*iter).iconId.c_str()];
+        typeItem.iconTitle             = [NSString stringWithUTF8String:(*iter).iconTitle.c_str()];
+        typeItem.price                 = (*iter).price;
+        typeItem.hotflog               = (*iter).hotflag;
+        typeItem.typeId                = [NSString stringWithUTF8String:(*iter).typeId.c_str()];
+        typeItem.updatetime            = (*iter).updatetime;
+        [object addObject:typeItem];
+    }
+    return object;
+}
+
 
 #pragma mark - message item
 /**
@@ -363,6 +484,16 @@
         {
             LCCustomItem* customItem = [LiveChatItem2OCObj getLiveChatCustomItem:msg.customMsg];
             msgItem->SetCustomItem(customItem);
+        }
+        else if(LCMessageItem::MT_Emotion == msg.msgType)
+        {
+            LCEmotionItem* emotionItem = [LiveChatItem2OCObj getLiveChatEmotionItem:msg.emotionMsg];
+            msgItem->SetEmotionItem(emotionItem);
+        }
+        else if(LCMessageItem::MT_MagicIcon == msg.msgType)
+        {
+            LCMagicIconItem* magicIconItem = [LiveChatItem2OCObj getLiveChatMagicIconItem:msg.magicIconMsg];
+            msgItem->SetMagicIconItem(magicIconItem);
         }
         else
         {
@@ -480,6 +611,46 @@
     return photoItem;
 }
 
+/**
+ *  获取高级表情信息item
+ *
+ *  @param emotion 自定义高级表情信息object
+ *
+ *  @return 高级表情信息item
+ */
++ (LCEmotionItem* _Nullable)getLiveChatEmotionItem:(LiveChatEmotionItemObject* _Nonnull)emotion
+{
+    LCEmotionItem* emotionItem = new LCEmotionItem;
+    if (NULL != emotionItem) {
+        
+        emotionItem->m_emotionId   = [emotion.emotionId UTF8String];
+        emotionItem->m_imagePath   = [emotion.imagePath UTF8String];
+        emotionItem->m_playBigPath = [emotion.playBigPath UTF8String];
+        for (int i = 0; i< [emotion.playBigImages count]; i++) {
+            emotionItem->m_playBigPaths.push_back([[emotion.playBigImages objectAtIndex:i] UTF8String]);
+        }
+    }
+    return emotionItem;
+}
+
+/**
+ *  获取小高级表情信息item
+ *
+ *  @param emotion 自定义小高级表情信息object
+ *
+ *  @return 小高级表情信息item
+ */
++ (LCMagicIconItem* _Nullable)getLiveChatMagicIconItem:(LiveChatMagicIconItemObject* _Nonnull)magicIcon
+{
+    LCMagicIconItem* magicIconItem = new LCMagicIconItem;
+    if(NULL != magicIconItem){
+        magicIconItem->m_magicIconId = [magicIcon.magicIconId UTF8String];
+        magicIconItem->m_sourcePath  = [magicIcon.sourcePath UTF8String];
+        magicIconItem->m_thumbPath   = [magicIcon.thumbPath UTF8String];
+    }
+    return magicIconItem;
+}
+
 
 #pragma mark - userinfo item
 /**
@@ -548,5 +719,89 @@
     }
     return userInfoArray;
 }
+
+#pragma mark - Emotion item
+/**
+ * 获取高级表情信息object
+ *
+ * @param EmotionItem
+ *
+ * @return 高级表情信息object
+ */
++ (LiveChatEmotionItemObject*) getLiveChatEmotionItemObject:(const LCEmotionItem *)EmotionItem
+{
+    LiveChatEmotionItemObject* object = nil;
+    if(NULL != EmotionItem){
+        object = [[LiveChatEmotionItemObject alloc] init];
+        object.emotionId     = [NSString stringWithUTF8String:EmotionItem->m_emotionId.c_str()];
+        object.imagePath     = [NSString stringWithUTF8String:EmotionItem->m_imagePath.c_str()];
+        object.playBigPath   = [NSString stringWithUTF8String:EmotionItem->m_playBigPath.c_str()];
+        object.playBigImages = [NSMutableArray array];
+        for(LCEmotionPathVector::const_iterator iter = EmotionItem->m_playBigPaths.begin(); iter != EmotionItem->m_playBigPaths.end(); iter++)
+        {
+            NSString* bigPath = [NSString stringWithUTF8String:(*iter).c_str()];
+            [object.playBigImages addObject:bigPath];
+        }
+    }
+    return object;
+}
+
+/**
+ *  获取高级表情配置信息object
+ *
+ *  @param otherEmotionItem 高级表情配置item
+ *
+ *  @return 高级表情配置信息object
+ */
+
++ (LiveChatEmotionConfigItemObject*)getLiveChatEmotionConfigItemObject:(const OtherEmotionConfigItem &)otherEmotionItem
+{
+    LiveChatEmotionConfigItemObject *object = nil;
+    object                 = [[LiveChatEmotionConfigItemObject alloc] init];
+    object.version         = otherEmotionItem.version;
+    object.path            = [NSString stringWithUTF8String:otherEmotionItem.path.c_str()];
+    object.typeList        = [self getEmotionTypeItemObject:otherEmotionItem.typeList];
+    object.tagList         = [self getEmotionTagItemObject:otherEmotionItem.tagList];
+    object.manEmotionList  = [self getEmotionItemObject:otherEmotionItem.manEmotionList];
+    object.ladyEmotionList = [self getEmotionItemObject:otherEmotionItem.ladyEmotionList];
+    return object;
+}
+
+#pragma mark - MagicIcon item
+/**
+ * 获取小高级表情信息object
+ *
+ * @param EmotionItem 小高级表情item
+ *
+ * @return 小高级表情信息object
+ */
++ (LiveChatMagicIconItemObject*)getLiveChatMagicIconItemObject:(const LCMagicIconItem*)magicIconItem
+{
+    LiveChatMagicIconItemObject* object = nil;
+    object                              = [[LiveChatMagicIconItemObject alloc] init];
+    object.magicIconId                  = [NSString stringWithUTF8String:magicIconItem->m_magicIconId.c_str()];
+    object.thumbPath                    = [NSString stringWithUTF8String:magicIconItem->m_thumbPath.c_str()];
+    object.sourcePath                   = [NSString stringWithUTF8String:magicIconItem->m_sourcePath.c_str()];
+    return object;
+}
+
+/**
+ * 获取小高级表情配置object
+ *
+ * @param magicConfig 小高级表情配置item
+ *
+ * @return 小高级表情配置信息object
+ */
++ (LiveChatMagicIconConfigItemObject*)getLiveChatMagicIconConfigItemObject:(const MagicIconConfig&)magicConfig
+{
+    LiveChatMagicIconConfigItemObject* object = nil;
+    object                                    = [[LiveChatMagicIconConfigItemObject alloc] init];
+    object.path                               = [NSString stringWithUTF8String:magicConfig.path.c_str()];
+    object.maxupdatetime                      = magicConfig.maxupdatetime;
+    object.typeList                           = [self getMagicIconTypeItemObject:magicConfig.typeList];
+    object.magicIconList                      = [self getMagicIconItemObject:magicConfig.magicIconList];
+    return object;
+}
+
 
 @end

@@ -13,7 +13,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *detailLabel;
 @property (weak, nonatomic) IBOutlet UIView *bgView;
-
+@property (weak, nonatomic) IBOutlet UIButton *detailButton;
 
 + (NSString *)cellIdentifier;
 + (NSInteger)cellHeight;

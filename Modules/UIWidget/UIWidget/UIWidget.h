@@ -67,6 +67,7 @@
 #import "UIImage+SolidColor.h"
 #import "UIImage+ScaleSize.h"
 #import "UIImage+Orientation.h"
+#import "AnimationImageView.h"
 
 #pragma mark - ToolBar
 

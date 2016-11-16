@@ -44,16 +44,16 @@
         
         UILabel *badgeLabel = (UILabel *)[badgeView viewWithTag:BADGE_LABEL_TAG];
         CGSize size = [self.badgeValue sizeWithFont:labelFont];
-        CGFloat paddingX = 7;
-        CGFloat paddingY = 5;
-        CGRect frame = CGRectMake(0, 0, size.width + 2 * paddingX, size.height + 2 * paddingY);
+//        CGFloat paddingX = 7;
+//        CGFloat paddingY = 5;
+        CGRect frame = CGRectZero;
 //        CGRect frame = CGRectMake(0, 0, 0, 0);
 //        badgeLabel.text = self.badgeValue;
         
         // place badgeView on top right corner
+        frame.size = CGSizeMake(size.width + 12, 12);
         frame.origin = CGPointMake(self.frame.size.width - floor(frame.size.width / 2),
                                    - floor(frame.size.height / 2));
-        frame.size = CGSizeMake(size.width + 12, 16);
         badgeView.frame = frame;
         
         badgeView.layer.cornerRadius = badgeView.frame.size.height * 0.5;

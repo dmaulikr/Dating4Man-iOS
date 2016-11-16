@@ -37,6 +37,10 @@ static SessionRequestManager* gManager = nil;
     return self;
 }
 
+- (void)dealloc {
+    [self.loginManager removeDelegate:self];
+}
+
 #pragma mark - 接口回调处理
 - (BOOL)sendRequest:(SessionRequest* _Nonnull)request {
     request.delegate = self;

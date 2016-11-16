@@ -115,7 +115,10 @@
     
     // 计算页数
     if( self.pageLineCount != 0 ) {
-        self.pageCount = (self.lineCount % self.pageLineCount == 0)?(self.lineCount % self.pageLineCount == 0):(self.lineCount % self.pageLineCount == 0) + 1;
+        self.pageCount = (self.lineCount / self.pageLineCount);
+        if( self.lineCount % self.pageLineCount != 0 ) {
+            self.pageCount++;
+        }
     }
     
     CGSize size = CGSizeMake(self.pageCount * self.collectionView.frame.size.width, self.collectionView.frame.size.height);

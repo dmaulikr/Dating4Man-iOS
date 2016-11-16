@@ -22,7 +22,8 @@
     flowlayout.minimumInteritemSpacing = 0;
 //    CGFloat itemSize = [UIScreen mainScreen].bounds.size.width / 3;
 //    flowlayout.itemSize = CGSizeMake(itemSize, itemSize);
-    flowlayout.itemSize = CGSizeMake(150, 150);
+
+    flowlayout.itemSize = CGSizeMake(131, 131);
     flowlayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
 //    flowlayout.sectionInset = UIEdgeInsetsMake(0, 0, 46, 0);
     view.chatPhotoCollectionView.collectionViewLayout = flowlayout;
@@ -45,8 +46,18 @@
     }];
 }
 
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
+    return 2;
+}
+
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    self.count = [self.delegate itemCountInChatPhotoView:self];
+    
+    if (section == 0) {
+          self.count = [self.delegate itemCountInChatPhotoView:self];
+    }else if (section == 1) {
+        return 0;
+    }
+  
     return self.count;
 }
 

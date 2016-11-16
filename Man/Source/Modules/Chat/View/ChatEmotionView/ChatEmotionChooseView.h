@@ -28,14 +28,10 @@
 @property (weak) IBOutlet UICollectionView* emotionCollectionView;
 
 /**
- *  发送按钮
- */
-@property (weak) IBOutlet UIButton* sendButton;
-
-/**
  *  表情数组
  */
 @property (retain) NSArray<ChatEmotion*>* emotions;
+@property (weak, nonatomic) IBOutlet UIPageControl *pageView;
 
 /**
  *  生成实例
