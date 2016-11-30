@@ -24,7 +24,34 @@ typedef enum EMFAlertType {
 
 } AlertType;
 
-@interface EMFViewController () <UIWebViewDelegate, LoginManagerDelegate, MonthFeeManagerDelegate, PaymentManagerDelegate>{
+static NSString *const PUBLICCSS01 = @"/Public/Css/jquery.mobile.min.css?v=1.51";
+static NSString *const PUBLICCSS02 = @"/Public/Css/public.css?v=1.65";
+static NSString *const PUBLICCSS03 = @"/Public/charmingdate/css/css.css?v=1.61";
+static NSString *const PUBLICCSS04 = @"/Public/Css/women_list.css?v=1.64";
+static NSString *const PUBLICCSS05 = @"/Public/Js/jquery.min.js?v=1.52";
+static NSString *const PUBLICCSS06 = @"/Public/Js/jquery.mobile.js?v=1.52";
+static NSString *const PUBLICCSS07 = @"/Public/Js/login.js?v=1.56";
+static NSString *const PUBLICCSS08 = @"/Public/Js/blocksit.min.js";
+static NSString *const PUBLICCSS09 = @"/Public/Js/jquery.form.min.js";
+static NSString *const PUBLICCSS10 = @"/Public/Js/public.js?v=1.09";
+static NSString *const PUBLICCSS11 = @"/Public/Js/base64.js";
+static NSString *const PUBLICCSS12 = @"/Public/Js/base_jqm.js?v=1.70";
+static NSString *const PUBLICCSS13 = @"/Public/Js/iscroll.js?v=1.52";
+static NSString *const PUBLICCSS14 = @"/Public/Js/util.js";
+static NSString *const PUBLICCSS15 = @"/Public/Js/json.js";
+static NSString *const PUBLICCSS16 = @"/Public/Js/framework.chat.js?v=1.68";
+static NSString *const PUBLICCSS17 = @"/Public/Js/socket.js?v=1.51";
+static NSString *const PUBLICCSS18 = @"/Public/Js/touchSwipe.min.js";
+static NSString *const PUBLICCSS19 = @"/Public/Js/age.scroller.js";
+static NSString *const PUBLICCSS20 = @"/Public/Js/TouchSlide.1.1.source.js";
+static NSString *const PUBLICCSS21 = @"/Public/Js/animation.js?v=1.52";
+static NSString *const PUBLICCSS22 = @"/Public/Css/chat_scroll.css?v=1.52";
+static NSString *const PUBLICCSS23 = @"/Public/Js/chat_scroll.js?v=1.52";
+static NSString *const PUBLICCSS24 = @"/Public/charmingdate/css/swipe.css";
+static NSString *const PUBLICCSS25 = @"/Public/Js/klass.min.js";
+static NSString *const PUBLICCSS26 = @"/Public/Js/photoswipe.jquery-3.0.4.min.js?v=1.57";
+
+@interface EMFViewController () <UIWebViewDelegate, LoginManagerDelegate, MonthFeeManagerDelegate, PaymentManagerDelegate, JWURLProtocolDelegate>{
 }
 
 /**
@@ -63,8 +90,6 @@ typedef enum EMFAlertType {
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
-    //[self.view setBackgroundColor:[UIColor whiteColor]];
     
     self.userId  = self.loginManager.loginItem.manid;
     self.userSid = self.loginManager.loginItem.sessionid;
@@ -74,25 +99,20 @@ typedef enum EMFAlertType {
     [self showFailLoad:NO];
     
     // 适应大小
-//    self.EMFWebView.scalesPageToFit = YES;
-//    // 设置代理
+    self.EMFWebView.scalesPageToFit = YES;
+    // 设置代理
     [self.EMFWebView setDelegate:self];
-//    self.automaticallyAdjustsScrollViewInsets = NO;
     self.EMFWebView.canBounces = YES;
-//    // 刚开始设置隐藏，当加载完，0.3秒才显示
+   // 刚开始设置隐藏，当加载完，0.3秒才显示
     [self.EMFWebView setHidden:YES];
-    //[self.view addSubview:self.EMFWebView];
-
-//    self.automaticallyAdjustsScrollViewInsets = NO;
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-    NSLog(@"alextest1 EMFViewController didReceiveMemoryWarning");
-    [self.EMFWebView stopLoading];
+    NSLog(@"self hideLoading alextest1 EMFViewController didReceiveMemoryWarning");
+    //[self.EMFWebView stopLoading];
     [[NSURLCache sharedURLCache] removeAllCachedResponses];
-    [self hideLoading];
     [self FailLoadWebview];
     
 }
@@ -107,7 +127,6 @@ typedef enum EMFAlertType {
     self.monthFeeManager = [MonthFeeManager manager];
     [self.monthFeeManager addDelegate:self];
    
-
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -120,7 +139,6 @@ typedef enum EMFAlertType {
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
     
     // 进来前第一次才请求加载webviw
     if (self.requesStart) {
@@ -142,7 +160,6 @@ typedef enum EMFAlertType {
     KKNavigationController *nvc = (KKNavigationController *)self.navigationController;
     // 显示导航栏
     [nvc setNavigationBarHidden:NO animated:NO];
-    //[self hideLoading];
 }
 
 // 清空所有webview的Cookice
@@ -164,17 +181,18 @@ typedef enum EMFAlertType {
     // EMF的网址和权限
     NSString *webSiteUrl = @"";
     webSiteUrl = [NSString stringWithFormat:@"%@/?topage=emf&user_id=%@&user_sid=%@", AppDelegate().wapSite, self.userId, self.userSid];
-//    webSiteUrl = [NSString stringWithFormat:@"http://test:5179@demo-m.charmdate.com"];
+    // webSiteUrl = [NSString stringWithFormat:@"%@/?topage=emf", AppDelegate().wapSite];
 
     // webview请求url
     NSURL *url = [NSURL URLWithString:webSiteUrl];
     // url请求
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    [request setTimeoutInterval:60];
     // 在请求的头加上DEVICE_TYPE字段
     [request addValue:@"31" forHTTPHeaderField:@"DEVICE_TYPE"];
-    //hi[request setHTTPMethod:@"POST"];
     // 加载请求
-    [self showLoading];
+    [self showAndResetLoading];
+    NSLog(@"[self showLoading]");
     [self.EMFWebView loadRequest:request];
     
 }
@@ -190,12 +208,13 @@ typedef enum EMFAlertType {
 /*每次url的请求前回调，注意只有当需要跳转到不同的主网域（如demo－m.chnlove.com和demo.chnlove.com不同主网域），返回值NO取消请求。才会经过DidStartLoad－>didFinishLoad／didFailLoadWithError。 相同网域返回值为NO也一样会处理请求，就是都不会经过DidStartLoad－>didFinishLoad*/
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
+
     if( self.isFirstTimeFinish ) {
         dispatch_async(dispatch_get_main_queue(), ^{
-            [self showLoading];
+            [self showAndResetLoading];
+            
         });
     }
-    
     NSURL *url = [request URL];
     NSString* strAbsolute = [url absoluteString];
     NSString *strFragment  = [url fragment];
@@ -214,6 +233,7 @@ typedef enum EMFAlertType {
         //NSLog(@"strFragment isEqualToString:strEMFgoBack");
         [NSURLProtocol unregisterClass:[JWURLProtocol class]];
         dispatch_async(dispatch_get_main_queue(), ^{
+            NSLog(@"self hideLoading shouldStartLoadWithRequest");
             [self hideLoading];
             KKNavigationController *nvc = (KKNavigationController *)self.navigationController;
             [nvc popViewControllerAnimated:NO];
@@ -225,7 +245,7 @@ typedef enum EMFAlertType {
     {
         dispatch_async(dispatch_get_main_queue(), ^{
             [self hideLoading];
-            
+            NSLog(@"self hideLoading shouldStartLoadWithRequest Tips_Buy_MonthFee");
             NSString *tips = NSLocalizedStringFromSelf(@"Tips_Buy_MonthFee");
             UIAlertView *premiumAlertView = [[UIAlertView alloc] initWithTitle:nil message:tips delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
             premiumAlertView.tag = AlertTypeBuyMonthFee;
@@ -238,6 +258,7 @@ typedef enum EMFAlertType {
     else if ( (strQuery != nil) && ([strQuery rangeOfString:checkout].location != NSNotFound || [strQuery rangeOfString:credits].location != NSNotFound) )
     {
         dispatch_async(dispatch_get_main_queue(), ^{
+            NSLog(@"self hideLoading shouldStartLoadWithRequest AddCreditsViewController");
             [self hideLoading];
             // 充值
             KKNavigationController *nvc = (KKNavigationController *)self.navigationController;
@@ -262,26 +283,18 @@ typedef enum EMFAlertType {
             [self.loginManager autoLogin];
         });
     }
-    
-    NSURLSessionDataTask *dataTask = [[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData* _Nullable data, NSURLResponse *_Nullable response, NSError* _Nullable error){
-        NSURL *url = [request URL];
-        NSString* strfragment = [url fragment];
-        NSHTTPURLResponse *tmpresponse = (NSHTTPURLResponse*) response;
+ 
+    if (self.isFirstTimeFinish) {
+        NSURLSessionDataTask *dataTask = [[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData* _Nullable data, NSURLResponse *_Nullable response, NSError* _Nullable error){
+            if( self.isFirstTimeFinish ) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self hideAndResetLoading];
+                });
+            }
+        }];
+        [dataTask resume];
+    }
 
-        if( self.isFirstTimeFinish ) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self hideLoading];
-            });
-        }
-        
-        if (200 != tmpresponse.statusCode) {
-            [self FailLoadWebview];
-        } else if( [strfragment isEqualToString:@"emf_mails"] ){
-            self.isOpenWebview = YES;
-        }
-
-    }];
-    [dataTask resume];
     
     return YES;
 }
@@ -289,53 +302,54 @@ typedef enum EMFAlertType {
 // 要开始加载了
 - (void)webViewDidStartLoad:(UIWebView *)webView
 {
-    // 获取屏幕大小，在加载前赋值webview的高度，防止显示时因导航栏隐藏，导致上移
-    CGRect frame = [[UIScreen mainScreen] applicationFrame];
-    CGRect webViewFrame = self.EMFWebView.frame;
-    webViewFrame.size.height = frame.size.height;
-    self.EMFWebView.frame = webViewFrame;
+    
+    //dispatch_async(dispatch_get_main_queue(), ^{
+        NSLog(@"webViewDidFinishLoad statusCode:webViewDidStartLoad");
+        // 获取屏幕大小，在加载前赋值webview的高度，防止显示时因导航栏隐藏，导致上移
+        CGRect frame = [[UIScreen mainScreen] applicationFrame];
+        CGRect webViewFrame = self.EMFWebView.frame;
+        webViewFrame.size.height = frame.size.height;
+        self.EMFWebView.frame = webViewFrame;
+     NSLog(@"self.view.frame:%@", NSStringFromCGRect(self.EMFWebView.frame));
+    // });
     
 }
 
 // 加载完成回调，并不代表渲染完成了
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
-    NSURLSessionDataTask *dataTask = [[NSURLSession sharedSession] dataTaskWithRequest:webView.request completionHandler:^(NSData* _Nullable data, NSURLResponse *_Nullable response, NSError* _Nullable error){
-        NSHTTPURLResponse *tmpresponse = (NSHTTPURLResponse*) response;
-        //NSLog(@"webViewDidFinishLoad statusCode:%ld", (long)tmpresponse.statusCode);
-        if (self.isOpenWebview && tmpresponse.statusCode == 200) {
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                //NSLog(@"webViewDidFinishLoad DISPATCH_TIME_NOW statusCode:%ld", (long)tmpresponse.statusCode);
-                // 隐藏导航栏
-                KKNavigationController *nvc = (KKNavigationController *)self.navigationController;
-                [nvc setNavigationBarHidden:YES animated:NO];
-                [self.EMFWebView setHidden:NO];
-                [self.EMFWebView stringByEvaluatingJavaScriptFromString:@"document.documentElement.style.webkitTouchCallout='none';"];
-                [self.EMFWebView stringByEvaluatingJavaScriptFromString:@"changeMonthFeePrice(14.99);"];
-                [[NSUserDefaults standardUserDefaults] setInteger:0 forKey:@"WebKitCacheModelPreferenceKey"];
-                
-            });
-        }
-        else
-        {
-            [self FailLoadWebview];
-        }
-    }];
-    [dataTask resume];
-    
-    self.isFirstTimeFinish = YES;
-    dispatch_async(dispatch_get_main_queue(), ^{
+
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+
+        NSLog(@"self.view.frame:%@", NSStringFromCGRect(self.EMFWebView.frame));
+        // 获取屏幕大小，在加载前赋值webview的高度，防止显示时因导航栏隐藏，导致上移
+        CGRect frame = [[UIScreen mainScreen] applicationFrame];
+        CGRect webViewFrame = self.EMFWebView.frame;
+        webViewFrame.size.height = frame.size.height;
+        self.EMFWebView.frame = webViewFrame;
+
+        // 隐藏导航栏
+        //if (self.isOpenWebview) {
+        self.isFirstTimeFinish = YES;
         [self hideLoading];
+        KKNavigationController *nvc = (KKNavigationController *)self.navigationController;
+        [nvc setNavigationBarHidden:YES animated:NO];
+        NSLog(@"self hideLoading webViewDidFinishLoad statusCode: [self.EMFWebView setHidden:NO] frame:%@;",NSStringFromCGRect(self.EMFWebView.frame));
+        [self.EMFWebView setHidden:NO];
+        [self showFailLoad:NO];
+        [self.EMFWebView stringByEvaluatingJavaScriptFromString:@"document.documentElement.style.webkitTouchCallout='none';"];
+        [self.EMFWebView stringByEvaluatingJavaScriptFromString:@"changeMonthFeePrice(14.99);"];
+        [[NSUserDefaults standardUserDefaults] setInteger:0 forKey:@"WebKitCacheModelPreferenceKey"];
+        [self.EMFWebView stringByEvaluatingJavaScriptFromString:@"document.loction.href"];
+
     });
+    
 }
 
 // 加载失败回调
 -(void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
 {
-    //NSLog(@"didFailLoadWithError:%@", error);
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self hideLoading];
-    });
+    NSLog(@"self hideLoading didFailLoadWithError:%@", error);
     [self FailLoadWebview];
     switch (error.code) {
         case NSURLErrorNotConnectedToInternet :
@@ -378,7 +392,9 @@ typedef enum EMFAlertType {
 {
     self.isFirstTimeFinish = NO;
     dispatch_async(dispatch_get_main_queue(), ^{
+        [self.EMFWebView stopLoading];
         [self.EMFWebView setHidden:YES];
+        [self hideAndResetLoading];
         KKNavigationController *nvc = (KKNavigationController *)self.navigationController;
         [nvc setNavigationBarHidden:NO animated:NO];
         [self showFailLoad:YES];
@@ -396,6 +412,7 @@ typedef enum EMFAlertType {
     self.backTitle = NSLocalizedString(@"Home", nil);
     
     [NSURLProtocol registerClass:[JWURLProtocol class]];
+    [JWURLProtocol setDelegate:self];
     
     self.loginManager = [LoginManager manager];
     [self.loginManager addDelegate:self];
@@ -409,8 +426,10 @@ typedef enum EMFAlertType {
     self.EMFWebView.delegate = nil;
     [self.EMFWebView stopLoading];
     [self.EMFWebView removeFromSuperview];
+    //[self dismissViewControllerAnimated:NO completion:nil];
     [self.loginManager removeDelegate:self];
     [NSURLProtocol unregisterClass:[JWURLProtocol class]];
+    [JWURLProtocol setDelegate:nil];
 }
 
 #pragma mark - LoginManager回调
@@ -519,7 +538,7 @@ typedef enum EMFAlertType {
             self.orderNo = orderNo;
             
         } else {
-            NSLog(@"SettingViewController::onGetOrderNo( 获取订单失败, code : %@ )", code);
+            NSLog(@"[self hideLoading] SettingViewController::onGetOrderNo( 获取订单失败, code : %@ )", code);
             
             [self.EMFWebView reload];
             
@@ -551,7 +570,7 @@ typedef enum EMFAlertType {
                 NSLog(@"SettingViewController::onAppStorePay( AppStore支付成功, orderNo : %@ )", orderNo);
                 
             } else {
-                NSLog(@"SettingViewController::onAppStorePay( AppStore支付失败, orderNo : %@, canRetry :%d )", orderNo, canRetry);
+                NSLog(@"[self hideLoading] SettingViewController::onAppStorePay( AppStore支付失败, orderNo : %@, canRetry :%d )", orderNo, canRetry);
                 
                 // 隐藏菊花
                 [self hideLoading];
@@ -593,7 +612,7 @@ typedef enum EMFAlertType {
                 NSLog(@"SettingViewController::onCheckOrder( 验证订单成功, orderNo : %@ )", orderNo);
                 
             } else {
-                NSLog(@"SettingViewController::onCheckOrder( 验证订单失败, orderNo : %@, canRetry :%d, code : %@ )", orderNo, canRetry, code);
+                NSLog(@"[self hideLoading SettingViewController::onCheckOrder( 验证订单失败, orderNo : %@, canRetry :%d, code : %@ )", orderNo, canRetry, code);
                 
                 // 隐藏菊花
                 [self hideLoading];
@@ -627,7 +646,7 @@ typedef enum EMFAlertType {
 - (void)onPaymentFinish:(PaymentManager* _Nonnull)mgr orderNo:(NSString* _Nonnull)orderNo
 {
     dispatch_async(dispatch_get_main_queue(), ^{
-        NSLog(@"SettingViewController::onPaymentFinish( 支付完成 orderNo : %@ )", orderNo);
+        NSLog(@"self hideLoading SettingViewController::onPaymentFinish( 支付完成 orderNo : %@ )", orderNo);
         
         // 隐藏菊花
         [self hideLoading];
@@ -661,10 +680,12 @@ typedef enum EMFAlertType {
 - (void)manager:(MonthFeeManager * _Nonnull)manager onGetMemberType:(BOOL)success  errnum:(NSString * _Nonnull)errnum errmsg:(NSString * _Nonnull)errmsg memberType:(int)memberType
 {
     dispatch_async(dispatch_get_main_queue(), ^{
-        NSLog(@"SettingViewController::onGetMemberType( 获取月费类型, memberType : %d )", memberType);
+        NSLog(@"self hideLoading SettingViewController::onGetMemberType( 获取月费类型, memberType : %d )", memberType);
         if (success) {
             self.memberType = (MonthFeeType)memberType;
-            [self hideLoading];
+            if (self.isFirstTimeFinish) {
+                 [self hideLoading];
+            }
         }
         
     });
@@ -703,6 +724,7 @@ typedef enum EMFAlertType {
                 }break;
                 case 1:{
                     // 点击重试
+                    NSLog(@"[self showLoading]");
                     [self showLoading];
                     [self.paymentManager retry:self.orderNo];
                     
@@ -722,6 +744,7 @@ typedef enum EMFAlertType {
                 }break;
                 case 1:{
                     // 点击重试, 手动验证
+                    NSLog(@"[self showLoading]");
                     [self showLoading];
                     [self.paymentManager retry:self.orderNo];
                     
@@ -735,6 +758,7 @@ typedef enum EMFAlertType {
                 case 0:{
                 }break;
                 case 1:{
+                    NSLog(@"[self showLoading]");
                     [self showLoading];
                     [self.paymentManager pay:@"SP2010"];
                     
@@ -748,6 +772,163 @@ typedef enum EMFAlertType {
             break;
     }
 }
+
+
+-(void)JWURLProtocol:(JWURLProtocol *)protocol task:(NSURLSessionTask *)task didCompleWithError:(NSError *)error
+{
+
+    NSLog(@"alextest didCompleteWithError absoluteString:%@ code:%ld error;%@ ", [[task.currentRequest URL] absoluteString], (long)error.code , error);
+
+        if ( [[[task.currentRequest URL] absoluteString]rangeOfString:@".jpg"].location != NSNotFound ||  [[[task.currentRequest URL] absoluteString]rangeOfString:@".png"].location != NSNotFound) {
+            return;
+        }
+    
+    BOOL result = NO;
+        if ([[[task.currentRequest URL] absoluteString] rangeOfString:PUBLICCSS01].location != NSNotFound)
+        {
+            result = YES;
+        }
+        else if ([[[task.currentRequest URL] absoluteString] rangeOfString:PUBLICCSS02].location != NSNotFound)
+        {
+            result = YES;
+        }
+        else if ([[[task.currentRequest URL] absoluteString] rangeOfString:PUBLICCSS03].location != NSNotFound)
+        {
+            result = YES;
+        }
+        else if ([[[task.currentRequest URL] absoluteString] rangeOfString:PUBLICCSS04].location != NSNotFound)
+        {
+    
+            result = YES;
+        }
+        else if ([[[task.currentRequest URL] absoluteString]rangeOfString:PUBLICCSS05].location != NSNotFound)
+        {
+            result = YES;
+        }
+        else if ([[[task.currentRequest URL] absoluteString]rangeOfString:PUBLICCSS06].location != NSNotFound)
+        {
+            result = YES;
+        }
+        else if ([[[task.currentRequest URL] absoluteString] rangeOfString:PUBLICCSS07].location != NSNotFound)
+        {
+            result = YES;
+        }
+        else if ([[[task.currentRequest URL] absoluteString] rangeOfString:PUBLICCSS08].location != NSNotFound)
+        {
+            result = YES;
+        }
+        else if ([[[task.currentRequest URL] absoluteString] rangeOfString:PUBLICCSS09].location != NSNotFound)
+        {
+            result = YES;
+        }
+        else if ([[[task.currentRequest URL] absoluteString] rangeOfString:PUBLICCSS10].location != NSNotFound)
+        {
+            result = YES;
+        }
+        else if ([[[task.currentRequest URL] absoluteString] rangeOfString:PUBLICCSS11].location != NSNotFound)
+        {
+            result = YES;
+        }
+        else if ([[[task.currentRequest URL] absoluteString] rangeOfString:PUBLICCSS12].location != NSNotFound)
+        {
+            result = YES;
+        }
+        else if ([[[task.currentRequest URL] absoluteString] rangeOfString:PUBLICCSS13].location != NSNotFound)
+        {
+            result = YES;
+        }
+        else if ([[[task.currentRequest URL] absoluteString] rangeOfString:PUBLICCSS14].location != NSNotFound)
+        {
+            result = YES;
+        }
+        else if ([[[task.currentRequest URL] absoluteString] rangeOfString:PUBLICCSS15].location != NSNotFound)
+        {
+            result = YES;
+        }
+        else if ([[[task.currentRequest URL] absoluteString] rangeOfString:PUBLICCSS16].location != NSNotFound)
+        {
+            result = YES;
+        }
+        else if ([[[task.currentRequest URL] absoluteString] rangeOfString:PUBLICCSS17].location != NSNotFound)
+        {
+            result = YES;
+        }
+        else if ([[[task.currentRequest URL] absoluteString] rangeOfString:PUBLICCSS18].location != NSNotFound)
+        {
+            result = YES;
+        }
+        else if ([[[task.currentRequest URL] absoluteString] rangeOfString:PUBLICCSS19].location != NSNotFound)
+        {
+            result = YES;
+        }
+        else if ([[[task.currentRequest URL] absoluteString] rangeOfString:PUBLICCSS20].location != NSNotFound)
+        {
+            result = YES;
+        }
+        else if ([[[task.currentRequest URL] absoluteString] rangeOfString:PUBLICCSS21].location != NSNotFound)
+        {
+            result = YES;
+        }
+        else if ([[[task.currentRequest URL] absoluteString] rangeOfString:PUBLICCSS22].location != NSNotFound)
+        {
+            result = YES;
+        }
+        else if ([[[task.currentRequest URL] absoluteString] rangeOfString:PUBLICCSS23].location != NSNotFound)
+        {
+            result = YES;
+        }
+        else if ([[[task.currentRequest URL] absoluteString] rangeOfString:PUBLICCSS24].location != NSNotFound)
+        {
+            result = YES;
+        }
+        else if ([[[task.currentRequest URL] absoluteString] rangeOfString:PUBLICCSS25].location != NSNotFound)
+        {
+            result = YES;
+        }
+        else if ([[[task.currentRequest URL] absoluteString] rangeOfString:PUBLICCSS26].location != NSNotFound)
+        {
+            result = YES;
+        }
+    
+        switch (error.code) {
+            case NSURLErrorNotConnectedToInternet :
+            {
+                result = YES;
+            }
+                break;
+            case NSURLErrorCancelled :
+            {
+            }
+                break;
+            case NSURLErrorNetworkConnectionLost :
+            {
+                result = YES;
+            }
+            default:
+                break;
+        }
+    
+    if (result) {
+        [self FailLoadWebview];
+    }
+}
+
+-(void)JWURLProtocol:(JWURLProtocol *)protocol task:(NSURLSessionDataTask *)task didReceiveResponse:(NSURLResponse *)response
+{
+    NSLog(@"alextest didReceiveResponse absouluteString:%@", [[task.currentRequest URL] absoluteString]);
+    NSLog(@"self.view.frame:%@", NSStringFromCGRect(self.EMFWebView.frame));
+    CGRect frame = [[UIScreen mainScreen] applicationFrame];
+    CGRect webViewFrame = self.EMFWebView.frame;
+    if (webViewFrame.size.height  < frame.size.height) {
+        webViewFrame.size.height = frame.size.height;
+         dispatch_async(dispatch_get_main_queue(), ^{
+             self.EMFWebView.frame = webViewFrame;
+         });
+    }
+
+}
+
+
 
 
 @end

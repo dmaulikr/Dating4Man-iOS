@@ -2203,8 +2203,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = dating/dating.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMMON_C_LBRARY_CURL_ROOT = "${COMMON_C_LBRARY_ROOT}/third-party/curl/${PLATFORM_NAME}/";
 				COMMON_C_LBRARY_ROOT = "${MODULES_ROOT}/Common-C-Library/Common-C-Library";
 				COMMON_C_LIBRARY_OPENSSL_ROOT = "${COMMON_C_LBRARY_ROOT}/third-party/openssl/${PLATFORM_NAME}/";

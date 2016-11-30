@@ -48,4 +48,14 @@
 
 - (void)hideNavgationBarBottomLine;
 
+/**
+ *  重设和隐藏加载状态
+ */
+-(void)hideAndResetLoading;
+
+/**
+ *  重设和显示加载状态
+ */
+- (void)showAndResetLoading;
+
 @end

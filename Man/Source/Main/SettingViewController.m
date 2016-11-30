@@ -27,6 +27,7 @@
 
 #import "GetEMFCountRequest.h"
 #import "EMFViewController.h"
+#import "JWURLProtocol.h"
 
 typedef enum {
     RowTypeSetting,
@@ -125,6 +126,7 @@ typedef enum AlertType {
     
     // 获取EMF没读邮件数
     [self getEMFCount];
+     [JWURLProtocol setDelegate:nil];
 
 }
 
@@ -730,6 +732,7 @@ typedef enum AlertType {
                 //RequestManager* manager = [RequestManager manager];
                 //appSetting.cookiesObject = [manager getCookiesItem];
                 //[nvc pushViewController:appSetting animated:YES];
+                [JWURLProtocol setDelegate:nil];
                 EMFViewController *EMFWebView = [[EMFViewController alloc] initWithNibName:nil bundle:nil];
                 [nvc pushViewController:EMFWebView animated:YES];
                 

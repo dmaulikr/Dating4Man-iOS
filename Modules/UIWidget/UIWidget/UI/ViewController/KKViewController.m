@@ -201,4 +201,26 @@
     return nil;
 }
 
+/**
+ *  重设和隐藏加载状态
+ */
+-(void)hideAndResetLoading;
+{
+    self.loadingCount = 0;
+    if( self.loadingCount <= 0 ) {
+        self.loadActivityView.hidden = YES;
+        self.view.userInteractionEnabled = YES;
+    }
+
+}
+
+
+- (void)showAndResetLoading;
+{
+    self.loadingCount = 0;
+    self.loadingCount++;
+    self.loadActivityView.hidden = NO;
+    self.view.userInteractionEnabled = NO;
+}
+
 @end

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="15G1108" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
@@ -152,25 +152,6 @@
                         <constraint firstItem="PWQ-en-vfc" firstAttribute="width" secondItem="N5I-DH-CRa" secondAttribute="width" id="yFh-Aj-jQ4"/>
                     </constraints>
                 </view>
-                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uiX-6h-ekE" userLabel="LoadingView">
-                    <subviews>
-                        <view alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yD4-MK-obX">
-                            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        </view>
-                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="2h0-JI-d4K"/>
-                    </subviews>
-                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
-                    <constraints>
-                        <constraint firstItem="yD4-MK-obX" firstAttribute="height" secondItem="uiX-6h-ekE" secondAttribute="height" id="4rl-od-0Jq"/>
-                        <constraint firstAttribute="width" constant="80" id="AYH-cp-H59"/>
-                        <constraint firstItem="yD4-MK-obX" firstAttribute="top" secondItem="uiX-6h-ekE" secondAttribute="top" id="T9g-JG-1sH"/>
-                        <constraint firstItem="2h0-JI-d4K" firstAttribute="centerY" secondItem="uiX-6h-ekE" secondAttribute="centerY" id="dLe-xQ-lz2"/>
-                        <constraint firstItem="yD4-MK-obX" firstAttribute="leading" secondItem="uiX-6h-ekE" secondAttribute="leading" id="h4N-YO-KpG"/>
-                        <constraint firstAttribute="height" constant="80" id="hOv-gE-NvE"/>
-                        <constraint firstItem="yD4-MK-obX" firstAttribute="width" secondItem="uiX-6h-ekE" secondAttribute="width" id="ocm-T6-3Tc"/>
-                        <constraint firstItem="2h0-JI-d4K" firstAttribute="centerX" secondItem="uiX-6h-ekE" secondAttribute="centerX" id="x3I-nc-J09"/>
-                    </constraints>
-                </view>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
@@ -182,8 +163,6 @@
                 <constraint firstItem="CQ7-As-YTB" firstAttribute="width" secondItem="i5M-Pr-FkT" secondAttribute="width" id="X62-dh-cr6"/>
                 <constraint firstItem="N5I-DH-CRa" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="36" id="bop-ab-rGE"/>
                 <constraint firstItem="CQ7-As-YTB" firstAttribute="height" secondItem="i5M-Pr-FkT" secondAttribute="height" id="cA0-rp-bA0"/>
-                <constraint firstItem="uiX-6h-ekE" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="cSt-Zs-ruR"/>
-                <constraint firstItem="uiX-6h-ekE" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="kdb-fu-9aj"/>
                 <constraint firstItem="E8d-W8-Asf" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="sl3-du-32E"/>
             </constraints>
             <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
