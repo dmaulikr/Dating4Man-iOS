@@ -10,6 +10,7 @@
 #import "GoogleAnalyticsViewController.h"
 
 @class QueryLadyListItemObject;
+
 @interface LadyDetailViewController : GoogleAnalyticsViewController
 
 /**
@@ -45,6 +46,7 @@
 
 /** 女士列表头像 */
 @property (nonatomic,strong) NSString *ladyListImageUrl;
+
 
 /**
  *  聊天按钮是否直接返回

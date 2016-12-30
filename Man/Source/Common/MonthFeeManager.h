@@ -33,7 +33,7 @@ typedef enum {
  *  @param errmsg     错误信息
  *  @param memberType 月费类型
  */
-- (void)manager:(MonthFeeManager * _Nonnull)manager onGetMemberType:(BOOL)success  errnum:(NSString * _Nonnull)errnum errmsg:(NSString * _Nonnull)errmsg memberType:(int)memberType;
+- (void)manager:(MonthFeeManager * _Nonnull)manager onGetMemberType:(BOOL)success  errnum:(NSString * _Nonnull)errnum errmsg:(NSString * _Nonnull)errmsg memberType:(MonthFeeType)memberType;
 
 /**
  *  月费管理器费用信息

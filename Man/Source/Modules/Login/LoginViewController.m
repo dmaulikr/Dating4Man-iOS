@@ -13,7 +13,7 @@
 #import "LiveChatManager.h"
 #import "MonthFeeManager.h"
 
-
+#define keyboardDuration 0.56
 
 @interface LoginViewController () <LoginManagerDelegate> {
     CGRect _orgFrame;
@@ -31,18 +31,18 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
- 
+    
     _orgFrame = CGRectZero;
     _newFrame = CGRectZero;
-
+    
     self.emailTextField.text = self.manager.email;
     self.passwordTextField.text = self.manager.password;
-
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-
+    
     self.navigationController.navigationBar.hidden = YES;
     
     // 添加键盘事件
@@ -58,7 +58,7 @@
             // 没登陆
             // 获取验证码
             [self getCheckCode];
-
+            
         }break;
         case LOGINING:{
             // 登陆中
@@ -103,10 +103,10 @@
     
     // 记录inputview原始大小
     if( CGRectIsEmpty(_orgFrame) ) {
-       _orgFrame = self.inputView.frame;
+        _orgFrame = self.inputView.frame;
         
     }
-
+    
     // 是否用新frame
     if( !CGRectIsEmpty(_newFrame) ) {
         self.inputView.frame = _newFrame;
@@ -124,12 +124,12 @@
     self.manager = [LoginManager manager];
     [self.manager addDelegate:self];
     
-
+    
 }
 
 - (void)dealloc {
     [self.manager removeDelegate:self];
-
+    
 }
 
 - (void)setupNavigationBar {
@@ -174,44 +174,51 @@
     
     // 默认图片
     [self.checkcodeImageView setImage:nil];
-
-
-
+    
+    
+    
 }
 
 - (IBAction)loginAction:(id)sender {
     // 收起键盘
     [self closeKeyBoard];
-    
+    self.view.userInteractionEnabled = NO;
     
     NSString *tipsEmail = NSLocalizedStringFromSelf(@"Tips_RegisterMessage_Email");
     NSString *tipsPassword = NSLocalizedStringFromSelf(@"Tips_RegisterMessage_Password");
     NSString *confirm = NSLocalizedStringFromSelf(@"OK");
-    
-    if (self.emailTextField.text.length == 0 ) {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:tipsEmail delegate:self cancelButtonTitle:confirm otherButtonTitles:nil, nil];
-        [alertView show];
-        return;
+    // 保证键盘动画收键盘操作完成之后,在执行操作以防止键盘与alertview之间产生冲突,alertview 弹出操作快于键盘收缩事件,防止alertview弹出多次,延迟回来才允许界面点击触发的事件
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(keyboardDuration * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        self.view.userInteractionEnabled = YES;
+        if (self.emailTextField.text.length == 0 ) {
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:tipsEmail delegate:self cancelButtonTitle:confirm otherButtonTitles:nil, nil];
+            
+            [alertView show];
+            
+            return;
+            
+        }
+        if (self.passwordTextField.text.length == 0) {
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:tipsPassword delegate:self cancelButtonTitle:confirm otherButtonTitles:nil, nil];
+            [alertView show];
+            
+            return;
+        }
         
-    }
-    if (self.passwordTextField.text.length == 0) {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:tipsPassword delegate:self cancelButtonTitle:confirm otherButtonTitles:nil, nil];
-        [alertView show];
-        return;
-    }
-
-    if( [self.manager login:self.emailTextField.text password:self.passwordTextField.text checkcode:self.checkcodeTextField.text] == LOGINING ) {
-        // 开始登陆
-        [self showLoading];
-    }
-    
-    if( self.manager.status == LOGINED ) {
-        // 已经登陆
-        KKNavigationController *nvc = (KKNavigationController* )self.navigationController;
-        [nvc dismissViewControllerAnimated:YES completion:nil];
-//        [self.navigationController dismissViewControllerAnimated:YES completion:nil];
-        return;
-    }
+        if( [self.manager login:self.emailTextField.text password:self.passwordTextField.text checkcode:self.checkcodeTextField.text] == LOGINING ) {
+            // 开始登陆
+            [self showLoading];
+        }
+        
+        if( self.manager.status == LOGINED ) {
+            // 已经登陆
+            KKNavigationController *nvc = (KKNavigationController* )self.navigationController;
+            [nvc dismissViewControllerAnimated:YES completion:nil];
+            //        [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+            return;
+        }
+        
+    });
 }
 
 - (IBAction)signupAccount:(id)sender {
@@ -239,27 +246,27 @@
 - (void)hideCheckCode {
     self.checkCodeHight.constant = 0;
     self.inputViewHeight.constant = 150;
-//    self.separated2.hidden = YES;
+    //    self.separated2.hidden = YES;
     self.separatedHeight.constant = 0;
-//    for(NSLayoutConstraint* lc in self.checkCodeView.constraints) {
-//        if( [lc.identifier isEqualToString:@"secureCodeHight"] ) {
-//            lc.constant = 0;
-//            break;
-//        }
-//    }
+    //    for(NSLayoutConstraint* lc in self.checkCodeView.constraints) {
+    //        if( [lc.identifier isEqualToString:@"secureCodeHight"] ) {
+    //            lc.constant = 0;
+    //            break;
+    //        }
+    //    }
 }
 
 - (void)showCheckCode {
     self.checkCodeHight.constant = 50;
     self.inputViewHeight.constant = 200;
-//    self.separated2.hidden = NO;
+    //    self.separated2.hidden = NO;
     self.separatedHeight.constant = 1;
-//    for(NSLayoutConstraint* lc in self.checkCodeView.constraints) {
-//        if( [lc.identifier isEqualToString:@"secureCodeHight"] ) {
-//            lc.constant = 50;
-//            break;
-//        }
-//    }
+    //    for(NSLayoutConstraint* lc in self.checkCodeView.constraints) {
+    //        if( [lc.identifier isEqualToString:@"secureCodeHight"] ) {
+    //            lc.constant = 50;
+    //            break;
+    //        }
+    //    }
 }
 
 #pragma mark - 数据逻辑
@@ -277,9 +284,9 @@
                 } else {
                     // 无验证码
                     [self hideCheckCode];
-    
+                    
                 }
-
+                
             } else {
                 // 获取验证码失败
                 
@@ -309,7 +316,7 @@
         // 完成验证码
         [textField resignFirstResponder];
     }
-
+    
     return YES;
 }
 
@@ -320,14 +327,14 @@
             return NO;
         }
     }
-
+    
     return YES;
 }
 
 
 
 #pragma mark - 处理键盘回调
-- (void)moveInputBarWithKeyboardHeight:(CGFloat)height withDuration:(NSTimeInterval)duration {    
+- (void)moveInputBarWithKeyboardHeight:(CGFloat)height withDuration:(NSTimeInterval)duration {
     // Ensures that all pending layout operations have been completed
     [self.view layoutIfNeeded];
     
@@ -346,7 +353,7 @@
         [self.view layoutIfNeeded];
         
     } completion:^(BOOL finished) {
-
+        
     }];
 }
 
@@ -387,7 +394,7 @@
             // 登陆成功
             KKNavigationController *nvc = (KKNavigationController* )self.navigationController;
             [nvc dismissViewControllerAnimated:YES completion:nil];
-
+            
             
         } else {
             // 登陆失败
@@ -402,7 +409,7 @@
                 UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:errmsg delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles: nil];
                 [alertView show];
             }
-
+            
         }
     });
 }
@@ -419,13 +426,13 @@
 
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

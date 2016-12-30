@@ -14,11 +14,15 @@
 
 @property (assign, nonatomic) IBOutlet id<PZPhotoViewDelegate> photoViewDelegate;
 
+/** 展示模式 */
+@property (nonatomic,assign) UIViewContentMode imageViewContentMode;
+
 - (void)prepareForReuse;
 - (void)setImage:(UIImage *)image;
 
 - (void)updateZoomScale:(CGFloat)newScale;
 - (void)updateZoomScale:(CGFloat)newScale withCenter:(CGPoint)center;
+
 
 @end
 

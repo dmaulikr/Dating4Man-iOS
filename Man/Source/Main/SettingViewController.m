@@ -29,6 +29,7 @@
 #import "EMFViewController.h"
 #import "JWURLProtocol.h"
 
+
 typedef enum {
     RowTypeSetting,
     RowTypeAppSetting,
@@ -304,7 +305,10 @@ typedef enum AlertType {
 
 #pragma mark - 点击事件
 - (IBAction)buyPremium:(id)sender {
-    NSString *tips = NSLocalizedStringFromSelf(@"Tips_Buy_MonthFee");
+
+    NSString *price = NSLocalizedString(@"Tips_MonthFee_Price", nil);
+    NSString *tips = [NSString stringWithFormat:NSLocalizedString(@"Tips_Buy_MonthFee", nil),price];
+
     UIAlertView *premiumAlertView = [[UIAlertView alloc] initWithTitle:nil message:tips delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
     premiumAlertView.tag = AlertTypeBuyMonthFee;
     [premiumAlertView show];
@@ -502,9 +506,9 @@ typedef enum AlertType {
             // 显示余额按钮
             if( self.otherGetCountItemObject.money <= 0 ) {
                 [self hideshowMemberCreditBalance];
-            } else {
-                // 显示余额按钮
+            }else {
                 [self showMemberCreditBalance];
+
             }
         }break;
         default:
@@ -904,11 +908,11 @@ typedef enum AlertType {
 
 
 #pragma mark - 月费管理器回调
-- (void)manager:(MonthFeeManager *)manager onGetMemberType:(BOOL)success errnum:(NSString *)errnum errmsg:(NSString *)errmsg memberType:(int)memberType {
+- (void)manager:(MonthFeeManager *)manager onGetMemberType:(BOOL)success errnum:(NSString *)errnum errmsg:(NSString *)errmsg memberType:(MonthFeeType)memberType {
     dispatch_async(dispatch_get_main_queue(), ^{
         NSLog(@"SettingViewController::onGetMemberType( 获取月费类型, memberType : %d )", memberType);
         if (success) {
-            self.memberType = (MonthFeeType)memberType;
+            self.memberType = memberType;
             [self reloadMemberType];
             [self reloadData:YES];
         }

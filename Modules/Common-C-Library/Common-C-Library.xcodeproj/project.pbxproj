@@ -184,6 +184,18 @@
 		50E967BE1CC4CC4B00E5BF26 /* UseTryTicketTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50E967711CC4CC4B00E5BF26 /* UseTryTicketTask.cpp */; };
 		50ECE5FD1D06A9F500FAAC1F /* RequestMonthlyFeeController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ECE5FA1D06A9F500FAAC1F /* RequestMonthlyFeeController.cpp */; };
 		50ECE6011D06AA2600FAAC1F /* RequestFakeController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ECE5FE1D06AA2600FAAC1F /* RequestFakeController.cpp */; };
+		52B4DC6A1DF7DFA000110302 /* ApplyCamShareTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 52B4DC541DF7DFA000110302 /* ApplyCamShareTask.cpp */; };
+		52B4DC6B1DF7DFA000110302 /* CamShareHearbeatTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 52B4DC561DF7DFA000110302 /* CamShareHearbeatTask.cpp */; };
+		52B4DC6C1DF7DFA000110302 /* GetLadyCamStatusTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 52B4DC581DF7DFA000110302 /* GetLadyCamStatusTask.cpp */; };
+		52B4DC6D1DF7DFA000110302 /* GetSessionInfoTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 52B4DC5A1DF7DFA000110302 /* GetSessionInfoTask.cpp */; };
+		52B4DC6E1DF7DFA000110302 /* GetUsersCamStatusTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 52B4DC5C1DF7DFA000110302 /* GetUsersCamStatusTask.cpp */; };
+		52B4DC6F1DF7DFA000110302 /* RecvAcceptCamInviteTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 52B4DC5E1DF7DFA000110302 /* RecvAcceptCamInviteTask.cpp */; };
+		52B4DC701DF7DFA000110302 /* RecvCamHearbeatExceptionTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 52B4DC601DF7DFA000110302 /* RecvCamHearbeatExceptionTask.cpp */; };
+		52B4DC711DF7DFA000110302 /* RecvCamShareInviteTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 52B4DC621DF7DFA000110302 /* RecvCamShareInviteTask.cpp */; };
+		52B4DC721DF7DFA000110302 /* RecvCamShareStartTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 52B4DC641DF7DFA000110302 /* RecvCamShareStartTask.cpp */; };
+		52B4DC731DF7DFA000110302 /* RecvLadyCamStatusTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 52B4DC661DF7DFA000110302 /* RecvLadyCamStatusTask.cpp */; };
+		52B4DC741DF7DFA000110302 /* SendCamShareInviteTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 52B4DC681DF7DFA000110302 /* SendCamShareInviteTask.cpp */; };
+		52B4DC771DF7DFCE00110302 /* LadyAcceptCamInviteTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 52B4DC751DF7DFCE00110302 /* LadyAcceptCamInviteTask.cpp */; };
 		D14A7F3F1CF99A4A00135FA3 /* LCCustomItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D14A7F3D1CF99A4A00135FA3 /* LCCustomItem.cpp */; };
 		D1526B2C1D75612900DA063A /* GetAutoInviteStatusTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1526B1E1D75612900DA063A /* GetAutoInviteStatusTask.cpp */; };
 		D1526B2D1D75612900DA063A /* RecvLadyAutoInviteStatusTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1526B201D75612900DA063A /* RecvLadyAutoInviteStatusTask.cpp */; };
@@ -634,6 +646,30 @@
 		50ECE5FF1D06AA2600FAAC1F /* RequestFakeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequestFakeController.h; sourceTree = "<group>"; };
 		50ECE6001D06AA2600FAAC1F /* RequestFakeDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequestFakeDefine.h; sourceTree = "<group>"; };
 		50ECE6021D06AA8F00FAAC1F /* CheckServerItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckServerItem.h; sourceTree = "<group>"; };
+		52B4DC541DF7DFA000110302 /* ApplyCamShareTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ApplyCamShareTask.cpp; sourceTree = "<group>"; };
+		52B4DC551DF7DFA000110302 /* ApplyCamShareTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApplyCamShareTask.h; sourceTree = "<group>"; };
+		52B4DC561DF7DFA000110302 /* CamShareHearbeatTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CamShareHearbeatTask.cpp; sourceTree = "<group>"; };
+		52B4DC571DF7DFA000110302 /* CamShareHearbeatTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CamShareHearbeatTask.h; sourceTree = "<group>"; };
+		52B4DC581DF7DFA000110302 /* GetLadyCamStatusTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GetLadyCamStatusTask.cpp; sourceTree = "<group>"; };
+		52B4DC591DF7DFA000110302 /* GetLadyCamStatusTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GetLadyCamStatusTask.h; sourceTree = "<group>"; };
+		52B4DC5A1DF7DFA000110302 /* GetSessionInfoTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GetSessionInfoTask.cpp; sourceTree = "<group>"; };
+		52B4DC5B1DF7DFA000110302 /* GetSessionInfoTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GetSessionInfoTask.h; sourceTree = "<group>"; };
+		52B4DC5C1DF7DFA000110302 /* GetUsersCamStatusTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GetUsersCamStatusTask.cpp; sourceTree = "<group>"; };
+		52B4DC5D1DF7DFA000110302 /* GetUsersCamStatusTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GetUsersCamStatusTask.h; sourceTree = "<group>"; };
+		52B4DC5E1DF7DFA000110302 /* RecvAcceptCamInviteTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RecvAcceptCamInviteTask.cpp; sourceTree = "<group>"; };
+		52B4DC5F1DF7DFA000110302 /* RecvAcceptCamInviteTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecvAcceptCamInviteTask.h; sourceTree = "<group>"; };
+		52B4DC601DF7DFA000110302 /* RecvCamHearbeatExceptionTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RecvCamHearbeatExceptionTask.cpp; sourceTree = "<group>"; };
+		52B4DC611DF7DFA000110302 /* RecvCamHearbeatExceptionTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecvCamHearbeatExceptionTask.h; sourceTree = "<group>"; };
+		52B4DC621DF7DFA000110302 /* RecvCamShareInviteTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RecvCamShareInviteTask.cpp; sourceTree = "<group>"; };
+		52B4DC631DF7DFA000110302 /* RecvCamShareInviteTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecvCamShareInviteTask.h; sourceTree = "<group>"; };
+		52B4DC641DF7DFA000110302 /* RecvCamShareStartTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RecvCamShareStartTask.cpp; sourceTree = "<group>"; };
+		52B4DC651DF7DFA000110302 /* RecvCamShareStartTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecvCamShareStartTask.h; sourceTree = "<group>"; };
+		52B4DC661DF7DFA000110302 /* RecvLadyCamStatusTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RecvLadyCamStatusTask.cpp; sourceTree = "<group>"; };
+		52B4DC671DF7DFA000110302 /* RecvLadyCamStatusTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecvLadyCamStatusTask.h; sourceTree = "<group>"; };
+		52B4DC681DF7DFA000110302 /* SendCamShareInviteTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SendCamShareInviteTask.cpp; sourceTree = "<group>"; };
+		52B4DC691DF7DFA000110302 /* SendCamShareInviteTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SendCamShareInviteTask.h; sourceTree = "<group>"; };
+		52B4DC751DF7DFCE00110302 /* LadyAcceptCamInviteTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LadyAcceptCamInviteTask.cpp; sourceTree = "<group>"; };
+		52B4DC761DF7DFCE00110302 /* LadyAcceptCamInviteTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LadyAcceptCamInviteTask.h; sourceTree = "<group>"; };
 		D14A7F3D1CF99A4A00135FA3 /* LCCustomItem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LCCustomItem.cpp; sourceTree = "<group>"; };
 		D14A7F3E1CF99A4A00135FA3 /* LCCustomItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCCustomItem.h; sourceTree = "<group>"; };
 		D1526B1E1D75612900DA063A /* GetAutoInviteStatusTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GetAutoInviteStatusTask.cpp; sourceTree = "<group>"; };
@@ -1100,6 +1136,30 @@
 			children = (
 				D1526B1E1D75612900DA063A /* GetAutoInviteStatusTask.cpp */,
 				D1526B1F1D75612900DA063A /* GetAutoInviteStatusTask.h */,
+				52B4DC541DF7DFA000110302 /* ApplyCamShareTask.cpp */,
+				52B4DC551DF7DFA000110302 /* ApplyCamShareTask.h */,
+				52B4DC561DF7DFA000110302 /* CamShareHearbeatTask.cpp */,
+				52B4DC571DF7DFA000110302 /* CamShareHearbeatTask.h */,
+				52B4DC751DF7DFCE00110302 /* LadyAcceptCamInviteTask.cpp */,
+				52B4DC761DF7DFCE00110302 /* LadyAcceptCamInviteTask.h */,
+				52B4DC581DF7DFA000110302 /* GetLadyCamStatusTask.cpp */,
+				52B4DC591DF7DFA000110302 /* GetLadyCamStatusTask.h */,
+				52B4DC5A1DF7DFA000110302 /* GetSessionInfoTask.cpp */,
+				52B4DC5B1DF7DFA000110302 /* GetSessionInfoTask.h */,
+				52B4DC5C1DF7DFA000110302 /* GetUsersCamStatusTask.cpp */,
+				52B4DC5D1DF7DFA000110302 /* GetUsersCamStatusTask.h */,
+				52B4DC5E1DF7DFA000110302 /* RecvAcceptCamInviteTask.cpp */,
+				52B4DC5F1DF7DFA000110302 /* RecvAcceptCamInviteTask.h */,
+				52B4DC601DF7DFA000110302 /* RecvCamHearbeatExceptionTask.cpp */,
+				52B4DC611DF7DFA000110302 /* RecvCamHearbeatExceptionTask.h */,
+				52B4DC621DF7DFA000110302 /* RecvCamShareInviteTask.cpp */,
+				52B4DC631DF7DFA000110302 /* RecvCamShareInviteTask.h */,
+				52B4DC641DF7DFA000110302 /* RecvCamShareStartTask.cpp */,
+				52B4DC651DF7DFA000110302 /* RecvCamShareStartTask.h */,
+				52B4DC661DF7DFA000110302 /* RecvLadyCamStatusTask.cpp */,
+				52B4DC671DF7DFA000110302 /* RecvLadyCamStatusTask.h */,
+				52B4DC681DF7DFA000110302 /* SendCamShareInviteTask.cpp */,
+				52B4DC691DF7DFA000110302 /* SendCamShareInviteTask.h */,
 				D1526B201D75612900DA063A /* RecvLadyAutoInviteStatusTask.cpp */,
 				D1526B211D75612900DA063A /* RecvLadyAutoInviteStatusTask.h */,
 				D1526B221D75612900DA063A /* RecvLadyAutoInviteTask.cpp */,
@@ -1394,6 +1454,7 @@
 				504CDA291C7FDA2D00DBB429 /* tinystr.cpp in Sources */,
 				50E967B01CC4CC4B00E5BF26 /* SetStatusTask.cpp in Sources */,
 				501BF3B41C7EFF460052C59F /* KSocket.cpp in Sources */,
+				52B4DC6E1DF7DFA000110302 /* GetUsersCamStatusTask.cpp in Sources */,
 				504CD9FD1C7FD6AF00DBB429 /* pngerror.c in Sources */,
 				50E967861CC4CC4B00E5BF26 /* ILiveChatClient.cpp in Sources */,
 				504CDA081C7FD6AF00DBB429 /* pngwrite.c in Sources */,
@@ -1406,6 +1467,7 @@
 				504CDBD41C7FEB1500DBB429 /* RequestAuthorizationController.cpp in Sources */,
 				501BF3B51C7EFF460052C59F /* KTcpSocket.cpp in Sources */,
 				D169394F1CE59724001D40E7 /* RecvThemeRecommendTask.cpp in Sources */,
+				52B4DC741DF7DFA000110302 /* SendCamShareInviteTask.cpp in Sources */,
 				50E967AC1CC4CC4B00E5BF26 /* SendMsgTask.cpp in Sources */,
 				504CDB791C7FE31500DBB429 /* LCWarningItem.cpp in Sources */,
 				504CDB6C1C7FE31500DBB429 /* LCPhotoItem.cpp in Sources */,
@@ -1415,9 +1477,11 @@
 				50E967901CC4CC4B00E5BF26 /* RecvAutoChargeResultTask.cpp in Sources */,
 				D169394B1CE59724001D40E7 /* ManApplyThemeTask.cpp in Sources */,
 				D169394A1CE59724001D40E7 /* GetPaidThemeTask.cpp in Sources */,
+				52B4DC721DF7DFA000110302 /* RecvCamShareStartTask.cpp in Sources */,
 				50E9677E1CC4CC4B00E5BF26 /* GetRecentContactListTask.cpp in Sources */,
 				504CDA1F1C7FD6EE00DBB429 /* json_writer.cpp in Sources */,
 				50E967821CC4CC4B00E5BF26 /* GetUsersInfoTask.cpp in Sources */,
+				52B4DC711DF7DFA000110302 /* RecvCamShareInviteTask.cpp in Sources */,
 				504CDA341C7FDA4100DBB429 /* AMF3.cpp in Sources */,
 				50E9677A1CC4CC4B00E5BF26 /* GetLadyChatInfoTask.cpp in Sources */,
 				50E967921CC4CC4B00E5BF26 /* RecvEditMsgTask.cpp in Sources */,
@@ -1452,9 +1516,11 @@
 				504CDB621C7FE31500DBB429 /* ILiveChatManManager.cpp in Sources */,
 				50E9678B1CC4CC4B00E5BF26 /* ITransportPacketHandler.cpp in Sources */,
 				50E967A41CC4CC4B00E5BF26 /* RefreshInviteTemplateTask.cpp in Sources */,
+				52B4DC6D1DF7DFA000110302 /* GetSessionInfoTask.cpp in Sources */,
 				D1526B2C1D75612900DA063A /* GetAutoInviteStatusTask.cpp in Sources */,
 				504CDBD61C7FEB1500DBB429 /* RequestEMFController.cpp in Sources */,
 				50E967781CC4CC4B00E5BF26 /* GetContactListTask.cpp in Sources */,
+				52B4DC6F1DF7DFA000110302 /* RecvAcceptCamInviteTask.cpp in Sources */,
 				504CDA1E1C7FD6EE00DBB429 /* json_value.cpp in Sources */,
 				504CDBDB1C7FEB1500DBB429 /* RequestOtherController.cpp in Sources */,
 				50E967771CC4CC4B00E5BF26 /* GetBlockUsersTask.cpp in Sources */,
@@ -1485,12 +1551,14 @@
 				D16939491CE59724001D40E7 /* GetAllPaidThemeTask.cpp in Sources */,
 				50E967A61CC4CC4B00E5BF26 /* SearchOnlineManTask.cpp in Sources */,
 				504CD9FE1C7FD6AF00DBB429 /* pngget.c in Sources */,
+				52B4DC771DF7DFCE00110302 /* LadyAcceptCamInviteTask.cpp in Sources */,
 				50E9677B1CC4CC4B00E5BF26 /* GetLadyConditionTask.cpp in Sources */,
 				504CDA021C7FD6AF00DBB429 /* pngrio.c in Sources */,
 				504CDB6A1C7FE31500DBB429 /* LCMessageItem.cpp in Sources */,
 				504CDBDA1C7FEB1500DBB429 /* RequestLoveCallController.cpp in Sources */,
 				50ECE6011D06AA2600FAAC1F /* RequestFakeController.cpp in Sources */,
 				504CDB781C7FE31500DBB429 /* LCVoiceManager.cpp in Sources */,
+				52B4DC6A1DF7DFA000110302 /* ApplyCamShareTask.cpp in Sources */,
 				50E967871CC4CC4B00E5BF26 /* ISocketHandler.cpp in Sources */,
 				50E967811CC4CC4B00E5BF26 /* GetUserInfoTask.cpp in Sources */,
 				504CDBDC1C7FEB1500DBB429 /* RequestProfileController.cpp in Sources */,
@@ -1504,6 +1572,7 @@
 				D1526B2E1D75612900DA063A /* RecvLadyAutoInviteTask.cpp in Sources */,
 				50E967BA1CC4CC4B00E5BF26 /* UploadDeviceTypeTask.cpp in Sources */,
 				50ECE5FD1D06A9F500FAAC1F /* RequestMonthlyFeeController.cpp in Sources */,
+				52B4DC6C1DF7DFA000110302 /* GetLadyCamStatusTask.cpp in Sources */,
 				D1526B321D75612900DA063A /* SendThemeRecommendTask.cpp in Sources */,
 				D1526B2D1D75612900DA063A /* RecvLadyAutoInviteStatusTask.cpp in Sources */,
 				50E967841CC4CC4B00E5BF26 /* GetVoiceCodeTask.cpp in Sources */,
@@ -1533,6 +1602,7 @@
 				D14A7F3F1CF99A4A00135FA3 /* LCCustomItem.cpp in Sources */,
 				501BF3CB1C7F00400052C59F /* unzip.c in Sources */,
 				504CDB7A1C7FE31500DBB429 /* LCWarningLinkItem.cpp in Sources */,
+				52B4DC731DF7DFA000110302 /* RecvLadyCamStatusTask.cpp in Sources */,
 				504CDB6F1C7FE31500DBB429 /* LCTextItem.cpp in Sources */,
 				501BF3B91C7EFF460052C59F /* md5.c in Sources */,
 				504CDA031C7FD6AF00DBB429 /* pngrtran.c in Sources */,
@@ -1542,6 +1612,7 @@
 				D1526B301D75612900DA063A /* RecvManFeeThemeTask.cpp in Sources */,
 				50E967BB1CC4CC4B00E5BF26 /* UploadPopLadyAutoInviteTask.cpp in Sources */,
 				504CDA2A1C7FDA2D00DBB429 /* tinyxml.cpp in Sources */,
+				52B4DC701DF7DFA000110302 /* RecvCamHearbeatExceptionTask.cpp in Sources */,
 				504CDB691C7FE31500DBB429 /* LCMessageFilter.cpp in Sources */,
 				504CDB731C7FE31500DBB429 /* LCVideoDownloader.cpp in Sources */,
 				50E967791CC4CC4B00E5BF26 /* GetFeeRecentContactListTask.cpp in Sources */,
@@ -1567,6 +1638,7 @@
 				50E9679B1CC4CC4B00E5BF26 /* RecvShowPhotoTask.cpp in Sources */,
 				504CDB631C7FE31500DBB429 /* LCBlockManager.cpp in Sources */,
 				50E967891CC4CC4B00E5BF26 /* IThreadHandler.cpp in Sources */,
+				52B4DC6B1DF7DFA000110302 /* CamShareHearbeatTask.cpp in Sources */,
 				50E9679A1CC4CC4B00E5BF26 /* RecvPhotoTask.cpp in Sources */,
 				501BF3AB1C7EFF460052C59F /* aes.c in Sources */,
 				504CDBDD1C7FEB1500DBB429 /* RequestQuickMatchController.cpp in Sources */,

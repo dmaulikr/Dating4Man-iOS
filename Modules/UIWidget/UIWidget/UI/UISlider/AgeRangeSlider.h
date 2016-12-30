@@ -42,4 +42,9 @@
 @property (nonatomic,assign) CGFloat positionValue;
 /** 制定范围的最大值必须的 */
 @property (nonatomic,assign) CGFloat positionMaxValue;
+
+@property (nonatomic,strong) UILabel *minValueLabel;
+@property (nonatomic,strong) UILabel *maxValueLabel;
+//外部传进来的最小值
+@property (nonatomic,assign) CGFloat minAgeRange;
 @end

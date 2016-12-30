@@ -515,6 +515,10 @@ typedef enum {
     self.searchShowBtn.enabled = YES;
 }
 
+- (void)tableViewDidResetView:(LadyListTableView *)tableView {
+     self.searchShowBtn.enabled = YES;
+}
+
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     if (scrollView == self.tableView) {

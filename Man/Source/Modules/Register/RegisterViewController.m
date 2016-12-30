@@ -14,6 +14,7 @@
 #import <AssetsLibrary/AssetsLibrary.h>
 #import "SelectSwitch.h"
 #import "RegisterHeaderViewCell.h"
+#import <AVFoundation/AVFoundation.h>
 
 #define maxInput 30
 
@@ -370,7 +371,7 @@ typedef enum : NSUInteger {
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
-
+    
     self.automaticallyAdjustsScrollViewInsets = NO;
     
     
@@ -424,7 +425,7 @@ typedef enum : NSUInteger {
 
 #pragma mark - 界面逻辑
 - (void)initCustomParam {
-//    self.customBackTitle = NSLocalizedString(@"Login", nil);
+    //    self.customBackTitle = NSLocalizedString(@"Login", nil);
     [super initCustomParam];
     self.backTitle = NSLocalizedString(@"Register", nil);
 }
@@ -447,7 +448,7 @@ typedef enum : NSUInteger {
     self.mainVC.pagingScrollView.delaysContentTouches = NO;
     self.tableView.delaysContentTouches = NO;
     
-//    self.tableView.backgroundColor = self.navigationController.navigationBar.barTintColor;
+    //    self.tableView.backgroundColor = self.navigationController.navigationBar.barTintColor;
     
     
     UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
@@ -481,7 +482,7 @@ typedef enum : NSUInteger {
     item.yesLabel.text = @"Male";
     item.yesLabel.font = [UIFont systemFontOfSize:16];
     item.noLabel.text = @"Female";
-        item.noLabel.font = [UIFont systemFontOfSize:16];
+    item.noLabel.font = [UIFont systemFontOfSize:16];
     //默认为女士
     if (self.registerObj.isMale == YES) {
         item.isYes = YES;
@@ -544,7 +545,7 @@ typedef enum : NSUInteger {
     [dictionary setValue:[NSNumber numberWithInteger:RegisterMsgTypeNationality] forKey:ROW_TYPE];
     [array addObject:dictionary];
     
-//    //个人描述
+    //    //个人描述
     dictionary = [NSMutableDictionary dictionary];
     viewSize = CGSizeMake(self.tableView.frame.size.width, [CommonTextFieldTableViewCell cellHeight]);
     rowSize = [NSValue valueWithCGSize:viewSize];
@@ -621,18 +622,18 @@ typedef enum : NSUInteger {
                 headerCell.backgroundColor = self.navigationController.navigationBar.barTintColor;
                 result = headerCell;
                 headerCell.delegate = self;
-//                headerCell.headerPhoto.image = self.registerObj.headerImage;
+                //                headerCell.headerPhoto.image = self.registerObj.headerImage;
                 if (self.registerObj.headerImage) {
                     headerCell.addPhotoImageView.image = self.registerObj.headerImage;
                 }else{
                     headerCell.addPhotoImageView.image = [UIImage imageNamed:@"Register-UploadPhoto"];
                 }
-               
-//                if (headerCell.headerPhoto.image) {
-//                    headerCell.headerPhoto.backgroundColor = [UIColor clearColor];
-//                }else{
-//                    headerCell.headerPhoto.backgroundColor = self.navigationController.navigationBar.barTintColor;
-//                }
+                
+                //                if (headerCell.headerPhoto.image) {
+                //                    headerCell.headerPhoto.backgroundColor = [UIColor clearColor];
+                //                }else{
+                //                    headerCell.headerPhoto.backgroundColor = self.navigationController.navigationBar.barTintColor;
+                //                }
                 
             }break;
             case RegisterMsgTypeGender:{
@@ -679,7 +680,7 @@ typedef enum : NSUInteger {
                 
                 [picker setMaximumDate:minDate];
                 [picker setMinimumDate:maxDate];
-            
+                
                 if (self.registerObj.birthday.length > 0) {
                     NSDateFormatter *formatter = [[NSDateFormatter alloc] init] ;
                     [formatter setDateFormat:@"yyyy-MM-dd"];
@@ -708,7 +709,7 @@ typedef enum : NSUInteger {
                 commomCell.contentTextField.hidden = NO;
                 commomCell.detailLabel.text = NSLocalizedStringFromSelf(@"YOUR_NATIONALITY");
                 commomCell.contentTextField.placeholder = NSLocalizedStringFromSelf(@"SELECT");
-//                UIPickerView *pickerView = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 215)];
+                //                UIPickerView *pickerView = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 215)];
                 UIPickerView *pickerView = [[UIPickerView alloc] init];
                 pickerView.dataSource = self;
                 pickerView.delegate = self;
@@ -848,7 +849,7 @@ typedef enum : NSUInteger {
         }
         
         if ([self.countryField isFirstResponder]) {
-//            [self cancelCountryPicker];
+            //            [self cancelCountryPicker];
         }
         
         [self closeKeyBoard];
@@ -857,7 +858,7 @@ typedef enum : NSUInteger {
         NSString *tipsPhoto = NSLocalizedStringFromSelf(@"TIPS_REGISTERMESSAGE_PHOTO");
         NSString *tipsName = NSLocalizedStringFromSelf(@"TIPS_REGISTERMESSAGE_NAME");
         NSString *tipsBirthday = NSLocalizedStringFromSelf(@"TIPS_REGISTERMESSAGE_BIRTHDAY");
-//        NSString *tipsNationality = NSLocalizedStringFromSelf(@"TIPS_REGISTERMESSAGE_NATIONALITY");
+        //        NSString *tipsNationality = NSLocalizedStringFromSelf(@"TIPS_REGISTERMESSAGE_NATIONALITY");
         NSString *confirm = NSLocalizedStringFromSelf(@"OK");
         
         if (!self.registerObj.headerImage) {
@@ -879,11 +880,11 @@ typedef enum : NSUInteger {
         }
         
         // 检测国家是否为空
-//        if (self.registerObj.country.length == 0) {
-//            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:tipsNationality delegate:self cancelButtonTitle:confirm otherButtonTitles:nil, nil];
-//            [alertView show];
-//            return;
-//        }
+        //        if (self.registerObj.country.length == 0) {
+        //            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:tipsNationality delegate:self cancelButtonTitle:confirm otherButtonTitles:nil, nil];
+        //            [alertView show];
+        //            return;
+        //        }
         
         
         
@@ -971,7 +972,7 @@ typedef enum : NSUInteger {
 #pragma mark - 相册逻辑
 - (void)callSheet{
     
-//    NSString *photoTips = NSLocalizedStringFromSelf(@"Photo_Type_Choose");
+    //    NSString *photoTips = NSLocalizedStringFromSelf(@"Photo_Type_Choose");
     NSString *photoTypeLibrary = NSLocalizedStringFromSelf(@"PHOTO_LIBRARY");
     NSString *photoTypeTakePhoto = NSLocalizedStringFromSelf(@"PHOTO_TAKING");
     NSString *photoCancel = NSLocalizedStringFromSelf(@"Cancel");
@@ -987,7 +988,7 @@ typedef enum : NSUInteger {
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
     if (actionSheet.tag == 1001) {
         UIImagePickerControllerSourceType sourceType = UIImagePickerControllerSourceTypeCamera;
-        
+        NSString *tips = @"";
         if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
             switch (buttonIndex) {
                 case 0:
@@ -996,10 +997,12 @@ typedef enum : NSUInteger {
                 case 1:
                     //相机
                     sourceType = UIImagePickerControllerSourceTypeCamera;
+                    tips = NSLocalizedString(@"Tips_Camera_Allow", nil);
                     break;
                 case 2:
                     //相册
                     sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+                    tips = NSLocalizedString(@"Tips_PhotoLibrary_Allow", nil);
                     break;
             }
         }else{
@@ -1020,7 +1023,18 @@ typedef enum : NSUInteger {
         //            imagePicker.allowsEditing = NO;
         //            imagePicker.cameraViewTransform = CGAffineTransformMakeScale(1, 1);
         //        }
-        [self presentViewController:imagePicker animated:YES completion:nil];
+        NSString *mediaType = AVMediaTypeVideo;
+        AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:mediaType];
+        // 是否给相机设置了可以访问权限
+        if(authStatus == AVAuthorizationStatusRestricted || authStatus == AVAuthorizationStatusDenied){
+            // 无权限
+            UIAlertView *cameraAlert = [[UIAlertView alloc] initWithTitle:nil message:tips delegate:self cancelButtonTitle:nil otherButtonTitles:NSLocalizedString(@"Close", nil), nil];
+            [cameraAlert show];
+            return;
+        } else {
+            [self presentViewController:imagePicker animated:YES completion:nil];
+        }
+        //        [self presentViewController:imagePicker animated:YES completion:nil];
         
     }
     
@@ -1033,13 +1047,15 @@ typedef enum : NSUInteger {
         
         self.registerObj.headerImage = info[UIImagePickerControllerOriginalImage];
         
+        UIImageWriteToSavedPhotosAlbum(self.registerObj.headerImage, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
+        
         FileCacheManager *manager = [FileCacheManager manager];
         
         self.profilePhotoPath =  [manager imageUploadCachePath:self.registerObj.headerImage fileName:@"headPhoto.jpg"];
         
         [self reloadData:YES];
         [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
-
+        
         
     }];
     
@@ -1051,6 +1067,18 @@ typedef enum : NSUInteger {
     [picker dismissViewControllerAnimated:YES completion:nil];
     
 }
+
+/**
+ *  拍摄完图片回调
+ *
+ *  @param picker 相机控制
+ *  @param info   图片的相关信息
+ */
+- (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo{
+    
+    
+}
+
 
 #pragma mark - 输入回调
 
@@ -1151,21 +1179,21 @@ typedef enum : NSUInteger {
     NSTimeInterval animationDuration;
     [animationDurationValue getValue:&animationDuration];
     
-   
     
-//        if( self.tableViewArray.count > 0 ) {
-//            // 拉到最底
-//            NSIndexPath* indexPath = [NSIndexPath indexPathForRow:self.tableViewArray.count - 1 inSection:0];
-//            [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
-//        }
+    
+    //        if( self.tableViewArray.count > 0 ) {
+    //            // 拉到最底
+    //            NSIndexPath* indexPath = [NSIndexPath indexPathForRow:self.tableViewArray.count - 1 inSection:0];
+    //            [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+    //        }
     
     // Animate the resize of the text view's frame in sync with the keyboard's appearance.
     [self moveInputBarWithKeyboardHeight:keyboardRect.size.height withDuration:animationDuration];
-//    if( self.tableViewArray.count > 0 ) {
-//        // 拉到最底
-//        NSIndexPath* indexPath = [NSIndexPath indexPathForRow:self.tableViewArray.count - 1 inSection:0];
-//        [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
-//    }
+    //    if( self.tableViewArray.count > 0 ) {
+    //        // 拉到最底
+    //        NSIndexPath* indexPath = [NSIndexPath indexPathForRow:self.tableViewArray.count - 1 inSection:0];
+    //        [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+    //    }
 }
 
 
@@ -1179,7 +1207,7 @@ typedef enum : NSUInteger {
     NSTimeInterval animationDuration;
     [animationDurationValue getValue:&animationDuration];
     [self moveInputBarWithKeyboardHeight:0.0 withDuration:animationDuration];
-
+    
 }
 
 

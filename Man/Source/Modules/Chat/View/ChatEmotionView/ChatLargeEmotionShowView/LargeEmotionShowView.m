@@ -8,14 +8,17 @@
 
 #import "LargeEmotionShowView.h"
 
-@interface LargeEmotionShowView()
+@interface LargeEmotionShowView()<GIFImageViewDelegate>
 
 @end
 
 @implementation LargeEmotionShowView
 + (instancetype)largeEmotionShowView {
-    LargeEmotionShowView *largeEmotionshowView = [[NSBundle mainBundle] loadNibNamed:@"LargeEmotionShowView" owner:self options:nil].firstObject;
+    LargeEmotionShowView *largeEmotionshowView = [[NSBundle mainBundle] loadNibNamedWithFamily:@"LargeEmotionShowView" owner:self options:nil].firstObject;
     largeEmotionshowView.animationArray = nil;
+    
+    largeEmotionshowView.imageView.delegate = largeEmotionshowView;
+    
     return largeEmotionshowView;
 }
 
@@ -27,6 +30,7 @@
     [super layoutSubviews];
 }
 
+/*
 - (void)reset {
     self.defaultImage = [UIImage imageNamed:@"Chat-LargeEmotionDefault"];
     [self stop];
@@ -34,7 +38,7 @@
 
 - (void)play {
     [self.imageView setImage:self.defaultImage];
-    
+
     if (self.animationArray.count > 0 ) {
         self.loadingImageView.hidden = YES;
         
@@ -60,6 +64,57 @@
 - (void)stop {
     [self.imageView stopAnimating];
     [self.imageView setImage:self.defaultImage];
+}
+*/
+
+- (void)playGif:(NSString *)emotionPath
+{
+     [self getGif:self.animationArray path:emotionPath];
+}
+
+//根据数组播放GIF
+- (void)getGif:(NSArray * )imgs path:(NSString *)path
+{
+    [self.imageView stopGIF];
+    
+    UIImage * defaultImg = self.defaultImage?self.defaultImage:[UIImage imageNamed:@"Chat-LargeEmotionDefault"];
+    [self.imageView setImage:imgs.count > 0?[imgs firstObject]:defaultImg];
+
+    if (!imgs) {
+        return;
+    }
+    //生成完整GIF路径
+    path = [NSString stringWithFormat:@"%@.gif",path];
+    //判断本地是否有GIF，没有则创建
+    if ([self locationGIF:path].length > 0) {
+        self.imageView.gifPath = [self locationGIF:path];
+    }
+    else
+    {
+       self.loadingImageView.hidden = NO;
+       self.imageView.gifPath = [GIFImageView createGIFPath:path imageArray:imgs];
+    }
+    [self.imageView startGIF];
+}
+
+//获取本地GIF路径
+- (NSString *)locationGIF:(NSString *)gifPath
+{
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    if ([fileManager fileExistsAtPath:gifPath]) {
+        return gifPath;
+    }
+    else {
+        return @"";
+    }
+    return @"";
+}
+
+//gif动画开始播放
+- (void)gifWillPlay
+{
+    //隐藏load状态
+   self.loadingImageView.hidden = YES;
 }
 
 @end

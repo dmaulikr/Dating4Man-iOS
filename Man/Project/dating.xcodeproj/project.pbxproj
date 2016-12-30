@@ -22,6 +22,8 @@
 		5062594A1DB5D51F0022A879 /* JWURLProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = 506259471DB5D51F0022A879 /* JWURLProtocol.m */; };
 		5062594B1DB610BE0022A879 /* ChatEmotionListView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5062594D1DB610BE0022A879 /* ChatEmotionListView.xib */; };
 		506259521DB61FC40022A879 /* MainViewController.strings in Resources */ = {isa = PBXBuildFile; fileRef = 506259501DB61FC40022A879 /* MainViewController.strings */; };
+		50645E711E026A9400E3F676 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50645E701E026A9400E3F676 /* ImageIO.framework */; };
+		50645E741E026ABE00E3F676 /* GIFImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 50645E731E026ABE00E3F676 /* GIFImageView.m */; };
 		5068FC071D013A1000551A36 /* EmotionList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5068FC061D013A1000551A36 /* EmotionList.plist */; };
 		50696C261DADCE8D0052210A /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50696C241DADCE8D0052210A /* LoginViewController.xib */; };
 		5069B3CF1C705F23006ABC92 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5069B3CE1C705F23006ABC92 /* main.m */; };
@@ -32,6 +34,15 @@
 		5069B4021C706DAB006ABC92 /* libCommonWidget.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5069B3FF1C706D9C006ABC92 /* libCommonWidget.a */; };
 		5069B4181C706FB4006ABC92 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5069B4161C706FB4006ABC92 /* InfoPlist.strings */; };
 		5069B42D1C707A26006ABC92 /* libUIWidget.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5069B42A1C707A17006ABC92 /* libUIWidget.a */; };
+		50C7193C1E0A1441005E9D04 /* LadyWaterfallViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50C7193A1E0A1441005E9D04 /* LadyWaterfallViewController.m */; };
+		50C7193D1E0A1441005E9D04 /* LadyWaterfallViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50C7193B1E0A1441005E9D04 /* LadyWaterfallViewController.xib */; };
+		50C719461E0A144C005E9D04 /* LadyListNotificationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 50C7193F1E0A144C005E9D04 /* LadyListNotificationView.m */; };
+		50C719471E0A144C005E9D04 /* LadyListNotificationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50C719401E0A144C005E9D04 /* LadyListNotificationView.xib */; };
+		50C719481E0A144C005E9D04 /* LadySearthView.m in Sources */ = {isa = PBXBuildFile; fileRef = 50C719421E0A144C005E9D04 /* LadySearthView.m */; };
+		50C719491E0A144C005E9D04 /* LadySearthView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50C719431E0A144C005E9D04 /* LadySearthView.xib */; };
+		50C7194A1E0A144D005E9D04 /* LadyWaterfallView.m in Sources */ = {isa = PBXBuildFile; fileRef = 50C719451E0A144C005E9D04 /* LadyWaterfallView.m */; };
+		50C7194E1E0A1459005E9D04 /* LadyCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 50C7194C1E0A1459005E9D04 /* LadyCollectionViewCell.m */; };
+		50C7194F1E0A1459005E9D04 /* LadyCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50C7194D1E0A1459005E9D04 /* LadyCollectionViewCell.xib */; };
 		50D054861DB71F0D009D2249 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50D054841DB71EC1009D2249 /* StoreKit.framework */; };
 		50D0548C1DB74466009D2249 /* URLHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 50D0548B1DB74466009D2249 /* URLHandler.m */; };
 		50D704B91C72BC05008D1A71 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50D704B81C72BC05008D1A71 /* QuartzCore.framework */; };
@@ -43,6 +54,17 @@
 		50E8E6A11D2BA07A006D1B94 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5069B3D61C705F23006ABC92 /* Main.storyboard */; };
 		50EAD2481D1777E1008B8F76 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 50EAD2461D1777E1008B8F76 /* Localizable.strings */; };
 		50EAD29D1D17E481008B8F76 /* UIWidgetBundle.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 50EAD2981D17DF4B008B8F76 /* UIWidgetBundle.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		521838D71DF9108900777918 /* ChatSmallEmotionLadyTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 521838D21DF9108900777918 /* ChatSmallEmotionLadyTableViewCell.m */; };
+		521838D81DF9108900777918 /* ChatSmallEmotionLadyTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 521838D31DF9108900777918 /* ChatSmallEmotionLadyTableViewCell.xib */; };
+		521838D91DF9108900777918 /* ChatSmallEmotionSelfTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 521838D51DF9108900777918 /* ChatSmallEmotionSelfTableViewCell.m */; };
+		521838DA1DF9108900777918 /* ChatSmallEmotionSelfTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 521838D61DF9108900777918 /* ChatSmallEmotionSelfTableViewCell.xib */; };
+		521838E41DF9115800777918 /* ChatNomalSmallEmotionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 521838DC1DF9115800777918 /* ChatNomalSmallEmotionView.m */; };
+		521838E51DF9115800777918 /* ChatNomalSmallEmotionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 521838DD1DF9115800777918 /* ChatNomalSmallEmotionView.xib */; };
+		521838E61DF9115800777918 /* ChatSmallEmotionCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 521838DF1DF9115800777918 /* ChatSmallEmotionCollectionViewCell.m */; };
+		521838E71DF9115800777918 /* ChatSmallEmotionCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 521838E01DF9115800777918 /* ChatSmallEmotionCollectionViewCell.xib */; };
+		521838E81DF9115800777918 /* ChatSmallEmotionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 521838E21DF9115800777918 /* ChatSmallEmotionView.m */; };
+		521838E91DF9115800777918 /* ChatSmallEmotionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 521838E31DF9115800777918 /* ChatSmallEmotionView.xib */; };
+		521838EC1DF911A900777918 /* ChatSmallGradeEmotion.m in Sources */ = {isa = PBXBuildFile; fileRef = 521838EB1DF911A900777918 /* ChatSmallGradeEmotion.m */; };
 		524ED2151D5C146B001F22D0 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 524ED2141D5C146B001F22D0 /* AVFoundation.framework */; };
 		5258C6401DAB355F00BF5561 /* AnalyticsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5258C4AF1DAB355F00BF5561 /* AnalyticsManager.m */; };
 		5258C6411DAB355F00BF5561 /* GoogleAnalyticsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5258C4B11DAB355F00BF5561 /* GoogleAnalyticsViewController.m */; };
@@ -229,6 +251,11 @@
 		5258C7071DAB355F00BF5561 /* UpdateProfileRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5258C63B1DAB355F00BF5561 /* UpdateProfileRequest.m */; };
 		5258C7081DAB355F00BF5561 /* UploadCrashLogRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5258C63D1DAB355F00BF5561 /* UploadCrashLogRequest.m */; };
 		5258C7091DAB355F00BF5561 /* UploadHeaderPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = 5258C63F1DAB355F00BF5561 /* UploadHeaderPhoto.m */; };
+		526C9A231DEFFA3E00B321E0 /* LadyDetailMsgManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 526C9A221DEFFA3E00B321E0 /* LadyDetailMsgManager.m */; };
+		528F96D11DD421E50083A1E8 /* LadyDetailCheckPhtoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 528F96CF1DD421E50083A1E8 /* LadyDetailCheckPhtoViewController.m */; };
+		528F96D21DD421E50083A1E8 /* LadyDetailCheckPhtoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 528F96D01DD421E50083A1E8 /* LadyDetailCheckPhtoViewController.xib */; };
+		52A50EF71DD07C7800C7B1F1 /* LadyDetailLockPhotoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 52A50EF61DD07C7800C7B1F1 /* LadyDetailLockPhotoView.m */; };
+		52A50EF91DD07C8200C7B1F1 /* LadyDetailLockPhotoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52A50EF81DD07C8200C7B1F1 /* LadyDetailLockPhotoView.xib */; };
 		80C6C0AFCC682233881C7AAA /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EC79040740288AC65F6AF51F /* libPods.a */; };
 		D105C7141D23AA420060BE6C /* AnalyticsScreenName.strings in Resources */ = {isa = PBXBuildFile; fileRef = D105C7131D23AA420060BE6C /* AnalyticsScreenName.strings */; };
 /* End PBXBuildFile section */
@@ -329,6 +356,9 @@
 		5062594C1DB610BE0022A879 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/ChatEmotionListView.xib; sourceTree = "<group>"; };
 		5062594F1DB610C00022A879 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/ChatEmotionListView.strings; sourceTree = "<group>"; };
 		506259511DB61FC40022A879 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/MainViewController.strings; sourceTree = "<group>"; };
+		50645E701E026A9400E3F676 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
+		50645E721E026ABE00E3F676 /* GIFImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GIFImageView.h; sourceTree = "<group>"; };
+		50645E731E026ABE00E3F676 /* GIFImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GIFImageView.m; sourceTree = "<group>"; };
 		5068FC061D013A1000551A36 /* EmotionList.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = EmotionList.plist; sourceTree = "<group>"; };
 		50696C1C1DADCD950052210A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/ContactListViewController.strings; sourceTree = "<group>"; };
 		50696C1D1DADCDD30052210A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/LadyListViewController.strings; sourceTree = "<group>"; };
@@ -356,6 +386,20 @@
 		5069B4171C706FB4006ABC92 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		5069B4251C707A17006ABC92 /* UIWidget.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = UIWidget.xcodeproj; path = ../../Modules/UIWidget/UIWidget.xcodeproj; sourceTree = "<group>"; };
 		50B54D991DB4795800A6CB63 /* dating.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = dating.entitlements; sourceTree = "<group>"; };
+		50C719391E0A1441005E9D04 /* LadyWaterfallViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LadyWaterfallViewController.h; sourceTree = "<group>"; };
+		50C7193A1E0A1441005E9D04 /* LadyWaterfallViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LadyWaterfallViewController.m; sourceTree = "<group>"; };
+		50C7193B1E0A1441005E9D04 /* LadyWaterfallViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LadyWaterfallViewController.xib; sourceTree = "<group>"; };
+		50C7193E1E0A144C005E9D04 /* LadyListNotificationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LadyListNotificationView.h; sourceTree = "<group>"; };
+		50C7193F1E0A144C005E9D04 /* LadyListNotificationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LadyListNotificationView.m; sourceTree = "<group>"; };
+		50C719401E0A144C005E9D04 /* LadyListNotificationView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LadyListNotificationView.xib; sourceTree = "<group>"; };
+		50C719411E0A144C005E9D04 /* LadySearthView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LadySearthView.h; sourceTree = "<group>"; };
+		50C719421E0A144C005E9D04 /* LadySearthView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LadySearthView.m; sourceTree = "<group>"; };
+		50C719431E0A144C005E9D04 /* LadySearthView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LadySearthView.xib; sourceTree = "<group>"; };
+		50C719441E0A144C005E9D04 /* LadyWaterfallView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LadyWaterfallView.h; sourceTree = "<group>"; };
+		50C719451E0A144C005E9D04 /* LadyWaterfallView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LadyWaterfallView.m; sourceTree = "<group>"; };
+		50C7194B1E0A1459005E9D04 /* LadyCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LadyCollectionViewCell.h; sourceTree = "<group>"; };
+		50C7194C1E0A1459005E9D04 /* LadyCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LadyCollectionViewCell.m; sourceTree = "<group>"; };
+		50C7194D1E0A1459005E9D04 /* LadyCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LadyCollectionViewCell.xib; sourceTree = "<group>"; };
 		50D054841DB71EC1009D2249 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		50D0548A1DB74466009D2249 /* URLHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = URLHandler.h; sourceTree = "<group>"; };
 		50D0548B1DB74466009D2249 /* URLHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = URLHandler.m; sourceTree = "<group>"; };
@@ -367,6 +411,23 @@
 		50E72D061DB8527A002E9D75 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/EMFViewController.xib; sourceTree = "<group>"; };
 		50E72D081DB8528C002E9D75 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/EMFViewController.strings; sourceTree = "<group>"; };
 		50EAD2471D1777E1008B8F76 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
+		521838D11DF9108900777918 /* ChatSmallEmotionLadyTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatSmallEmotionLadyTableViewCell.h; sourceTree = "<group>"; };
+		521838D21DF9108900777918 /* ChatSmallEmotionLadyTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatSmallEmotionLadyTableViewCell.m; sourceTree = "<group>"; };
+		521838D31DF9108900777918 /* ChatSmallEmotionLadyTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChatSmallEmotionLadyTableViewCell.xib; sourceTree = "<group>"; };
+		521838D41DF9108900777918 /* ChatSmallEmotionSelfTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatSmallEmotionSelfTableViewCell.h; sourceTree = "<group>"; };
+		521838D51DF9108900777918 /* ChatSmallEmotionSelfTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatSmallEmotionSelfTableViewCell.m; sourceTree = "<group>"; };
+		521838D61DF9108900777918 /* ChatSmallEmotionSelfTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChatSmallEmotionSelfTableViewCell.xib; sourceTree = "<group>"; };
+		521838DB1DF9115800777918 /* ChatNomalSmallEmotionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatNomalSmallEmotionView.h; sourceTree = "<group>"; };
+		521838DC1DF9115800777918 /* ChatNomalSmallEmotionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatNomalSmallEmotionView.m; sourceTree = "<group>"; };
+		521838DD1DF9115800777918 /* ChatNomalSmallEmotionView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChatNomalSmallEmotionView.xib; sourceTree = "<group>"; };
+		521838DE1DF9115800777918 /* ChatSmallEmotionCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatSmallEmotionCollectionViewCell.h; sourceTree = "<group>"; };
+		521838DF1DF9115800777918 /* ChatSmallEmotionCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatSmallEmotionCollectionViewCell.m; sourceTree = "<group>"; };
+		521838E01DF9115800777918 /* ChatSmallEmotionCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChatSmallEmotionCollectionViewCell.xib; sourceTree = "<group>"; };
+		521838E11DF9115800777918 /* ChatSmallEmotionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatSmallEmotionView.h; sourceTree = "<group>"; };
+		521838E21DF9115800777918 /* ChatSmallEmotionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatSmallEmotionView.m; sourceTree = "<group>"; };
+		521838E31DF9115800777918 /* ChatSmallEmotionView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChatSmallEmotionView.xib; sourceTree = "<group>"; };
+		521838EA1DF911A900777918 /* ChatSmallGradeEmotion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatSmallGradeEmotion.h; sourceTree = "<group>"; };
+		521838EB1DF911A900777918 /* ChatSmallGradeEmotion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatSmallGradeEmotion.m; sourceTree = "<group>"; };
 		524ED2141D5C146B001F22D0 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		5258C4AE1DAB355F00BF5561 /* AnalyticsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnalyticsManager.h; sourceTree = "<group>"; };
 		5258C4AF1DAB355F00BF5561 /* AnalyticsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnalyticsManager.m; sourceTree = "<group>"; };
@@ -697,6 +758,14 @@
 		5258C63D1DAB355F00BF5561 /* UploadCrashLogRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UploadCrashLogRequest.m; sourceTree = "<group>"; };
 		5258C63E1DAB355F00BF5561 /* UploadHeaderPhoto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UploadHeaderPhoto.h; sourceTree = "<group>"; };
 		5258C63F1DAB355F00BF5561 /* UploadHeaderPhoto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UploadHeaderPhoto.m; sourceTree = "<group>"; };
+		526C9A211DEFFA3E00B321E0 /* LadyDetailMsgManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LadyDetailMsgManager.h; sourceTree = "<group>"; };
+		526C9A221DEFFA3E00B321E0 /* LadyDetailMsgManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LadyDetailMsgManager.m; sourceTree = "<group>"; };
+		528F96CE1DD421E50083A1E8 /* LadyDetailCheckPhtoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LadyDetailCheckPhtoViewController.h; sourceTree = "<group>"; };
+		528F96CF1DD421E50083A1E8 /* LadyDetailCheckPhtoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LadyDetailCheckPhtoViewController.m; sourceTree = "<group>"; };
+		528F96D01DD421E50083A1E8 /* LadyDetailCheckPhtoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LadyDetailCheckPhtoViewController.xib; sourceTree = "<group>"; };
+		52A50EF51DD07C7800C7B1F1 /* LadyDetailLockPhotoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LadyDetailLockPhotoView.h; sourceTree = "<group>"; };
+		52A50EF61DD07C7800C7B1F1 /* LadyDetailLockPhotoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LadyDetailLockPhotoView.m; sourceTree = "<group>"; };
+		52A50EF81DD07C8200C7B1F1 /* LadyDetailLockPhotoView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LadyDetailLockPhotoView.xib; sourceTree = "<group>"; };
 		B0B03A7CF4C967DFCBFBCEDD /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		D105C7131D23AA420060BE6C /* AnalyticsScreenName.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = AnalyticsScreenName.strings; sourceTree = "<group>"; };
 		E76EA58EDE6EC7CD0772FA3F /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
@@ -708,6 +777,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				50645E711E026A9400E3F676 /* ImageIO.framework in Frameworks */,
 				524ED2151D5C146B001F22D0 /* AVFoundation.framework in Frameworks */,
 				504CDB861C7FEACF00DBB429 /* libCommon-C-Library.a in Frameworks */,
 				501B16911C746D440023865B /* MobileCoreServices.framework in Frameworks */,
@@ -734,6 +804,7 @@
 		3C18718515A645E61DFB3BC3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				50645E701E026A9400E3F676 /* ImageIO.framework */,
 				50D054841DB71EC1009D2249 /* StoreKit.framework */,
 				524ED2141D5C146B001F22D0 /* AVFoundation.framework */,
 				50D704CC1C72BD80008D1A71 /* CoreText.framework */,
@@ -990,6 +1061,9 @@
 				5258C50E1DAB355F00BF5561 /* LadyListViewController.h */,
 				5258C50F1DAB355F00BF5561 /* LadyListViewController.m */,
 				5258C5001DAB355F00BF5561 /* LadyListViewController.xib */,
+				50C719391E0A1441005E9D04 /* LadyWaterfallViewController.h */,
+				50C7193A1E0A1441005E9D04 /* LadyWaterfallViewController.m */,
+				50C7193B1E0A1441005E9D04 /* LadyWaterfallViewController.xib */,
 				5258C5101DAB355F00BF5561 /* MainViewController.h */,
 				5258C5111DAB355F00BF5561 /* MainViewController.m */,
 				506259501DB61FC40022A879 /* MainViewController.strings */,
@@ -1007,8 +1081,16 @@
 				5258C5151DAB355F00BF5561 /* Cell */,
 				5258C51C1DAB355F00BF5561 /* ContactListTableView.h */,
 				5258C51D1DAB355F00BF5561 /* ContactListTableView.m */,
+				50C7193E1E0A144C005E9D04 /* LadyListNotificationView.h */,
+				50C7193F1E0A144C005E9D04 /* LadyListNotificationView.m */,
+				50C719401E0A144C005E9D04 /* LadyListNotificationView.xib */,
 				5258C51E1DAB355F00BF5561 /* LadyListTableView.h */,
 				5258C51F1DAB355F00BF5561 /* LadyListTableView.m */,
+				50C719411E0A144C005E9D04 /* LadySearthView.h */,
+				50C719421E0A144C005E9D04 /* LadySearthView.m */,
+				50C719431E0A144C005E9D04 /* LadySearthView.xib */,
+				50C719441E0A144C005E9D04 /* LadyWaterfallView.h */,
+				50C719451E0A144C005E9D04 /* LadyWaterfallView.m */,
 				5258C5201DAB355F00BF5561 /* MyProfileTopTableViewCell.h */,
 				5258C5211DAB355F00BF5561 /* MyProfileTopTableViewCell.m */,
 				5258C5221DAB355F00BF5561 /* MyProfileTopTableViewCell.xib */,
@@ -1022,6 +1104,9 @@
 				5258C5161DAB355F00BF5561 /* ContactListTableViewCell.h */,
 				5258C5171DAB355F00BF5561 /* ContactListTableViewCell.m */,
 				5258C5181DAB355F00BF5561 /* ContactListTableViewCell.xib */,
+				50C7194B1E0A1459005E9D04 /* LadyCollectionViewCell.h */,
+				50C7194C1E0A1459005E9D04 /* LadyCollectionViewCell.m */,
+				50C7194D1E0A1459005E9D04 /* LadyCollectionViewCell.xib */,
 				5258C5191DAB355F00BF5561 /* LadyListTableViewCell.h */,
 				5258C51A1DAB355F00BF5561 /* LadyListTableViewCell.m */,
 				5258C51B1DAB355F00BF5561 /* LadyListTableViewCell.xib */,
@@ -1155,6 +1240,8 @@
 				5000C6231DAF1FDC004582CF /* ChatHighGradeEmotion.m */,
 				5258C5861DAB355F00BF5561 /* ChatPhoneAlbumPhoto.h */,
 				5258C5871DAB355F00BF5561 /* ChatPhoneAlbumPhoto.m */,
+				521838EA1DF911A900777918 /* ChatSmallGradeEmotion.h */,
+				521838EB1DF911A900777918 /* ChatSmallGradeEmotion.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1206,6 +1293,12 @@
 				5258C5A51DAB355F00BF5561 /* ChatWarningTipsTableViewCell.h */,
 				5258C5A61DAB355F00BF5561 /* ChatWarningTipsTableViewCell.m */,
 				5258C5A71DAB355F00BF5561 /* ChatWarningTipsTableViewCell.xib */,
+				521838D11DF9108900777918 /* ChatSmallEmotionLadyTableViewCell.h */,
+				521838D21DF9108900777918 /* ChatSmallEmotionLadyTableViewCell.m */,
+				521838D31DF9108900777918 /* ChatSmallEmotionLadyTableViewCell.xib */,
+				521838D41DF9108900777918 /* ChatSmallEmotionSelfTableViewCell.h */,
+				521838D51DF9108900777918 /* ChatSmallEmotionSelfTableViewCell.m */,
+				521838D61DF9108900777918 /* ChatSmallEmotionSelfTableViewCell.xib */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -1232,6 +1325,15 @@
 				5258C5B31DAB355F00BF5561 /* ChatEmotionListView.h */,
 				5258C5B41DAB355F00BF5561 /* ChatEmotionListView.m */,
 				5062594D1DB610BE0022A879 /* ChatEmotionListView.xib */,
+				521838DB1DF9115800777918 /* ChatNomalSmallEmotionView.h */,
+				521838DC1DF9115800777918 /* ChatNomalSmallEmotionView.m */,
+				521838DD1DF9115800777918 /* ChatNomalSmallEmotionView.xib */,
+				521838DE1DF9115800777918 /* ChatSmallEmotionCollectionViewCell.h */,
+				521838DF1DF9115800777918 /* ChatSmallEmotionCollectionViewCell.m */,
+				521838E01DF9115800777918 /* ChatSmallEmotionCollectionViewCell.xib */,
+				521838E11DF9115800777918 /* ChatSmallEmotionView.h */,
+				521838E21DF9115800777918 /* ChatSmallEmotionView.m */,
+				521838E31DF9115800777918 /* ChatSmallEmotionView.xib */,
 				5258C5B91DAB355F00BF5561 /* ChatLargeEmotionShowView */,
 			);
 			path = ChatEmotionView;
@@ -1240,6 +1342,8 @@
 		5258C5B91DAB355F00BF5561 /* ChatLargeEmotionShowView */ = {
 			isa = PBXGroup;
 			children = (
+				50645E721E026ABE00E3F676 /* GIFImageView.h */,
+				50645E731E026ABE00E3F676 /* GIFImageView.m */,
 				5258C5BA1DAB355F00BF5561 /* CoverView.h */,
 				5258C5BB1DAB355F00BF5561 /* CoverView.m */,
 				5258C5BC1DAB355F00BF5561 /* LargeEmotionShowView.h */,
@@ -1294,6 +1398,11 @@
 				5258C5DC1DAB355F00BF5561 /* LadyDetailViewController.m */,
 				5258C5D41DAB355F00BF5561 /* LadyDetailViewController.xib */,
 				5258C5DD1DAB355F00BF5561 /* View */,
+				528F96CE1DD421E50083A1E8 /* LadyDetailCheckPhtoViewController.h */,
+				528F96CF1DD421E50083A1E8 /* LadyDetailCheckPhtoViewController.m */,
+				528F96D01DD421E50083A1E8 /* LadyDetailCheckPhtoViewController.xib */,
+				526C9A211DEFFA3E00B321E0 /* LadyDetailMsgManager.h */,
+				526C9A221DEFFA3E00B321E0 /* LadyDetailMsgManager.m */,
 			);
 			path = Lady;
 			sourceTree = "<group>";
@@ -1302,6 +1411,9 @@
 			isa = PBXGroup;
 			children = (
 				5258C5DE1DAB355F00BF5561 /* Cell */,
+				52A50EF51DD07C7800C7B1F1 /* LadyDetailLockPhotoView.h */,
+				52A50EF61DD07C7800C7B1F1 /* LadyDetailLockPhotoView.m */,
+				52A50EF81DD07C8200C7B1F1 /* LadyDetailLockPhotoView.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1575,6 +1687,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				5258C6631DAB355F00BF5561 /* CommonTitleDetailTableViewCell.xib in Resources */,
+				50C719471E0A144C005E9D04 /* LadyListNotificationView.xib in Resources */,
+				50C7193D1E0A1441005E9D04 /* LadyWaterfallViewController.xib in Resources */,
 				5258C6DA1DAB355F00BF5561 /* LadyDetailPhototViewController.xib in Resources */,
 				506259521DB61FC40022A879 /* MainViewController.strings in Resources */,
 				5258C6A11DAB355F00BF5561 /* ChatViewFakeController.xib in Resources */,
@@ -1596,15 +1710,20 @@
 				5258C6F21DAB355F00BF5561 /* MyProfileViewController.xib in Resources */,
 				5258C6AD1DAB355F00BF5561 /* ChatCouponTableViewCell.xib in Resources */,
 				5258C66B1DAB355F00BF5561 /* SettingViewController.xib in Resources */,
+				521838E71DF9115800777918 /* ChatSmallEmotionCollectionViewCell.xib in Resources */,
 				5258C6BD1DAB355F00BF5561 /* ChatTextSelfTableViewCell.xib in Resources */,
 				5258C6B51DAB355F00BF5561 /* ChatPhotoLadyTableViewCell.xib in Resources */,
 				5069B4181C706FB4006ABC92 /* InfoPlist.strings in Resources */,
 				5258C6F11DAB355F00BF5561 /* AppSettingContentViewController.xib in Resources */,
+				50C719491E0A144C005E9D04 /* LadySearthView.xib in Resources */,
 				5258C6C41DAB355F00BF5561 /* ChatEmotionChooseView.xib in Resources */,
 				5258C6C11DAB355F00BF5561 /* ChatEmotionChooseCollectionViewCell.xib in Resources */,
 				504EF28C1DB0C6D8003F722B /* ChatEmotionKeyboardView.xib in Resources */,
+				521838DA1DF9108900777918 /* ChatSmallEmotionSelfTableViewCell.xib in Resources */,
+				521838D81DF9108900777918 /* ChatSmallEmotionLadyTableViewCell.xib in Resources */,
 				5258C6751DAB355F00BF5561 /* ContactListTableViewCell.xib in Resources */,
 				50408ECC1CFD6C300076951B /* country_without_code.xml in Resources */,
+				521838E91DF9115800777918 /* ChatSmallEmotionView.xib in Resources */,
 				5258C6771DAB355F00BF5561 /* LadyListTableViewCell.xib in Resources */,
 				5258C65D1DAB355F00BF5561 /* CommonSettingTableViewCell.xib in Resources */,
 				5069B3DA1C705F23006ABC92 /* Assets.xcassets in Resources */,
@@ -1613,6 +1732,7 @@
 				5258C6591DAB355F00BF5561 /* CommonLeftTitleTableViewCell.xib in Resources */,
 				D105C7141D23AA420060BE6C /* AnalyticsScreenName.strings in Resources */,
 				5068FC071D013A1000551A36 /* EmotionList.plist in Resources */,
+				52A50EF91DD07C8200C7B1F1 /* LadyDetailLockPhotoView.xib in Resources */,
 				5258C6B11DAB355F00BF5561 /* ChatLargeEmotionSelfTableViewCell.xib in Resources */,
 				5258C6D01DAB355F00BF5561 /* ChatPhotoView.xib in Resources */,
 				5258C65F1DAB355F00BF5561 /* CommonSpecialTitleTableViewCell.xib in Resources */,
@@ -1623,16 +1743,19 @@
 				50E72D071DB8527A002E9D75 /* EMFViewController.xib in Resources */,
 				5258C6E61DAB355F00BF5561 /* RegisterSecondStepViewController.xib in Resources */,
 				5258C6DD1DAB355F00BF5561 /* LadyDetailNameTableViewCell.xib in Resources */,
+				521838E51DF9115800777918 /* ChatNomalSmallEmotionView.xib in Resources */,
 				5258C6AF1DAB355F00BF5561 /* ChatLargeEmotionLadyTableViewCell.xib in Resources */,
 				5258C6D71DAB355F00BF5561 /* LadyDetailViewController.xib in Resources */,
 				5258C65B1DAB355F00BF5561 /* CommonPageViewTableViewCell.xib in Resources */,
 				5062594B1DB610BE0022A879 /* ChatEmotionListView.xib in Resources */,
+				50C7194F1E0A1459005E9D04 /* LadyCollectionViewCell.xib in Resources */,
 				5258C6511DAB355F00BF5561 /* CommonContentTableViewCell.xib in Resources */,
 				5258C67B1DAB355F00BF5561 /* MyProfileTopTableViewCell.xib in Resources */,
 				5258C6E71DAB355F00BF5561 /* RegisterViewController.xib in Resources */,
 				5258C6CE1DAB355F00BF5561 /* ChatPhotoCollectionViewCell.xib in Resources */,
 				5258C6BF1DAB355F00BF5561 /* ChatWarningTipsTableViewCell.xib in Resources */,
 				5258C6B71DAB355F00BF5561 /* ChatPhotoSelfTableViewCell.xib in Resources */,
+				528F96D21DD421E50083A1E8 /* LadyDetailCheckPhtoViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1701,11 +1824,13 @@
 				5258C6FD1DAB355F00BF5561 /* GetPersonProfileRequest.m in Sources */,
 				5258C64D1DAB355F00BF5561 /* ServerManager.m in Sources */,
 				5258C7041DAB355F00BF5561 /* SessionRequest.m in Sources */,
+				50C7194E1E0A1459005E9D04 /* LadyCollectionViewCell.m in Sources */,
 				5258C6791DAB355F00BF5561 /* LadyListTableView.m in Sources */,
 				5258C67D1DAB355F00BF5561 /* Contact.m in Sources */,
 				5258C6EF1DAB355F00BF5561 /* AppSettingContentViewController.m in Sources */,
 				5258C6D11DAB355F00BF5561 /* ChatPhotoViewLayout.m in Sources */,
 				5258C6B61DAB355F00BF5561 /* ChatPhotoSelfTableViewCell.m in Sources */,
+				521838D91DF9108900777918 /* ChatSmallEmotionSelfTableViewCell.m in Sources */,
 				5258C69E1DAB355F00BF5561 /* VideoItemObject.m in Sources */,
 				5258C6AA1DAB355F00BF5561 /* ChatEmotion.m in Sources */,
 				5258C68B1DAB355F00BF5561 /* LIveChatSendPhotoItem.m in Sources */,
@@ -1713,6 +1838,7 @@
 				5258C64B1DAB355F00BF5561 /* Reachability.m in Sources */,
 				5258C6781DAB355F00BF5561 /* ContactListTableView.m in Sources */,
 				5258C6BA1DAB355F00BF5561 /* ChatTextLadyTableViewCell.m in Sources */,
+				50C719481E0A144C005E9D04 /* LadySearthView.m in Sources */,
 				5258C6901DAB355F00BF5561 /* LiveChatWarningItemObject.m in Sources */,
 				5258C6EA1DAB355F00BF5561 /* RegisterSecondStepViewController.m in Sources */,
 				5258C64F1DAB355F00BF5561 /* UpdateAppManager.m in Sources */,
@@ -1721,6 +1847,7 @@
 				5258C6EC1DAB355F00BF5561 /* RegisterHeaderViewCell.m in Sources */,
 				5258C6CA1DAB355F00BF5561 /* CoverView.m in Sources */,
 				5258C6921DAB355F00BF5561 /* MagicIconItemObject.m in Sources */,
+				526C9A231DEFFA3E00B321E0 /* LadyDetailMsgManager.m in Sources */,
 				5258C6EB1DAB355F00BF5561 /* RegisterViewController.m in Sources */,
 				5258C6E31DAB355F00BF5561 /* AppStorePayHandler.m in Sources */,
 				5258C6F91DAB355F00BF5561 /* GetCountRequest.m in Sources */,
@@ -1765,11 +1892,14 @@
 				5000C6241DAF1FDC004582CF /* ChatHighGradeEmotion.m in Sources */,
 				5258C67E1DAB355F00BF5561 /* EmotionItemObject.m in Sources */,
 				5258C67A1DAB355F00BF5561 /* MyProfileTopTableViewCell.m in Sources */,
+				521838E61DF9115800777918 /* ChatSmallEmotionCollectionViewCell.m in Sources */,
 				5258C6AB1DAB355F00BF5561 /* ChatPhoneAlbumPhoto.m in Sources */,
 				5258C6971DAB355F00BF5561 /* PersonalProfile.m in Sources */,
+				50C7193C1E0A1441005E9D04 /* LadyWaterfallViewController.m in Sources */,
 				5258C6F61DAB355F00BF5561 /* MyProfileViewController.m in Sources */,
 				5258C6601DAB355F00BF5561 /* CommonTextFieldTableViewCell.m in Sources */,
 				5258C6461DAB355F00BF5561 /* CrashLogManager.m in Sources */,
+				521838E41DF9115800777918 /* ChatNomalSmallEmotionView.m in Sources */,
 				5258C6491DAB355F00BF5561 /* MonthFeeManager.m in Sources */,
 				5258C6661DAB355F00BF5561 /* AppSettingGroup.m in Sources */,
 				5258C6451DAB355F00BF5561 /* ConfigManager.m in Sources */,
@@ -1777,11 +1907,14 @@
 				5258C64E1DAB355F00BF5561 /* ServerViewControllerManager.m in Sources */,
 				5258C7081DAB355F00BF5561 /* UploadCrashLogRequest.m in Sources */,
 				5258C6E51DAB355F00BF5561 /* PaymentManager.m in Sources */,
+				521838E81DF9115800777918 /* ChatSmallEmotionView.m in Sources */,
 				5258C7051DAB355F00BF5561 /* SessionRequestManager.m in Sources */,
 				5258C6941DAB355F00BF5561 /* Message.m in Sources */,
 				5258C69A1DAB355F00BF5561 /* RegisterItemObject.m in Sources */,
+				521838D71DF9108900777918 /* ChatSmallEmotionLadyTableViewCell.m in Sources */,
 				5258C6991DAB355F00BF5561 /* QueryLadyListItemObject.m in Sources */,
 				5258C6801DAB355F00BF5561 /* EmotionTypeItemObject.m in Sources */,
+				521838EC1DF911A900777918 /* ChatSmallGradeEmotion.m in Sources */,
 				5258C6931DAB355F00BF5561 /* MagicIconTypeItemObject.m in Sources */,
 				5258C6811DAB355F00BF5561 /* LadyDetailItemObject.m in Sources */,
 				5258C6B21DAB355F00BF5561 /* ChatMoonFeeTableViewCell.m in Sources */,
@@ -1791,6 +1924,7 @@
 				5258C7091DAB355F00BF5561 /* UploadHeaderPhoto.m in Sources */,
 				5258C6481DAB355F00BF5561 /* ImageViewLoader.m in Sources */,
 				5258C65C1DAB355F00BF5561 /* CommonSettingTableViewCell.m in Sources */,
+				50645E741E026ABE00E3F676 /* GIFImageView.m in Sources */,
 				5258C6EE1DAB355F00BF5561 /* AddCreditsViewController.m in Sources */,
 				5258C6881DAB355F00BF5561 /* LiveChatMsgItemObject.m in Sources */,
 				5258C7021DAB355F00BF5561 /* RemoveFavouriteLadyRequest.m in Sources */,
@@ -1812,6 +1946,7 @@
 				5062593E1DB5D22B0022A879 /* GetEMFCountRequest.m in Sources */,
 				5062594A1DB5D51F0022A879 /* JWURLProtocol.m in Sources */,
 				5258C6E41DAB355F00BF5561 /* PaymentHandler.m in Sources */,
+				528F96D11DD421E50083A1E8 /* LadyDetailCheckPhtoViewController.m in Sources */,
 				5258C6D61DAB355F00BF5561 /* ContactManager.m in Sources */,
 				5258C6411DAB355F00BF5561 /* GoogleAnalyticsViewController.m in Sources */,
 				5258C66C1DAB355F00BF5561 /* ContactListViewController.m in Sources */,
@@ -1832,12 +1967,15 @@
 				5258C68A1DAB355F00BF5561 /* LiveChatMsgProcResultObject.m in Sources */,
 				5258C6E01DAB355F00BF5561 /* LoginManager.m in Sources */,
 				5258C6AC1DAB355F00BF5561 /* ChatCouponTableViewCell.m in Sources */,
+				50C719461E0A144C005E9D04 /* LadyListNotificationView.m in Sources */,
+				50C7194A1E0A144D005E9D04 /* LadyWaterfallView.m in Sources */,
 				5258C7071DAB355F00BF5561 /* UpdateProfileRequest.m in Sources */,
 				5258C6871DAB355F00BF5561 /* LiveChatMagicIconItemObject.m in Sources */,
 				5258C6F81DAB355F00BF5561 /* CheckPaymentRequest.m in Sources */,
 				5258C6711DAB355F00BF5561 /* LadyListViewController.m in Sources */,
 				5258C65A1DAB355F00BF5561 /* CommonPageViewTableViewCell.m in Sources */,
 				5258C6851DAB355F00BF5561 /* LiveChatEmotionItemObject.m in Sources */,
+				52A50EF71DD07C7800C7B1F1 /* LadyDetailLockPhotoView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2190,6 +2328,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = net.qdating.qdating;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = 1;
 				UI_WIDGET_ROOT = "${MODULES_ROOT}/UIWidget/UIWidget";
 				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../Source/Header\"";
 				VALID_ARCHS = "arm64 armv7 armv7s";
@@ -2256,6 +2395,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = net.qdating.qdating;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = 1;
 				UI_WIDGET_ROOT = "${MODULES_ROOT}/UIWidget/UIWidget";
 				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../Source/Header\"";
 				VALID_ARCHS = "arm64 armv7 armv7s";

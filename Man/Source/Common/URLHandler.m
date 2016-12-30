@@ -63,6 +63,12 @@ static URLHandler* gInstance = nil;
     if( [moduleString isEqualToString:@"emf"] ) {
         // 跳转emf
         _type = URLTypeEmf;
+    }else if ([moduleString isEqualToString:@"setting"]) {
+        _type = URLTypeSetting;
+    }else if ([moduleString isEqualToString:@"ladydetail"]) {
+        _type = URLTypeLadyDetail;
+    }else if ([moduleString isEqualToString:@"chatlady"]) {
+        _type = URLTypeChatLady;
     }
     
     [self dealWithURL];

@@ -32,6 +32,7 @@
 #import "PaymentManager.h"
 #import "PaymentErrorCode.h"
 
+
 #define ADD_CREDIT_URL @"ADD_CREDIT_URL"
 #define INPUTMESSAGEVIEW_MAX_HEIGHT 44.0 * 2
 
@@ -39,6 +40,7 @@
 #define SystemMessageFontSize 16
 #define WarningMessageFontSize 16
 #define MessageGrayColor [UIColor colorWithIntRGB:180 green:180 blue:180 alpha:255]
+#define maxInputCount 200
 
 
 typedef enum AlertType {
@@ -97,7 +99,7 @@ typedef enum AlertPayType {
 @property (nonatomic, strong) ImageViewLoader *imageViewLoader;
 
 /** 月费类型 */
-@property (nonatomic,assign) int memberType;
+@property (nonatomic,assign) MonthFeeType memberType;
 /** 月费消息id */
 @property (nonatomic,strong) NSMutableArray *msgIdArray;
 
@@ -116,6 +118,8 @@ typedef enum AlertPayType {
 @property (nonatomic, strong) NSString* orderNo;
 /** 键盘弹出时间 */
 @property (nonatomic,assign) NSTimeInterval duration;
+/** 文字的富文本属性 */
+@property (nonatomic,copy) NSAttributedString *emotionAttributedString;
 
 @end
 
@@ -1379,7 +1383,8 @@ typedef enum AlertPayType {
     NSTimeInterval animationDuration;
     [animationDurationValue getValue:&animationDuration];
     
-     self.duration = animationDuration;
+    // 从表情键盘切换成系统键盘,保存普通表情的富文本属性
+    self.emotionAttributedString = self.textView.attributedText;
     
     // Animate the resize of the text view's frame in sync with the keyboard's appearance.
     [self moveInputBarWithKeyboardHeight:keyboardRect.size.height withDuration:animationDuration];
@@ -1402,7 +1407,20 @@ typedef enum AlertPayType {
 
 #pragma mark - 输入回调
 - (void)textViewDidChange:(UITextView *)textView {
-    
+    // 超过字符限制
+    NSString *toBeString = textView.text;
+    UITextRange *selectedRange = [textView markedTextRange];
+    UITextPosition *position = [textView positionFromPosition:selectedRange.start offset:0];
+    if (position) {
+        if (toBeString.length > maxInputCount) {
+            // 取出之前保存的属性
+            textView.attributedText = self.emotionAttributedString;
+            
+        }else {
+            // 记录当前的富文本属性
+            self.emotionAttributedString = textView.attributedText;
+        }
+    }
 }
 
 - (BOOL)textViewShouldBeginEditing:(UITextView *)textView {
@@ -1428,9 +1446,19 @@ typedef enum AlertPayType {
         return NO;
     } else {
         // 超过字符限制
-        if( textView.text.length > 200 ) {
-            return NO;
+        NSInteger strLength = textView.text.length - range.length + text.length;
+        if (strLength >= maxInputCount && text.length >= range.length) {
+            // 判断是否为删除字符，如果为删除则让执行
+            char c = [text UTF8String][0];
+            if (c == '\000') {
+                return YES;
+            }
+            if([[textView text] length] >= maxInputCount) {
+                if(![text isEqualToString:@"\b"])
+                    return NO;
+            }
         }
+
     }
     
     // 允许输入
@@ -1788,7 +1816,7 @@ typedef enum AlertPayType {
 }
 
 #pragma mark - 月费管理器回调
-- (void)manager:(MonthFeeManager *)manager onGetMemberType:(BOOL)success errnum:(NSString *)errnum errmsg:(NSString *)errmsg memberType:(int)memberType {
+- (void)manager:(MonthFeeManager *)manager onGetMemberType:(BOOL)success errnum:(NSString *)errnum errmsg:(NSString *)errmsg memberType:(MonthFeeType)memberType {
     dispatch_async(dispatch_get_main_queue(), ^{
         NSLog(@"ChatViewController::onGetMemberType( 获取月费类型, memberType : %d )", memberType);
         if (success) {

@@ -96,6 +96,9 @@
 }
 
 - (void)textChange:(NSNotification* )notice {
+    
+
+    
     // 刷新界面
     [self setNeedsDisplay];
 }
@@ -166,5 +169,7 @@
     }
     
 }
+
+
 
 @end

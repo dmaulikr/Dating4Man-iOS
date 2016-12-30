@@ -15,6 +15,7 @@
 #import "MonthFeeManager.h"
 #import "PaymentManager.h"
 #import "PaymentErrorCode.h"
+#import "PZPhotoView.h"
 
 typedef enum : NSUInteger {
     SecretPhotoStatusNormal,
@@ -28,7 +29,7 @@ typedef enum AlertType {
     AlertTypeBuyMonthFee
 } AlertType;
 
-@interface ChatSecretPhotoViewController ()<LiveChatManagerDelegate, UIAlertViewDelegate, UIActionSheetDelegate,MonthFeeManagerDelegate,PaymentManagerDelegate>
+@interface ChatSecretPhotoViewController ()<LiveChatManagerDelegate, UIAlertViewDelegate, UIActionSheetDelegate,MonthFeeManagerDelegate,PaymentManagerDelegate,PZPhotoViewDelegate>
 
 @property (nonatomic, strong) LiveChatManager *liveChatManager;
 /** 私密照状态 */
@@ -49,7 +50,7 @@ typedef enum AlertType {
  */
 @property (nonatomic, strong) PaymentManager* paymentManager;
 /** 月费类型 */
-@property (nonatomic,assign) int memberType;
+@property (nonatomic,assign) MonthFeeType memberType;
 /**
  *  月费管理器
  */
@@ -58,7 +59,8 @@ typedef enum AlertType {
  *  当前支付订单号
  */
 @property (nonatomic, strong) NSString* orderNo;
-
+/** 可滚动距离 */
+@property (nonatomic,strong) PZPhotoView *imageScrollViewPhoto;
 @end
 
 @implementation ChatSecretPhotoViewController
@@ -66,7 +68,7 @@ typedef enum AlertType {
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-
+    
     self.pinch = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(pinchAction:)];
 }
 
@@ -87,6 +89,14 @@ typedef enum AlertType {
         [self.view addGestureRecognizer:tap];
         self.view.userInteractionEnabled = YES;
         
+        // 显示可缩放的清晰图
+        PZPhotoView *imagePhoto = [[PZPhotoView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+        [imagePhoto prepareForReuse];
+        imagePhoto.photoViewDelegate = self;
+        [self.view insertSubview:imagePhoto atIndex:0];
+        self.imageScrollViewPhoto = imagePhoto;
+        
+        
         // 根据付费状态设置显示状态
         self.status = self.msgItem.secretPhoto.isGetCharge?SecretPhotoStatusFee:SecretPhotoStatusNormal;
         
@@ -98,7 +108,7 @@ typedef enum AlertType {
             }
         }
     }
-
+    
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -116,7 +126,7 @@ typedef enum AlertType {
     
     self.paymentManager = [PaymentManager manager];
     [self.paymentManager addDelegate:self];
-
+    
 }
 
 #pragma mark - 界面初始化
@@ -151,7 +161,7 @@ typedef enum AlertType {
 }
 
 - (void)initCustomParam {
-    [super initCustomParam]; 
+    [super initCustomParam];
     self.liveChatManager = [LiveChatManager manager];
     [self.liveChatManager addDelegate:self];
     self.backTitle = NSLocalizedString(@"SecretPhoto", nil);
@@ -181,8 +191,9 @@ typedef enum AlertType {
                 // 获取模糊图, 显示菊花
                 [self showLoading];
                 self.view.userInteractionEnabled = YES;
-                [self.liveChatManager getPhoto:self.msgItem.fromId msgId:(int)self.msgItem.msgId sizeType:GPT_ORIGINAL];
-    
+
+                [self.liveChatManager getPhoto:self.msgItem.fromId photoId:self.msgItem.secretPhoto.photoId sizeType:GPT_ORIGINAL sendType:self.msgItem.sendType];
+                
             }
         }break;
         case SecretPhotoStatusFee:{
@@ -196,24 +207,31 @@ typedef enum AlertType {
             if( self.msgItem.secretPhoto.srcFilePath.length > 0 ) {
                 NSData *data = [NSData dataWithContentsOfFile:self.msgItem.secretPhoto.srcFilePath];
                 self.secretImageView.image = [UIImage imageWithData:data];
-            }else if (self.msgItem.secretPhoto.showFuzzyFilePath > 0) {
-                NSData *data = [NSData dataWithContentsOfFile:self.msgItem.secretPhoto.showFuzzyFilePath];
-                self.secretImageView.image = [UIImage imageWithData:data];
-                [self showLoading];
-                self.view.userInteractionEnabled = YES;
             }
+//            else if (self.msgItem.secretPhoto.showFuzzyFilePath > 0) {
+//                NSData *data = [NSData dataWithContentsOfFile:self.msgItem.secretPhoto.showFuzzyFilePath];
+//                self.secretImageView.image = [UIImage imageWithData:data];
+//                [self showLoading];
+//                self.view.userInteractionEnabled = YES;
+//            }
             
             if( self.secretImageView.image ) {
-                // 图片已经存在
-//                self.saveBtn.hidden = NO;
-            
                 // 增加手势
-                [self.secretImageView removeGestureRecognizer:self.pinch];
-                [self.secretImageView addGestureRecognizer:self.pinch];
+                [self hideLoading];
+
+                self.secretImageView.hidden = YES;
+                // 清晰图添加加缩放功能
+                [self.imageScrollViewPhoto setImage:self.secretImageView.image];
+                self.imageScrollViewPhoto.imageViewContentMode = UIViewContentModeScaleAspectFit;
+                
                 
             } else {
                 // 显示下载控件
                 [self showDownControll];
+                NSData *data = [NSData dataWithContentsOfFile:self.msgItem.secretPhoto.showFuzzyFilePath];
+                self.secretImageView.image = [UIImage imageWithData:data];
+//                [self showLoading];
+                self.view.userInteractionEnabled = YES;
             }
             
         }break;
@@ -230,15 +248,15 @@ typedef enum AlertType {
     
     // 显示菊花
     [self showLoading];
-     self.view.userInteractionEnabled = YES;
-
-    if( ![self.liveChatManager PhotoFee:self.msgItem.fromId msgId:(int)self.msgItem.msgId] ) {
+    self.view.userInteractionEnabled = YES;
+    
+    if( ![self.liveChatManager PhotoFee:self.msgItem.fromId mphotoId:self.msgItem.secretPhoto.photoId] ) {
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [self hideLoading];
             [self showBuyControll];
         });
     }
-
+    
 }
 
 - (IBAction)downSecretPhotoAction:(id)sender {
@@ -248,13 +266,13 @@ typedef enum AlertType {
     if (self.msgItem.sendType == LCMessageItem::SendType_Send) {
         // 获取付费图片(自己发的图片), 显示菊花
         [self showLoading];
-         self.view.userInteractionEnabled = YES;
-        [self.liveChatManager getPhoto:self.msgItem.toId msgId:(int)self.msgItem.msgId sizeType:GPT_ORIGINAL];
+        self.view.userInteractionEnabled = YES;
+        [self.liveChatManager getPhoto:self.msgItem.toId photoId:self.msgItem.secretPhoto.photoId sizeType:GPT_ORIGINAL sendType:self.msgItem.sendType];
     } else {
         // 获取付费图片(收到的图片), 显示菊花
         [self showLoading];
-         self.view.userInteractionEnabled = YES;
-        [self.liveChatManager getPhoto:self.msgItem.fromId msgId:(int)self.msgItem.msgId sizeType:GPT_ORIGINAL];
+        self.view.userInteractionEnabled = YES;
+        [self.liveChatManager getPhoto:self.msgItem.fromId photoId:self.msgItem.secretPhoto.photoId sizeType:GPT_ORIGINAL sendType:self.msgItem.sendType];
     }
 }
 
@@ -360,8 +378,41 @@ typedef enum AlertType {
 - (void)pinchAction:(UIPinchGestureRecognizer *)recognizer{
     // 对图片进行缩放
     recognizer.view.transform = CGAffineTransformScale(recognizer.view.transform, recognizer.scale, recognizer.scale);
+    
     recognizer.scale = 1;
+    
+    if (recognizer.view.transform.a < 1 && recognizer.view.transform.d < 1) {
+        [UIView animateWithDuration:(1)
+                              delay:0
+                            options:UIViewAnimationOptionCurveEaseIn|
+         UIViewAnimationOptionAllowUserInteraction|
+         UIViewAnimationOptionBeginFromCurrentState
+                         animations:^{
+                             [self.view.layer setAffineTransform:CGAffineTransformMakeScale(recognizer.view.transform.a, recognizer.view.transform.d)];
+                         } completion:^(BOOL finished){
+                             [UIView animateWithDuration:(1)
+                                                   delay:0
+                                                 options:UIViewAnimationOptionCurveEaseOut|
+                              UIViewAnimationOptionAllowUserInteraction|
+                              UIViewAnimationOptionBeginFromCurrentState
+                                              animations:^{
+                                                  //                                                  CGFloat transfromA = recognizer.view.transform.a;
+                                                  
+                                                  //                                                  [self.view.layer setAffineTransform:CGAffineTransformMakeScale(recognizer.view.transform.a, recognizer.view.transform.d)];
+                                                  [self.view.layer setAffineTransform:CGAffineTransformMakeScale(1, 1)];
+                                              }completion:nil];
+                         }];
+        
+    }
+    //    NSLog(@"transform %@",NSStringFromCGAffineTransform(recognizer.view.transform));
+    //    NSLog(@"transform %f",self.secretImageView.frame.size.height);
+    //    self.secretImageView.center = self.imageScrollView.center;
+    //    self.imageScrollView.contentSize = CGSizeMake(self.view.frame.size.width * recognizer.view.transform.a, self.secretImageView.frame.size.height * recognizer.view.transform.d);
+    //
+    //    NSLog(@" UIScreen %@",NSStringFromCGSize(CGSizeMake([UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height)));
+    //    NSLog(@" contentSize %@",NSStringFromCGSize(self.imageScrollView.contentSize));
 }
+
 
 - (void)dismiss {
     [self dismissViewControllerAnimated:NO completion:nil];
@@ -383,6 +434,7 @@ typedef enum AlertType {
                     
                     // 根据付费状态设置显示状态
                     self.status = self.msgItem.secretPhoto.isGetCharge?SecretPhotoStatusFee:SecretPhotoStatusNormal;
+                    
                 }
             }
         }
@@ -399,7 +451,7 @@ typedef enum AlertType {
             
             // 停止菊花
             [self hideLoading];
-
+            
             if( success ) {
                 // 根据付费状态设置显示状态
                 self.status = self.msgItem.secretPhoto.isGetCharge?SecretPhotoStatusFee:SecretPhotoStatusNormal;
@@ -436,7 +488,7 @@ typedef enum AlertType {
 
 #pragma mark - 底部弹出选择器回调
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-      [self showBuyControll];
+    [self showBuyControll];
     if( buttonIndex != actionSheet.cancelButtonIndex ) {
         
         switch (self.memberType) {
@@ -448,7 +500,9 @@ typedef enum AlertType {
             }break;
             case MonthFeeTypeNoFirstFeeMember:
             case MonthFeeTypeFirstFeeMember:{
-                NSString *tips = NSLocalizedStringFromSelf(@"Tips_Buy_MonthFee");
+                //                NSString *tips = NSLocalizedStringFromSelf(@"Tips_Buy_MonthFee");
+                NSString *price = NSLocalizedString(@"Tips_MonthFee_Price", nil);
+                NSString *tips = [NSString stringWithFormat:NSLocalizedString(@"Tips_Buy_MonthFee", nil),price];
                 UIAlertView *monthFeeAlertView = [[UIAlertView alloc] initWithTitle:nil message:tips delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
                 monthFeeAlertView.tag = AlertTypeBuyMonthFee;
                 [monthFeeAlertView show];
@@ -456,8 +510,8 @@ typedef enum AlertType {
             default:
                 break;
         }
-
-//        [self.navigationController pushViewController:vc animated:YES];
+        
+        //        [self.navigationController pushViewController:vc animated:YES];
     }
 }
 - (void)reloadMsgItem:(LiveChatMsgItemObject *)msgItem {
@@ -621,13 +675,13 @@ typedef enum AlertType {
         // 重新请求接口,获取最新状态
         self.monthFeeManager.bRequest = NO;
         [self.monthFeeManager getQueryMemberType];
-
+        
         
     });
 }
 
 #pragma mark - 月费管理器回调
-- (void)manager:(MonthFeeManager *)manager onGetMemberType:(BOOL)success errnum:(NSString *)errnum errmsg:(NSString *)errmsg memberType:(int)memberType {
+- (void)manager:(MonthFeeManager *)manager onGetMemberType:(BOOL)success errnum:(NSString *)errnum errmsg:(NSString *)errmsg memberType:(MonthFeeType)memberType {
     dispatch_async(dispatch_get_main_queue(), ^{
         NSLog(@"ChatViewController::onGetMemberType( 获取月费类型, memberType : %d )", memberType);
         if (success) {
@@ -637,5 +691,35 @@ typedef enum AlertType {
             self.memberType = MonthFeeTypeNoramlMember;
         }
     });
+}
+
+
+#pragma mark - 照片手势处理回调
+
+- (void)photoViewDidSingleTap:(PZPhotoView *)photoView {
+    [self dismissViewControllerAnimated:NO completion:nil];
+    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationNone];
+}
+
+- (void)photoViewDidDoubleTap:(PZPhotoView *)photoView {
+    
+}
+
+- (void)photoViewDidTwoFingerTap:(PZPhotoView *)photoView {
+    
+}
+
+- (void)photoViewDidDoubleTwoFingerTap:(PZPhotoView *)photoView {
+    
+}
+
+#pragma mark - 下载完成回调
+- (void)loadImageFinish:(ImageViewLoader *)imageViewLoader success:(BOOL)success {
+    if (success) {
+        //        [self hideLoading];
+    }else {
+        
+    }
+    
 }
 @end

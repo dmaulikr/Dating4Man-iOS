@@ -20,6 +20,7 @@
 - (void)tableView:(LadyListTableView *)tableView didSelectLady:(QueryLadyListItemObject *)item;
 //- (void)tableView:(LadyListTableView *)tableView willDeleteLady:(Lady *)item;
 - (void)tableView:(LadyListTableView *)tableView willDeleteLady:(QueryLadyListItemObject *)item;
+- (void)tableViewDidResetView:(LadyListTableView *)tableView;
 
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView;

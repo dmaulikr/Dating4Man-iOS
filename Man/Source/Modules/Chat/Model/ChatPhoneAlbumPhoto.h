@@ -20,4 +20,9 @@
  */
 @property (strong) NSURL* assertUrl;
 
+/**
+ *  原始图片缓存路径
+ */
+@property (strong) NSString * originalPath;
+
 @end

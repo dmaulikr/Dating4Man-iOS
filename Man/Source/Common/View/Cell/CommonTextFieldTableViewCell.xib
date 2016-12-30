@@ -12,7 +12,7 @@
             <rect key="frame" x="0.0" y="0.0" width="260" height="45"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <frame key="frameInset" width="260" height="44"/>
+                <frame key="frameInset" width="260" height="45"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter" textAlignment="right" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="X5L-pm-yzG" userLabel="输入框">
@@ -29,11 +29,11 @@
                     </label>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="x3G-G5-pAd" firstAttribute="bottom" secondItem="H2p-sc-9uM" secondAttribute="bottom" constant="-5" id="7Sf-gZ-mIh"/>
+                    <constraint firstItem="X5L-pm-yzG" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="195-zh-7SX"/>
                     <constraint firstItem="X5L-pm-yzG" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailing" constant="-10" id="CXy-5f-V2d"/>
-                    <constraint firstItem="x3G-G5-pAd" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="J7g-EU-XZv"/>
                     <constraint firstItem="X5L-pm-yzG" firstAttribute="bottom" secondItem="x3G-G5-pAd" secondAttribute="bottom" id="Yri-fH-6Up"/>
                     <constraint firstItem="X5L-pm-yzG" firstAttribute="top" secondItem="x3G-G5-pAd" secondAttribute="top" id="hj7-v2-aJp"/>
+                    <constraint firstItem="x3G-G5-pAd" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="nU4-zk-h44"/>
                     <constraint firstItem="x3G-G5-pAd" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="vuS-2R-Rig"/>
                 </constraints>
             </tableViewCellContentView>

@@ -20,12 +20,12 @@
 + (id)getUITableViewCell:(UITableView*)tableView {
     LadyListTableViewCell *cell = (LadyListTableViewCell *)[tableView dequeueReusableCellWithIdentifier:[LadyListTableViewCell cellIdentifier]];
     if ( nil == cell ) {
-        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"LadyListTableViewCell" owner:tableView options:nil];
+        NSArray *nib = [[NSBundle mainBundle] loadNibNamedWithFamily:@"LadyListTableViewCell" owner:tableView options:nil];
         cell = [nib objectAtIndex:0];
         
         cell.imageViewLoader = nil;
     }
-    
+     
     cell.loadingView.hidden = YES;
     cell.loadingActivity.hidden = YES;
     cell.ladyImageView.hidden = NO;

@@ -11,6 +11,9 @@
 typedef enum {
     URLTypeNone,
     URLTypeEmf,
+    URLTypeSetting,
+    URLTypeLadyDetail,
+    URLTypeChatLady
 }URLType;
 
 @class URLHandler;

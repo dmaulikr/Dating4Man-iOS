@@ -28,6 +28,12 @@
 
 #import "SessionRequestManager.h"
 #import "LiveChatManager.h"
+#import "MonthFeeManager.h"
+
+#import "LadyDetailLockPhotoView.h"
+#import "Masonry.h"
+
+#import "LadyDetailCheckPhtoViewController.h"
 
 typedef enum {
     RowTypePhoto,
@@ -43,7 +49,7 @@ typedef enum : NSUInteger {
 } ActionSheetBtnActionType;
 
 
-@interface LadyDetailViewController () <PZPhotoViewDelegate, PZPagingScrollViewDelegate, UIActionSheetDelegate, KKCheckButtonDelegate, ContactManagerDelegate, ImageViewLoaderDelegate,LadyDetailNameTableViewCellDelegate,UIAlertViewDelegate>
+@interface LadyDetailViewController () <PZPhotoViewDelegate, PZPagingScrollViewDelegate, UIActionSheetDelegate, KKCheckButtonDelegate, ContactManagerDelegate, ImageViewLoaderDelegate,LadyDetailNameTableViewCellDelegate,UIAlertViewDelegate,MonthFeeManagerDelegate,LadyDetailCheckPhtoViewControllerDelegate>
 /**
  *  详情分栏
  */
@@ -76,6 +82,12 @@ typedef enum : NSUInteger {
  *  点击手势
  */
 @property (nonatomic,strong) UITapGestureRecognizer *tap;
+/** 月费管理器 */
+@property (nonatomic,strong) MonthFeeManager *monthFeeManager;
+/** 月费类型 */
+@property (nonatomic,assign) MonthFeeType memberType;
+/** 锁定照片 */
+@property (nonatomic,strong) LadyDetailLockPhotoView *lockPhotoView;
 
 @end
 
@@ -83,7 +95,7 @@ typedef enum : NSUInteger {
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-
+    
     self.addFavouriesBtn.userInteractionEnabled = NO;
 }
 
@@ -94,7 +106,6 @@ typedef enum : NSUInteger {
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-        
     if( !self.viewDidAppearEver ) {
         [self getLadyDetail];
     }
@@ -102,6 +113,11 @@ typedef enum : NSUInteger {
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    [self.monthFeeManager removeDelegate:self];
 }
 
 #pragma mark - 界面逻辑
@@ -113,10 +129,15 @@ typedef enum : NSUInteger {
     self.contactManager = [ContactManager manager];
     self.photoIndex = 0;
     self.backToChat = NO;
+    
+    self.monthFeeManager = [MonthFeeManager manager];
+    [self.monthFeeManager addDelegate:self];
+    
+    [self.monthFeeManager getQueryMemberType];
 }
 
 - (void)dealloc {
-
+    
 }
 
 - (void)setupNavigationBar {
@@ -124,12 +145,30 @@ typedef enum : NSUInteger {
     UIBarButtonItem *barButtonItem = nil;
     UIImage *image = nil;
     UIButton* button = nil;
+    NSInteger totalPhotoCount = 1;
     
     // 标题
     button = [UIButton buttonWithType:UIButtonTypeCustom];
     image = [UIImage imageNamed:@"LadyDetail-Camera"];
     [button setImage:image forState:UIControlStateDisabled];
-    NSString* title = [NSString stringWithFormat:@" %ld / %lu", self.imageList.count > 0?(long)self.photoIndex + 1:0, (unsigned long)self.imageList.count];
+    
+    switch (self.memberType) {
+        case MonthFeeTypeFeeMember:{
+            totalPhotoCount = self.imageList.count;
+        }break;
+        case MonthFeeTypeNoramlMember:
+        case MonthFeeTypeFirstFeeMember:
+        case MonthFeeTypeNoFirstFeeMember:{
+            totalPhotoCount = self.imageList.count + self.item.photoLockNum;
+        }
+            break;
+        default:
+            break;
+    }
+    
+    //    totalPhotoCount = self.imageList.count;
+    
+    NSString* title = [NSString stringWithFormat:@" %ld / %lu", self.imageList.count > 0?(long)self.photoIndex + 1:0, totalPhotoCount];
     [button setTitle:title forState:UIControlStateNormal];
     button.titleLabel.font = [UIFont systemFontOfSize:16];
     [button sizeToFit];
@@ -137,9 +176,9 @@ typedef enum : NSUInteger {
     self.navigationItem.titleView = button;
     
     // 隐藏附件数目
-//    if (self.items.count == 0) {
-//        self.navigationItem.titleView.hidden = YES;
-//    }
+    //    if (self.items.count == 0) {
+    //        self.navigationItem.titleView.hidden = YES;
+    //    }
     
     // 右边按钮
     NSMutableArray *array = [NSMutableArray array];
@@ -153,6 +192,7 @@ typedef enum : NSUInteger {
     [array addObject:barButtonItem];
     
     self.navigationItem.rightBarButtonItems = array;
+    
 }
 
 - (void)setupContainView {
@@ -173,7 +213,7 @@ typedef enum : NSUInteger {
     UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
     [self.tableView setTableFooterView:footerView];
     
-//    self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 78, 0);
+    //    self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 78, 0);
 }
 
 - (IBAction)reportAction:(id)sender {
@@ -190,15 +230,16 @@ typedef enum : NSUInteger {
         UIViewController* vc = [[ServerViewControllerManager manager] chatViewController:self.item.firstname womanid:self.item.womanid photoURL:self.item.photoURL];
         KKNavigationController *nvc = (KKNavigationController *)self.navigationController;
         [nvc pushViewController:vc animated:YES];
+        self.viewDidAppearEver = NO;
     }
-
+    
 }
 
 - (IBAction)favouriteChange:(id)sender {
     if( self.item.isFavorite ) {
         // 取消收藏
         [self removeFavouriesLady];
-       
+        
     } else {
         // 增加收藏
         [self addFavouriesLady];
@@ -207,12 +248,22 @@ typedef enum : NSUInteger {
 
 #pragma mark - 图片点击手势方法
 - (void)lookBigPicture{
-    LadyDetailPhototViewController *photo = [[LadyDetailPhototViewController alloc] initWithNibName:nil bundle:nil];
+    //    LadyDetailPhototViewController *photo = [[LadyDetailPhototViewController alloc] initWithNibName:nil bundle:nil];
+    //    photo.ladyListArray = self.imageList;
+    //    photo.ladyListPath = self.imageList;
+    //    photo.photoIndex = self.photoIndex;
+    //    photo.enableScroll = NO;
+    //
+    //    [self presentViewController:photo animated:NO completion:^{
+    //        [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide];
+    //    }];
+    
+    LadyDetailCheckPhtoViewController *photo = [[LadyDetailCheckPhtoViewController alloc] initWithNibName:nil bundle:nil];
     photo.ladyListArray = self.imageList;
-    photo.ladyListPath = self.imageList;
     photo.photoIndex = self.photoIndex;
-    photo.enableScroll = NO;
-
+    photo.delegate = self;
+    
+    
     [self presentViewController:photo animated:NO completion:^{
         [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide];
     }];
@@ -243,13 +294,13 @@ typedef enum : NSUInteger {
     [dictionary setValue:[NSNumber numberWithInteger:RowTypeName] forKey:ROW_TYPE];
     [array addObject:dictionary];
     
-//    // 国家
-//    dictionary = [NSMutableDictionary dictionary];
-//    viewSize = CGSizeMake(self.tableView.frame.size.width, [CommonTitleTableViewCell cellHeight]);
-//    rowSize = [NSValue valueWithCGSize:viewSize];
-//    [dictionary setValue:rowSize forKey:ROW_SIZE];
-//    [dictionary setValue:[NSNumber numberWithInteger:RowTypeLocation] forKey:ROW_TYPE];
-//    [array addObject:dictionary];
+    //    // 国家
+    //    dictionary = [NSMutableDictionary dictionary];
+    //    viewSize = CGSizeMake(self.tableView.frame.size.width, [CommonTitleTableViewCell cellHeight]);
+    //    rowSize = [NSValue valueWithCGSize:viewSize];
+    //    [dictionary setValue:rowSize forKey:ROW_SIZE];
+    //    [dictionary setValue:[NSNumber numberWithInteger:RowTypeLocation] forKey:ROW_TYPE];
+    //    [array addObject:dictionary];
     
     // 描述
     dictionary = [NSMutableDictionary dictionary];
@@ -272,7 +323,7 @@ typedef enum : NSUInteger {
         }
     }
     self.imageList = imageList;
-
+    
     if( isReloadView ) {
         [self setupNavigationBar];
         [self.tableView reloadData];
@@ -321,55 +372,93 @@ typedef enum : NSUInteger {
 
 #pragma mark - 画廊回调 (PZPagingScrollViewDelegate)
 - (Class)pagingScrollView:(PZPagingScrollView *)pagingScrollView classForIndex:(NSUInteger)index {
-    return [UIImageViewTopFit class];
+    if (self.imageList.count - 1 < index ) {
+        return [LadyDetailLockPhotoView class];
+        
+    }else {
+        
+        return [UIImageViewTopFit class];
+    }
+    //    return [UIImageViewTopFit class];
 }
 
 - (NSUInteger)pagingScrollViewPagingViewCount:(PZPagingScrollView *)pagingScrollView {
     NSUInteger count = 0;
     if (self.imageList != nil) {
-        count = self.imageList.count;
+        switch (self.memberType) {
+            case MonthFeeTypeFeeMember:{
+                count = self.imageList.count;
+            }break;
+            case MonthFeeTypeNoramlMember:
+            case MonthFeeTypeFirstFeeMember:
+            case MonthFeeTypeNoFirstFeeMember:{
+                count = self.imageList.count + self.item.photoLockNum;
+            }
+                break;
+            default:
+                break;
+        }
+        //        count = self.imageList.count;
     }
     return count;
 }
 
 - (UIView *)pagingScrollView:(PZPagingScrollView *)pagingScrollView pageViewForIndex:(NSUInteger)index {
-    UIImageViewTopFit* view = [[UIImageViewTopFit alloc] initWithFrame:CGRectMake(0, 0, pagingScrollView.frame.size.width, pagingScrollView.frame.size.height)];
-    [view setContentMode:UIViewContentModeScaleAspectFit];
+    
+    UIView* view = nil;
+    if (self.imageList.count - 1 < index ) {
+        LadyDetailLockPhotoView *lockPhotoView =  [LadyDetailLockPhotoView ladyDetailLockPhotoView:self];
+        view = lockPhotoView;
+    }else {
+        UIImageViewTopFit* topImageView = [[UIImageViewTopFit alloc] initWithFrame:CGRectMake(0, 0, pagingScrollView.frame.size.width, pagingScrollView.frame.size.height)];
+        [view setContentMode:UIViewContentModeScaleAspectFit];
+        view = topImageView;
+    }
+    
     return view;
+    //        UIImageViewTopFit* view = [[UIImageViewTopFit alloc] initWithFrame:CGRectMake(0, 0, pagingScrollView.frame.size.width, pagingScrollView.frame.size.height)];
+    //        [view setContentMode:UIViewContentModeScaleAspectFit];
+    //        return view;
+    
+    
 }
 
 - (void)pagingScrollView:(PZPagingScrollView *)pagingScrollView preparePageViewForDisplay:(UIView *)pageView forIndex:(NSUInteger)index {
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(lookBigPicture)];
-    pageView.userInteractionEnabled = YES;
-    [pageView addGestureRecognizer:tap];
     
-    // 还原默认图片
-    UIImageViewTopFit* imageView = (UIImageViewTopFit *)pageView;
-    [imageView setImage:nil];
-    
-    // 图片路径
-    NSString* url = [self.imageList objectAtIndex:index];
-    // 停止旧的
-    static NSString *imageViewLoaderKey = @"imageViewLoaderKey";
-    ImageViewLoader* imageViewLoader = objc_getAssociatedObject(pageView, &imageViewLoaderKey);
-    [imageViewLoader stop];
-    
-    // 创建新的
-    imageViewLoader = [ImageViewLoader loader];
-    objc_setAssociatedObject(pageView, &imageViewLoaderKey, imageViewLoader, OBJC_ASSOCIATION_RETAIN);
-    
-    // 加载图片
-    imageViewLoader.delegate = self;
-    imageViewLoader.view = imageView;
-    imageViewLoader.url = url;
-    imageViewLoader.path = [[FileCacheManager manager] imageCachePathWithUrl:imageViewLoader.url];
-    [imageViewLoader loadImage];
+    if (self.imageList.count - 1 >= index) {
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(lookBigPicture)];
+        pageView.userInteractionEnabled = YES;
+        [pageView addGestureRecognizer:tap];
+        // 还原默认图片
+        UIImageViewTopFit* imageView = (UIImageViewTopFit *)pageView;
+        [imageView setImage:nil];
+        
+        // 图片路径
+        NSString* url = [self.imageList objectAtIndex:index];
+        // 停止旧的
+        static NSString *imageViewLoaderKey = @"imageViewLoaderKey";
+        ImageViewLoader* imageViewLoader = objc_getAssociatedObject(pageView, &imageViewLoaderKey);
+        [imageViewLoader stop];
+        
+        // 创建新的
+        imageViewLoader = [ImageViewLoader loader];
+        objc_setAssociatedObject(pageView, &imageViewLoaderKey, imageViewLoader, OBJC_ASSOCIATION_RETAIN);
+        
+        // 加载图片
+        imageViewLoader.delegate = self;
+        imageViewLoader.view = imageView;
+        imageViewLoader.url = url;
+        imageViewLoader.path = [[FileCacheManager manager] imageCachePathWithUrl:imageViewLoader.url];
+        [imageViewLoader loadImage];
+        
+    }
     
 }
 
 - (void)pagingScrollView:(PZPagingScrollView *)pagingScrollView didShowPageViewForDisplay:(NSUInteger)index {
     self.photoIndex = index;
     [self setupNavigationBar];
+    
 }
 
 #pragma mark - 列表界面回调 (UITableViewDataSource / UITableViewDelegate)
@@ -406,7 +495,7 @@ typedef enum : NSUInteger {
         [value getValue:&viewSize];
         height = viewSize.height;
     }
-  
+    
     return height;
 }
 
@@ -480,7 +569,7 @@ typedef enum : NSUInteger {
                 CommonDetailTableViewCell *cell = [CommonDetailTableViewCell getUITableViewCell:tableView];
                 result = cell;
                 cell.detailLabel.attributedText = [self parseResume:self.item.resume font:[UIFont systemFontOfSize:17]];
-
+                
             }break;
             default:break;
         }
@@ -532,6 +621,7 @@ typedef enum : NSUInteger {
                 self.addFavouriesBtn.userInteractionEnabled = YES;
                 
                 self.item = item;
+                
                 [self reloadData:YES];
                 
             } else {
@@ -556,7 +646,7 @@ typedef enum : NSUInteger {
                 // 收藏成功, 更新最近联系人数据
                 LadyRecentContactObject* recent = [self.contactManager getOrNewRecentWithId:self.item.womanid];
                 recent.firstname = self.item.firstname;
-//                recent.photoURL = self.item.photoURL;
+                //                recent.photoURL = self.item.photoURL;
                 [ContactManager updateLasttime:recent];
                 self.item.isFavorite = YES;
                 
@@ -634,6 +724,27 @@ typedef enum : NSUInteger {
         default:
             break;
     }
+}
+
+
+
+
+- (void)ladyDetailCheckPhtoViewController:(LadyDetailCheckPhtoViewController *)checkPhotoViewController didScrollToIndex:(NSInteger)index {
+    [self.pagingScrollView displayPagingViewAtIndex:index animated:NO];
+}
+
+#pragma mark - 月费管理器回调
+- (void)manager:(MonthFeeManager *)manager onGetMemberType:(BOOL)success errnum:(NSString *)errnum errmsg:(NSString *)errmsg memberType:(MonthFeeType)memberType {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        NSLog(@"ChatViewController::onGetMemberType( 获取月费类型, memberType : %d )", memberType);
+        if (success) {
+            self.memberType = memberType;
+            
+        }else {
+            self.memberType = MonthFeeTypeNoramlMember;
+        }
+        [self getLadyDetail];
+    });
 }
 
 

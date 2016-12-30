@@ -11,6 +11,7 @@
 
 @interface AgeRangeSlider()<UIGestureRecognizerDelegate>
 
+
 @property (strong, nonatomic) UIImageView *leftHandle;
 @property (strong, nonatomic) UIImageView *rightHandle;
 @property (strong, nonatomic) UIImageView *sliderBackground;
@@ -153,6 +154,19 @@
     [self.rightHandle addGestureRecognizer:rightPanGesture];
     
     [self addSubview:self.rightHandle];
+    
+    self.minValueLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 18, 18)];
+    self.minValueLabel.font = [UIFont systemFontOfSize:10];
+    self.minValueLabel.textAlignment = NSTextAlignmentCenter;
+    [self.leftHandle addSubview:self.minValueLabel];
+    
+    self.maxValueLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 18, 18)];
+    self.maxValueLabel.font = self.minValueLabel.font;
+    self.maxValueLabel.textAlignment = NSTextAlignmentCenter;
+    [self.rightHandle addSubview:self.maxValueLabel];
+    
+    self.minValueLabel.text = [NSString stringWithFormat:@"%0.f", self.minAgeRange];
+    self.maxValueLabel.text = [NSString stringWithFormat:@"%0.f",self.positionValue + self.minAgeRange];
 }
 
 

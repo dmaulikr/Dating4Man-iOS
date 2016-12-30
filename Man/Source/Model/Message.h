@@ -46,6 +46,7 @@ typedef enum {
     MessageTypeText,
     MessageTypePhoto,
     MessageTypeLargeEmotion,
+    MessageTypeSmallEmotion,
     MessageTypeCoupon,
 } Type;
 @property (nonatomic, assign) Type type;

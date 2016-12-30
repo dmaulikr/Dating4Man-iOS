@@ -1495,39 +1495,32 @@ static LiveChatManManagerListener *gLiveChatManManagerListener;
  *
  *  @return 处理结果
  */
-- (BOOL)PhotoFee:(NSString *)userId msgId:(int)msgId {
+- (BOOL)PhotoFee:(NSString * _Nonnull)userId mphotoId:(NSString * _Nonnull)photoId{
     
-       BOOL result = NO;
+    BOOL result = NO;
     if (NULL != mILiveChatManManager)
     {
         const char* pUserId = [userId UTF8String];
-        result = mILiveChatManManager->PhotoFee(pUserId, msgId);
-    }
-    
-    return result;
-}
-
-/**
- *  根据消息ID获取图片(模糊或清晰)
- *
- *  @param userId   女士Id
- *  @param msgId    私密照Id
- *  @param sizeType 私密照大小类型
- *
- *  @return 处理结果
- */
-- (BOOL)getPhoto:(NSString *)userId msgId:(int)msgId sizeType:(GETPHOTO_PHOTOSIZE_TYPE)sizeType{
-    BOOL result = NO; 
-    if (NULL != mILiveChatManManager)
-    {
-        const char* pUserId = [userId UTF8String];
-        result = mILiveChatManManager->GetPhoto(pUserId, msgId, sizeType);
+        const char* pPhotoId = [photoId UTF8String];
+        result = mILiveChatManManager->PhotoFee(pUserId, pPhotoId);
     }
     
     return result;
 }
 
 
+- (BOOL)getPhoto:(NSString *)userId photoId:(NSString *)photoId sizeType:(GETPHOTO_PHOTOSIZE_TYPE)sizeType sendType:(LCMessageItem::SendType)sendType
+{
+    BOOL result = NO;
+    if (NULL != mILiveChatManManager)
+    {
+        const char* pUserId = [userId UTF8String];
+        const char* pPhotoId = [photoId UTF8String];
+        result = mILiveChatManManager->GetPhoto(pUserId, pPhotoId, sizeType, sendType);
+    }
+    
+    return result;
+}
 
 
 

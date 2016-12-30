@@ -22,6 +22,8 @@
 #import "ChatEmotionCreditsCollectionViewCell.h"
 #import "ChatLargeEmotionLadyTableViewCell.h"
 #import "ChatLargeEmotionSelfTableViewCell.h"
+#import "ChatSmallEmotionLadyTableViewCell.h"
+#import "ChatSmallEmotionselfTableViewCell.h"
 
 #import "ChatEmotionKeyboardView.h"
 #import "ChatEmotionChooseView.h"
@@ -47,6 +49,10 @@
 
 #import <AssetsLibrary/AssetsLibrary.h>
 #import <AVFoundation/AVFoundation.h>
+#import "ChatSmallEmotionView.h"
+#import "ChatNomalSmallEmotionView.h"
+
+
 
 #define ADD_CREDIT_URL @"ADD_CREDIT_URL"
 #define INPUTMESSAGEVIEW_MAX_HEIGHT 44.0 * 2
@@ -57,9 +63,11 @@
 #define MessageGrayColor [UIColor colorWithIntRGB:180 green:180 blue:180 alpha:255]
 #define halfWidth self.view.frame.size.width * 0.5f
 #define PreloadPhotoCount 10
+#define maxInputCount 200
 
 #define column 5
 #define imageRow 2
+#define defaultPage 1
 
 typedef enum AlertType {
     AlertType200Limited = 100000,
@@ -76,7 +84,7 @@ typedef enum AlertPayType {
     AlertTypePayMonthFee
 } AlertPayType;
 
-@interface ChatViewController () <UIAlertViewDelegate, ChatTextSelfDelegate, LiveChatManagerDelegate, KKCheckButtonDelegate, ChatEmotionChooseViewDelegate, TTTAttributedLabelDelegate, ChatTextViewDelegate, ImageViewLoaderDelegate,ChatPhotoViewDelegate,UINavigationControllerDelegate, UIImagePickerControllerDelegate, ChatPhotoLadyTableViewCellDelegate, ChatPhotoSelfTableViewCellDelegate, MonthFeeManagerDelegate, ChatMoonFeeTableViewCellDelegate, PaymentManagerDelegate, ChatEmotionListViewDelegate, ChatLargeEmotionSelfTableViewCellDelegate, ChatEmotionKeyboardViewDelegate> {
+@interface ChatViewController () <UIAlertViewDelegate, ChatTextSelfDelegate, LiveChatManagerDelegate, KKCheckButtonDelegate, ChatEmotionChooseViewDelegate, TTTAttributedLabelDelegate, ChatTextViewDelegate, ImageViewLoaderDelegate,ChatPhotoViewDelegate,UINavigationControllerDelegate, UIImagePickerControllerDelegate, ChatPhotoLadyTableViewCellDelegate, ChatPhotoSelfTableViewCellDelegate, MonthFeeManagerDelegate, ChatMoonFeeTableViewCellDelegate, PaymentManagerDelegate, ChatEmotionListViewDelegate, ChatLargeEmotionSelfTableViewCellDelegate, ChatEmotionKeyboardViewDelegate,ChatSmallEmotionViewDelegate,ChatSmallEmotionSelfTableViewCellDelegate,ChatNormalSmallEmotionViewDelegate,UIScrollViewDelegate> {
     CGRect _orgFrame;
 }
 
@@ -157,7 +165,7 @@ typedef enum AlertPayType {
 @property (atomic, assign) BOOL isStop;
 
 /** 月费类型 */
-@property (nonatomic,assign) int memberType;
+@property (nonatomic,assign) MonthFeeType memberType;
 /** 月费消息id */
 @property (nonatomic,strong) NSMutableArray *msgIdArray;
 
@@ -198,6 +206,25 @@ typedef enum AlertPayType {
  表情播放图片缓存列表
  */
 @property (strong, atomic) NSMutableDictionary* emotionImageArrayCacheDict;
+
+/** 文字的富文本属性 */
+@property (nonatomic,strong) UIScrollView *normalEmotionView;
+@property (nonatomic,strong) ChatSmallEmotionView *smallEmotionView;
+@property (nonatomic,strong) NSArray *smallEmotionListArray;
+@property (nonatomic,strong) NSArray *nomalSmallEmotionArray;
+/**
+ 小高表情缩略图缓存列表
+ */
+@property (strong, atomic) NSMutableDictionary* smallEmotionImageCacheDict;
+@property (nonatomic,copy) NSAttributedString *emotionAttributedString;
+
+/** pageView */
+@property (nonatomic,strong) UIPageControl *pageControlView;
+
+/** 普通表和小高表 */
+@property (nonatomic,strong)  ChatNomalSmallEmotionView *normalAndSmallEmotionView;
+/** 记录偏移量 */
+@property (nonatomic,assign) CGPoint ScrollContentOffset;
 
 @end
 
@@ -260,6 +287,9 @@ typedef enum AlertPayType {
         }
         
     }
+    
+
+
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -324,9 +354,13 @@ typedef enum AlertPayType {
     // 加载高级表情
     [self realoadLargeEmotion];
     
+    [self reloadSmallEmotion];
+    
+    
     // 初始化表情缓存
     self.emotionImageCacheDict = [NSMutableDictionary dictionary];
     self.emotionImageArrayCacheDict = [NSMutableDictionary dictionary];
+    self.smallEmotionImageCacheDict = [NSMutableDictionary dictionary];
     
     // 初始化自定义消息列表
     self.msgCustomDict = [NSMutableDictionary dictionary];
@@ -343,7 +377,7 @@ typedef enum AlertPayType {
     [self.monthFeeManager removeDelegate:self];
     // 清空自定义消息
     [self clearCustomMessage];
-    
+    [self.imageViewLoader stop];
 }
 
 /**
@@ -416,15 +450,27 @@ typedef enum AlertPayType {
  *  初始化表情选择器
  */
 - (void)setupEmotionInputView {
-    // 普通表情
-    if( self.emotionInputView == nil ) {
-        self.emotionInputView = [ChatEmotionChooseView emotionChooseView:self];
-        self.emotionInputView.delegate = self;
-
-        self.emotionInputView.emotions = self.emotionArray;
-        [self.emotionInputView reloadData];
+    self.pageControlView = [[UIPageControl alloc] init];
+    //    // 普通表情
+    //    if( self.emotionInputView == nil ) {
+    //        self.emotionInputView = [ChatEmotionChooseView emotionChooseView:self];
+    //        self.emotionInputView.delegate = self;
+    //
+    //        self.emotionInputView.emotions = self.emotionArray;
+    //        self.emotionInputView.smallEmotions = self.smallEmotionListArray;
+    //        [self.emotionInputView reloadData];
+    //
+    //
+    //    }
+        if (self.normalAndSmallEmotionView == nil) {
+            self.normalAndSmallEmotionView = [ChatNomalSmallEmotionView chatNormalSmallEmotionView:self];
+            self.normalAndSmallEmotionView.delegate = self;
+            self.normalAndSmallEmotionView.emotionInputView.delegate = self;
+            self.normalAndSmallEmotionView.smallEmotionView.delegate = self;
+            self.normalAndSmallEmotionView.defaultEmotionArray = self.emotionArray;
+            self.normalAndSmallEmotionView.smallEmotionArray = self.smallEmotionListArray;
+		}
         
-    }
 
     // 高级表情
     if( self.largelistView == nil ) {
@@ -855,10 +901,42 @@ typedef enum AlertPayType {
 
 #pragma mark - 普通表情选择回调
 - (void)chatEmotionChooseView:(ChatEmotionChooseView *)chatEmotionChooseView didSelectItem:(NSInteger)item {
-    if( self.textView.text.length < 200 ) {
+    if( self.textView.text.length < maxInputCount ) {
         // 插入表情到输入框
         ChatEmotion* emotion = [self.emotionArray objectAtIndex:item];
         [self.textView insertEmotion:emotion];
+    }
+}
+/**
+ 点击普通界面的小高表
+ */
+- (void)chatEmotionChooseView:(ChatEmotionChooseView *)chatEmotionChooseView didSelectSmallItem:(ChatSmallGradeEmotion *)item {
+    [self chatEmotionViewDidSelectSmallItem:item];
+}
+/**
+ 点击小高表界面的小高表
+ */
+- (void)chatSmallEmotionView:(ChatSmallEmotionView *)emotionListView didSelectSmallEmotion:(ChatSmallGradeEmotion *)item {
+    [self chatEmotionViewDidSelectSmallItem:item];
+}
+
+/**
+ 点击小高表
+ 
+ @param item 小高表属性
+ */
+- (void)chatEmotionViewDidSelectSmallItem:(ChatSmallGradeEmotion *)item {
+    if ( [[ContactManager manager] isInChatUser:self.womanId]) {
+        MagicIconItemObject *emotionItemObject = item.magicIconItemObject;
+        [self.liveChatManager GetMagicIconSrcImage:emotionItemObject.iconId];
+        [self sendSmallEmotion:emotionItemObject.iconId];
+        
+    } else {
+        // 必须开聊才能发送图片
+        NSString *inChatTips = NSLocalizedStringFromSelf(@"Tips_InChat_Emotion");
+        UIAlertView *chatAlertView = [[UIAlertView alloc] initWithTitle:nil message:inChatTips delegate:self cancelButtonTitle:nil otherButtonTitles:NSLocalizedString(@"OK", nil), nil];
+        chatAlertView.tag = AlertTypeInChatAllow;
+        [chatAlertView show];
     }
 }
 
@@ -871,8 +949,9 @@ typedef enum AlertPayType {
     Class cls = nil;
     switch(index) {
         case 0:{
+                        cls = [ChatNomalSmallEmotionView class];
             // 普通表情
-            cls = [ChatEmotionChooseView class];
+            //            cls = [ChatEmotionChooseView class];
         }break;
         case 1:{
             // 高级表情
@@ -890,7 +969,7 @@ typedef enum AlertPayType {
     switch(index) {
         case 0:{
             // 普通表情
-            view = self.emotionInputView;
+            view = self.normalAndSmallEmotionView;
         }break;
         case 1:{
             // 高级表情
@@ -912,6 +991,8 @@ typedef enum AlertPayType {
         case 0:{
             // 普通表情
             [self.emotionInputView reloadData];
+            [self.normalAndSmallEmotionView.pageScrollView setContentOffset:CGPointMake(0, 0) animated:NO];
+            
         }break;
         case 1:{
             // 高级表情
@@ -923,6 +1004,16 @@ typedef enum AlertPayType {
 }
 
 - (void)chatEmotionKeyboardView:(ChatEmotionKeyboardView *)chatEmotionKeyboardView didShowPageViewForDisplay:(NSUInteger)index {
+    switch (index) {
+        case 0:{
+
+        
+        } break;
+        case 1:{
+        }break;
+        default:
+            break;
+    }
     
 }
 
@@ -968,12 +1059,15 @@ typedef enum AlertPayType {
     [self.liveChatManager GetEmotionPlayImage:item.emotionItemObject.emotionId];
 
     // 开始播放
-    [self.largeEmotion play];
+    [self.largeEmotion playGif:item.liveChatEmotionItemObject.imagePath];
 }
 
 - (void)chatEmotionListView:(ChatEmotionListView *)emotionListView didLongPressReleaseLargeEmotion:(ChatHighGradeEmotion *)item {
     // 移除预览视图
+
+    self.largeEmotion.imageView.animationImages = nil;
     [self.largeEmotion removeFromSuperview];
+    self.largeEmotion = nil;
 }
 
 #pragma mark - 选择私密照回调
@@ -1035,34 +1129,47 @@ typedef enum AlertPayType {
             }
             
         } else {
-            // 选择相册图片
-            ALAssetsLibrary* library = [[ALAssetsLibrary alloc] init];
+            
             ChatPhoneAlbumPhoto* albumPhoto = [self.photoPathArray objectAtIndex:item - 1];
-            NSURL* url = albumPhoto.assertUrl;
-            [library assetForURL:url resultBlock:^(ALAsset *asset) {
-                ALAssetRepresentation *ar = [asset defaultRepresentation];
-                
-                UIImageOrientation imageOrientation = (UIImageOrientation)[ar orientation];
-                CGImageRef imageReference = [ar fullResolutionImage];
-                UIImage *photoImage = [UIImage imageWithCGImage:imageReference scale:1.0 orientation:imageOrientation];
-                
-                // 去除图片旋转属性( fullResolutionImage 没有做旋转处理, fullScreenImage 做了旋转处理)
-                UIImage* fixOrientationImage = [photoImage fixOrientation];
-                
-                // 保存到本地
-                FileCacheManager *fileCacheManager = [FileCacheManager manager];
-                NSString *path = [fileCacheManager imageUploadCachePath:fixOrientationImage fileName:ar.filename];
-                
-                // 发送图片
-                [self sendPhoto:path];
-                
-            } failureBlock:^(NSError *error) {
-                // 获取图片失败
-                NSString *photoLibraryAllow = NSLocalizedStringFromSelf(@"Tips_PhotoLibrary_Allow");
-                UIAlertView *photoAllowAlert = [[UIAlertView alloc] initWithTitle:nil message:photoLibraryAllow delegate:self cancelButtonTitle:nil otherButtonTitles:NSLocalizedString(@"Close", nil), nil];
-                photoAllowAlert.tag = AlertTypePhotoAllow;
-                [photoAllowAlert show];
-            }];
+            if (albumPhoto.originalPath.length > 0) { //如果本地有缓存路径，直接发送
+              [self sendPhoto:albumPhoto.originalPath];
+            }
+            else
+            {
+                 dispatch_async(dispatch_get_global_queue(0, 0), ^{
+                 // 根据URL获得相册图片
+                 ALAssetsLibrary* library = [[ALAssetsLibrary alloc] init];
+                 NSURL* url = albumPhoto.assertUrl;
+                 __weak typeof(self) weakSelf = self;
+                 [library assetForURL:url resultBlock:^(ALAsset *asset) {
+                 ALAssetRepresentation *ar = [asset defaultRepresentation];
+                 
+                 UIImageOrientation imageOrientation = (UIImageOrientation)[ar orientation];
+                 CGImageRef imageReference = [ar fullResolutionImage];
+                 UIImage *photoImage = [UIImage imageWithCGImage:imageReference scale:1.0 orientation:imageOrientation];
+                 // 去除图片旋转属性( fullResolutionImage 没有做旋转处理, fullScreenImage 做了旋转处理)
+                 UIImage* fixOrientationImage = [photoImage fixOrientation];
+                 
+                 // 保存到本地
+                 FileCacheManager *fileCacheManager = [FileCacheManager manager];
+                 NSString *path = [fileCacheManager imageUploadCachePath:fixOrientationImage fileName:ar.filename];
+                 
+                 dispatch_async(dispatch_get_main_queue(), ^{
+                     // 发送图片
+                     [weakSelf sendPhoto:path];
+                     //更新对象
+                     albumPhoto.originalPath = path;
+                    });
+                 
+                 } failureBlock:^(NSError *error) {
+                 // 获取图片失败
+                 NSString *photoLibraryAllow = NSLocalizedStringFromSelf(@"Tips_PhotoLibrary_Allow");
+                 UIAlertView *photoAllowAlert = [[UIAlertView alloc] initWithTitle:nil message:photoLibraryAllow delegate:weakSelf cancelButtonTitle:nil otherButtonTitles:NSLocalizedString(@"Close", nil), nil];
+                 photoAllowAlert.tag = AlertTypePhotoAllow;
+                 [photoAllowAlert show];
+                 }];
+                 });
+            }
         }
         
     } else {
@@ -1072,6 +1179,7 @@ typedef enum AlertPayType {
         chatAlertView.tag = AlertTypeInChatAllow;
         [chatAlertView show];
     }
+        
     
 }
 
@@ -1082,17 +1190,54 @@ typedef enum AlertPayType {
  *  @param info   图片的相关信息
  */
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info{
-    [picker dismissViewControllerAnimated:YES completion:^{
+    
         FileCacheManager *fileCacheManager = [FileCacheManager manager];
         UIImage* image = info[UIImagePickerControllerOriginalImage];
         UIImage* fixOrientationImage = [image fixOrientation];
-        
+
         NSString *path = [fileCacheManager imageUploadCachePath:fixOrientationImage fileName:@"secretFile"];
         [self sendPhoto:path];
+
+        //UIImageWriteToSavedPhotosAlbum(fixOrientationImage, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
+
+        [picker dismissViewControllerAnimated:YES completion:NULL];
+    
+    //保存相册更新UI
+    __block ALAssetsLibrary *lib = [[ALAssetsLibrary alloc] init];
+    [lib writeImageToSavedPhotosAlbum:fixOrientationImage.CGImage metadata:nil completionBlock:^(NSURL *assetURL, NSError *error) {
+        lib = nil;
+        if (assetURL) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                // 增加相册图片缓存
+                ChatPhoneAlbumPhoto* albumPhoto = [[ChatPhoneAlbumPhoto alloc] init];
+                // 缩略图片缓存路径
+                albumPhoto.filePath = path;
+                // 原始图片缓存路径
+                albumPhoto.originalPath = path;
+                // 相册原图路径
+                albumPhoto.assertUrl = assetURL;
+                // 插入到第一张
+                [self.photoPathArray insertObject:albumPhoto atIndex:0];
+                [self.photoView reloadData];
+            });
+        }
     }];
     
 }
 
+
+/**
+ // 写入完成相册方法回调
+
+ @param image       图片
+ @param error       错误
+ @param contextInfo 信息
+ */
+//- (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo{
+//    
+////    [self reloadPhotoViewLibrary]; 
+//    
+//}
 /**
  *  结束操作
  *
@@ -1112,7 +1257,7 @@ typedef enum AlertPayType {
 - (void)reloadPhotoViewLibrary {
     // 初始化照片
     ALAssetsLibrary *assetsLibrary = [[ALAssetsLibrary alloc] init];
-    NSMutableArray *photoPathArray = [[NSMutableArray alloc] init];
+    _photoPathArray = [[NSMutableArray alloc] init];
     
     //    [self.photoView reloadData];
     
@@ -1121,17 +1266,19 @@ typedef enum AlertPayType {
     //    [self.photoView reloadItemsAtIndexPaths:array];
     
     // 获取手机相册图片
+    __weak typeof(self) weakSelf = self;
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         [assetsLibrary enumerateGroupsWithTypes:ALAssetsGroupSavedPhotos usingBlock:^(ALAssetsGroup *group, BOOL *stop) {
-            *stop = self.isStop;
+            *stop = weakSelf.isStop;
             
             if (group) {
                 __block NSInteger iCount = 1;
                 __block NSMutableArray* arrayIndexPath = [[NSMutableArray alloc] init];
                 
-                [group enumerateAssetsUsingBlock:^(ALAsset *result, NSUInteger index, BOOL *stop) {
+                [group enumerateAssetsWithOptions:NSEnumerationReverse usingBlock:^(ALAsset *result, NSUInteger index, BOOL *stop) {
+
                     if (result) {
-                        *stop = self.isStop;
+                        *stop = weakSelf.isStop;
                         
                         ALAssetRepresentation *ar = [result defaultRepresentation];
                         
@@ -1142,22 +1289,32 @@ typedef enum AlertPayType {
                         CGImageRef imageReference = [ar fullScreenImage];
                         UIImage* photoImage = [UIImage imageWithCGImage:imageReference scale:1.0 orientation:UIImageOrientationUp];
                         
-                        CGFloat imageScale = photoImage.size.height / (2 * self.photoView.bounds.size.height);
+                        CGFloat imageScale = photoImage.size.height / (2 * weakSelf.photoView.bounds.size.height);
                         CGFloat width = photoImage.size.width / imageScale;
-                        CGSize size = CGSizeMake(width, 2 * self.photoView.bounds.size.height);
+                        CGSize size = CGSizeMake(width, 2 * weakSelf.photoView.bounds.size.height);
                         
                         UIImage* scaleImage = [photoImage scaleToSize:size];
                         
                         NSString* filePath = [[FileCacheManager manager] imageCacheFromPhoneAlbumnPath:scaleImage fileName:ar.filename];
                         
+                        NSString *originalPath = @"";
+                        if (weakSelf.photoPathArray.count < 5) {//缓存最近5张图
+                            // 去除图片旋转属性( fullResolutionImage 没有做旋转处理, fullScreenImage 做了旋转处理)
+                            UIImage* fixOrientationImage = [photoImage fixOrientation];
+                            // 保存到本地
+                            originalPath = [[FileCacheManager manager]  imageUploadCachePath:fixOrientationImage fileName:ar.filename];
+                        }
+
                         // 增加相册图片缓存
                         ChatPhoneAlbumPhoto* albumPhoto = [[ChatPhoneAlbumPhoto alloc] init];
                         // 缩略图片缓存路径
                         albumPhoto.filePath = filePath;
+                        // 原始图片缓存路径
+                        albumPhoto.originalPath = originalPath;
                         // 相册原图路径
                         albumPhoto.assertUrl = ar.url;
                         // 相册Item
-                        [photoPathArray addObject:albumPhoto];
+                        [weakSelf.photoPathArray addObject:albumPhoto];
                         
                         // 刷新界面
                         NSIndexPath* indexPath = [NSIndexPath indexPathForRow:(index + 1) inSection:0];
@@ -1166,12 +1323,7 @@ typedef enum AlertPayType {
                         if( index == group.numberOfAssets - 1 || iCount++ % PreloadPhotoCount == 0 ) {
                             // 加载相册图片完成
                             dispatch_async(dispatch_get_main_queue(), ^{
-                                // 刷新图片选择器数据
-                                self.photoPathArray = photoPathArray;
-                                
                                 // 刷新图片选择器界面
-                                //                                [self.photoView reloadData];
-                                
                                 // 没有显示私密照选择界面||第一个||已经到最后一个
                                 if( !self.photoBtn.selected || self.photoView.count <= 1 || ([self.photoView lastVisableIndex].row == self.photoView.count - 1) ) {
 //                                    NSLog(@"ChatViewController::reloadPhotoViewLibrary( self.photoPathArray.count : %ld )", (long)self.photoPathArray.count);
@@ -1281,7 +1433,8 @@ typedef enum AlertPayType {
     [self.textView setNeedsDisplay];
     
     // 刷新列表
-    [self reloadData:YES scrollToEnd:YES animated:YES];
+    //[self reloadData:YES scrollToEnd:YES animated:YES];
+    [self insertData:msg scrollToEnd:YES animated:YES];
 }
 
 /**
@@ -1290,6 +1443,7 @@ typedef enum AlertPayType {
  *  @param filePath 图片路径
  */
 - (void)sendPhoto:(NSString* )filePath {
+    
     LiveChatMsgItemObject *msg = [self.liveChatManager SendPhoto:self.womanId PhotoPath:filePath];
     self.msgItem = msg;
     
@@ -1302,9 +1456,9 @@ typedef enum AlertPayType {
     } else {
         NSLog(@"ChatViewController::sendPhoto( 发送私密照消息 : %@, 失败 )", msg.secretPhoto.srcFilePath);
     }
-    
     // 刷新列表, 拉到最低
-    [self reloadData:YES scrollToEnd:YES animated:YES];
+    //[self reloadData:YES scrollToEnd:YES animated:YES];
+    [self insertData:msg scrollToEnd:YES animated:YES];
 }
 /**
  *  发送高级表情
@@ -1324,9 +1478,32 @@ typedef enum AlertPayType {
         NSLog(@"ChatViewController::sendEmotion( 发送高级表情消息 : %@, 失败 )",msg.emotionMsg.emotionId);
     }
     
-    [self reloadData:YES scrollToEnd:YES animated:YES];
+    //[self reloadData:YES scrollToEnd:YES animated:YES];
+    [self insertData:msg scrollToEnd:YES animated:YES];
+
 }
 
+/**
+ *  发送小高级表情
+ *
+ *  @param emotionId 表情id
+ */
+- (void)sendSmallEmotion:(NSString *)emotionId {
+    LiveChatMsgItemObject *msg = [self.liveChatManager SendMagicIcon:self.womanId iconId:emotionId];
+    self.msgItem = msg;
+    if( msg != nil ) {
+        NSLog(@"ChatViewController::sendEmotion( 发送小高级表情消息 emotionId : %@ )",msg.magicIconMsg.magicIconId);
+        
+        // 更新最近联系人数据
+        [self updateRecents:msg];
+        
+    } else {
+        NSLog(@"ChatViewController::sendEmotion( 发送小高级表情消息 : %@, 失败 )",msg.magicIconMsg.magicIconId);
+    }
+    
+    //[self reloadData:YES scrollToEnd:YES animated:YES];
+    [self insertData:msg scrollToEnd:YES animated:YES];
+}
 
 /**
  *  重新加载消息到界面
@@ -1341,246 +1518,14 @@ typedef enum AlertPayType {
     NSArray* array = [self.liveChatManager getMsgsWithUser:self.womanId];
     for(LiveChatMsgItemObject* msg in array) {
         Message* item = [[Message alloc] init];
-        item.liveChatMsgItemObject = msg;
-        item.msgId = msg.msgId;
-        if( msg.msgType == LCMessageItem::MessageType::MT_Custom ) {
-            // 自定义消息
-            Message* custom = [self.msgCustomDict valueForKey:[NSString stringWithFormat:@"%ld", (long)msg.msgId]];
-            if( custom != nil ) {
-                item = [custom copy];
-            }
-            
-        } else {
-            // 其他
-            
-            // 方向
-            switch (msg.sendType) {
-                case LCMessageItem::SendType::SendType_Send:{
-                    // 发出去的消息
-                    item.sender = MessageSenderSelf;
-                    
-                }break;
-                case LCMessageItem::SendType::SendType_Recv:{
-                    // 接收到的消息
-                    item.sender = MessageSenderLady;
-                    
-                }break;
-                case LCMessageItem::SendType::SendType_System:{
-                    // 系统消息
-                }break;
-                default:
-                    break;
-            }
-            
-            // 类型
-            switch (msg.msgType) {
-                case LCMessageItem::MessageType::MT_Text:{
-                    // 文本
-                    item.type = MessageTypeText;
-                    item.text = msg.textMsg.displayMsg;
-                    item.attText = [self parseMessageTextEmotion:item.text font:[UIFont systemFontOfSize:TextMessageFontSize]];
-                    
-                }break;
-                case LCMessageItem::MessageType::MT_System:{
-                    item.type = MessageTypeSystemTips;
-                    
-                    switch (msg.systemMsg.codeType) {
-                        case LCSystemItem::MESSAGE:{
-                            // 普通系统消息
-                            item.text = msg.systemMsg.message;
-                            
-                        }break;
-                        case LCSystemItem::TRY_CHAT_END:{
-                            // 试聊结束消息
-                            item.text = msg.systemMsg.message;
-                            item.text = NSLocalizedStringFromSelf(@"Tips_Your_Free_Chat_Is_Ended");
-                            
-                        }break;
-                        case LCSystemItem::NOT_SUPPORT_TEXT:{
-                            // 不支持文本消息
-                            item.text = msg.systemMsg.message;
-                            item.text = NSLocalizedStringFromSelf(@"Tips_Text_Not_Support");
-                            
-                        }break;
-                        case LCSystemItem::NOT_SUPPORT_EMOTION:{
-                            // 试聊券系统消息
-                            item.text = msg.systemMsg.message;
-                            item.text = NSLocalizedStringFromSelf(@"Tips_Emotion_Not_Support");
-                            
-                        }break;
-                        case LCSystemItem::NOT_SUPPORT_VOICE:{
-                            // 不支持语音消息
-                            item.text = msg.systemMsg.message;
-                            item.text = NSLocalizedStringFromSelf(@"Tips_Voice_Not_Support");
-                            
-                        }break;
-                        case LCSystemItem::NOT_SUPPORT_PHOTO:{
-                            // 不支持私密照消息
-                            item.text = msg.systemMsg.message;
-                            item.text = NSLocalizedStringFromSelf(@"Tips_Photo_Not_Support");
-                            
-                        }break;
-                        case LCSystemItem::NOT_SUPPORT_MAGICICON:{
-                            // 不支持小高表消息
-                            item.text = msg.systemMsg.message;
-                            item.text = NSLocalizedStringFromSelf(@"Tips_MagicIcon_Not_Support");
-                            
-                        }break;
-                        default:
-                            break;
-                    }
-                    
-                    item.attText = [self parseMessage:item.text font:[UIFont systemFontOfSize:SystemMessageFontSize] color:MessageGrayColor];
-                    
-                }break;
-                case LCMessageItem::MessageType::MT_Warning:{
-                    item.type = MessageTypeWarningTips;
-                    switch (msg.warningMsg.codeType) {
-                        case LCWarningItem::CodeType::NOMONEY:{
-                            switch (self.memberType) {
-                                case MonthFeeTypeNoramlMember:
-                                case MonthFeeTypeFeeMember:{
-                                    item.text = msg.warningMsg.message;
-                                    NSString* tips = NSLocalizedStringFromSelf(@"Warning_Error_Tips_No_Money");
-                                    NSString* linkMessage = NSLocalizedStringFromSelf(@"Tips_Add_Credit");
-                                    item.attText = [self parseNoMomenyWarningMessage:tips linkMessage:linkMessage font:[UIFont systemFontOfSize:WarningMessageFontSize] color:MessageGrayColor];
-                                }break;
-                                case MonthFeeTypeNoFirstFeeMember:
-                                case MonthFeeTypeFirstFeeMember:{
-                                    [self.msgIdArray addObject:[NSNumber numberWithInteger:msg.msgId]];
-                                }break;
-                                default:
-                                    break;
-                            }
-                        }break;
-                        default:{
-                            item.text = msg.warningMsg.message;
-                            item.attText = [self parseMessage:item.text font:[UIFont systemFontOfSize:SystemMessageFontSize] color:MessageGrayColor];
-                            
-                        }break;
-                            
-                    }
-                }break;
-                case LCMessageItem::MessageType::MT_Photo:{
-                    item.type = MessageTypePhoto;
-                    item.secretPhotoImage = [UIImage imageNamed:@"Chat-SecretPlaceholder"];
-                    
-                    // 私密照
-                    switch (item.sender) {
-                        case MessageSenderLady:{
-                            if (msg.secretPhoto) {
-                                // 已经购买
-                                if (msg.secretPhoto.isGetCharge) {
-                                    // 获取本地清晰图片
-                                    // 必须先重文件读取完整data, 如果用imageWithContentsOfFile读取会被修改的文件会crash
-                                    NSData *data = [NSData dataWithContentsOfFile:msg.secretPhoto.showSrcFilePath];
-                                    UIImage *secretPhotoImage = [UIImage imageWithData:data];
-                                    
-                                    if ( secretPhotoImage == nil ) {
-                                        // 获取清晰图
-                                        [self.liveChatManager getPhoto:msg.fromId msgId:(int)msg.msgId sizeType:GPT_LARGE];
-                                        
-                                    } else {
-                                        item.secretPhotoImage = secretPhotoImage;
-                                    }
-                                    
-                                } else {
-                                    // 未购买
-                                    // 获取本地模糊图
-                                    NSData *data = [NSData dataWithContentsOfFile:msg.secretPhoto.showFuzzyFilePath];
-                                    UIImage *secretPhotoImage = [UIImage imageWithData:data];
-                                    
-                                    if ( secretPhotoImage == nil ) {
-                                        // 获取模糊图
-                                        [self.liveChatManager getPhoto:msg.fromId msgId:(int)msg.msgId sizeType:GPT_LARGE];
-                                    } else {
-                                        item.secretPhotoImage = secretPhotoImage;
-                                    }
-                                }
-                            }
-                        }break;
-                        case MessageSenderSelf:{
-                            if (msg.secretPhoto) {
-                                // 显示清晰图
-                                NSData *data = nil;
-                                UIImage* secretPhotoImage = nil;
-                                if( msg.secretPhoto.srcFilePath.length > 0 ) {
-                                    data = [NSData dataWithContentsOfFile:msg.secretPhoto.srcFilePath];
-                                    secretPhotoImage = [UIImage imageWithData:data];
-                                } else if( msg.secretPhoto.showSrcFilePath.length > 0 ) {
-                                    data = [NSData dataWithContentsOfFile:msg.secretPhoto.showSrcFilePath];
-                                    secretPhotoImage = [UIImage imageWithData:data];
-                                }
-                                
-                                if ( secretPhotoImage == nil ) {
-                                    [self.liveChatManager getPhoto:msg.toId msgId:(int)msg.msgId sizeType:GPT_LARGE];
-                                } else {
-                                    item.secretPhotoImage = secretPhotoImage;
-                                }
-                            }
-                        }
-                            
-                        default:
-                            break;
-                    }
-                    
-                }break;
-                case LCMessageItem::MessageType::MT_Emotion:{
-                    item.type = MessageTypeLargeEmotion;
-                    switch (item.sender) {
-                        case MessageSenderLady:
-                        case MessageSenderSelf:{
-                            NSString* emotionId = msg.emotionMsg.emotionId;
-                            
-                            // 设置缩略图
-                            if( msg.emotionMsg.imagePath.length > 0 ) {
-                                NSString* imagePath = msg.emotionMsg.imagePath;
-                                item.emotionDefault = [self getEmotionImageFromCache:emotionId imagePath:imagePath];
-                            }
-                            
-                            // 设置动画图片
-                            if (msg.emotionMsg.playBigImages.count > 0) {
-                                item.emotionAnimationArray = [self getEmotionImageArrayFromCache:emotionId imagePathArray:msg.emotionMsg.playBigImages];
-                            } else {
-                                [self.liveChatManager GetEmotionPlayImage:emotionId];
-                            }
-                            
-                        }break;
-
-                        default:
-                            break;
-                    }
-                }break;
-                default:
-                    break;
-            }
-            
-            // 状态
-            switch (msg.statusType) {
-                case LCMessageItem::StatusType::StatusType_Processing:{
-                    // 处理中
-                    item.status = MessageStatusProcessing;
-                }break;
-                case LCMessageItem::StatusType::StatusType_Fail:{
-                    // 失败
-                    item.status = MessageStatusFail;
-                }break;
-                case LCMessageItem::StatusType::StatusType_Finish:{
-                    // 完成
-                    item.status = MessageStatusFinish;
-                }break;
-                    
-                default:
-                    break;
-            }
-        }
-        
+        [self reloadMessage:item fromLiveChatMsgItemObject:msg];
         [dataArray addObject:item];
     }
-    self.msgArray = dataArray;
-
     if(isReloadView) {
         dispatch_async(dispatch_get_main_queue(), ^{
+            
+            self.msgArray = dataArray;
+            
             [self.tableView reloadData];
             
             if( scrollToEnd ) {
@@ -1590,7 +1535,341 @@ typedef enum AlertPayType {
     }
         
     });
+}
 
+/**
+ *  插入加载消息到界面
+ *
+ *  @param scrollToEnd 是否刷新界面
+ */
+- (void)insertData:(LiveChatMsgItemObject *)object scrollToEnd:(BOOL)scrollToEnd animated:(BOOL)animated
+{
+    __weak typeof(self) weakSelf = self;
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        Message* item = [[Message alloc] init];
+        [weakSelf reloadMessage:item fromLiveChatMsgItemObject:object];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            [self.msgArray addObject:item];
+            [self.tableView beginUpdates];
+            [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:self.msgArray.count-1 inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
+            [self.tableView endUpdates];
+            
+            if( scrollToEnd ) {
+                [self scrollToEnd:animated];
+            }
+        });
+        
+    });
+}
+
+/**
+ *  更新消息数据
+ *
+ *  @param scrollToEnd 是否刷新界面
+ */
+- (void)updataMessageData:(LiveChatMsgItemObject *)object scrollToEnd:(BOOL)scrollToEnd animated:(BOOL)animated
+{
+   
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        Message* item = [[Message alloc] init];
+        [self reloadMessage:item fromLiveChatMsgItemObject:object];
+        //为了兼容cell插入数据时动画不冲突，延迟执行刷新
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            NSInteger count = 0;
+            for (int i = 0; i < self.msgArray.count; i++) {
+                Message* msg = self.msgArray[i];
+                if (msg.msgId == object.msgId) {
+                    count = i;
+                    break;
+                }
+            }
+                [self.msgArray removeObjectAtIndex:count];
+                [self.msgArray insertObject:item atIndex:count];
+                
+                [self.tableView beginUpdates];
+                [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:count inSection:0]]  withRowAnimation:UITableViewRowAnimationNone];
+                [self.tableView endUpdates];
+                
+                if( scrollToEnd ) {
+                    [self scrollToEnd:animated];
+                }
+        });
+        
+    });
+}
+
+/**
+ *  Message赋值逻辑
+ *
+ *  @param msg
+ */
+- (void)reloadMessage:(Message *)item fromLiveChatMsgItemObject:(LiveChatMsgItemObject *)msg
+{
+    item.liveChatMsgItemObject = msg;
+    item.msgId = msg.msgId;
+    if( msg.msgType == LCMessageItem::MessageType::MT_Custom ) {
+        // 自定义消息
+        Message* custom = [self.msgCustomDict valueForKey:[NSString stringWithFormat:@"%ld", (long)msg.msgId]];
+        if( custom != nil ) {
+            item = [custom copy];
+        }
+        
+    } else {
+        // 其他
+        
+        // 方向
+        switch (msg.sendType) {
+            case LCMessageItem::SendType::SendType_Send:{
+                // 发出去的消息
+                item.sender = MessageSenderSelf;
+                
+            }break;
+            case LCMessageItem::SendType::SendType_Recv:{
+                // 接收到的消息
+                item.sender = MessageSenderLady;
+                
+            }break;
+            case LCMessageItem::SendType::SendType_System:{
+                // 系统消息
+            }break;
+            default:
+                break;
+        }
+        
+        // 类型
+        switch (msg.msgType) {
+            case LCMessageItem::MessageType::MT_Text:{
+                // 文本
+                item.type = MessageTypeText;
+                item.text = msg.textMsg.displayMsg;
+                item.attText = [self parseMessageTextEmotion:item.text font:[UIFont systemFontOfSize:TextMessageFontSize]];
+                
+            }break;
+            case LCMessageItem::MessageType::MT_System:{
+                item.type = MessageTypeSystemTips;
+                
+                switch (msg.systemMsg.codeType) {
+                    case LCSystemItem::MESSAGE:{
+                        // 普通系统消息
+                        item.text = msg.systemMsg.message;
+                        
+                    }break;
+                    case LCSystemItem::TRY_CHAT_END:{
+                        // 试聊结束消息
+                        item.text = msg.systemMsg.message;
+                        item.text = NSLocalizedStringFromSelf(@"Tips_Your_Free_Chat_Is_Ended");
+                        
+                    }break;
+                    case LCSystemItem::NOT_SUPPORT_TEXT:{
+                        // 不支持文本消息
+                        item.text = msg.systemMsg.message;
+                        item.text = NSLocalizedStringFromSelf(@"Tips_Text_Not_Support");
+                        
+                    }break;
+                    case LCSystemItem::NOT_SUPPORT_EMOTION:{
+                        // 试聊券系统消息
+                        item.text = msg.systemMsg.message;
+                        item.text = NSLocalizedStringFromSelf(@"Tips_Emotion_Not_Support");
+                        
+                    }break;
+                    case LCSystemItem::NOT_SUPPORT_VOICE:{
+                        // 不支持语音消息
+                        item.text = msg.systemMsg.message;
+                        item.text = NSLocalizedStringFromSelf(@"Tips_Voice_Not_Support");
+                        
+                    }break;
+                    case LCSystemItem::NOT_SUPPORT_PHOTO:{
+                        // 不支持私密照消息
+                        item.text = msg.systemMsg.message;
+                        item.text = NSLocalizedStringFromSelf(@"Tips_Photo_Not_Support");
+                        
+                    }break;
+                    case LCSystemItem::NOT_SUPPORT_MAGICICON:{
+                        // 不支持小高表消息
+                        item.text = msg.systemMsg.message;
+                        item.text = NSLocalizedStringFromSelf(@"Tips_MagicIcon_Not_Support");
+                        
+                    }break;
+                    default:
+                        break;
+                }
+                
+                item.attText = [self parseMessage:item.text font:[UIFont systemFontOfSize:SystemMessageFontSize] color:MessageGrayColor];
+                
+            }break;
+            case LCMessageItem::MessageType::MT_Warning:{
+                item.type = MessageTypeWarningTips;
+                switch (msg.warningMsg.codeType) {
+                    case LCWarningItem::CodeType::NOMONEY:{
+                        switch (self.memberType) {
+                            case MonthFeeTypeNoramlMember:
+                            case MonthFeeTypeFeeMember:{
+                                item.text = msg.warningMsg.message;
+                                NSString* tips = NSLocalizedStringFromSelf(@"Warning_Error_Tips_No_Money");
+                                NSString* linkMessage = NSLocalizedStringFromSelf(@"Tips_Add_Credit");
+                                item.attText = [self parseNoMomenyWarningMessage:tips linkMessage:linkMessage font:[UIFont systemFontOfSize:WarningMessageFontSize] color:MessageGrayColor];
+                            }break;
+                            case MonthFeeTypeNoFirstFeeMember:
+                            case MonthFeeTypeFirstFeeMember:{
+                                [self.msgIdArray addObject:[NSNumber numberWithInteger:msg.msgId]];
+                            }break;
+                            default:
+                                break;
+                        }
+                    }break;
+                    default:{
+                        item.text = msg.warningMsg.message;
+                        item.attText = [self parseMessage:item.text font:[UIFont systemFontOfSize:SystemMessageFontSize] color:MessageGrayColor];
+                        
+                    }break;
+                        
+                }
+            }break;
+            case LCMessageItem::MessageType::MT_Photo:{
+                item.type = MessageTypePhoto;
+                item.secretPhotoImage = [UIImage imageNamed:@"Chat-SecretPlaceholder"];
+                
+                // 私密照
+                switch (item.sender) {
+                    case MessageSenderLady:{
+                        if (msg.secretPhoto) {
+                            /*
+                            // 已经购买
+                            if (msg.secretPhoto.isGetCharge) {
+                                // 获取本地清晰图片
+                                // 必须先重文件读取完整data, 如果用imageWithContentsOfFile读取会被修改的文件会crash
+                                NSData *data = [NSData dataWithContentsOfFile:msg.secretPhoto.showSrcFilePath];
+                                UIImage *secretPhotoImage = [UIImage imageWithData:data];
+                                
+                                if ( secretPhotoImage == nil ) {
+                                    // 获取清晰图
+                                    [self.liveChatManager getPhoto:msg.fromId photoId:msg.secretPhoto.photoId sizeType:GPT_LARGE sendType:msg.sendType];
+                                    
+                                    
+                                } else {
+                                    item.secretPhotoImage = secretPhotoImage;
+                                }
+                                
+                            } else {
+                                // 未购买
+                                // 获取本地模糊图
+                                NSData *data = [NSData dataWithContentsOfFile:msg.secretPhoto.showFuzzyFilePath];
+                                UIImage *secretPhotoImage = [UIImage imageWithData:data];
+                                
+                                if ( secretPhotoImage == nil ) {
+                                    // 获取模糊图
+                                    [self.liveChatManager getPhoto:msg.fromId photoId:msg.secretPhoto.photoId sizeType:GPT_LARGE sendType:msg.sendType];;
+                                    
+                                } else {
+                                    item.secretPhotoImage = secretPhotoImage;
+                                }
+                            }
+                             */
+                        }
+                    }break;
+                    case MessageSenderSelf:{
+                        if (msg.secretPhoto) {
+                            // 显示清晰图
+//                            NSData *data = nil;
+//                            UIImage* secretPhotoImage = nil;
+//                            if( msg.secretPhoto.srcFilePath.length > 0 ) {
+//                                data = [NSData dataWithContentsOfFile:msg.secretPhoto.srcFilePath];
+//                                secretPhotoImage = [UIImage imageWithData:data];
+//                            } else if( msg.secretPhoto.showSrcFilePath.length > 0 ) {
+//                                data = [NSData dataWithContentsOfFile:msg.secretPhoto.showSrcFilePath];
+//                                secretPhotoImage = [UIImage imageWithData:data];
+//                            }
+//                            
+//                            if ( secretPhotoImage == nil ) {
+//                                [self.liveChatManager getPhoto:msg.toId photoId:msg.secretPhoto.photoId sizeType:GPT_LARGE sendType:msg.sendType];
+//                                
+//                            } else {
+//                                item.secretPhotoImage = secretPhotoImage;
+//                            }
+                        }
+                    }
+                        
+                    default:
+                        break;
+                }
+                
+            }break;
+            case LCMessageItem::MessageType::MT_Emotion:{
+                item.type = MessageTypeLargeEmotion;
+                switch (item.sender) {
+                    case MessageSenderLady:
+                    case MessageSenderSelf:{
+                        NSString* emotionId = msg.emotionMsg.emotionId;
+                        
+                        // 设置缩略图
+                        if( msg.emotionMsg.imagePath.length > 0 ) {
+                            NSString* imagePath = msg.emotionMsg.imagePath;
+                            item.emotionDefault = [self getEmotionImageFromCache:emotionId imagePath:imagePath];
+                        }
+                        
+                        // 设置动画图片
+                        if (msg.emotionMsg.playBigImages.count > 0) {
+                            item.emotionAnimationArray = [self getEmotionImageArrayFromCache:emotionId imagePathArray:msg.emotionMsg.playBigImages];
+                        } else {
+                            [self.liveChatManager GetEmotionPlayImage:emotionId];
+                        }
+                        
+                    }break;
+                        
+                    default:
+                        break;
+                }
+            }break;
+            case LCMessageItem::MessageType::MT_MagicIcon:{
+                item.type = MessageTypeSmallEmotion;
+                switch (item.sender) {
+                    case MessageSenderLady:
+                    case MessageSenderSelf:{
+                        NSString* emotionId = msg.magicIconMsg.magicIconId;
+                        // 设置缩略图
+                        if( msg.magicIconMsg.thumbPath.length > 0 ) {
+                            NSString* imagePath = msg.magicIconMsg.thumbPath;
+                            //                                item.emotionDefault = [self getEmotionImageFromCache:emotionId imagePath:imagePath];
+                            item.emotionDefault = [self getSmallThumbEmotionImageFromCache:emotionId imagePath:imagePath];
+                        }
+                        else
+                        {
+                            if (emotionId.length > 0) {
+                                [self.liveChatManager GetMagicIconSrcImage:emotionId];
+                            }
+                        }
+                        
+                    }break;
+                        
+                    default:
+                        break;
+                }
+            }break;
+            default:
+                break;
+        }
+        
+        // 状态
+        switch (msg.statusType) {
+            case LCMessageItem::StatusType::StatusType_Processing:{
+                // 处理中
+                item.status = MessageStatusProcessing;
+            }break;
+            case LCMessageItem::StatusType::StatusType_Fail:{
+                // 失败
+                item.status = MessageStatusFail;
+            }break;
+            case LCMessageItem::StatusType::StatusType_Finish:{
+                // 完成
+                item.status = MessageStatusFinish;
+            }break;
+                
+            default:
+                break;
+        }
+    }
 }
 
 /**
@@ -1754,7 +2033,9 @@ typedef enum AlertPayType {
  */
 - (void)addMothFeeViewShow {
 //    self.textView.userInteractionEnabled = NO;
-    NSString *tips = NSLocalizedStringFromSelf(@"Tips_Buy_MonthFee");
+//    NSString *tips = NSLocalizedStringFromSelf(@"Tips_Buy_MonthFee");
+    NSString *price = NSLocalizedString(@"Tips_MonthFee_Price", nil);
+    NSString *tips = [NSString stringWithFormat:NSLocalizedString(@"Tips_Buy_MonthFee", nil),price];
     UIAlertView *monthFeeAlertView = [[UIAlertView alloc] initWithTitle:nil message:tips delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
     monthFeeAlertView.tag = AlertTypePayMonthFee;
     [monthFeeAlertView show];
@@ -1811,18 +2092,27 @@ typedef enum AlertPayType {
         self.largeEmotionVerson = items.version;
         
         NSMutableArray* array = [NSMutableArray array];
+        NSArray *sortArray = [NSArray array];
         for (EmotionItemObject *emotion in emotions) {
-            ChatHighGradeEmotion* item = [ChatHighGradeEmotion alloc];
+            ChatHighGradeEmotion* item = [[ChatHighGradeEmotion alloc] init];
             item.emotionItemObject = emotion;
             [array addObject:item];
             
             // 手动下载/更新高级表情图片文件
             [self.liveChatManager GetEmotionImage:emotion.emotionId];
         }
+
         // 排序
-        [array sortUsingFunction:sortLargeEmotion context:nil];
-        self.largeEmotionListArray = array;
+        NSSortDescriptor *tagDesc = [NSSortDescriptor sortDescriptorWithKey:@"emotionItemObject.tagId" ascending:NO];
+        NSSortDescriptor *typeDesc = [NSSortDescriptor sortDescriptorWithKey:@"emotionItemObject.typeId" ascending:NO];
+        NSSortDescriptor *emotionDesc = [NSSortDescriptor sortDescriptorWithKey:@"emotionItemObject.sortId" ascending:NO];
+        NSArray *descs = [NSArray arrayWithObjects:tagDesc, typeDesc, emotionDesc,nil];
+        
+        sortArray = [array sortedArrayUsingDescriptors:descs];
+        self.largeEmotionListArray = sortArray;
+
     }
+
 }
 
 - (ChatHighGradeEmotion *)getLargeEmotionFromCache:(NSString * _Nonnull)emotionId {
@@ -1852,7 +2142,7 @@ NSInteger sortLargeEmotion(id _Nonnull obj1, id _Nonnull obj2, void* _Nullable c
     
     // 比较emotionId
     NSComparisonResult result = NSOrderedSame;
-    result = [emotionItem1.emotionItemObject.emotionId compare:emotionItem2.emotionItemObject.emotionId];
+    result = [emotionItem1.emotionItemObject.tagId compare:emotionItem2.emotionItemObject.tagId];
     
     return result;
 }
@@ -1880,6 +2170,73 @@ NSInteger sortLargeEmotion(id _Nonnull obj1, id _Nonnull obj2, void* _Nullable c
         [self.emotionImageArrayCacheDict setValue:imageArray forKey:emotionId];
     }
     return imageArray;
+}
+/**
+ 加载小高表配置和列表
+ */
+- (void)reloadSmallEmotion {
+    LiveChatMagicIconConfigItemObject *items = [self.liveChatManager GetMagicIconConfigItem];
+    NSArray<MagicIconItemObject *> *emotions = items.magicIconList;
+    NSMutableArray* array = [NSMutableArray array];
+    for (MagicIconItemObject *emotion in emotions) {
+        ChatSmallGradeEmotion* item = [[ChatSmallGradeEmotion alloc] init];
+        item.magicIconItemObject = emotion;
+        [array addObject:item];
+        
+        // 手动下载/更新小高级表情图片文件
+        [self.liveChatManager GetMagicIconThumbImage:emotion.iconId];
+    }
+    // 排序
+    [array sortUsingFunction:sortSmallThumbEmotion context:nil];
+    self.smallEmotionListArray = array;
+}
+
+- (ChatSmallGradeEmotion *)getSmallThumbEmotionFromCache:(NSString * _Nonnull)emotionId {
+    ChatSmallGradeEmotion* item = nil;
+    for (ChatSmallGradeEmotion *emotion in self.smallEmotionListArray) {
+        if( [emotion.magicIconItemObject.iconId isEqualToString:emotionId] ) {
+            item = emotion;
+            break;
+        }
+    }
+    return item;
+}
+
+
+NSInteger sortSmallThumbEmotion(id _Nonnull obj1, id _Nonnull obj2, void* _Nullable context)
+{
+      NSComparisonResult result = NSOrderedSame;
+    ChatSmallGradeEmotion* emotionItem1 = (ChatSmallGradeEmotion *)obj1;
+    ChatSmallGradeEmotion* emotionItem2 = (ChatSmallGradeEmotion *)obj2;
+    
+//    // tag
+    if (NSOrderedSame == result) {
+        if (emotionItem1.magicIconItemObject.typeId != emotionItem2.magicIconItemObject.typeId) {
+            result = (emotionItem1.magicIconItemObject.typeId ? NSOrderedAscending : NSOrderedDescending);
+        }
+    }
+    
+    
+    if (NSOrderedSame == result) {
+        if (emotionItem1.magicIconItemObject.iconId != emotionItem2.magicIconItemObject.iconId) {
+            result = (emotionItem1.magicIconItemObject.iconId ? NSOrderedAscending : NSOrderedDescending);
+        }
+    }
+    
+    
+    return result;
+}
+
+
+- (UIImage *)getSmallThumbEmotionImageFromCache:(NSString *)emotionId imagePath:(NSString *)imagePath {
+    UIImage* image = [self.smallEmotionImageCacheDict valueForKey:emotionId];;
+    if( image == nil ) {
+        NSData *data = [NSData dataWithContentsOfFile:imagePath];
+        image = [UIImage imageWithData:data];
+        [self.smallEmotionImageCacheDict setValue:image forKey:emotionId];
+    }
+    
+    return image;
 }
 
 
@@ -2150,6 +2507,24 @@ NSInteger sortLargeEmotion(id _Nonnull obj1, id _Nonnull obj2, void* _Nullable c
                     break;
             }
         }break;
+        case MessageTypeSmallEmotion:{
+            //  小高级表情
+            switch (item.sender) {
+                case MessageSenderLady:{
+                    // 对方
+                    CGSize viewSize = CGSizeMake(self.tableView.frame.size.width, [ChatSmallEmotionLadyTableViewCell cellHeight]);
+                    height = viewSize.height;
+                }break;
+                case MessageSenderSelf:{
+                    // 自己
+                    CGSize viewsize = CGSizeMake(self.tableView.frame.size.width, [ChatSmallEmotionSelfTableViewCell cellHeight]);
+                    return viewsize.height;
+                }break;
+                    
+                default:
+                    break;
+            }
+        }break;
         default: {
             
         }break;
@@ -2299,10 +2674,37 @@ NSInteger sortLargeEmotion(id _Nonnull obj1, id _Nonnull obj2, void* _Nullable c
                     //用于刷新图片
                     cell.detailLabel.text = [NSString stringWithFormat:@"\"%@\"", item.liveChatMsgItemObject.secretPhoto.photoDesc, nil];
                     
-                    //处理图片显示的大小
-                    if (item.secretPhotoImage) {
-                        cell.secretPhoto.image = item.secretPhotoImage;
+                    //已购买
+                    if (item.liveChatMsgItemObject.secretPhoto.isGetCharge) {
+                        // 必须先重文件读取完整data, 如果用imageWithContentsOfFile读取会被修改的文件会crash
+                        NSData *data = [NSData dataWithContentsOfFile:item.liveChatMsgItemObject.secretPhoto.showSrcFilePath];
+                        UIImage *secretPhotoImage = [UIImage imageWithData:data];
                         
+                        if ( secretPhotoImage == nil ) {
+                            // 获取清晰图
+                            [self.liveChatManager getPhoto:item.liveChatMsgItemObject.fromId photoId:item.liveChatMsgItemObject.secretPhoto.photoId sizeType:GPT_LARGE sendType:item.liveChatMsgItemObject.sendType];
+                            
+                        } else {
+                            cell.secretPhoto.image = secretPhotoImage;
+                        }
+                    }
+                    else //未购买
+                    {
+                        // 获取本地模糊图
+                        NSData *data = [NSData dataWithContentsOfFile:item.liveChatMsgItemObject.secretPhoto.showFuzzyFilePath];
+                        UIImage *secretPhotoImage = [UIImage imageWithData:data];
+                        
+                        if ( secretPhotoImage == nil ) {
+                            // 获取模糊图
+                            [self.liveChatManager getPhoto:item.liveChatMsgItemObject.fromId photoId:item.liveChatMsgItemObject.secretPhoto.photoId sizeType:GPT_LARGE sendType:item.liveChatMsgItemObject.sendType];;
+                            
+                        } else {
+                            cell.secretPhoto.image = secretPhotoImage;
+                        }
+                    }
+                    //处理图片显示的大小
+                    if (cell.secretPhoto.image) {
+
                         if (cell.secretPhoto.image.size.height > 0) {
                             
                             CGFloat heightScale = cell.secretPhoto.frame.size.height / cell.secretPhoto.image.size.height;
@@ -2332,9 +2734,16 @@ NSInteger sortLargeEmotion(id _Nonnull obj1, id _Nonnull obj2, void* _Nullable c
                     result.tag = indexPath.row;
                     cell.delegate = self;
                     
+                    if(item.liveChatMsgItemObject.secretPhoto.srcFilePath.length > 0 ) {
+                        cell.secretPhoto.image = [UIImage imageWithData:[NSData dataWithContentsOfFile:item.liveChatMsgItemObject.secretPhoto.srcFilePath]];
+                    } else if( item.liveChatMsgItemObject.secretPhoto.showSrcFilePath.length > 0 ) {
+                        cell.secretPhoto.image = [UIImage imageWithData:[NSData dataWithContentsOfFile:item.liveChatMsgItemObject.secretPhoto.showSrcFilePath]];
+                    }
+                    
+                    
                     //处理图片显示的大小
-                    if (item.secretPhotoImage != nil) {
-                        cell.secretPhoto.image = item.secretPhotoImage;
+                    if (cell.secretPhoto.image != nil) {
+                        //cell.secretPhoto.image = item.secretPhotoImage;
                         
                         if (cell.secretPhoto.image.size.height > 0) {
                             CGFloat receivePhotoWidth = cell.secretPhoto.image.size.width * cell.secretPhoto.frame.size.height / cell.secretPhoto.image.size.height;
@@ -2346,6 +2755,10 @@ NSInteger sortLargeEmotion(id _Nonnull obj1, id _Nonnull obj2, void* _Nullable c
                             
                             //                            [cell setNeedsLayout];
                         }
+                    }
+                    else
+                    {
+                        [self.liveChatManager getPhoto:item.liveChatMsgItemObject.toId photoId:item.liveChatMsgItemObject.secretPhoto.photoId sizeType:GPT_LARGE sendType:item.liveChatMsgItemObject.sendType];
                     }
                     
                     //获取图片发送的状态,显示图片以及加载状态
@@ -2403,7 +2816,7 @@ NSInteger sortLargeEmotion(id _Nonnull obj1, id _Nonnull obj2, void* _Nullable c
                     
                     cell.largeEmotionImageView.defaultImage = item.emotionDefault;
                     cell.largeEmotionImageView.animationArray = item.emotionAnimationArray;
-                    [cell.largeEmotionImageView play];
+                    [cell.largeEmotionImageView playGif:item.liveChatMsgItemObject.emotionMsg.imagePath];
 
                 }break;
                 case MessageSenderSelf:{
@@ -2413,7 +2826,57 @@ NSInteger sortLargeEmotion(id _Nonnull obj1, id _Nonnull obj2, void* _Nullable c
                     
                     cell.largeEmotionImageView.defaultImage = item.emotionDefault;
                     cell.largeEmotionImageView.animationArray = item.emotionAnimationArray;
-                    [cell.largeEmotionImageView play];
+                    [cell.largeEmotionImageView playGif:item.liveChatMsgItemObject.emotionMsg.imagePath];
+                    
+                    switch (item.status) {
+                        case MessageStatusProcessing: {
+                            // 发送中
+                            [cell.sendingLoadingView stopAnimating];
+                            cell.retryBtn.hidden = YES;
+                            
+                        }break;
+                        case MessageStatusFinish: {
+                            // 发送成功
+                            [cell.sendingLoadingView stopAnimating];
+                            cell.retryBtn.hidden = YES;
+                            
+                        }break;
+                        case MessageStatusFail:{
+                            // 发送失败
+                            [cell.sendingLoadingView stopAnimating];
+                            cell.retryBtn.hidden = NO;
+                            cell.delegate = self;
+                            
+                        }break;
+                        default: {
+                            // 未知
+                            [cell.sendingLoadingView stopAnimating];
+                            cell.retryBtn.hidden = YES;
+                            cell.delegate = self;
+                            
+                        }break;
+                    }
+                }break;
+                    
+                default:
+                    break;
+            }
+        }break;
+        case MessageTypeSmallEmotion:{
+            // 小高级表情
+            switch (item.sender) {
+                case MessageSenderLady:{
+                    ChatSmallEmotionLadyTableViewCell *cell = [ChatSmallEmotionLadyTableViewCell getUITableViewCell:tableView];
+                    result = cell;
+                    cell.smallEmotonImageView.image = item.emotionDefault;
+                    
+                    
+                }break;
+                case MessageSenderSelf:{
+                    ChatSmallEmotionSelfTableViewCell *cell = [ChatSmallEmotionSelfTableViewCell getUITableViewCell:tableView];
+                    result = cell;
+                    result.tag = indexPath.row;
+                    cell.smallEmotonImageView.image = item.emotionDefault;
                     
                     switch (item.status) {
                         case MessageStatusProcessing: {
@@ -2474,6 +2937,18 @@ NSInteger sortLargeEmotion(id _Nonnull obj1, id _Nonnull obj2, void* _Nullable c
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
     [self closeAllInputView];
 }
+- (void)chatNormalSmallEmotionViewDidScroll:(ChatNomalSmallEmotionView *)normalSmallView {
+    int pageNum =(int)(normalSmallView.pageScrollView.contentOffset.x / normalSmallView.pageScrollView.frame.size.width + 0.5);
+    normalSmallView.pageView.currentPage = pageNum;
+}
+
+
+- (void)chatNormalSmallEmotionViewDidEndDecelerating:(ChatNomalSmallEmotionView *)normalSmallView {
+    CGPoint offsetofScrollView = normalSmallView.pageScrollView.contentOffset;
+    self.ScrollContentOffset = offsetofScrollView;
+    [normalSmallView.pageScrollView setContentOffset:offsetofScrollView];
+    
+}
 
 #pragma mark - 处理键盘回调
 - (void)moveInputBarWithKeyboardHeight:(CGFloat)height withDuration:(NSTimeInterval)duration {
@@ -2526,6 +3001,9 @@ NSInteger sortLargeEmotion(id _Nonnull obj1, id _Nonnull obj2, void* _Nullable c
     
     self.keyboardHeight = keyboardRect.size.height;
     
+    // 从表情键盘切换成系统键盘,保存普通表情的富文本属性
+    self.emotionAttributedString = self.textView.attributedText;
+    
     // Animate the resize of the text view's frame in sync with the keyboard's appearance.
     [self moveInputBarWithKeyboardHeight:keyboardRect.size.height withDuration:animationDuration];
     
@@ -2548,9 +3026,26 @@ NSInteger sortLargeEmotion(id _Nonnull obj1, id _Nonnull obj2, void* _Nullable c
 }
 
 #pragma mark - 输入回调
+
 - (void)textViewDidChange:(UITextView *)textView {
-    
+    // 超过字符限制
+    NSString *toBeString = textView.text;
+        UITextRange *selectedRange = [textView markedTextRange];
+        UITextPosition *position = [textView positionFromPosition:selectedRange.start offset:0];
+        if (position) {
+            if (toBeString.length > maxInputCount) {
+                // 取出之前保存的属性
+               textView.attributedText = self.emotionAttributedString;
+                
+            }else {
+                // 记录当前的富文本属性
+                self.emotionAttributedString = textView.attributedText;
+            }
+        }
+
 }
+
+
 
 - (BOOL)textViewShouldBeginEditing:(UITextView *)textView {
     // 增加手势
@@ -2575,9 +3070,19 @@ NSInteger sortLargeEmotion(id _Nonnull obj1, id _Nonnull obj2, void* _Nullable c
         [self sendMsgAction:nil];
         return NO;
     } else {
-        // 超过字符限制
-        if( textView.text.length > 200 ) {
-            return NO;
+
+          // 超过字符限制
+        NSInteger strLength = textView.text.length - range.length + text.length;
+        if (strLength >= maxInputCount && text.length >= range.length) {
+            // 判断是否为删除字符，如果为删除则让执行
+            char c = [text UTF8String][0];
+            if (c == '\000') {
+                return YES;
+            }
+            if([[textView text] length] >= maxInputCount) {
+                if(![text isEqualToString:@"\b"])
+                    return NO;
+            }
         }
     }
     
@@ -2607,7 +3112,8 @@ NSInteger sortLargeEmotion(id _Nonnull obj1, id _Nonnull obj2, void* _Nullable c
             }
             
         }
-        [self reloadData:YES scrollToEnd:NO animated:NO];
+        //[self reloadData:YES scrollToEnd:NO animated:NO];
+        [self updataMessageData:msg scrollToEnd:NO animated:NO];
     });
     
 }
@@ -2630,7 +3136,8 @@ NSInteger sortLargeEmotion(id _Nonnull obj1, id _Nonnull obj2, void* _Nullable c
         // 当前聊天女士才显示
         if( [msg.fromId isEqualToString:self.womanId] ) {
             NSLog(@"ChatViewController::onRecvTextMsg( 接收文本消息回调 fromId : %@, message : %@ )", msg.fromId, msg.textMsg.message);
-            [self reloadData:YES scrollToEnd:YES animated:YES];
+            //[self reloadData:YES scrollToEnd:YES animated:YES];
+            [self insertData:msg scrollToEnd:YES animated:YES];
         }
     });
 }
@@ -2640,7 +3147,8 @@ NSInteger sortLargeEmotion(id _Nonnull obj1, id _Nonnull obj2, void* _Nullable c
         // 当前聊天女士才显示
         if( [msg.fromId isEqualToString:self.womanId] ) {
             NSLog(@"ChatViewController::onRecvSystemMsg( 接收系统消息回调 fromId : %@, message : %@ )", msg.fromId, msg.systemMsg.message);
-            [self reloadData:YES scrollToEnd:YES animated:YES];
+           // [self reloadData:YES scrollToEnd:YES animated:YES];
+            [self insertData:msg scrollToEnd:YES animated:YES];
         }
     });
 }
@@ -2650,7 +3158,8 @@ NSInteger sortLargeEmotion(id _Nonnull obj1, id _Nonnull obj2, void* _Nullable c
         // 当前聊天女士才显示
         if( [msg.fromId isEqualToString:self.womanId] ) {
             NSLog(@"ChatViewController::onRecvWarningMsg( 接收警告消息 fromId : %@, message : %@ )", msg.fromId, msg.warningMsg.message);
-            [self reloadData:YES scrollToEnd:YES animated:YES];
+            //[self reloadData:YES scrollToEnd:YES animated:YES];
+            [self insertData:msg scrollToEnd:YES animated:YES];
         }
     });
 }
@@ -2725,7 +3234,7 @@ NSInteger sortLargeEmotion(id _Nonnull obj1, id _Nonnull obj2, void* _Nullable c
                 }
                 
                 // 刷新界面
-                [self reloadData:YES scrollToEnd:YES animated:YES];
+                [self reloadData:YES scrollToEnd:YES animated:NO];
                 
             }
         }
@@ -2802,7 +3311,8 @@ NSInteger sortLargeEmotion(id _Nonnull obj1, id _Nonnull obj2, void* _Nullable c
     dispatch_async(dispatch_get_main_queue(), ^{
         if( [msgItem.fromId isEqualToString:self.womanId] ) {
             NSLog(@"ChatViewController::onRecvPhoto( 收到私密照回调 : %ld, fromId : %@, message : %@ )", (long)msgItem.msgId, msgItem.fromId, msgItem.secretPhoto.photoId);
-            [self reloadData:YES scrollToEnd:YES animated:YES];
+            //[self reloadData:YES scrollToEnd:YES animated:YES];
+            [self insertData:msgItem scrollToEnd:YES animated:YES];
         }
     });
 }
@@ -2817,7 +3327,8 @@ NSInteger sortLargeEmotion(id _Nonnull obj1, id _Nonnull obj2, void* _Nullable c
                 } else {
                     NSLog(@"ChatViewController::onSendPhoto( 发送私密照消息回调, 发送失败 : %ld, toId : %@, errMsg : %@ )", (long)msgItem.msgId, msgItem.toId, errMsg);
                 }
-                [self reloadData:YES scrollToEnd:YES animated:YES];
+                //[self reloadData:YES scrollToEnd:YES animated:YES];
+                [self updataMessageData:msgItem scrollToEnd:YES animated:YES];
             }
         }
     });
@@ -3019,7 +3530,7 @@ NSInteger sortLargeEmotion(id _Nonnull obj1, id _Nonnull obj2, void* _Nullable c
 }
 
 #pragma mark - 月费管理器回调
-- (void)manager:(MonthFeeManager *)manager onGetMemberType:(BOOL)success errnum:(NSString *)errnum errmsg:(NSString *)errmsg memberType:(int)memberType {
+- (void)manager:(MonthFeeManager *)manager onGetMemberType:(BOOL)success errnum:(NSString *)errnum errmsg:(NSString *)errmsg memberType:(MonthFeeType)memberType {
     dispatch_async(dispatch_get_main_queue(), ^{
         NSLog(@"ChatViewController::onGetMemberType( 获取月费类型, memberType : %d )", memberType);
         if (success) {
@@ -3051,16 +3562,18 @@ NSInteger sortLargeEmotion(id _Nonnull obj1, id _Nonnull obj2, void* _Nullable c
 - (void)onRecvEmotion:(LiveChatMsgItemObject* _Nonnull)msgItem {
     dispatch_async(dispatch_get_main_queue(), ^{
         NSLog(@"ChatViewController::onRecvEmotion( 接收高级表情消息回调 fromId : %@, emotionId : %@ )", msgItem.fromId, msgItem.emotionMsg.emotionId);
-        [self reloadData:YES scrollToEnd:YES animated:YES];
+        //[self reloadData:YES scrollToEnd:YES animated:YES];
+        [self insertData:msgItem scrollToEnd:YES animated:YES];
     });
 }
 
 - (void)onSendEmotion:(LCC_ERR_TYPE)errType errMsg:(NSString* _Nonnull)errMsg msgItem:(LiveChatMsgItemObject* _Nullable)msgItem {
     dispatch_async(dispatch_get_main_queue(), ^{
         NSLog(@"ChatViewController::onSendEmotion( 发送高级表情消息回调 fromId : %@, emotionId : %@ )", msgItem.fromId, msgItem.emotionMsg.emotionId);
-        if (errType == LCC_ERR_SUCCESS) {
-            [self reloadData:YES scrollToEnd:NO animated:NO];
-        }
+        //if (errType == LCC_ERR_SUCCESS) {
+            //[self reloadData:YES scrollToEnd:NO animated:NO];
+            [self updataMessageData:msgItem scrollToEnd:YES animated:YES];
+       // }
         
     });
 }
@@ -3089,7 +3602,9 @@ NSInteger sortLargeEmotion(id _Nonnull obj1, id _Nonnull obj2, void* _Nullable c
             
             dispatch_async(dispatch_get_main_queue(), ^{
                 // 开始播放
-                [self.largeEmotion play];
+                [self.largeEmotion playGif:item.imagePath];
+                
+             
             });
             
         } else {
@@ -3098,7 +3613,63 @@ NSInteger sortLargeEmotion(id _Nonnull obj1, id _Nonnull obj2, void* _Nullable c
         }
 
     }
-
+    
 }
+
+#pragma mark - 小高表回调
+
+- (void)onGetMagicIconConfig:(bool)success errNo:(NSString* _Nonnull)errNo  errMsg:(NSString* _Nonnull) errMsg magicIconConItem:(LiveChatMagicIconConfigItemObject* _Nonnull) config {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        NSLog(@"ChatViewController::onGetMagicIconConfig( 获取小高级表情消息回调 config : %ld, config : %@ )", (long)config.maxupdatetime, config.path);
+    });
+    
+}
+
+
+- (void)onGetMagicIconSrcImage:(bool)success magicIconItem:(LiveChatMagicIconItemObject* _Nonnull)item {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        NSLog(@"ChatViewController::onGetMagicIconSrcImage( 获取小高级表情清晰图消息回调 config : %@, config : %@ )", item.magicIconId, item.sourcePath);
+    });
+    
+}
+
+
+
+- (void)onGetMagicIconThumbImage:(bool)success magicIconItem:(LiveChatMagicIconItemObject* _Nonnull)item {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        NSLog(@"ChatViewController::onGetMagicIconThumbImage( 获取小高级表情缩略图消息回调 config : %@, config : %@ )", item.magicIconId, item.thumbPath);
+        // 获取缩略图
+        ChatSmallGradeEmotion* emotion = [self getSmallThumbEmotionFromCache:item.magicIconId];
+        emotion.liveChatMagicIconItemObject = item;
+        
+        [self.smallEmotionView reloadData];
+        [self.emotionInputView reloadData];
+        [self reloadData:YES scrollToEnd:YES animated:NO];
+    });
+    
+}
+
+
+
+- (void)onSendMagicIcon:(LCC_ERR_TYPE)errType errMsg:(NSString* _Nonnull)errMsg msgItem:(LiveChatMsgItemObject* _Nullable)msgItem {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        NSLog(@"ChatViewController::onSendMagicIcon( 发送小高级表情消息回调 fromId : %@, emotionId : %@ )", msgItem.fromId, msgItem.emotionMsg.emotionId);
+        //if (errType == LCC_ERR_SUCCESS) {
+            //[self reloadData:YES scrollToEnd:NO animated:NO];
+            [self updataMessageData:msgItem scrollToEnd:NO animated:NO];
+        //}
+    });
+}
+
+- (void)onRecvMagicIcon:(LiveChatMsgItemObject*  _Nonnull)msgItem {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        NSLog(@"ChatViewController::onRecvMagicIcon( 接收小高级表情消息回调 fromId : %@, emotionId : %@ )", msgItem.fromId, msgItem.emotionMsg.emotionId);
+        //[self reloadData:YES scrollToEnd:NO animated:NO];
+        [self insertData:msgItem scrollToEnd:YES animated:YES];
+    });
+}
+
+
+
 
 @end

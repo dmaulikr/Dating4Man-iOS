@@ -218,7 +218,7 @@
  *
  *  @return 处理结果
  */
-- (BOOL)PhotoFee:(NSString * _Nonnull)userId msgId:(int)msgId;
+- (BOOL)PhotoFee:(NSString * _Nonnull)userId mphotoId:(NSString * _Nonnull)photoId;
 /**
  *  根据消息ID获取图片(模糊或清晰)
  *
@@ -228,7 +228,8 @@
  *
  *  @return 处理结果
  */
-- (BOOL)getPhoto:(NSString * _Nonnull)userId msgId:(int)msgId sizeType:(GETPHOTO_PHOTOSIZE_TYPE)sizeType;
+- (BOOL)getPhoto:(NSString * _Nonnull)userId photoId:(NSString * _Nonnull)photoId sizeType:(GETPHOTO_PHOTOSIZE_TYPE)sizeType sendType:(LCMessageItem::SendType)sendType;
+
 
 #pragma mark - 高级表情消息处理（大高表）
 /**

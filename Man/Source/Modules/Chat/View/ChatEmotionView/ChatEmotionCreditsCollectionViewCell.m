@@ -38,10 +38,10 @@
 }
 
 - (void)handlerLongPress:(UILongPressGestureRecognizer *)gesture {
-    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    dict[@"gesture"] = gesture;
-
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"longPressGesture" object:nil userInfo:dict];
+//    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+//    dict[@"gesture"] = gesture;
+//
+//    [[NSNotificationCenter defaultCenter] postNotificationName:@"longPressGesture" object:nil userInfo:dict];
     
     if (self.delegate && [self.delegate respondsToSelector:@selector(ChatEmotionCreditsCollectionViewCellDidLongPress:gesture:)]) {
         [self.delegate ChatEmotionCreditsCollectionViewCellDidLongPress:self gesture:gesture];

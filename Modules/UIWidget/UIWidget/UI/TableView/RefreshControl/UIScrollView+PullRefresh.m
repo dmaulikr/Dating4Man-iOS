@@ -121,7 +121,7 @@ static NSString* delegateKey = @"delegateKey";
             } completion:^(BOOL finished) {
                 [pullRefreshView setState:PullRefreshNormal];
                 
-                self.pagingEnabled = YES;
+                self.pagingEnabled = NO;
                 self.bounces = YES;
                 self.scrollEnabled = YES;
             }];
@@ -130,7 +130,7 @@ static NSString* delegateKey = @"delegateKey";
             
             [pullRefreshView setState:PullRefreshNormal];
             
-            self.pagingEnabled = YES;
+            self.pagingEnabled = NO;
             self.bounces = YES;
             self.scrollEnabled = YES;
         }
@@ -186,7 +186,7 @@ static NSString* delegateKey = @"delegateKey";
             } completion:^(BOOL finished) {
                 [pullRefreshView setState:PullRefreshNormal];
                 
-                self.pagingEnabled = YES;
+                self.pagingEnabled = NO;
                 self.bounces = YES;
                 self.scrollEnabled = YES;
             }];
@@ -195,7 +195,7 @@ static NSString* delegateKey = @"delegateKey";
             
             [pullRefreshView setState:PullRefreshNormal];
             
-            self.pagingEnabled = YES;
+            self.pagingEnabled = NO;
             self.bounces = YES;
             self.scrollEnabled = YES;
         }

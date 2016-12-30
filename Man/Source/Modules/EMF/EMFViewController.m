@@ -246,7 +246,9 @@ static NSString *const PUBLICCSS26 = @"/Public/Js/photoswipe.jquery-3.0.4.min.js
         dispatch_async(dispatch_get_main_queue(), ^{
             [self hideLoading];
             NSLog(@"self hideLoading shouldStartLoadWithRequest Tips_Buy_MonthFee");
-            NSString *tips = NSLocalizedStringFromSelf(@"Tips_Buy_MonthFee");
+//            NSString *tips = NSLocalizedStringFromSelf(@"Tips_Buy_MonthFee");
+            NSString *price = NSLocalizedString(@"Tips_MonthFee_Price", nil);
+            NSString *tips = [NSString stringWithFormat:NSLocalizedString(@"Tips_Buy_MonthFee", nil),price];
             UIAlertView *premiumAlertView = [[UIAlertView alloc] initWithTitle:nil message:tips delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
             premiumAlertView.tag = AlertTypeBuyMonthFee;
             [premiumAlertView show];
@@ -677,12 +679,12 @@ static NSString *const PUBLICCSS26 = @"/Public/Js/photoswipe.jquery-3.0.4.min.js
  *  @param errmsg     错误信息
  *  @param memberType 月费类型
  */
-- (void)manager:(MonthFeeManager * _Nonnull)manager onGetMemberType:(BOOL)success  errnum:(NSString * _Nonnull)errnum errmsg:(NSString * _Nonnull)errmsg memberType:(int)memberType
+- (void)manager:(MonthFeeManager * _Nonnull)manager onGetMemberType:(BOOL)success  errnum:(NSString * _Nonnull)errnum errmsg:(NSString * _Nonnull)errmsg memberType:(MonthFeeType)memberType
 {
     dispatch_async(dispatch_get_main_queue(), ^{
         NSLog(@"self hideLoading SettingViewController::onGetMemberType( 获取月费类型, memberType : %d )", memberType);
         if (success) {
-            self.memberType = (MonthFeeType)memberType;
+            self.memberType = memberType;
             if (self.isFirstTimeFinish) {
                  [self hideLoading];
             }

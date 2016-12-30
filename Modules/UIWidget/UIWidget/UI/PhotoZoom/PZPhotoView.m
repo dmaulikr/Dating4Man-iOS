@@ -14,6 +14,7 @@
 
 @property (nonatomic, assign) UIImageView *imageView;
 
+
 @end
 
 @implementation PZPhotoView {
@@ -36,10 +37,11 @@
 - (void)setupView {
     self.delegate = self;
     self.imageView = nil;
+
     
     self.showsVerticalScrollIndicator = NO;
     self.showsHorizontalScrollIndicator = NO;
-    self.bouncesZoom = TRUE;
+    self.bouncesZoom = YES;
     self.decelerationRate = UIScrollViewDecelerationRateFast;
     
     UITapGestureRecognizer *scrollViewDoubleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleScrollViewDoubleTap:)];
@@ -129,6 +131,7 @@
     
     if( !self.imageView ) {
         UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
+        imageView.contentMode = self.imageViewContentMode;
         [self addSubview:imageView];
         self.imageView = imageView;
     }
@@ -273,9 +276,9 @@
 }
 
 - (CGRect)zoomRectForScale:(float)scale withCenter:(CGPoint)center {
-    assert(scale >= self.minimumZoomScale);
-    assert(scale <= self.maximumZoomScale);
-    
+//    assert(scale >= self.minimumZoomScale);
+//    assert(scale <= self.maximumZoomScale);
+
     CGRect zoomRect;
     
     // the zoom rect is in the content view's coordinates.
@@ -307,8 +310,10 @@
         
         minScale = MIN(xScale, yScale);
     }
-    
-    CGFloat maxScale = minScale * (kZoomStep * 2);
+
+#warning lance modify
+//    CGFloat maxScale = minScale * (kZoomStep * 2);
+    CGFloat maxScale = minScale * kZoomStep;
     
     self.maximumZoomScale = maxScale;
     self.minimumZoomScale = minScale;
@@ -370,6 +375,18 @@
 
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView {
     return self.imageView;
+}
+
+
+#warning lance add
+- (void)scrollViewDidEndZooming:(UIScrollView *)scrollView withView:(nullable UIView *)view atScale:(CGFloat)scale {
+//    NSLog(@"self.zoom %f,self.maxmum %f",self.zooming,self.maximumZoomScale);
+
+        if (self.zoomScale == self.maximumZoomScale) {
+            // jump back to minimum scale
+            [self updateZoomScaleWithGesture:scrollView.pinchGestureRecognizer newScale:self.maximumZoomScale];
+        }
+
 }
 
 #pragma mark - Layout Debugging Support

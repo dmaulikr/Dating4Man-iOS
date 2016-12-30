@@ -93,7 +93,7 @@ static id<JWURLProtocolDelegate> sDelegate;
     //只处理http和https请求
     NSString *scheme = [[request URL] scheme];
     NSString *host   = [[request URL] host];
-    NSString *absolute = [[request URL] absoluteString];
+//    NSString *absolute = [[request URL] absoluteString];
 //    if ([absolute rangeOfString:@"/emf/"].location != NSNotFound) {
 //        NSLog(@"alextest1 absolute:%@",absolute );
 //    }

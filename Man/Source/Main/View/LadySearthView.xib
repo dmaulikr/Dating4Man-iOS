@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" restorationIdentifier="LadySearthView" id="i5M-Pr-FkT" customClass="LadySearthView">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view alpha="0.0" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bwu-9x-Uq8">
+                    <frame key="frameInset" width="414" height="736"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                    <gestureRecognizers/>
+                </view>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LadyList-SearthCancel" translatesAutoresizingMaskIntoConstraints="NO" id="2Yk-C7-esZ"/>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7tV-Eo-xwU" userLabel="搜索栏">
+                    <subviews>
+                        <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="So4-JX-wir">
+                            <color key="backgroundColor" red="0.80392156862745101" green="0.80392156862745101" blue="0.80392156862745101" alpha="1" colorSpace="calibratedRGB"/>
+                            <gestureRecognizers/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="36" id="Fcj-Aa-2tD"/>
+                                <constraint firstAttribute="width" constant="210" id="SJn-tX-mer"/>
+                            </constraints>
+                            <connections>
+                                <outletCollection property="gestureRecognizers" destination="87K-jX-Sh6" appends="YES" id="KSb-cL-3r8"/>
+                            </connections>
+                        </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Female" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oMx-Ra-Mwc">
+                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LadyList-SearthFemaleIcon" translatesAutoresizingMaskIntoConstraints="NO" id="kvH-Wp-vEJ"/>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LadyList-SearthMaleIcon-Black" translatesAutoresizingMaskIntoConstraints="NO" id="FfG-cO-cKa"/>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LadyList-SearthBG" translatesAutoresizingMaskIntoConstraints="NO" id="67W-rK-IFP">
+                            <constraints>
+                                <constraint firstAttribute="width" constant="210" id="c6O-bz-Rn5"/>
+                                <constraint firstAttribute="height" constant="36" id="yOZ-lT-ofU"/>
+                            </constraints>
+                        </imageView>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LadyList-SearthBG" translatesAutoresizingMaskIntoConstraints="NO" id="AWt-B8-f6Q">
+                            <constraints>
+                                <constraint firstAttribute="height" constant="36" id="IXq-8X-RWl"/>
+                                <constraint firstAttribute="width" constant="210" id="qdD-Iy-KaG"/>
+                            </constraints>
+                        </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Online Now" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WWf-3e-BRb" userLabel="在线状态">
+                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dWf-ha-QGc" userLabel="年龄选择" customClass="AgeRangeSlider">
+                            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        </view>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bJH-Yy-B3c">
+                            <state key="normal" backgroundImage="LadyList-Searth-OfflineIocn"/>
+                            <connections>
+                                <action selector="onlineStatusChange:" destination="i5M-Pr-FkT" eventType="touchUpInside" id="Ob1-Ly-nbP"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fWR-RF-SOE" userLabel="搜索按钮">
+                            <constraints>
+                                <constraint firstAttribute="width" constant="48" id="TXt-xh-BKf"/>
+                                <constraint firstAttribute="height" constant="48" id="yfr-Eu-exE"/>
+                            </constraints>
+                            <state key="normal" backgroundImage="LadyList-SearthButton"/>
+                            <connections>
+                                <action selector="didSearthButton:" destination="i5M-Pr-FkT" eventType="touchUpInside" id="c4l-AF-9KN"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <gestureRecognizers/>
+                    <constraints>
+                        <constraint firstItem="fWR-RF-SOE" firstAttribute="centerX" secondItem="7tV-Eo-xwU" secondAttribute="centerX" id="0bu-Rg-ISg"/>
+                        <constraint firstItem="bJH-Yy-B3c" firstAttribute="top" secondItem="AWt-B8-f6Q" secondAttribute="top" constant="8" id="14q-ZF-3vc"/>
+                        <constraint firstItem="dWf-ha-QGc" firstAttribute="leading" secondItem="67W-rK-IFP" secondAttribute="leading" constant="17" id="1Ed-NT-ND7"/>
+                        <constraint firstItem="oMx-Ra-Mwc" firstAttribute="trailing" secondItem="FfG-cO-cKa" secondAttribute="trailing" constant="-24.666666666666686" id="7R7-3a-6ec"/>
+                        <constraint firstItem="67W-rK-IFP" firstAttribute="top" secondItem="7tV-Eo-xwU" secondAttribute="top" constant="108" id="7kV-xA-RGR"/>
+                        <constraint firstItem="FfG-cO-cKa" firstAttribute="top" secondItem="So4-JX-wir" secondAttribute="top" constant="10" id="9GO-v7-ioa"/>
+                        <constraint firstItem="So4-JX-wir" firstAttribute="centerX" secondItem="7tV-Eo-xwU" secondAttribute="centerX" constant="-0.5" id="BqZ-wz-jpb"/>
+                        <constraint firstItem="fWR-RF-SOE" firstAttribute="top" secondItem="7tV-Eo-xwU" secondAttribute="top" constant="230" id="Dcc-Dr-Uml"/>
+                        <constraint firstItem="kvH-Wp-vEJ" firstAttribute="centerY" secondItem="So4-JX-wir" secondAttribute="centerY" id="EF6-aU-yWT"/>
+                        <constraint firstItem="oMx-Ra-Mwc" firstAttribute="leading" secondItem="kvH-Wp-vEJ" secondAttribute="leading" constant="27.333333333333343" id="F0C-K3-sTe"/>
+                        <constraint firstItem="bJH-Yy-B3c" firstAttribute="trailing" secondItem="AWt-B8-f6Q" secondAttribute="trailing" constant="-10" id="F9z-rI-sq7"/>
+                        <constraint firstItem="dWf-ha-QGc" firstAttribute="centerY" secondItem="67W-rK-IFP" secondAttribute="centerY" id="JND-1V-xZX"/>
+                        <constraint firstItem="AWt-B8-f6Q" firstAttribute="centerX" secondItem="7tV-Eo-xwU" secondAttribute="centerX" constant="-0.5" id="N4a-OK-RbW"/>
+                        <constraint firstItem="dWf-ha-QGc" firstAttribute="top" secondItem="67W-rK-IFP" secondAttribute="top" constant="3" id="O5D-1j-4xr"/>
+                        <constraint firstItem="67W-rK-IFP" firstAttribute="centerX" secondItem="7tV-Eo-xwU" secondAttribute="centerX" constant="-0.5" id="ObQ-T4-OD2"/>
+                        <constraint firstItem="WWf-3e-BRb" firstAttribute="top" secondItem="AWt-B8-f6Q" secondAttribute="top" constant="8" id="VAF-5w-8pa"/>
+                        <constraint firstItem="So4-JX-wir" firstAttribute="top" secondItem="7tV-Eo-xwU" secondAttribute="top" constant="56" id="WLR-JT-kLV"/>
+                        <constraint firstItem="kvH-Wp-vEJ" firstAttribute="leading" secondItem="So4-JX-wir" secondAttribute="leading" constant="10" id="WRf-Cc-S5v"/>
+                        <constraint firstItem="dWf-ha-QGc" firstAttribute="trailing" secondItem="67W-rK-IFP" secondAttribute="trailing" constant="-17" id="ZRY-04-jCD"/>
+                        <constraint firstItem="WWf-3e-BRb" firstAttribute="leading" secondItem="AWt-B8-f6Q" secondAttribute="leading" constant="15" id="hfe-xg-jqF"/>
+                        <constraint firstItem="FfG-cO-cKa" firstAttribute="trailing" secondItem="So4-JX-wir" secondAttribute="trailing" constant="-10" id="pyg-oW-SYN"/>
+                        <constraint firstItem="oMx-Ra-Mwc" firstAttribute="top" secondItem="So4-JX-wir" secondAttribute="top" constant="9" id="tNI-Fr-Pek"/>
+                        <constraint firstItem="AWt-B8-f6Q" firstAttribute="top" secondItem="7tV-Eo-xwU" secondAttribute="top" constant="162" id="uBf-Ya-Xmw"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <gestureRecognizers/>
+            <constraints>
+                <constraint firstItem="7tV-Eo-xwU" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="4oJ-vU-kkd"/>
+                <constraint firstAttribute="trailing" secondItem="7tV-Eo-xwU" secondAttribute="trailing" id="GFI-Sw-hEM"/>
+                <constraint firstItem="2Yk-C7-esZ" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="Sq2-VH-fxg"/>
+                <constraint firstAttribute="bottom" secondItem="7tV-Eo-xwU" secondAttribute="bottom" constant="86" id="WGC-ur-GkZ"/>
+                <constraint firstItem="7tV-Eo-xwU" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="86" id="idC-hM-rWY"/>
+                <constraint firstAttribute="bottom" secondItem="2Yk-C7-esZ" secondAttribute="bottom" constant="68" id="ngA-N3-tk2"/>
+            </constraints>
+            <connections>
+                <outlet property="ageSlider" destination="dWf-ha-QGc" id="Z2i-fw-Vj5"/>
+                <outlet property="bgView" destination="bwu-9x-Uq8" id="6hw-2e-hHr"/>
+                <outlet property="femaleIcon" destination="kvH-Wp-vEJ" id="fab-se-GJP"/>
+                <outlet property="maleIcon" destination="FfG-cO-cKa" id="hGA-Jw-GJw"/>
+                <outlet property="onlineButton" destination="bJH-Yy-B3c" id="1JV-Q7-bZQ"/>
+                <outlet property="searthView" destination="7tV-Eo-xwU" id="Upm-gQ-7ab"/>
+                <outlet property="sexBGView" destination="So4-JX-wir" id="lBw-Mp-qkh"/>
+                <outlet property="sexLabel" destination="oMx-Ra-Mwc" id="08K-st-4aM"/>
+                <outletCollection property="gestureRecognizers" destination="uZL-wm-P4K" appends="YES" id="1rF-1F-ky0"/>
+            </connections>
+            <point key="canvasLocation" x="-96.5" y="56.5"/>
+        </view>
+        <tapGestureRecognizer id="uZL-wm-P4K">
+            <connections>
+                <action selector="didBGviewTap:" destination="i5M-Pr-FkT" id="e3h-fl-Se0"/>
+            </connections>
+        </tapGestureRecognizer>
+        <tapGestureRecognizer id="87K-jX-Sh6">
+            <connections>
+                <action selector="sexChoose:" destination="i5M-Pr-FkT" id="xt9-Ca-fzK"/>
+            </connections>
+        </tapGestureRecognizer>
+    </objects>
+    <resources>
+        <image name="LadyList-Searth-OfflineIocn" width="20" height="20"/>
+        <image name="LadyList-SearthBG" width="210" height="36"/>
+        <image name="LadyList-SearthButton" width="48" height="48"/>
+        <image name="LadyList-SearthCancel" width="27" height="27"/>
+        <image name="LadyList-SearthFemaleIcon" width="20" height="20"/>
+        <image name="LadyList-SearthMaleIcon-Black" width="20" height="20"/>
+    </resources>
+</document>

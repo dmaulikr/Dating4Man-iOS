@@ -9,6 +9,7 @@
 #import "MainViewController.h"
 
 #import "LadyListViewController.h"
+#import "LadyWaterfallViewController.h"
 #import "SettingViewController.h"
 #import "ContactListViewController.h"
 #import "LoginViewController.h"
@@ -19,7 +20,7 @@
 #import "URLHandler.h"
 
 #import "GetEMFCountRequest.h"
-
+#import "LadyListNotificationView.h"
 typedef enum PageType {
     PageTypeSetting = 0,
     PageTypeLadyList,
@@ -35,6 +36,8 @@ typedef enum PageType {
 
 @property (assign) BOOL bCanShowEMFNotice;
 @property (assign) NSInteger totalEMF;
+
+@property (nonatomic, strong) NSMutableArray * inviteMsgArray;
 
 /**
  *  LiveChat管理器
@@ -79,6 +82,7 @@ typedef enum PageType {
     // 跟踪用户行为
     [self reportDidShowPage:_curIndex];
     
+    self.inviteMsgArray = [NSMutableArray array];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -88,7 +92,7 @@ typedef enum PageType {
         // 第一次进入, 界面未出现
         [self checkLogin:NO];
     }
-
+    [self.inviteMsgArray removeAllObjects];
     [self reloadInviteUsers];
 }
 
@@ -275,7 +279,11 @@ typedef enum PageType {
     vc.mainVC = self;
     [self addChildViewController:vc];
     
-    LadyListViewController* vc1 = [[LadyListViewController alloc] initWithNibName:nil bundle:nil];
+//    LadyListViewController* vc1 = [[LadyListViewController alloc] initWithNibName:nil bundle:nil];
+//    vc1.mainVC = self;
+//    [self addChildViewController:vc1];
+    
+    LadyWaterfallViewController* vc1 = [[LadyWaterfallViewController alloc] initWithNibName:nil bundle:nil];
     vc1.mainVC = self;
     [self addChildViewController:vc1];
     
@@ -345,6 +353,11 @@ typedef enum PageType {
     
     if( _curIndex == 1 ) {
         self.navRightButton.badgeValue = badge > 0?[NSString stringWithFormat:@"%ld", (long)badge]:nil;
+        if (self.navRightButton.badgeValue.length > 0) {
+            LiveChatUserItemObject * user = [array firstObject];
+            // 获取女士详情
+            [self.liveChatManager getUserInfo:user.userId];
+        }
     }
 }
 
@@ -434,6 +447,8 @@ typedef enum PageType {
 - (void)onRecvTextMsg:(LiveChatMsgItemObject* _Nonnull)msg {
     dispatch_async(dispatch_get_main_queue(), ^{
         NSLog(@"MainViewController::onRecvTextMsg( 接收文本消息回调 )");
+        //将邀请信息插入到数组
+        [self.inviteMsgArray addObject:msg];
         [self reloadInviteUsers];
     });
 }
@@ -489,6 +504,22 @@ typedef enum PageType {
     });
 }
 
+- (void)onGetUserInfo:(LCC_ERR_TYPE)errType errMsg:(NSString* _Nonnull)errMsg userId:(NSString* _Nonnull)userId userInfo:(LiveChatUserInfoItemObject* _Nullable)userInfo {
+    dispatch_async(dispatch_get_main_queue(), ^{
+            if( LCC_ERR_SUCCESS == errType ) {
+                
+                for (LiveChatMsgItemObject * msg in self.inviteMsgArray) {
+                    if ([msg.fromId isEqualToString:userId] && _curIndex == 1) {
+                        LadyListNotificationView * notificationView = [LadyListNotificationView initLadyListNotificationViewXibLoadUser:userInfo msg:msg.textMsg.message];
+                        notificationView.frame = CGRectMake(self.view.frame.size.width - notificationView.frame.size.width - 5, 0 ,notificationView.frame.size.width, notificationView.frame.size.height);
+                        [self.view addSubview:notificationView];
+                        return;
+                    }
+                }
+            }
+    });
+}
+
 #pragma mark - LoginManager回调
 - (void)manager:(LoginManager * _Nonnull)manager onLogin:(BOOL)success loginItem:(LoginItemObject * _Nullable)loginItem errnum:(NSString * _Nonnull)errnum errmsg:(NSString * _Nonnull)errmsg {
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -532,6 +563,13 @@ typedef enum PageType {
                 [self.navigationController pushViewController:vc animated:YES];
                 
             }break;
+            case URLTypeSetting: {
+                [self.navigationController popToRootViewControllerAnimated:NO];
+                // 跳转setting
+                
+                _curIndex = PageTypeSetting;
+                [self reloadData:YES animated:NO];
+            }
             default:
                 break;
         }

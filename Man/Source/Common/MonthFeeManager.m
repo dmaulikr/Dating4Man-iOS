@@ -28,7 +28,7 @@
 @property (nonatomic, strong) NSMutableArray* delegates;
 
 /** 月费状态 */
-@property (nonatomic,assign) int  memberType;
+@property (nonatomic,assign) MonthFeeType  memberType;
 
 @end
 
@@ -100,7 +100,7 @@ static MonthFeeManager *gManager = nil;
             __block NSString *blockErrnum = errmun;
             __block NSString *blockErrmsg = errmsg;
             if (success) {
-                self.memberType = memberType;
+                self.memberType = (MonthFeeType)memberType;
                 self.bRequest = YES;
             }else {
                 self.memberType = MonthFeeTypeNoramlMember;

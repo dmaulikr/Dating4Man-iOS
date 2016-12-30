@@ -14,28 +14,63 @@
             <subviews>
                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="Zyn-yM-WTb" userLabel="Emotion Collection View">
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="100" id="JgN-kU-cVf"/>
+                    </constraints>
                     <collectionViewLayout key="collectionViewLayout" id="WyP-2o-YCg" customClass="ChatEmotionChooseCollectionViewLayout"/>
                     <connections>
                         <outlet property="dataSource" destination="iN0-l3-epB" id="64d-vo-Jyj"/>
                         <outlet property="delegate" destination="iN0-l3-epB" id="8el-tE-MIL"/>
                     </connections>
                 </collectionView>
-                <pageControl hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="QJT-CI-pjO"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="  Premium stickers" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="chE-uv-rNn">
+                    <constraints>
+                        <constraint firstAttribute="height" constant="21" id="Au6-lp-zXi"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                    <color key="textColor" red="0.33333333329999998" green="0.33333333329999998" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(0.1 credits each time sent)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hfc-s9-d6e">
+                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                    <color key="textColor" red="0.66666666669999997" green="0.66666666669999997" blue="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="MmR-xz-cIu">
+                    <color key="backgroundColor" red="0.96362179489999999" green="0.96362179489999999" blue="0.96362179489999999" alpha="1" colorSpace="calibratedRGB"/>
+                    <collectionViewLayout key="collectionViewLayout" id="0Oe-Ei-aGi" customClass="ChatEmotionCreditsCollectionViewLayout"/>
+                    <connections>
+                        <outlet property="dataSource" destination="iN0-l3-epB" id="GEn-7l-BJl"/>
+                        <outlet property="delegate" destination="iN0-l3-epB" id="f5R-Uw-YPY"/>
+                    </connections>
+                </collectionView>
+                <pageControl hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="nBb-3S-D76">
+                    <color key="pageIndicatorTintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="currentPageIndicatorTintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                </pageControl>
             </subviews>
             <color key="backgroundColor" red="0.96470588235294119" green="0.96470588235294119" blue="0.96470588235294119" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="QJT-CI-pjO" firstAttribute="bottom" secondItem="iN0-l3-epB" secondAttribute="bottom" id="4yu-46-xwg"/>
+                <constraint firstItem="chE-uv-rNn" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="8fh-Ei-P7W"/>
+                <constraint firstItem="chE-uv-rNn" firstAttribute="top" secondItem="Zyn-yM-WTb" secondAttribute="bottom" id="E8p-DJ-oJw"/>
                 <constraint firstItem="Zyn-yM-WTb" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="G7q-D3-bdG"/>
                 <constraint firstItem="Zyn-yM-WTb" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" id="IUB-ZP-OwK"/>
+                <constraint firstItem="MmR-xz-cIu" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Kzm-Qc-rrX"/>
+                <constraint firstItem="nBb-3S-D76" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="LDw-un-ylG"/>
+                <constraint firstItem="Hfc-s9-d6e" firstAttribute="centerY" secondItem="chE-uv-rNn" secondAttribute="centerY" id="VMG-0p-zIH"/>
                 <constraint firstItem="Zyn-yM-WTb" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="VgE-tX-ucW"/>
-                <constraint firstItem="QJT-CI-pjO" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="Yut-cH-8zk"/>
-                <constraint firstItem="Zyn-yM-WTb" firstAttribute="height" secondItem="iN0-l3-epB" secondAttribute="height" id="mcr-bd-6dr"/>
+                <constraint firstItem="MmR-xz-cIu" firstAttribute="top" secondItem="Hfc-s9-d6e" secondAttribute="bottom" id="bby-G9-V2j"/>
+                <constraint firstAttribute="bottom" secondItem="MmR-xz-cIu" secondAttribute="bottom" id="hPn-by-JDs"/>
+                <constraint firstAttribute="trailing" secondItem="MmR-xz-cIu" secondAttribute="trailing" id="oL3-0W-XjJ"/>
+                <constraint firstAttribute="bottom" secondItem="nBb-3S-D76" secondAttribute="bottom" constant="2" id="qFB-99-vQ6"/>
+                <constraint firstItem="Hfc-s9-d6e" firstAttribute="leading" secondItem="chE-uv-rNn" secondAttribute="trailing" id="tBT-qH-uoa"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="emotionCollectionView" destination="Zyn-yM-WTb" id="xaV-bw-2hV"/>
-                <outlet property="pageView" destination="QJT-CI-pjO" id="vhn-4w-KHK"/>
+                <outlet property="pageView" destination="nBb-3S-D76" id="PWO-yb-1li"/>
+                <outlet property="smallEmotionCollectionView" destination="MmR-xz-cIu" id="C0I-4k-xli"/>
             </connections>
             <point key="canvasLocation" x="448.5" y="342"/>
         </view>

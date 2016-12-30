@@ -17,6 +17,7 @@
 #import "StartEditResumeRequest.h"
 #import "UpdateProfileRequest.h"
 #import "MotifyPersonalProfileManager.h"
+#import <AVFoundation/AVFoundation.h>
 
 typedef enum {
     RowTypePhoto,
@@ -716,6 +717,7 @@ typedef enum : NSUInteger {
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
     if (actionSheet.tag == 1000) {
         UIImagePickerControllerSourceType sourceType = UIImagePickerControllerSourceTypeCamera;
+            NSString *tips = @"";
         
         if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
             switch (buttonIndex) {
@@ -725,10 +727,12 @@ typedef enum : NSUInteger {
                 case 1:
                     //相机
                     sourceType = UIImagePickerControllerSourceTypeCamera;
+                        tips = NSLocalizedString(@"Tips_Camera_Allow", nil);
                     break;
                 case 2:
                     //相册
                     sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+                      tips = NSLocalizedString(@"Tips_PhotoLibrary_Allow", nil);
                     break;
             }
         }else{
@@ -745,7 +749,17 @@ typedef enum : NSUInteger {
         imagePicker.delegate = self;
         imagePicker.sourceType = sourceType;
         
-        [self presentViewController:imagePicker animated:YES completion:nil];
+        NSString *mediaType = AVMediaTypeVideo;
+        AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:mediaType];
+        // 是否给相机设置了可以访问权限
+        if(authStatus == AVAuthorizationStatusRestricted || authStatus == AVAuthorizationStatusDenied){
+            // 无权限
+            UIAlertView *cameraAlert = [[UIAlertView alloc] initWithTitle:nil message:tips delegate:self cancelButtonTitle:nil otherButtonTitles:NSLocalizedString(@"Close", nil), nil];
+            [cameraAlert show];
+            return;
+        } else {
+            [self presentViewController:imagePicker animated:YES completion:nil];
+        }
         
     }
     
@@ -764,6 +778,8 @@ typedef enum : NSUInteger {
         
         self.uploadingPhoto = info[UIImagePickerControllerOriginalImage];
         
+        UIImageWriteToSavedPhotosAlbum(self.uploadingPhoto, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
+        
         FileCacheManager *manager = [FileCacheManager manager];
         NSString *headPhotoPath = [manager imageUploadCachePath:self.uploadingPhoto fileName:@"headPhoto.jpg"];
         [self showLoading];
@@ -778,6 +794,19 @@ typedef enum : NSUInteger {
     [picker dismissViewControllerAnimated:YES completion:^{
         [self hideLoading];
     }];
+}
+
+
+
+/**
+ *  拍摄完图片回调
+ *
+ *  @param picker 相机控制
+ *  @param info   图片的相关信息
+ */
+- (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo{
+    
+    
 }
 
 

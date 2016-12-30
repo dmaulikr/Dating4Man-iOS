@@ -200,6 +200,12 @@
         if([self.tableViewDelegate respondsToSelector:@selector(tableView:didShowLady:)]) {
             [self.tableViewDelegate tableView:self didShowLady:item];
         }
+    }else
+    {
+        if ([self.tableViewDelegate respondsToSelector:@selector(tableViewDidResetView:)]) {
+            [self.tableViewDelegate tableViewDidResetView:self];
+        }
+        
     }
 }
 

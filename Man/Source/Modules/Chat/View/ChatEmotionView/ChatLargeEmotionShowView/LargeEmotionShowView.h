@@ -7,9 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import <ImageIO/ImageIO.h>
+#import "GIFImageView.h"
 @interface LargeEmotionShowView : UIView
-@property (weak, nonatomic) IBOutlet UIImageView *imageView;
+@property (weak, nonatomic) IBOutlet GIFImageView *imageView;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityView;
 @property (weak, nonatomic) IBOutlet UIView *loadingImageView;
 /**
@@ -31,17 +32,20 @@
 
 
 /**
- 重置
+ 以GIF格式播放
  */
-- (void)reset;
-
-/**
- 重新开始播放
- */
-- (void)play;
-
-/**
- 停止播放
- */
-- (void)stop;
+- (void)playGif:(NSString *)emotionPath;
+///**
+// 重置
+// */
+//- (void)reset;
+//
+///**
+// 重新开始播放
+// */
+//- (void)play;
+///**
+// 停止播放
+// */
+//- (void)stop;
 @end
